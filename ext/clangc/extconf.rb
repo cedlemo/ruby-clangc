@@ -1,3 +1,3 @@
 require "mkmf"
 have_library("clang")
-create_makefile("clangc")
+create_makefile("clangc/clangc")

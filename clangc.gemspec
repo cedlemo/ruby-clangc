@@ -7,11 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["cedlemo"]
   s.email       = 'cedlemo@gmx.com'
   require "rake"
-  s.files       = FileList['lib/*/*.{so}',
-                     'lib/*.{rb}'
-                    ].to_a
+  s.files       = FileList['lib/*.rb', 'ext/*/*.{rb,c,h}']
   s.extensions = %w(ext/clangc/extconf.rb)
-#  s.require_paths = [ 'lib', 'ext' ] 
   s.add_development_dependency 'rake-compiler', '~> 0' 
   s.homepage    =     'https://github.com/cedlemo/ruby-clangc'
   s.license       = 'MIT'
