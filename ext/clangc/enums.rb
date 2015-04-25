@@ -56,6 +56,7 @@ void init_clang_enums_to_constants(VALUE);
 EOF
 constants._c.puts create_module_constants("m_clang", enums)
 constants.close_all
+
 NEWLINE ="\n"
 O_BRACKET ="("
 C_BRACKET = ")"

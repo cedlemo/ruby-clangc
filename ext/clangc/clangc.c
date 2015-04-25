@@ -3,7 +3,7 @@
 
 #include "constants.h"
 void Init_clangc(void) {
-  VALUE m_clangc = rb_define_module("clangc");
+  VALUE m_clangc = rb_define_module("Clangc");
   init_clang_enums_to_constants(m_clangc);
   
 }
