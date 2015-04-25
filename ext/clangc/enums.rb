@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby 
 require "rtruckboris"
-
+require "binder"
 
 clang_c = "/usr/include/clang-c/Index.h"
 headerPaths = []
@@ -36,20 +36,8 @@ def create_module_constants(main_module, enums)
 end
 enums = parser.enums
 puts enums.size
-class OutputFiles
-  attr_reader :_c, :_h
-  def initialize(name)
-    @_c = File.new((name||'wrapper') + '.c', 'w')
-    @_h = File.new((name||'wrapper') + '.h', 'w')
-    @_c.sync= true
-    @_c.sync= true
-  end
-  def close_all
-    @_c.close
-    @_h.close
-  end
-end 
-constants = OutputFiles.new("constants")
+
+constants = Binder::OutputFiles.new("constants")
 constants._h.puts <<EOF
 #include <ruby/ruby.h>
 void init_clang_enums_to_constants(VALUE);
@@ -57,12 +45,5 @@ EOF
 constants._c.puts create_module_constants("m_clang", enums)
 constants.close_all
 
-NEWLINE ="\n"
-O_BRACKET ="("
-C_BRACKET = ")"
-O_CURLY_BRACKET = "{"
-C_CURLY_BRACKET = "}"
-COMMA = ","
-SEMI_COLON = ";"
 
 
