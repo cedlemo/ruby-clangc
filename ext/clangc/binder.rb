@@ -21,24 +21,65 @@ module Binder
     end
   end 
 
-  def self.generate_simple_class_allocator(class_name, structure_name)
-%Q{ /*#{name} ruby class*/
-#include "#{name}_class.h"
+  class Ruby_C_Class_Generator
+    attr_accessor :free_instructions, :args, :init_instructions 
+    def initialize(class_name, data_type)
+      @class_name = class_name
+      @data_type = data_type
+      @files = OutputFiles.new(class_name)
+    end
+    def generate_files
+      generate_c_file
+      generate_h_file
+      @files.close_all
+    end
 
-static void c_#{name}_struct_free(#{name}_t *c)
+    :private
+    def generate_class_structure
+%Q{#ifndef #{@class_name.upcase}_H
+#define #{@class_name.upcase}_H
+  #include <ruby/ruby.h>
+  typedef #{class_name}_t {
+    #{@data_type} data; 
+} #{class_name}_t;
+#endif //#{@class_name.upcase}_H
+}
+    end
+    def generate_free_callback
+%Q{/*#{@class_name} ruby class*/
+#include "#{@class_name}.h"
+static void c_#{@class_name}_struct_free(#{@class_name}_t *c)
 {
   if(c)
   {
+    #{@free_instructions||""}
     ruby_xfree(c);
   }
+}  
 }
-static VALUE c_#{name}_struct_alloc( VALUE klass)
+    end
+    def generate_basic_allocator
+%Q{static VALUE c_#{class_name}_struct_alloc( VALUE klass)
 {
-  return Data_Wrap_Struct(klass, NULL, c_#{name}_struct_free, ruby_xmalloc(sizeof(#{name}_t)));
+  return Data_Wrap_Struct(klass, NULL, c_#{class_name}_struct_free, ruby_xmalloc(sizeof(#{class_name}_t)));
 }
-/*static VALUE c_#{name}_initialize(VALUE self)
-{
-}*/} 
+}
+    end
+    def generate_initialize
+%Q{
+static VALUE c_#{@class_name}_initialize(#{@args||"VALUE self"}) {
+  #{init_instructions}
+}
+}
+    end
+    def generate_c_file
+      @files._c.puts generate_free_callback
+      @files._c.puts generate_basic_allocator
+      @files._c.puts generate_initialize
+    end
+    def generate_h_file
+      @files._h.puts generate_class_structure
+    end
   end
 
   def self.rb_str_2_c_char_ptr(r_val_name, c_val_type, c_val_name)
