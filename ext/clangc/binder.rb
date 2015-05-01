@@ -22,7 +22,7 @@ module Binder
   end 
 
   class Ruby_C_Class_Generator
-    attr_accessor :free_instructions, :args, :init_instructions 
+    attr_accessor :free_instructions, :args, :init_instructions, :module_name, :superclass_name 
     def initialize(class_name, data_type)
       @class_name = class_name
       @data_type = data_type
@@ -39,29 +39,34 @@ module Binder
 %Q{#ifndef #{@class_name.upcase}_H
 #define #{@class_name.upcase}_H
   #include <ruby/ruby.h>
-  typedef #{class_name}_t {
+  typedef #{@class_name}_t {
     #{@data_type} data; 
-} #{class_name}_t;
+} #{@class_name}_t;
+}
+    end
+    def generate_main_function_header
+%Q{
+  VALUE generate_#{@class_name}_under(VALUE, VALUE);
 #endif //#{@class_name.upcase}_H
 }
     end
     def generate_free_callback
 %Q{/*#{@class_name} ruby class*/
 #include "#{@class_name}.h"
-static void c_#{@class_name}_struct_free(#{@class_name}_t *c)
+static void c_#{@class_name}_struct_free(#{@class_name}_t *s)
 {
-  if(c)
+  if(s)
   {
     #{@free_instructions||""}
-    ruby_xfree(c);
+    ruby_xfree(s);
   }
 }  
 }
     end
     def generate_basic_allocator
-%Q{static VALUE c_#{class_name}_struct_alloc( VALUE klass)
+%Q{static VALUE c_#{@class_name}_struct_alloc( VALUE klass)
 {
-  return Data_Wrap_Struct(klass, NULL, c_#{class_name}_struct_free, ruby_xmalloc(sizeof(#{class_name}_t)));
+  return Data_Wrap_Struct(klass, NULL, c_#{@class_name}_struct_free, ruby_xmalloc(sizeof(#{@class_name}_t)));
 }
 }
     end
@@ -72,13 +77,24 @@ static VALUE c_#{@class_name}_initialize(#{@args||"VALUE self"}) {
 }
 }
     end
+    def generate_main_function
+%Q{  VALUE generate_#{@class_name}_under(VALUE module, VALUE superclass){
+  VALUE klass = rb_define_class_under(module, #{@class_name}, superclass);
+  rb_define_alloc_func(klass, c_#{@class_name}_struct_alloc);
+  return klass;
+}
+
+}
+    end
     def generate_c_file
       @files._c.puts generate_free_callback
       @files._c.puts generate_basic_allocator
       @files._c.puts generate_initialize
+      @files._c.puts generate_main_function
     end
     def generate_h_file
       @files._h.puts generate_class_structure
+      @files._h.puts generate_main_function_header
     end
   end
 
