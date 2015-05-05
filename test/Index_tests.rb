@@ -35,4 +35,22 @@ class TestIndexGlobalOptions < MiniTest::Test
     @cindex.global_options = flags
     assert_equal flags, @cindex.global_options
   end
+  def test_index_set_global_options_and_editing
+    flags =  @cindex.global_options |
+             Clangc::GlobalOptFlags::Threadbackgroundpriorityforediting
+    @cindex.global_options = flags
+    assert_equal flags, @cindex.global_options
+  end
+  def test_index_set_global_options_and_indexing
+    flags =  @cindex.global_options |
+             Clangc::GlobalOptFlags::Threadbackgroundpriorityforindexing
+    @cindex.global_options = flags
+    assert_equal flags, @cindex.global_options
+  end
+  def test_index_set_global_options_all
+    flags =   @cindex.global_options |
+              Clangc::GlobalOptFlags::Threadbackgroundpriorityforall
+    @cindex.global_options = flags
+    assert_equal flags, @cindex.global_options
+  end
 end
