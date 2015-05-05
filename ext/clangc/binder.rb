@@ -26,7 +26,10 @@ module Binder
     def initialize(class_name, data_type)
       @class_name = class_name
       @data_type = data_type
-      @files = OutputFiles.new(class_name)
+      
+      abort "WARNING : Files class_#{class_name}.c/h already exist" if File.file?("class_#{class_name}.c")
+
+      @files = OutputFiles.new("class_#{class_name}")
     end
     def generate_files
       generate_c_file
@@ -64,9 +67,20 @@ static void c_#{@class_name}_struct_free(#{@class_name}_t *s)
 }
     end
     def generate_basic_allocator
+      if @data_type =~ /\*/
+        set_ptr_null = %Q{
+    #{@class_name}_t * ptr;
+    ptr = (#{@class_name}_t *) ruby_xmalloc(sizeof(#{@class_name}_t)); 
+}
+        void_ptr = "(void *) ptr"
+      else
+        set_ptr_null = ""
+        void_ptr = "ruby_xmalloc(sizeof(#{@class_name}_t))"
+      end
 %Q{static VALUE c_#{@class_name}_struct_alloc( VALUE klass)
 {
-  return Data_Wrap_Struct(klass, NULL, c_#{@class_name}_struct_free, ruby_xmalloc(sizeof(#{@class_name}_t)));
+  #{set_ptr_null}
+  return Data_Wrap_Struct(klass, NULL, c_#{@class_name}_struct_free, #{void_ptr});
 }
 }
     end
