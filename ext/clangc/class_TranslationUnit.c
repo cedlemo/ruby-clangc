@@ -23,10 +23,10 @@ c_TranslationUnit_struct_alloc( VALUE klass)
   return Data_Wrap_Struct(klass, NULL, c_TranslationUnit_struct_free, (void *) ptr);
 }
 
-static VALUE
+/*static VALUE
 c_TranslationUnit_initialize(VALUE self) {
   
-}
+}*/
 VALUE
 generate_TranslationUnit_under(VALUE module, VALUE superclass)
 {
