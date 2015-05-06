@@ -56,7 +56,8 @@ module Binder
     def generate_free_callback
 %Q{/*#{@class_name} ruby class*/
 #include "#{@class_name}.h"
-static void c_#{@class_name}_struct_free(#{@class_name}_t *s)
+static void
+c_#{@class_name}_struct_free(#{@class_name}_t *s)
 {
   if(s)
   {
@@ -77,7 +78,8 @@ static void c_#{@class_name}_struct_free(#{@class_name}_t *s)
         set_ptr_null = ""
         void_ptr = "ruby_xmalloc(sizeof(#{@class_name}_t))"
       end
-%Q{static VALUE c_#{@class_name}_struct_alloc( VALUE klass)
+%Q{static VALUE
+c_#{@class_name}_struct_alloc( VALUE klass)
 {
   #{set_ptr_null}
   return Data_Wrap_Struct(klass, NULL, c_#{@class_name}_struct_free, #{void_ptr});
@@ -86,14 +88,17 @@ static void c_#{@class_name}_struct_free(#{@class_name}_t *s)
     end
     def generate_initialize
 %Q{
-static VALUE c_#{@class_name}_initialize(#{@args||"VALUE self"}) {
+static VALUE
+c_#{@class_name}_initialize(#{@args||"VALUE self"}) {
   #{init_instructions}
 }
 }
     end
     def generate_main_function
-%Q{  VALUE generate_#{@class_name}_under(VALUE module, VALUE superclass){
-  VALUE klass = rb_define_class_under(module, #{@class_name}, superclass);
+%Q{VALUE
+generate_#{@class_name}_under(VALUE module, VALUE superclass)
+{
+  VALUE klass = rb_define_class_under(module, "#{@class_name}", superclass);
   rb_define_alloc_func(klass, c_#{@class_name}_struct_alloc);
   return klass;
 }
