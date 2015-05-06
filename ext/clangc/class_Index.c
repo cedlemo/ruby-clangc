@@ -52,8 +52,26 @@ c_Index_get_global_options(VALUE self) {
 
   return UINT2NUM(clang_CXIndex_getGlobalOptions(i->data));
 }
+static VALUE
+c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
+  VALUE tu;
+  Check_Type(source_file, T_STRING); //Manage nil and String value
+  Check_Type(args, T_ARRAY);
+  int len = RARRAY_LEN(args);
+  char *c_args[len];
+  int i = 0;
+  for (i=0; i< len; i++) {
+    VALUE arg = rb_ary_entry(args, i);
+    args[i] = stringValueCStr(arg);
+  }
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  
+  clang_createTranslationUnitFromSourceFile(i->data, "IndexTest.c", 2, args, 0, 0); // TODO manage unsaved files
+  return tu;
+}
 VALUE
-generate_Index_under(VALUE module, VALUE superclass){
+generate_Index_under(VALUE module, VALUE superclass) {
   VALUE klass = rb_define_class_under(module, "Index", superclass);
   rb_define_alloc_func(klass, c_Index_struct_alloc);
   rb_define_private_method(klass, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);
