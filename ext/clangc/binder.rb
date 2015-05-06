@@ -42,21 +42,22 @@ module Binder
     def generate_class_structure
 %Q{#ifndef #{@class_name.upcase}_H
 #define #{@class_name.upcase}_H
-  #include <ruby/ruby.h>
-  typedef #{@class_name}_t {
+#include <ruby/ruby.h>
+typedef #{@class_name}_t {
     #{@data_type} data; 
 } #{@class_name}_t;
 }
     end
     def generate_main_function_header
 %Q{
-  VALUE generate_#{@class_name}_under(VALUE, VALUE);
+VALUE
+generate_#{@class_name}_under(VALUE, VALUE);
 #endif //#{@class_name.upcase}_H
 }
     end
     def generate_free_callback
 %Q{/*#{@class_name} ruby class*/
-#include "#{@class_name}.h"
+#include "class_#{@class_name}.h"
 static void
 c_#{@class_name}_struct_free(#{@class_name}_t *s)
 {

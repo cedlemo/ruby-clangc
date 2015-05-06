@@ -1,5 +1,5 @@
 /*TranslationUnit ruby class*/
-#include "TranslationUnit.h"
+#include "class_TranslationUnit.h"
 static void
 c_TranslationUnit_struct_free(TranslationUnit_t *s)
 {
