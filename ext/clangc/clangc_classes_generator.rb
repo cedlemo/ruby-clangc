@@ -11,7 +11,7 @@ require "./binder"
 #index_class.superclass_name("rb_cObject")
 #index_class.generate_files
 
-tu_class = Binder::Ruby_C_Class_Generator.new("TranslationUnit", "CXTranslationUnit")
+tu_class = Binder::Ruby_C_Class_Generator.new("TranslationUnit", "CXTranslationUnit", true)
 tu_class.free_instructions = %q{
   if(s->data)
     clang_disposeTranslationUnit(s->data); 

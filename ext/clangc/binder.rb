@@ -23,10 +23,11 @@ module Binder
 
   class Ruby_C_Class_Generator
     attr_accessor :free_instructions, :args, :init_instructions, :module_name, :superclass_name 
-    def initialize(class_name, data_type)
+    def initialize(class_name, data_type, is_ptr = false)
       @class_name = class_name
       @data_type = data_type
-      
+      @is_ptr = is_ptr
+
       abort "WARNING : Files class_#{class_name}.c/h already exist" if File.file?("class_#{class_name}.c")
 
       @files = OutputFiles.new("class_#{class_name}")
@@ -68,10 +69,11 @@ c_#{@class_name}_struct_free(#{@class_name}_t *s)
 }
     end
     def generate_basic_allocator
-      if @data_type =~ /\*/
+      if @data_type =~ /\*/ || @is_ptr
         set_ptr_null = %Q{
     #{@class_name}_t * ptr;
     ptr = (#{@class_name}_t *) ruby_xmalloc(sizeof(#{@class_name}_t)); 
+    ptr->data = NULL;
 }
         void_ptr = "(void *) ptr"
       else
