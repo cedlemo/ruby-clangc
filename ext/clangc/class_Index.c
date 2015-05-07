@@ -56,7 +56,7 @@ static VALUE
 c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   VALUE tu;
   char *c_source_file;
-  if(Type(source_file == T_STRING))
+  if(TYPE(source_file == T_STRING))
     c_source_file = StringValueCStr(source_file);
   else
     c_source_file = NULL;
@@ -64,20 +64,27 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   Check_Type(args, T_ARRAY);
   int len = RARRAY_LEN(args);
   const char * c_args[len];
+
+  if(len > 0)
+  {
+    
   int j = 0;
   for (j=0; j< len; j++) {
     VALUE arg = rb_ary_entry(args, j);
     c_args[j] = StringValueCStr(arg);
   }
+  }
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
   TranslationUnit_t *c_tu;
   VALUE mClangc = rb_const_get(rb_cObject, rb_intern("Clangc"));
-  tu = rb_const_get(mClangc, rb_intern("TranslationUnit")); 
+  VALUE cTu = rb_const_get(mClangc, rb_intern("TranslationUnit")); 
+  //VALUE argv[0];
+  tu = rb_class_new_instance(0, NULL, cTu);
   Data_Get_Struct(tu, TranslationUnit_t, c_tu);
   c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
-                                                          "IndexTest.c",
-                                                          2, c_args, 0, 0); // TODO manage unsaved files
+                                                          c_source_file,
+                                                          len, c_args, 0, 0); // TODO manage unsaved files
   return tu;
 }
 VALUE
