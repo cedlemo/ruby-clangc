@@ -9,7 +9,12 @@ class TestTranslationUnitCreation < MiniTest::Test
     @ast_file = "#{File.basename(__FILE__)}/source1.ast"
   end
   def test_create_TU_from_source_file
-
+    tu = @cindex.create_translation_unit_from_source_file(@source_file,[""])
+    assert_equal Clangc::TranslationUnit, tu.class 
+  end
+  def test_create_TU_from_source_file_empty_cmdline
+    tu = @cindex.create_translation_unit_from_source_file(@source_file,[])
+    assert_equal Clangc::TranslationUnit, tu.class 
   end
   def test_create_TU_from_source_file_in_cmdline
 
