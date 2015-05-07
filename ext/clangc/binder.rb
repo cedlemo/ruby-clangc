@@ -43,7 +43,7 @@ module Binder
 %Q{#ifndef #{@class_name.upcase}_H
 #define #{@class_name.upcase}_H
 #include <ruby/ruby.h>
-typedef #{@class_name}_t {
+typedef struct #{@class_name}_t {
     #{@data_type} data; 
 } #{@class_name}_t;
 }

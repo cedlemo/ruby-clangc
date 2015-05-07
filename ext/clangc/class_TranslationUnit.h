@@ -1,7 +1,7 @@
 #ifndef TRANSLATIONUNIT_H
 #define TRANSLATIONUNIT_H
 #include <ruby/ruby.h>
-typedef TranslationUnit_t {
+typedef struct TranslationUnit_t {
     CXTranslationUnit data; 
 } TranslationUnit_t;
 
