@@ -2,6 +2,7 @@
 #include "clang-c/Index.h"
 #include "class_Index.h"
 #include "stdio.h"
+#include "macros.h"
 
 static void
 c_Index_struct_free(Index_t *s)
@@ -29,9 +30,11 @@ static VALUE
 c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  uint e= (excl_decls_from_PCH == Qtrue) ? 1 : 0;
-  uint d= (display_diagnostics == Qtrue) ? 1 : 0;
-
+//  uint e= (excl_decls_from_PCH == Qtrue) ? 1 : 0;
+//  uint d= (display_diagnostics == Qtrue) ? 1 : 0;
+  uint e,d;
+  RBOOL_2_INT(excl_decls_from_PCH, e);
+  RBOOL_2_INT(display_diagnostics, d);  
   i->data = clang_createIndex( e, d);
   return self;
 }
@@ -39,10 +42,13 @@ static VALUE
 c_Index_set_global_options(VALUE self, VALUE options) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  if (TYPE(options) == T_FIXNUM || TYPE(options) == T_BIGNUM)
-    clang_CXIndex_setGlobalOptions(i->data,NUM2UINT(options));
-  else
-    rb_raise(rb_eTypeError, "invalid type for input");
+  uint c_options;
+  RNUM_2_UINT(options, c_options);
+//  if (TYPE(options) == T_FIXNUM || TYPE(options) == T_BIGNUM)
+//    clang_CXIndex_setGlobalOptions(i->data,NUM2UINT(options));
+//  else
+//    rb_raise(rb_eTypeError, "invalid type for input");
+    clang_CXIndex_setGlobalOptions(i->data,c_options);
   return Qnil;
 }
 static VALUE
@@ -54,34 +60,18 @@ c_Index_get_global_options(VALUE self) {
 }
 static VALUE
 c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
-  VALUE tu;
   char *c_source_file;
   if(TYPE(source_file == T_STRING))
     c_source_file = StringValueCStr(source_file);
   else
     c_source_file = NULL;
-  
-  Check_Type(args, T_ARRAY);
-  int len = RARRAY_LEN(args);
-  const char * c_args[len];
 
-  if(len > 0)
-  {
-    
-  int j = 0;
-  for (j=0; j< len; j++) {
-    VALUE arg = rb_ary_entry(args, j);
-    c_args[j] = StringValueCStr(arg);
-  }
-  }
+  RARRAY_OF_STRINGS_2_C(args);
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
   TranslationUnit_t *c_tu;
-  VALUE mClangc = rb_const_get(rb_cObject, rb_intern("Clangc"));
-  VALUE cTu = rb_const_get(mClangc, rb_intern("TranslationUnit")); 
-  //VALUE argv[0];
-  tu = rb_class_new_instance(0, NULL, cTu);
-  Data_Get_Struct(tu, TranslationUnit_t, c_tu);
+  R_GET_CLASS_DATA("Clangc", "TranslationUnit", tu, TranslationUnit_t, c_tu);
   c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
                                                           c_source_file,
                                                           len, c_args, 0, 0); // TODO manage unsaved files
