@@ -55,19 +55,29 @@ c_Index_get_global_options(VALUE self) {
 static VALUE
 c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   VALUE tu;
-  Check_Type(source_file, T_STRING); //Manage nil and String value
+  char *c_source_file;
+  if(Type(source_file == T_STRING))
+    c_source_file = StringValueCStr(source_file);
+  else
+    c_source_file = NULL;
+  
   Check_Type(args, T_ARRAY);
   int len = RARRAY_LEN(args);
-  char *c_args[len];
-  int i = 0;
-  for (i=0; i< len; i++) {
-    VALUE arg = rb_ary_entry(args, i);
-    args[i] = stringValueCStr(arg);
+  const char * c_args[len];
+  int j = 0;
+  for (j=0; j< len; j++) {
+    VALUE arg = rb_ary_entry(args, j);
+    c_args[j] = StringValueCStr(arg);
   }
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  
-  clang_createTranslationUnitFromSourceFile(i->data, "IndexTest.c", 2, args, 0, 0); // TODO manage unsaved files
+  TranslationUnit_t *c_tu;
+  VALUE mClangc = rb_const_get(rb_cObject, rb_intern("Clangc"));
+  tu = rb_const_get(mClangc, rb_intern("TranslationUnit")); 
+  Data_Get_Struct(tu, TranslationUnit_t, c_tu);
+  c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
+                                                          "IndexTest.c",
+                                                          2, c_args, 0, 0); // TODO manage unsaved files
   return tu;
 }
 VALUE
@@ -77,6 +87,7 @@ generate_Index_under(VALUE module, VALUE superclass) {
   rb_define_private_method(klass, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);
   rb_define_method(klass, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);
   rb_define_method(klass, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);
+  rb_define_method(klass, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
   return klass;
 }
 
