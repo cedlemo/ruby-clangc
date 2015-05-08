@@ -69,7 +69,54 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
                                                           c_source_file,
                                                           len, c_args, 0, 0); // TODO manage unsaved files
-  return tu;
+  if(c_tu->data != NULL)
+    return tu;
+  else
+    return Qnil;
+}
+static VALUE
+c_Index_create_TU(VALUE self, VALUE ast_file) {
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA("Clangc", "TranslationUnit", tu, TranslationUnit_t, c_tu);
+  char *c_ast_file;
+//  if(TYPE(source_file == T_STRING))
+  c_ast_file = StringValueCStr(ast_file);
+  c_tu->data = clang_createTranslationUnit( i->data, c_ast_file);
+  if(c_tu->data)
+    return tu;
+  else
+    return Qnil;
+}
+static VALUE
+c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
+  char *c_source_file;
+  if(TYPE(source_file == T_STRING))
+    c_source_file = StringValueCStr(source_file);
+  else
+    c_source_file = NULL;
+  
+  uint c_options;
+  RNUM_2_UINT(options, c_options);
+
+  RARRAY_OF_STRINGS_2_C(args);
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA("Clangc", "TranslationUnit", tu, TranslationUnit_t, c_tu);
+
+  c_tu->data = clang_parseTranslationUnit( i->data,
+                                                          c_source_file,
+                                                          c_args, len, 
+                                                          0, 0, c_options); // TODO manage unsaved files
+  
+  if (c_tu->data)
+    return tu;
+  else
+    return Qnil;
 }
 VALUE
 generate_Index_under(VALUE module, VALUE superclass) {
@@ -79,5 +126,7 @@ generate_Index_under(VALUE module, VALUE superclass) {
   rb_define_method(klass, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);
   rb_define_method(klass, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);
   rb_define_method(klass, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
+  rb_define_method(klass, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);
+  rb_define_method(klass, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);
   return klass;
 }
