@@ -30,8 +30,6 @@ static VALUE
 c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-//  uint e= (excl_decls_from_PCH == Qtrue) ? 1 : 0;
-//  uint d= (display_diagnostics == Qtrue) ? 1 : 0;
   uint e,d;
   RBOOL_2_INT(excl_decls_from_PCH, e);
   RBOOL_2_INT(display_diagnostics, d);  
@@ -44,11 +42,7 @@ c_Index_set_global_options(VALUE self, VALUE options) {
   Data_Get_Struct(self, Index_t, i);
   uint c_options;
   RNUM_2_UINT(options, c_options);
-//  if (TYPE(options) == T_FIXNUM || TYPE(options) == T_BIGNUM)
-//    clang_CXIndex_setGlobalOptions(i->data,NUM2UINT(options));
-//  else
-//    rb_raise(rb_eTypeError, "invalid type for input");
-    clang_CXIndex_setGlobalOptions(i->data,c_options);
+  clang_CXIndex_setGlobalOptions(i->data,c_options);
   return Qnil;
 }
 static VALUE
@@ -87,4 +81,3 @@ generate_Index_under(VALUE module, VALUE superclass) {
   rb_define_method(klass, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
   return klass;
 }
-
