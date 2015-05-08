@@ -1,3 +1,9 @@
+#ruby-clangc
+
+ruby bindings to the clang C interface
+
+Just a hobby project for now.
+
 #Installation:
 
     gem build
