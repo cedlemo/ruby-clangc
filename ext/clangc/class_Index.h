@@ -23,5 +23,24 @@ typedef struct Index_t {
     CXIndex data; 
 } Index_t;
 
-  VALUE generate_Index_under(VALUE, VALUE);
+VALUE
+c_Index_struct_alloc(VALUE);
+
+VALUE
+c_Index_initialize(VALUE, VALUE, VALUE);
+
+VALUE
+c_Index_set_global_options(VALUE, VALUE);
+
+VALUE
+c_Index_get_global_options(VALUE);
+
+VALUE
+c_Index_create_TU_from_source_file(VALUE, VALUE, VALUE);
+
+VALUE
+c_Index_create_TU(VALUE, VALUE);
+
+VALUE
+c_Index_parse_TU(VALUE, VALUE, VALUE, VALUE);
 #endif //INDEX_H

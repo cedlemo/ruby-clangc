@@ -34,8 +34,8 @@ c_Index_struct_free(Index_t *s)
     ruby_xfree(s);
    }
 }  
-static VALUE
-c_Index_struct_alloc( VALUE klass)
+VALUE
+c_Index_struct_alloc(VALUE klass)
 {
   Index_t *i;
   i = (Index_t *) ruby_xmalloc(sizeof(Index_t));
@@ -43,7 +43,7 @@ c_Index_struct_alloc( VALUE klass)
   return Data_Wrap_Struct(klass, NULL, c_Index_struct_free,(void *) i );
 }
 
-static VALUE
+VALUE
 c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
@@ -53,7 +53,7 @@ c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnost
   i->data = clang_createIndex( e, d);
   return self;
 }
-static VALUE
+VALUE
 c_Index_set_global_options(VALUE self, VALUE options) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
@@ -62,14 +62,14 @@ c_Index_set_global_options(VALUE self, VALUE options) {
   clang_CXIndex_setGlobalOptions(i->data,c_options);
   return Qnil;
 }
-static VALUE
+VALUE
 c_Index_get_global_options(VALUE self) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
 
   return UINT2NUM(clang_CXIndex_getGlobalOptions(i->data));
 }
-static VALUE
+VALUE
 c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   char *c_source_file;
   if(TYPE(source_file == T_STRING))
@@ -91,7 +91,7 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   else
     return Qnil;
 }
-static VALUE
+VALUE
 c_Index_create_TU(VALUE self, VALUE ast_file) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
@@ -107,7 +107,7 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
   else
     return Qnil;
 }
-static VALUE
+VALUE
 c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   char *c_source_file;
   if(TYPE(source_file == T_STRING))
@@ -135,9 +135,14 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   else
     return Qnil;
 }
-VALUE
-generate_Index_under(VALUE module, VALUE superclass) {
-  VALUE klass = rb_define_class_under(module, "Index", superclass);
+
+//VALUE
+//generate_Index_under(VALUE module, VALUE superclass) {
+/*
+ An "index" consists of a set of translation units that would
+ typically be linked together into an executable or library.
+*/
+/*  VALUE klass = rb_define_class_under(module, "Index", superclass);
   rb_define_alloc_func(klass, c_Index_struct_alloc);
   rb_define_private_method(klass, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);
   rb_define_method(klass, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);
@@ -146,4 +151,4 @@ generate_Index_under(VALUE module, VALUE superclass) {
   rb_define_method(klass, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);
   rb_define_method(klass, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);
   return klass;
-}
+}*/
