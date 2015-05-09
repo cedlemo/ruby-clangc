@@ -1,0 +1,10 @@
+= Ruby bindings for libclang 
+
+This module provides bindings for the C interface of Clang.
+http://clang.llvm.org/
+
+The libclang data are mapped to the following:
+
+[CXIndex]             Clangc::Index
+[CXTranslationUnit]   Clangc::TranslationUnit
+
