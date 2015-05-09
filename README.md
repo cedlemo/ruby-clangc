@@ -3,6 +3,7 @@
 ruby bindings to the clang C interface
 
 Just a hobby project for now.
+This is free software shared under the GNU GPL 3.
 
 #Installation:
 

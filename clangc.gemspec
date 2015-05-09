@@ -11,5 +11,5 @@ Gem::Specification.new do |s|
   s.extensions = %w(ext/clangc/extconf.rb)
   s.add_development_dependency 'rake-compiler', '~> 0' 
   s.homepage    =     'https://github.com/cedlemo/ruby-clangc'
-  s.license       = 'MIT'
+  s.license       = 'GNU GPL 3'
 end

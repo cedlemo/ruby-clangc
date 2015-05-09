@@ -6,12 +6,32 @@ module Binder
   C_CURLY_BRACKET = "}"
   COMMA = ","
   SEMI_COLON = ";"
-  
+
+LICENCE=%q(
+/*
+ * ruby-clangc ruby bindings for the C interface of Clang
+ * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/)  
   class OutputFiles
     attr_reader :_c, :_h
     def initialize(name)
       @_c = File.new((name||'wrapper') + '.c', 'w')
       @_h = File.new((name||'wrapper') + '.h', 'w')
+      @_c.puts LICENCE
+      @_h.puts LICENCE
       @_c.sync= true
       @_c.sync= true
     end
