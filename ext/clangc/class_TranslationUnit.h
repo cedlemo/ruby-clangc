@@ -23,5 +23,5 @@ typedef struct TranslationUnit_t {
 } TranslationUnit_t;
 
 VALUE
-generate_TranslationUnit_under(VALUE, VALUE);
+c_TranslationUnit_struct_alloc(VALUE);
 #endif //TRANSLATIONUNIT_H

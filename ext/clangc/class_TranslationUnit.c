@@ -31,7 +31,7 @@ c_TranslationUnit_struct_free(TranslationUnit_t *s)
     ruby_xfree(s);
   }
 }  
-static VALUE
+VALUE
 c_TranslationUnit_struct_alloc( VALUE klass)
 {
   
@@ -46,11 +46,3 @@ c_TranslationUnit_struct_alloc( VALUE klass)
 c_TranslationUnit_initialize(VALUE self) {
   
 }*/
-VALUE
-generate_TranslationUnit_under(VALUE module, VALUE superclass)
-{
-  VALUE klass = rb_define_class_under(module, "TranslationUnit", superclass);
-  rb_define_alloc_func(klass, c_TranslationUnit_struct_alloc);
-  return klass;
-}
-

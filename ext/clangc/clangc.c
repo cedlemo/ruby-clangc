@@ -35,6 +35,6 @@ void Init_clangc(void) {
   rb_define_method(c_Index, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
   rb_define_method(c_Index, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);
   rb_define_method(c_Index, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);
-  //generate_Index_under(m_clangc, rb_cObject);   
-  generate_TranslationUnit_under(m_Clangc, rb_cObject);   
+  VALUE c_TranslationUnit = rb_define_class_under(m_Clangc, "TranslationUnit", rb_cObject);
+  rb_define_alloc_func(c_TranslationUnit, c_TranslationUnit_struct_alloc);
 }
