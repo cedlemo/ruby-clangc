@@ -23,18 +23,27 @@
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
   init_clang_enums_to_constants(m_Clangc);
+
 /*
- An "index" consists of a set of translation units that would
- typically be linked together into an executable or library.
+* An "index" consists of a set of translation units that would
+* typically be linked together into an executable or library.
 */
   VALUE c_Index = rb_define_class_under(m_Clangc, "Index", rb_cObject);
   rb_define_alloc_func(c_Index, c_Index_struct_alloc);
+  /*
+  * call-seq:
+  *   Clangc::Index.new(exclude_decl_from_pch, display_diagnostic) => Clangc::Index
+  */
   rb_define_private_method(c_Index, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);
   rb_define_method(c_Index, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);
   rb_define_method(c_Index, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);
   rb_define_method(c_Index, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
   rb_define_method(c_Index, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);
   rb_define_method(c_Index, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);
+
+/*
+* A single TranslationUnit which resides in an Index
+*/
   VALUE c_TranslationUnit = rb_define_class_under(m_Clangc, "TranslationUnit", rb_cObject);
   rb_define_alloc_func(c_TranslationUnit, c_TranslationUnit_struct_alloc);
 }
