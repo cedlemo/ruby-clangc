@@ -30,16 +30,12 @@ void Init_clangc(void) {
 */
   VALUE c_Index = rb_define_class_under(m_Clangc, "Index", rb_cObject);
   rb_define_alloc_func(c_Index, c_Index_struct_alloc);
-  /*
-  * call-seq:
-  *   Clangc::Index.new(exclude_decl_from_pch, display_diagnostic) => Clangc::Index
-  */
-  rb_define_private_method(c_Index, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);
-  rb_define_method(c_Index, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);
-  rb_define_method(c_Index, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);
-  rb_define_method(c_Index, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
-  rb_define_method(c_Index, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);
-  rb_define_method(c_Index, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);
+  rb_define_private_method(c_Index, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);// in class_Index.c
+  rb_define_method(c_Index, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);// in class_Index.c
+  rb_define_method(c_Index, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);// in class_Index.c
+  rb_define_method(c_Index, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);// in class_Index.c
+  rb_define_method(c_Index, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);// in class_Index.c
+  rb_define_method(c_Index, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);// in class_Index.c
 
 /*
 * A single TranslationUnit which resides in an Index

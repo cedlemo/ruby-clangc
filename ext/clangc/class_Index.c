@@ -43,6 +43,28 @@ c_Index_struct_alloc(VALUE klass)
   return Data_Wrap_Struct(klass, NULL, c_Index_struct_free,(void *) i );
 }
 
+/*
+* call-seq:
+*   Clangc::Index.new(exclude_decl_from_pch, display_diagnostics) => Clangc::Index
+*
+* Provides a shared context for creating translation units.
+*
+* It provides two options:
+*
+* - excludeDeclarationsFromPCH:
+* When true, allows enumeration of "local"
+* declarations (when loading any new translation units). A "local" declaration
+* is one that belongs in the translation unit itself and not in a precompiled
+* header that was used by the translation unit. If false, all declarations
+* will be enumerated.
+* The process of creating the 'pch', loading it separately, and using it (via
+* -include-pch) allows 'excludeDeclsFromPCH' to remove redundant callbacks
+* (which gives the indexer the same performance benefit as the compiler).
+*
+* - displayDiagnostics:
+* When true, default diagnostics are displayed, when false, it is up to the user
+* to display them.
+*/
 VALUE
 c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
   Index_t *i;
@@ -53,6 +75,14 @@ c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnost
   i->data = clang_createIndex( e, d);
   return self;
 }
+/*
+* call-seq:
+*   Clangc::Index#global_options=(options) => nil
+*
+* Sets general options associated with an Index instance.
+* - options:
+* A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.
+*/
 VALUE
 c_Index_set_global_options(VALUE self, VALUE options) {
   Index_t *i;
@@ -62,6 +92,13 @@ c_Index_set_global_options(VALUE self, VALUE options) {
   clang_CXIndex_setGlobalOptions(i->data,c_options);
   return Qnil;
 }
+/*
+* call-seq:
+*   Clangc::Index#global_options() => num 
+*
+* Gets the general options associated with an Index.
+* A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.
+*/
 VALUE
 c_Index_get_global_options(VALUE self) {
   Index_t *i;
@@ -69,6 +106,37 @@ c_Index_get_global_options(VALUE self) {
 
   return UINT2NUM(clang_CXIndex_getGlobalOptions(i->data));
 }
+/*
+* call-seq:
+*   Clangc::Index#create_translation_unit_from_source_file(source, args) => Clangc::TranslationUnit
+*
+* Return a TranslationUnit instance for a given source file and the provided
+* command line arguments one would pass to the compiler.
+*
+* - source:
+* The source filename argument must be a string but is optional.  If the caller
+* provides a nil value, the name of the source file is expected to reside in the
+* specified command line arguments.
+* - args:
+* Must be an array of strings or empty.
+* The command-line arguments that would be passed to the clang executable if it
+* were being invoked out-of-process.
+* These command-line options will be parsed and will affect how the translation
+* unit is parsed. Note that the following options are ignored: '-c',
+* '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
+* 
+* TODO : (not implemented yet)
+* - num_unsaved_files
+* the number of unsaved file entries in unsaved_files.
+*
+* - unsaved_files 
+* the files that have not yet been saved to disk but may be required
+* for code completion, including the contents of those files.  The contents and name
+* of these files (as specified by CXUnsavedFile) are copied when necessary, so the 
+* client only needs to guarantee their validity until the call to this function 
+* returns.
+*/
+
 VALUE
 c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   char *c_source_file;
