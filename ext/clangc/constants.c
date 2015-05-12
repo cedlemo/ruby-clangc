@@ -50,15 +50,93 @@ rb_define_const(m_DiagnosticDisplayOptions,"Displayoption", INT2NUM(8));
 rb_define_const(m_DiagnosticDisplayOptions,"Displaycategoryid", INT2NUM(16));
 rb_define_const(m_DiagnosticDisplayOptions,"Displaycategoryname", INT2NUM(32));
 
+/*
+* Flags that control the creation of translation units.
+*
+* The enumerators in this enumeration type are meant to be bitwise
+* ORed together to specify which options should be used when
+* constructing the translation unit.
+*/
 VALUE m_TranslationUnit_Flags = rb_define_module_under(m_clang,"TranslationUnit_Flags");
+/*
+* Used to indicate that no special translation-unit options are needed.
+*/
 rb_define_const(m_TranslationUnit_Flags,"None", INT2NUM(0));
+/*
+* Used to indicate that the parser should construct a "detailed"
+* preprocessing record, including all macro definitions and instantiations.
+*
+* Constructing a detailed preprocessing record requires more memory
+* and time to parse, since the information contained in the record
+* is usually not retained. However, it can be useful for
+* applications that require more detailed information about the
+* behavior of the preprocessor.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Detailedpreprocessingrecord", INT2NUM(1));
+/*
+* Used to indicate that the translation unit is incomplete.
+*
+* When a translation unit is considered "incomplete", semantic
+* analysis that is typically performed at the end of the
+* translation unit will be suppressed. For example, this suppresses
+* the completion of tentative declarations in C and of
+* instantiation of implicitly-instantiation function templates in
+* C++. This option is typically used when parsing a header with the
+* intent of producing a precompiled header.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Incomplete", INT2NUM(2));
+/*
+* Used to indicate that the translation unit should be built with an 
+* implicit precompiled header for the preamble.
+*
+* An implicit precompiled header is used as an optimization when a
+* particular translation unit is likely to be reparsed many times
+* when the sources aren't changing that often. In this case, an
+* implicit precompiled header will be built containing all of the
+* initial includes at the top of the main file (what we refer to as
+* the "preamble" of the file). In subsequent parses, if the
+* preamble or the files in it have not changed, \c
+* clang_reparseTranslationUnit() will re-use the implicit
+* precompiled header to improve parsing performance.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Precompiledpreamble", INT2NUM(4));
+/*
+* Used to indicate that the translation unit should cache some
+* code-completion results with each reparse of the source file.
+*
+* Caching of code-completion results is a performance optimization that
+* introduces some overhead to reparsing but improves the performance of
+* code-completion operations.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Cachecompletionresults", INT2NUM(8));
+/*
+* Used to indicate that the translation unit will be serialized with
+* clang_saveTranslationUnit.
+*
+* This option is typically used when parsing a header with the intent of
+* producing a precompiled header.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Forserialization", INT2NUM(16));
+/*
+* DEPRECATED: Enabled chained precompiled preambles in C++.
+*
+* Note: this is a *temporary* option that is available only while
+* we are testing C++ precompiled preamble support. It is deprecated.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Cxxchainedpch", INT2NUM(32));
+/*
+* Used to indicate that function/method bodies should be skipped while
+* parsing.
+*
+* This option can be used to search for declarations/definitions while
+* ignoring the usages.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Skipfunctionbodies", INT2NUM(64));
+/*
+* Used to indicate that brief documentation comments should be
+* included into the set of code completions returned from this translation
+* unit.
+*/
 rb_define_const(m_TranslationUnit_Flags,"Includebriefcommentsincodecompletion", INT2NUM(128));
 
 VALUE m_SaveTranslationUnit_Flags = rb_define_module_under(m_clang,"SaveTranslationUnit_Flags");

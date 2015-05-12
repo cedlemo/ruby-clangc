@@ -159,6 +159,14 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   else
     return Qnil;
 }
+/*
+* call-seq:
+*   Clangc::Index#create_translation_unit(ast_file) => Clangc::TranslationUnit
+*
+* Create a translation unit from an AST file name. If the creation fail, it returns
+* nil.
+* The AST file is created by clang with the option -emit-ast
+*/
 VALUE
 c_Index_create_TU(VALUE self, VALUE ast_file) {
   Index_t *i;
@@ -175,6 +183,44 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
   else
     return Qnil;
 }
+/*
+* call-seq:
+*   Clangc::Index#parse_translation_unit(source_file, args, options) => Clangc::TranslationUnit
+*
+* Parse the given source file and generate the translation unit corresponding
+* to that file.
+*
+* This routine is the main entry point for the Clang C API, providing the
+* ability to parse a source file into a translation unit that can then be
+* queried by other functions in the API. This routine accepts a set of
+* command-line arguments so that the compilation can be configured in the same
+* way that the compiler is configured on the command line.
+*
+* - source_file:
+* The name of the source file to load, or nil if the source file is included in
+* the command line arguments.
+*
+* - args:
+* The command-line arguments that would be passed to the clang executable if it
+* were being invoked out-of-process.
+* These command-line options will be parsed and will affect how the translation
+* unit is parsed. Note that the following options are ignored: '-c', 
+* '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
+*
+* - options:
+*  A bitmask of options that affects how the translation unit is managed but not
+* its compilation. This should be a bitwise OR of the TranslationUnit_Flags constants.
+*
+* TODO:
+* - unsaved_files:
+* The files that have not yet been saved to disk but may be required for parsing,
+* including the contents of those files.  The contents and name of these files
+* (as specified by CXUnsavedFile) are copied when necessary, so the client only
+* needs to guarantee their validity until the call to this function returns.
+*
+* - num_unsaved_files:
+*  the number of unsaved file entries in unsaved_files.
+*/
 VALUE
 c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   char *c_source_file;
@@ -203,20 +249,3 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   else
     return Qnil;
 }
-
-//VALUE
-//generate_Index_under(VALUE module, VALUE superclass) {
-/*
- An "index" consists of a set of translation units that would
- typically be linked together into an executable or library.
-*/
-/*  VALUE klass = rb_define_class_under(module, "Index", superclass);
-  rb_define_alloc_func(klass, c_Index_struct_alloc);
-  rb_define_private_method(klass, "initialize", RUBY_METHOD_FUNC(c_Index_initialize), 2);
-  rb_define_method(klass, "global_options=", RUBY_METHOD_FUNC(c_Index_set_global_options), 1);
-  rb_define_method(klass, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);
-  rb_define_method(klass, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);
-  rb_define_method(klass, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);
-  rb_define_method(klass, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);
-  return klass;
-}*/
