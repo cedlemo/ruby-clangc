@@ -191,18 +191,22 @@ c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnost
     
       <div id="method-i-create_translation_unit" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">create_translation_unit</span><span
-            class="method-args">(p1)</span>
+          <span class="method-callseq">
+            Clangc::Index#create_translation_unit(ast_file) &rarr; Clangc::TranslationUnit
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>Create a translation unit from an AST file name. If the creation fail, it
+returns nil. The AST file is created by clang with the option -emit-ast</p>
           
           
 
@@ -412,18 +416,68 @@ c_Index_set_global_options(VALUE self, VALUE options) {
     
       <div id="method-i-parse_translation_unit" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">parse_translation_unit</span><span
-            class="method-args">(p1, p2, p3)</span>
+          <span class="method-callseq">
+            Clangc::Index#parse_translation_unit(source_file, args, options) &rarr; Clangc::TranslationUnit
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>Parse the given source file and generate the translation unit corresponding
+to that file.</p>
+
+<p>This routine is the main entry point for the Clang C API, providing the
+ability to parse a source file into a translation unit that can then be
+queried by other functions in the API. This routine accepts a set of
+command-line arguments so that the compilation can be configured in the
+same way that the compiler is configured on the command line.</p>
+<ul><li>
+<p>source_file:</p>
+</li></ul>
+
+<p>The name of the source file to load, or nil if the source file is included
+in the command line arguments.</p>
+<ul><li>
+<p>args:</p>
+</li></ul>
+
+<p>The command-line arguments that would be passed to the clang executable if
+it were being invoked out-of-process. These command-line options will be
+parsed and will affect how the translation unit is parsed. Note that the
+following options are ignored: &#39;-c&#39;,  &#39;-emit-ast&#39;,
+&#39;-fsyntax-only&#39; (which is the default), and &#39;-o &lt;output
+file&gt;&#39;.</p>
+<ul><li>
+<p>options:</p>
+</li></ul>
+
+<pre>A bitmask of options that affects how the translation unit is managed but not</pre>
+
+<p>its compilation. This should be a bitwise OR of the TranslationUnit_Flags
+constants.</p>
+
+<p>TODO:</p>
+<ul><li>
+<p>unsaved_files:</p>
+</li></ul>
+
+<p>The files that have not yet been saved to disk but may be required for
+parsing, including the contents of those files.  The contents and name of
+these files (as specified by CXUnsavedFile) are copied when necessary, so
+the client only needs to guarantee their validity until the call to this
+function returns.</p>
+<ul><li>
+<p>num_unsaved_files:</p>
+</li></ul>
+
+<pre>the number of unsaved file entries in unsaved_files.</pre>
           
           
 
