@@ -40,10 +40,16 @@ class TestTranslationUnitCreation < MiniTest::Test
   def test_fail_create_TU
     tu = @cindex.create_translation_unit(@bad_file)
     assert_nil tu 
-  end  # return an error code if the Translation Unit creation fail
+  end
+  # return an error code if the Translation Unit creation fail
   def test_create_TU2
     tu = @cindex.create_translation_unit2(@ast_file)
     assert_instance_of Clangc::TranslationUnit, tu 
+  end
+  def test_fail_create_TU2
+    tu = @cindex.create_translation_unit2(@bad_file)
+    assert_equal Integer, tu.class.superclass
+    assert_equal Clangc::ErrorCode::Failure, tu
   end
   def test_parse_TU
     options = Clangc::TranslationUnit_Flags::None
@@ -57,6 +63,5 @@ class TestTranslationUnitCreation < MiniTest::Test
   end
   # return an error code if the Translation Unit creation fail
   def test_parse_TU2
-
   end
 end
