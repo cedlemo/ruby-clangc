@@ -63,5 +63,9 @@ VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
   instance = rb_class_new_instance(args_len, args, cKlass);\
   Data_Get_Struct(tu, data_type, data_ptr);
 
+/************************/
+/*C values to Ruby value*/
+/************************/
+#define CUINT_2_NUM(c_val) UINT2NUM(c_val)
 
 #endif //MACROS_H
