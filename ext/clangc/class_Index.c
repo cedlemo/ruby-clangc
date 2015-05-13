@@ -314,7 +314,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
 *  the number of unsaved file entries in unsaved_files.
 */
 VALUE
-c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
+c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   char *c_source_file;
   if(TYPE(source_file == T_STRING))
     c_source_file = StringValueCStr(source_file);
