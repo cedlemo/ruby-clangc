@@ -274,3 +274,70 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   else
     return Qnil;
 }
+/*
+* call-seq:
+*   Clangc::Index#parse_translation_unit2(source_file, args, options) => Clangc::TranslationUnit
+*
+* Parse the given source file and generate the translation unit corresponding
+* to that file. If its fails, it returns an Integer corresponding to the 
+* error code a Clangc::ErrorCode constant.
+*
+* This routine is the main entry point for the Clang C API, providing the
+* ability to parse a source file into a translation unit that can then be
+* queried by other functions in the API. This routine accepts a set of
+* command-line arguments so that the compilation can be configured in the same
+* way that the compiler is configured on the command line.
+*
+* - source_file:
+* The name of the source file to load, or nil if the source file is included in
+* the command line arguments.
+*
+* - args:
+* The command-line arguments that would be passed to the clang executable if it
+* were being invoked out-of-process.
+* These command-line options will be parsed and will affect how the translation
+* unit is parsed. Note that the following options are ignored: '-c', 
+* '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
+*
+* - options:
+*  A bitmask of options that affects how the translation unit is managed but not
+* its compilation. This should be a bitwise OR of the TranslationUnit_Flags constants.
+*
+* TODO:
+* - unsaved_files:
+* The files that have not yet been saved to disk but may be required for parsing,
+* including the contents of those files.  The contents and name of these files
+* (as specified by CXUnsavedFile) are copied when necessary, so the client only
+* needs to guarantee their validity until the call to this function returns.
+*
+* - num_unsaved_files:
+*  the number of unsaved file entries in unsaved_files.
+*/
+VALUE
+c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
+  char *c_source_file;
+  if(TYPE(source_file == T_STRING))
+    c_source_file = StringValueCStr(source_file);
+  else
+    c_source_file = NULL;
+  
+  uint c_options;
+  RNUM_2_UINT(options, c_options);
+
+  RARRAY_OF_STRINGS_2_C(args);
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA("Clangc", "TranslationUnit", tu, TranslationUnit_t, c_tu);
+
+  uint er = clang_parseTranslationUnit2(i->data,
+                                        c_source_file,
+                                        c_args, len, 
+                                        0, 0, c_options, // TODO manage unsaved files
+                                        &(c_tu->data)); 
+  if(er != 0)
+    return CUINT_2_NUM(er);
+  else
+    return tu;
+}
