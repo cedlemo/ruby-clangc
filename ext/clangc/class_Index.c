@@ -185,6 +185,31 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
 }
 /*
 * call-seq:
+*   Clangc::Index#create_translation_unit2(ast_file) => Clangc::TranslationUnit or an error code
+*
+* Create a translation unit from an AST file name. If the creation fail, it returns
+* an error code Clangc::ErrorCode. With this implementation, Clangc::ErrorCode::Success is not
+* used.
+* The AST file is created by clang with the option -emit-ast
+*/
+VALUE
+c_Index_create_TU2(VALUE self, VALUE ast_file) {
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA("Clangc", "TranslationUnit", tu, TranslationUnit_t, c_tu);
+  char *c_ast_file;
+//  if(TYPE(source_file == T_STRING))
+  c_ast_file = StringValueCStr(ast_file);
+  uint er = clang_createTranslationUnit( i->data, c_ast_file, c_tu->data);
+  if(er != 0)
+    return CUINT_2_NUM(er)
+  else
+    return tu;
+}
+/*
+* call-seq:
 *   Clangc::Index#parse_translation_unit(source_file, args, options) => Clangc::TranslationUnit
 *
 * Parse the given source file and generate the translation unit corresponding

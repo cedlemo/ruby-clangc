@@ -42,5 +42,8 @@ VALUE
 c_Index_create_TU(VALUE, VALUE);
 
 VALUE
+c_Index_create_TU2(VALUE, VALUE);
+
+VALUE
 c_Index_parse_TU(VALUE, VALUE, VALUE, VALUE);
 #endif //INDEX_H
