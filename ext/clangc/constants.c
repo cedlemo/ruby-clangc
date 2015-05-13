@@ -662,4 +662,12 @@ rb_define_const(m_IndexOptFlags,"Indeximplicittemplateinstantiations", INT2NUM(4
 rb_define_const(m_IndexOptFlags,"Suppresswarnings", INT2NUM(8));
 rb_define_const(m_IndexOptFlags,"Skipparsedbodiesinsession", INT2NUM(16));
 
+//From CXErrorCode.h
+VALUE m_ErrorCode = rb_define_module_under(m_clang,"ErrorCode");
+rb_define_const(m_ErrorCode,"Success", INT2NUM(0));
+rb_define_const(m_ErrorCode,"Failure", INT2NUM(1));
+rb_define_const(m_ErrorCode,"Crashed", INT2NUM(2));
+rb_define_const(m_ErrorCode,"Invalidarguments", INT2NUM(3));
+rb_define_const(m_ErrorCode,"Astreaderror", INT2NUM(4));
+
 }
