@@ -202,9 +202,9 @@ c_Index_create_TU2(VALUE self, VALUE ast_file) {
   char *c_ast_file;
 //  if(TYPE(source_file == T_STRING))
   c_ast_file = StringValueCStr(ast_file);
-  uint er = clang_createTranslationUnit( i->data, c_ast_file, c_tu->data);
+  uint er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
   if(er != 0)
-    return CUINT_2_NUM(er)
+    return CUINT_2_NUM(er);
   else
     return tu;
 }
