@@ -35,6 +35,7 @@ void Init_clangc(void) {
   rb_define_method(c_Index, "global_options", RUBY_METHOD_FUNC(c_Index_get_global_options), 0);// in class_Index.c
   rb_define_method(c_Index, "create_translation_unit_from_source_file", RUBY_METHOD_FUNC(c_Index_create_TU_from_source_file), 2);// in class_Index.c
   rb_define_method(c_Index, "create_translation_unit", RUBY_METHOD_FUNC(c_Index_create_TU), 1);// in class_Index.c
+  rb_define_method(c_Index, "create_translation_unit2", RUBY_METHOD_FUNC(c_Index_create_TU2), 1);// in class_Index.c
   rb_define_method(c_Index, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);// in class_Index.c
 
 /*
