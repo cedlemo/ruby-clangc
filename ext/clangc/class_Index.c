@@ -233,7 +233,7 @@ c_Index_create_TU2(VALUE self, VALUE ast_file) {
 * '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
 *
 * - options:
-*  A bitmask of options that affects how the translation unit is managed but not
+* A bitmask of options that affects how the translation unit is managed but not
 * its compilation. This should be a bitwise OR of the TranslationUnit_Flags constants.
 *
 * TODO:
@@ -244,7 +244,7 @@ c_Index_create_TU2(VALUE self, VALUE ast_file) {
 * needs to guarantee their validity until the call to this function returns.
 *
 * - num_unsaved_files:
-*  the number of unsaved file entries in unsaved_files.
+* The number of unsaved file entries in unsaved_files.
 */
 VALUE
 c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
@@ -300,7 +300,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
 * '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
 *
 * - options:
-*  A bitmask of options that affects how the translation unit is managed but not
+* A bitmask of options that affects how the translation unit is managed but not
 * its compilation. This should be a bitwise OR of the TranslationUnit_Flags constants.
 *
 * TODO:
@@ -311,7 +311,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
 * needs to guarantee their validity until the call to this function returns.
 *
 * - num_unsaved_files:
-*  the number of unsaved file entries in unsaved_files.
+* The number of unsaved file entries in unsaved_files.
 */
 VALUE
 c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
