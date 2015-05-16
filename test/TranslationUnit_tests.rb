@@ -5,7 +5,11 @@ require "clangc"
 class TestTranslationUnitCreation < MiniTest::Test
   def setup
     @cindex = Clangc::Index.new(false, false)
+    # Good C test file
     @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+    # C source code with one error
+    @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+    # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
   end
@@ -73,4 +77,24 @@ class TestTranslationUnitCreation < MiniTest::Test
     assert_equal Integer, tu.class.superclass
     assert_equal Clangc::ErrorCode::Failure, tu
   end
+end
+class TestTranslationUnitCreation < MiniTest::Test
+  def setup
+    @cindex = Clangc::Index.new(false, false)
+    # Good C test file
+    @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+    # C source code with one error
+    @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+    # Inexistant file
+    @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
+    @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
+  end
+  def test_TU_get_num_diagnostic_zero
+    tu = @cindex.create_translation_unit_from_source_file(@source_file,[""])
+    assert_equal 0, tu.diagnostics_num
+  end
+  def test_TU_get_num_diagnostic_one
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[""])
+    assert_equal 0, tu.diagnostics_num
+  end  
 end
