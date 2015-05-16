@@ -77,7 +77,10 @@ generate_#{@class_name}_under(VALUE, VALUE);
     end
     def generate_free_callback
 %Q{/*#{@class_name} ruby class*/
+#include "clang-c/Index.h"
 #include "class_#{@class_name}.h"
+#include "macros.h"
+
 static void
 c_#{@class_name}_struct_free(#{@class_name}_t *s)
 {
