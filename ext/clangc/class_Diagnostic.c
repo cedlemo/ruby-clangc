@@ -33,7 +33,7 @@ c_Diagnostic_struct_free(Diagnostic_t *s)
     ruby_xfree(s);
   }
 }  
-static VALUE
+VALUE
 c_Diagnostic_struct_alloc( VALUE klass)
 {
   
@@ -42,17 +42,5 @@ c_Diagnostic_struct_alloc( VALUE klass)
     ptr->data = NULL;
 
   return Data_Wrap_Struct(klass, NULL, c_Diagnostic_struct_free, (void *) ptr);
-}
-
-static VALUE
-c_Diagnostic_initialize(VALUE self) {
-  
-}
-VALUE
-generate_Diagnostic_under(VALUE module, VALUE superclass)
-{
-  VALUE klass = rb_define_class_under(module, "Diagnostic", superclass);
-  rb_define_alloc_func(klass, c_Diagnostic_struct_alloc);
-  return klass;
 }
 

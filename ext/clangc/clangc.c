@@ -20,6 +20,9 @@
 
 #include "constants.h"
 #include "class_Index.h"
+#include "class_TranslationUnit.h"
+#include "class_Diagnostic.h"
+
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
   init_clang_enums_to_constants(m_Clangc);
@@ -45,4 +48,11 @@ void Init_clangc(void) {
   VALUE c_TranslationUnit = rb_define_class_under(m_Clangc, "TranslationUnit", rb_cObject);
   rb_define_alloc_func(c_TranslationUnit, c_TranslationUnit_struct_alloc);
   rb_define_method(c_TranslationUnit, "diagnostics_num", RUBY_METHOD_FUNC(c_TranslationUnit_get_diagnostics_num), 0);// in class_TranslationUnit.c
+
+/*
+* A diagnostic object, containing the diagnostic's severity,
+* location, text, source ranges, and fix-it hints.
+*/
+  VALUE c_Diagnostic = rb_define_class_under(m_Clangc, "Diagnostic", rb_cObject);
+  rb_define_alloc_func(c_Diagnostic, c_Diagnostic_struct_alloc);
 }

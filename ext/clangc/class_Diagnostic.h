@@ -23,5 +23,5 @@ typedef struct Diagnostic_t {
 } Diagnostic_t;
 
 VALUE
-generate_Diagnostic_under(VALUE, VALUE);
+c_Diagnostic_struc_alloc(VALUE);
 #endif //DIAGNOSTIC_H
