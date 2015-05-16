@@ -44,4 +44,5 @@ void Init_clangc(void) {
 */
   VALUE c_TranslationUnit = rb_define_class_under(m_Clangc, "TranslationUnit", rb_cObject);
   rb_define_alloc_func(c_TranslationUnit, c_TranslationUnit_struct_alloc);
+  rb_define_method(c_TranslationUnit, "diagnostics_num", RUBY_METHOD_FUNC(c_TranslationUnit_get_diagnostics_num), 0);// in class_TranslationUnit.c
 }

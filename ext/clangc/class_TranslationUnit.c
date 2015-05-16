@@ -18,6 +18,7 @@
 /*TranslationUnit ruby class*/
 #include "clang-c/Index.h"
 #include "class_TranslationUnit.h"
+#include "macros.h"
 
 static void
 c_TranslationUnit_struct_free(TranslationUnit_t *s)
@@ -42,7 +43,17 @@ c_TranslationUnit_struct_alloc( VALUE klass)
   return Data_Wrap_Struct(klass, NULL, c_TranslationUnit_struct_free, (void *) ptr);
 }
 
-/*static VALUE
-c_TranslationUnit_initialize(VALUE self) {
-  
-}*/
+/*
+* call-seq:
+*   Clangc::TranslationUnit#diagnostics_num => num
+*
+* Determine the number of diagnostics produced for the given
+* translation unit.
+*/
+VALUE c_TranslationUnit_get_diagnostics_num(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int num = clang_getNumDiagnostics(t->data);
+  return CUINT_2_NUM(num); 
+}

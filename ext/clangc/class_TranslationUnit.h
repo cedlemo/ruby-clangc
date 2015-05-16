@@ -24,4 +24,7 @@ typedef struct TranslationUnit_t {
 
 VALUE
 c_TranslationUnit_struct_alloc(VALUE);
+
+VALUE
+c_TranslationUnit_get_diagnostics_num();
 #endif //TRANSLATIONUNIT_H

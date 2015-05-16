@@ -104,7 +104,7 @@ c_Index_get_global_options(VALUE self) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
 
-  return UINT2NUM(clang_CXIndex_getGlobalOptions(i->data));
+  return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i->data));
 }
 /*
 * call-seq:
