@@ -18,7 +18,7 @@
 #ifndef INDEX_H
 #define INDEX_H
 #include <ruby/ruby.h>
-#include "class_TranslationUnit.h"
+#include "clang-c/Index.h"
 typedef struct Index_t {
     CXIndex data; 
 } Index_t;

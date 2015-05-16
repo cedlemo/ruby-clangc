@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /*Index ruby class*/
-#include "clang-c/Index.h"
 #include "class_Index.h"
+#include "class_TranslationUnit.h"
 #include "stdio.h"
 #include "macros.h"
 

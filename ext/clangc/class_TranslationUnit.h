@@ -18,6 +18,7 @@
 #ifndef TRANSLATIONUNIT_H
 #define TRANSLATIONUNIT_H
 #include <ruby/ruby.h>
+#include "clang-c/Index.h"
 typedef struct TranslationUnit_t {
     CXTranslationUnit data; 
 } TranslationUnit_t;
@@ -26,5 +27,5 @@ VALUE
 c_TranslationUnit_struct_alloc(VALUE);
 
 VALUE
-c_TranslationUnit_get_diagnostics_num();
+c_TranslationUnit_get_diagnostics_num(VALUE);
 #endif //TRANSLATIONUNIT_H

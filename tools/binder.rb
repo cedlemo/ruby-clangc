@@ -63,6 +63,7 @@ LICENCE=%q(
 %Q{#ifndef #{@class_name.upcase}_H
 #define #{@class_name.upcase}_H
 #include <ruby/ruby.h>
+#include "clang-c/Index.h"
 typedef struct #{@class_name}_t {
     #{@data_type} data; 
 } #{@class_name}_t;
@@ -77,7 +78,6 @@ generate_#{@class_name}_under(VALUE, VALUE);
     end
     def generate_free_callback
 %Q{/*#{@class_name} ruby class*/
-#include "clang-c/Index.h"
 #include "class_#{@class_name}.h"
 #include "macros.h"
 
