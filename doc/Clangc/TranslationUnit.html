@@ -64,7 +64,21 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-default_save_options">#default_save_options</a>
+    
+    <li ><a href="#method-i-diagnostics_num">#diagnostics_num</a>
+    
+    <li ><a href="#method-i-spelling">#spelling</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -93,6 +107,143 @@ in an <a href="Index.html">Index</a></p>
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-default_save_options" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#default_save_options &rarr; num
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the set of flags that is suitable for saving a translation unit.
+Those flags should be Clangc::SaveTranslationUnit_Flags constant</p>
+
+<p>The set of flags returned provide options for Clangc::TranslationUnit#save
+by default. The returned flags set contains an unspecified set of options
+that save translation units with the most commonly-requested data.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default_save_options-source">
+            <pre>VALUE
+c_TranslationUnit_get_default_save_options(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int num = clang_defaultSaveOptions(t-&gt;data);
+  return CUINT_2_NUM(num);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-diagnostics_num" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#diagnostics_num &rarr; num
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the number of diagnostics produced for the given translation
+unit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="diagnostics_num-source">
+            <pre>VALUE
+c_TranslationUnit_get_diagnostics_num(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int num = clang_getNumDiagnostics(t-&gt;data);
+  return CUINT_2_NUM(num); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-spelling" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#spelling &rarr; string
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Get the original translation unit source file name.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="spelling-source">
+            <pre>VALUE
+c_TranslationUnit_get_spelling(VALUE self)
+{
+  VALUE spelling = Qnil;
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  CXString str = clang_getTranslationUnitSpelling(t-&gt;data);
+  spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
