@@ -99,12 +99,12 @@ class TestTranslationUnitUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
     assert_equal 1, tu.diagnostics_num
   end  
-  def test_TU_get_spelling
-    tu = @cindex.create_translation_unit_from_source_file(@source_file,[@clang_headers_path])
-#    assert_equal " ", tu.spelling
-  end
   def test_TU_get_default_save_options
     tu = @cindex.create_translation_unit_from_source_file(@source_file,[@clang_headers_path])
     assert_equal Clangc::SaveTranslationUnit_Flags::None, tu.default_save_options
+  end
+  def test_TU_get_spelling
+    tu = @cindex.create_translation_unit_from_source_file(@source_file,[@clang_headers_path])
+    assert_equal @source_file, tu.spelling
   end
 end
