@@ -31,4 +31,7 @@ c_TranslationUnit_get_diagnostics_num(VALUE);
 
 VALUE
 c_TranslationUnit_get_default_save_options(VALUE);
+
+VALUE
+c_TranslationUnit_get_spelling(VALUE);
 #endif //TRANSLATIONUNIT_H

@@ -77,4 +77,20 @@ c_TranslationUnit_get_default_save_options(VALUE self)
   unsigned int num = clang_defaultSaveOptions(t->data);
   return CUINT_2_NUM(num);
 }
-
+/**
+* call-seq:
+*   Clangc::TranslationUnit#spelling => string
+*
+* Get the original translation unit source file name. 
+*/
+VALUE
+c_TranslationUnit_get_spelling(VALUE self)
+{
+  VALUE spelling = Qnil;
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  CXString str = clang_getTranslationUnitSpelling(t->data);
+  spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}
