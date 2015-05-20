@@ -23,5 +23,5 @@ typedef struct Diagnostic_t {
 } Diagnostic_t;
 
 VALUE
-c_Diagnostic_struc_alloc(VALUE);
+c_Diagnostic_struct_alloc(VALUE);
 #endif //DIAGNOSTIC_H
