@@ -28,4 +28,7 @@ c_TranslationUnit_struct_alloc(VALUE);
 
 VALUE
 c_TranslationUnit_get_diagnostics_num(VALUE);
+
+VALUE
+c_TranslationUnit_get_default_save_options(VALUE);
 #endif //TRANSLATIONUNIT_H

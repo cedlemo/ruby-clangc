@@ -49,10 +49,32 @@ c_TranslationUnit_struct_alloc( VALUE klass)
 * Determine the number of diagnostics produced for the given
 * translation unit.
 */
-VALUE c_TranslationUnit_get_diagnostics_num(VALUE self)
+VALUE
+c_TranslationUnit_get_diagnostics_num(VALUE self)
 {
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   unsigned int num = clang_getNumDiagnostics(t->data);
   return CUINT_2_NUM(num); 
 }
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#default_save_options => num
+ *
+ * Returns the set of flags that is suitable for saving a translation
+ * unit. Those flags should be Clangc::SaveTranslationUnit_Flags constant
+ *
+ * The set of flags returned provide options for Clangc::TranslationUnit#save by default.
+ * The returned flags set contains an unspecified set of options that save translation units with
+ * the most commonly-requested data.
+ */
+VALUE
+c_TranslationUnit_get_default_save_options(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int num = clang_defaultSaveOptions(t->data);
+  return CUINT_2_NUM(num);
+}
+
