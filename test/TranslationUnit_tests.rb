@@ -79,7 +79,7 @@ class TestTranslationUnitCreation < MiniTest::Test
     assert_equal Clangc::ErrorCode::Failure, tu
   end
 end
-class TestTranslationUnitCreation < MiniTest::Test
+class TestTranslationUnitDiagnostic < MiniTest::Test
   def setup
     @cindex = Clangc::Index.new(false, false)
     # Good C test file
