@@ -77,6 +77,7 @@ c_TranslationUnit_get_default_save_options(VALUE self)
   unsigned int num = clang_defaultSaveOptions(t->data);
   return CUINT_2_NUM(num);
 }
+
 /**
 * call-seq:
 *   Clangc::TranslationUnit#spelling => string
@@ -93,4 +94,26 @@ c_TranslationUnit_get_spelling(VALUE self)
   spelling = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
   return spelling;
+}
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#default_reparse_options => num
+ *
+ * Returns the set of flags that is suitable for reparsing a translation
+ * unit.
+ *
+ * The set of flags returned provide options for clang_reparseTranslationUnit()
+ * by default. The returned flag set contains an unspecified set of optimizations 
+ * geared toward common uses of reparsing. The set of optimizations enabled may 
+ * change from one version  to the next. Clangc::ReparseF_Flags constants.
+ */
+
+VALUE
+c_TranslationUnit_get_default_reparse_options(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int num = clang_defaultReparseOptions(t->data);
+  return CUINT_2_NUM(num);
 }

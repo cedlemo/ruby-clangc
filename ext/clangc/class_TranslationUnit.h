@@ -34,4 +34,7 @@ c_TranslationUnit_get_default_save_options(VALUE);
 
 VALUE
 c_TranslationUnit_get_spelling(VALUE);
+
+VALUE
+c_TranslationUnit_get_default_reparse_options(VALUE);
 #endif //TRANSLATIONUNIT_H
