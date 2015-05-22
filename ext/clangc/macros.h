@@ -19,6 +19,11 @@
 /*Common C macros*/
 /*****************/
 #define CARRAY_LEN(A)   (sizeof(A) / sizeof((A)[0]));
+#define CHECK_IN_RANGE(A, MIN, MAX)\
+  if (A < MIN)\
+    A = MIN;\
+  if (A > MAX)\
+    A = MAX;
 
 /***************************/
 /*Ruby arguments to C value*/
@@ -41,8 +46,14 @@ if(len > 0)\
 c_arg = (arg == Qtrue) ? 1 : 0;
 //ruby number to uint
 #define RNUM_2_UINT(rval, cval)\
-if (TYPE(options) == T_FIXNUM || TYPE(options) == T_BIGNUM)\
-  cval=NUM2UINT(options);\
+if (TYPE(rval) == T_FIXNUM || TYPE(rval) == T_BIGNUM)\
+  cval=NUM2UINT(rval);\
+else\
+  rb_raise(rb_eTypeError, "invalid type for input");
+//ruby number to int
+#define RNUM_2_INT(rval, cval)\
+if (TYPE(rval) == T_FIXNUM || TYPE(rval) == T_BIGNUM)\
+  cval=NUM2INT(rval);\
 else\
   rb_raise(rb_eTypeError, "invalid type for input");
 
@@ -54,14 +65,14 @@ else\
 VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
   VALUE cKlass = rb_const_get(mModule, rb_intern(class_name));\
   instance = rb_class_new_instance(0, NULL, cKlass);\
-  Data_Get_Struct(tu, data_type, data_ptr);
+  Data_Get_Struct(instance, data_type, data_ptr);
 //Create a new instance with args and get its data
 #define R_GET_CLASS_WITH_ARGS_DATA(module_name, class_name, instance, args, data_type, data_ptr)\
 VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
   VALUE cKlass = rb_const_get(mModule, rb_intern(class_name));\
   int args_n=CARRAY_LEN(args)\
   instance = rb_class_new_instance(args_len, args, cKlass);\
-  Data_Get_Struct(tu, data_type, data_ptr);
+  Data_Get_Struct(instance, data_type, data_ptr);
 
 /************************/
 /*C values to Ruby value*/
