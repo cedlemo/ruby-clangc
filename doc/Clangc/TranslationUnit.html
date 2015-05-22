@@ -74,6 +74,8 @@
     
     <li ><a href="#method-i-default_save_options">#default_save_options</a>
     
+    <li ><a href="#method-i-diagnostic">#diagnostic</a>
+    
     <li ><a href="#method-i-diagnostics_num">#diagnostics_num</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
@@ -195,6 +197,57 @@ c_TranslationUnit_get_default_save_options(VALUE self)
   Data_Get_Struct(self, TranslationUnit_t, t);
   unsigned int num = clang_defaultSaveOptions(t-&gt;data);
   return CUINT_2_NUM(num);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-diagnostic" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#diagnostic(index) &rarr; Clangc::Diagnostic
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a diagnostic associated with the given translation unit.</p>
+
+<p>index the zero-based diagnostic number to retrieve.</p>
+
+<p>returns the requested diagnostic.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="diagnostic-source">
+            <pre>VALUE
+c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int max = clang_getNumDiagnostics(t-&gt;data);
+  unsigned  int c_num;
+  RNUM_2_UINT(num, c_num);
+  CHECK_IN_RANGE(c_num, 0, max);
+  VALUE diagnostic;
+  Diagnostic_t *d;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Diagnostic&quot;, diagnostic, Diagnostic_t, d); 
+  d-&gt;data = clang_getDiagnostic(t-&gt;data, c_num);
+  return diagnostic;
 }</pre>
           </div>
           
