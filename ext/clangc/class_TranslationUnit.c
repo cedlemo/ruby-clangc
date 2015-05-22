@@ -17,6 +17,7 @@
 */
 /*TranslationUnit ruby class*/
 #include "class_TranslationUnit.h"
+#include "class_Diagnostic.h"
 #include "macros.h"
 
 static void
@@ -116,4 +117,30 @@ c_TranslationUnit_get_default_reparse_options(VALUE self)
   Data_Get_Struct(self, TranslationUnit_t, t);
   unsigned int num = clang_defaultReparseOptions(t->data);
   return CUINT_2_NUM(num);
+}
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#diagnostic(index) => Clangc::Diagnostic
+ *
+ * Retrieve a diagnostic associated with the given translation unit.
+ *
+ * index the zero-based diagnostic number to retrieve.
+ *
+ * returns the requested diagnostic.
+ */
+VALUE
+c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int max = clang_getNumDiagnostics(t->data);
+  unsigned  int c_num;
+  RNUM_2_UINT(num, c_num);
+  CHECK_IN_RANGE(c_num, 0, max);
+  VALUE diagnostic;
+  Diagnostic_t *d;
+  R_GET_CLASS_DATA("Clangc", "Diagnostic", diagnostic, Diagnostic_t, d); 
+  d->data = clang_getDiagnostic(t->data, c_num);
+  return diagnostic;
 }

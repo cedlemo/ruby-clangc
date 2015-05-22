@@ -51,6 +51,7 @@ void Init_clangc(void) {
   rb_define_method(c_TranslationUnit, "default_save_options", RUBY_METHOD_FUNC(c_TranslationUnit_get_default_save_options), 0);// in class_TranslationUnit.c
   rb_define_method(c_TranslationUnit, "spelling", RUBY_METHOD_FUNC(c_TranslationUnit_get_spelling), 0);// in class_TranslationUnit.c
   rb_define_method(c_TranslationUnit, "default_reparse_options", RUBY_METHOD_FUNC(c_TranslationUnit_get_default_reparse_options), 0);// in class_TranslationUnit.c
+  rb_define_method(c_TranslationUnit, "diagnostic", RUBY_METHOD_FUNC(c_TranslationUnit_get_diagnostic), 1);// in class_TranslationUnit.c  
 
 /*
 * A diagnostic object, containing the diagnostic's severity,
