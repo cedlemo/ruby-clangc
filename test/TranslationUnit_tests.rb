@@ -111,4 +111,8 @@ class TestTranslationUnitUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(@source_file,[@clang_headers_path])
     assert_equal Clangc::Reparse_Flags::None, tu.default_reparse_options
   end
+  def test_TU_get_diagnostic_one
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
+    assert_instance_of Clangc::Diagnostic, tu.diagnostic(0)
+  end
 end
