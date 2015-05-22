@@ -107,4 +107,8 @@ class TestTranslationUnitUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(@source_file,[@clang_headers_path])
     assert_equal @source_file, tu.spelling
   end
+  def test_TU_get_default_reparse_options
+    tu = @cindex.create_translation_unit_from_source_file(@source_file,[@clang_headers_path])
+    assert_equal Clangc::Reparse_Flags::None, tu.default_reparse_options
+  end
 end
