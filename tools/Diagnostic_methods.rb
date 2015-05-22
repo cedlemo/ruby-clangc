@@ -48,12 +48,20 @@ def display_infos(object_name, generators, methods)
 #  generators.each do |g|
 #    puts g
 #  end
-
+  # Sort on arguments number
+  methods.sort! {|a,b| a.parameters_num <=> b.parameters_num}
   puts "Methods"
+  output_types = []
+  input_types = []
   methods.each do |m|
-    puts m
+    m.parameters.each do |p|
+      input_types << p.type.name unless input_types.include?(p.type.name)
+    end
+    puts "#{m.parameters_num} __ #{m}"
+    output_types << m.return_type.name unless output_types.include?(m.return_type.name)
   end
-
+  puts "ouput_types:\n #{output_types.join(" ")}"
+  puts "input_types:\n #{input_types.join(" ")}"
 end
 def sumup(functions, objects)
   objects.each do |obj|
