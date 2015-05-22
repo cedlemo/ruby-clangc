@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-default_reparse_options">#default_reparse_options</a>
+    
     <li ><a href="#method-i-default_save_options">#default_save_options</a>
     
     <li ><a href="#method-i-diagnostics_num">#diagnostics_num</a>
@@ -111,6 +113,52 @@ in an <a href="Index.html">Index</a></p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-default_reparse_options" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#default_reparse_options &rarr; num
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the set of flags that is suitable for reparsing a translation unit.</p>
+
+<p>The set of flags returned provide options for
+clang_reparseTranslationUnit() by default. The returned flag set contains
+an unspecified set of optimizations  geared toward common uses of
+reparsing. The set of optimizations enabled may  change from one version 
+to the next. Clangc::ReparseF_Flags constants.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default_reparse_options-source">
+            <pre>VALUE
+c_TranslationUnit_get_default_reparse_options(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  unsigned int num = clang_defaultReparseOptions(t-&gt;data);
+  return CUINT_2_NUM(num);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-default_save_options" class="method-detail ">
