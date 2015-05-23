@@ -39,6 +39,7 @@ c_Index_struct_alloc(VALUE klass)
 {
   Index_t *i;
   i = (Index_t *) ruby_xmalloc(sizeof(Index_t));
+  i->instance = Qnil;
   i->data = NULL;
   return Data_Wrap_Struct(klass, NULL, c_Index_struct_free,(void *) i );
 }
@@ -73,6 +74,7 @@ c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnost
   RBOOL_2_INT(excl_decls_from_PCH, e);
   RBOOL_2_INT(display_diagnostics, d);  
   i->data = clang_createIndex( e, d);
+  i->instance = self;
   return self;
 }
 /*
