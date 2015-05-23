@@ -2,9 +2,7 @@
 require "rtruckboris"
 
 clang_c = "/usr/include/clang-c/Index.h"
-#headerPaths = `pkg-config --cflags gtk+-3.0`.gsub("-I","").split(" ")
 header_paths = []
-#get gcc include if needed
 gcc_lib_base='/usr/lib/gcc/' << `llvm-config --host-target`.chomp << "/*"
 gcc_lib = Dir.glob(gcc_lib_base ).sort.last + "/include"
 header_paths << gcc_lib
@@ -21,9 +19,9 @@ end
 functions = parser.functions
 puts functions.size
 def is_object_generator(f, object_name)
-  if f.name.match(/.*2$/)
+  if f.name.match(/.*2\z/)
     f.parameters.each do |p|
-      if p.type.name.match(/#{object_name}\s+\*/)
+      if p.type.name.match(/#{object_name}/)
         return true
       end
     end
@@ -44,10 +42,10 @@ def is_object_method(f, object_name)
 end
 def display_infos(object_name, generators, methods)
   puts "#{object_name} related functions"
-#  puts "Generators"
-#  generators.each do |g|
-#    puts g
-#  end
+  puts "Generators"
+  generators.each do |g|
+    puts g
+  end
   # Sort on arguments number
   methods.sort! {|a,b| a.parameters_num <=> b.parameters_num}
   puts "Methods"
@@ -57,7 +55,7 @@ def display_infos(object_name, generators, methods)
     m.parameters.each do |p|
       input_types << p.type.name unless input_types.include?(p.type.name)
     end
-    puts "#{m.parameters_num} __ #{m}"
+    puts "#{m.parameters_num} __ #{m.name}"
     output_types << m.return_type.name unless output_types.include?(m.return_type.name)
   end
   puts "ouput_types:\n #{output_types.join(" ")}"
@@ -69,10 +67,9 @@ def sumup(functions, objects)
     obj_generators = []
     obj_methods = []
     functions.each do |f|
-#      next unless f.name.match(/#{obj.gsub(/^CX/,"")}/)
-      if is_object_method(f, obj)
-        obj_methods << f 
-      end
+      obj_generators << f if is_object_generator(f, obj)
+      obj_methods << f if is_object_method(f, obj)
+
     end
     display_infos(obj, obj_generators, obj_methods)
   end
