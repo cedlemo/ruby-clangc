@@ -39,7 +39,7 @@ c_TranslationUnit_struct_alloc( VALUE klass)
     TranslationUnit_t * ptr;
     ptr = (TranslationUnit_t *) ruby_xmalloc(sizeof(TranslationUnit_t)); 
     ptr->data = NULL;
-
+    ptr->index = Qnil;
   return Data_Wrap_Struct(klass, NULL, c_TranslationUnit_struct_free, (void *) ptr);
 }
 

@@ -21,7 +21,6 @@
 #include "clang-c/Index.h"
 typedef struct Index_t {
     CXIndex data; 
-    VALUE instance;
 } Index_t;
 
 VALUE

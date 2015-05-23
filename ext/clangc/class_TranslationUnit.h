@@ -21,6 +21,7 @@
 #include "clang-c/Index.h"
 typedef struct TranslationUnit_t {
     CXTranslationUnit data; 
+    VALUE index;
 } TranslationUnit_t;
 
 VALUE

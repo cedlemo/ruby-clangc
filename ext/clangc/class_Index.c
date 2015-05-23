@@ -39,7 +39,6 @@ c_Index_struct_alloc(VALUE klass)
 {
   Index_t *i;
   i = (Index_t *) ruby_xmalloc(sizeof(Index_t));
-  i->instance = Qnil;
   i->data = NULL;
   return Data_Wrap_Struct(klass, NULL, c_Index_struct_free,(void *) i );
 }
@@ -74,7 +73,6 @@ c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnost
   RBOOL_2_INT(excl_decls_from_PCH, e);
   RBOOL_2_INT(display_diagnostics, d);  
   i->data = clang_createIndex( e, d);
-  i->instance = self;
   return self;
 }
 /*
@@ -156,6 +154,9 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
                                                           c_source_file,
                                                           len, c_args, 0, 0); // TODO manage unsaved files
+  c_tu->index = self;
+  rb_gc_register_mark_object(self);
+
   if(c_tu->data != NULL)
     return tu;
   else
@@ -180,6 +181,10 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
 //  if(TYPE(source_file == T_STRING))
   c_ast_file = StringValueCStr(ast_file);
   c_tu->data = clang_createTranslationUnit( i->data, c_ast_file);
+
+  c_tu->index = self;
+  rb_gc_register_mark_object(self);
+
   if(c_tu->data)
     return tu;
   else
@@ -205,6 +210,10 @@ c_Index_create_TU2(VALUE self, VALUE ast_file) {
 //  if(TYPE(source_file == T_STRING))
   c_ast_file = StringValueCStr(ast_file);
   uint er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
+
+  c_tu->index = self;
+  rb_gc_register_mark_object(self);
+
   if(er != 0)
     return CUINT_2_NUM(er);
   else
@@ -271,6 +280,10 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
                                                           c_args, len, 
                                                           0, 0, c_options); // TODO manage unsaved files
   
+
+  c_tu->index = self;
+  rb_gc_register_mark_object(self);
+
   if (c_tu->data)
     return tu;
   else
@@ -338,6 +351,10 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
                                         c_args, len, 
                                         0, 0, c_options, // TODO manage unsaved files
                                         &(c_tu->data)); 
+
+  c_tu->index = self;
+  rb_gc_register_mark_object(self);
+
   if(er != 0)
     return CUINT_2_NUM(er);
   else
