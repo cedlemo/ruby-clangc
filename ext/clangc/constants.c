@@ -111,7 +111,7 @@ rb_define_const(m_TranslationUnit_Flags,"Precompiledpreamble", INT2NUM(4));
 rb_define_const(m_TranslationUnit_Flags,"Cachecompletionresults", INT2NUM(8));
 /*
 * Used to indicate that the translation unit will be serialized with
-* clang_saveTranslationUnit.
+* Clangc::TranslationUnit#save.
 *
 * This option is typically used when parsing a header with the intent of
 * producing a precompiled header.
