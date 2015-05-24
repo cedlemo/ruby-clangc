@@ -32,6 +32,13 @@ c_TranslationUnit_struct_free(TranslationUnit_t *s)
     ruby_xfree(s);
   }
 }  
+static void
+c_TranslationUnit_mark(void *s)
+{
+  TranslationUnit_t *t =(TranslationUnit_t *)s;
+  rb_gc_mark(t->index);
+}
+
 VALUE
 c_TranslationUnit_struct_alloc( VALUE klass)
 {
@@ -40,7 +47,7 @@ c_TranslationUnit_struct_alloc( VALUE klass)
     ptr = (TranslationUnit_t *) ruby_xmalloc(sizeof(TranslationUnit_t)); 
     ptr->data = NULL;
     ptr->index = Qnil;
-  return Data_Wrap_Struct(klass, NULL, c_TranslationUnit_struct_free, (void *) ptr);
+  return Data_Wrap_Struct(klass, c_TranslationUnit_mark, c_TranslationUnit_struct_free, (void *) ptr);
 }
 
 /*
