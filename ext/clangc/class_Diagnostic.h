@@ -25,4 +25,7 @@ typedef struct Diagnostic_t {
 
 VALUE
 c_Diagnostic_struct_alloc(VALUE);
+
+VALUE
+c_Diagnostic_get_severity(VALUE);
 #endif //DIAGNOSTIC_H

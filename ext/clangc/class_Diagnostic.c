@@ -53,3 +53,18 @@ c_Diagnostic_struct_alloc( VALUE klass)
   return Data_Wrap_Struct(klass, c_Diagnostic_mark, c_Diagnostic_struct_free, (void *) ptr);
 }
 
+/**
+* call-seq:
+*   Clangc::Diagnostic#severity => Fixnum
+*
+* Determine the severity of the given diagnostic. It returns one of the constants defined
+* in Clangc::DiagnosticSeverity.constants
+*/
+VALUE
+c_Diagnostic_get_severity(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int severity = clang_getDiagnosticSeverity(d->data);
+  return CUINT_2_NUM(severity);
+}
