@@ -85,3 +85,26 @@ c_Diagnostic_get_spelling(VALUE self)
   clang_disposeString(str);
   return spelling;
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#category => Fixnum
+* 
+* Retrieve the category number for this diagnostic.
+*
+* Diagnostics can be categorized into groups along with other, related
+* diagnostics (e.g., diagnostics under the same warning flag). This routine 
+* retrieves the category number for the given diagnostic.
+*
+* The number of the category that contains this diagnostic, or zero
+* if this diagnostic is uncategorized.
+*/
+
+VALUE
+c_Diagnostic_get_category(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int category = clang_getDiagnosticCategory(d->data);
+  return CUINT_2_NUM(category);
+}

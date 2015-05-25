@@ -31,4 +31,7 @@ c_Diagnostic_get_severity(VALUE);
 
 VALUE
 c_Diagnostic_get_spelling(VALUE);
+
+VALUE
+c_Diagnostic_get_category(VALUE);
 #endif //DIAGNOSTIC_H
