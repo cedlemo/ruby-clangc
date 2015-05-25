@@ -34,4 +34,16 @@ class TestDiagnostic < MiniTest::Test
     assert_instance_of Array, diagnostics
     assert_equal 2, diagnostics.size
   end
+  def test_get_diagnostic_severity_one_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_instance_of Fixnum, diagnostics[0].severity
+    assert_equal Clangc::DiagnosticSeverity::Error , diagnostics[0].severity
+  end
+  def test_get_diagnostic_severity_two_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_instance_of Fixnum, diagnostics[1].severity
+    assert_equal Clangc::DiagnosticSeverity::Warning , diagnostics[1].severity
+  end
 end
