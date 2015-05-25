@@ -164,7 +164,7 @@ c_Diagnostic_get_num_ranges(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Diagnostic#num_fixit => Fixnum
+*   Clangc::Diagnostic#num_fixits => Fixnum
 *
 * Determine the number of fix-it hints associated with the given
 * diagnostic.
