@@ -74,6 +74,8 @@
     
     <li ><a href="#method-i-category_name">#category_name</a>
     
+    <li ><a href="#method-i-category_text">#category_text</a>
+    
     <li ><a href="#method-i-severity">#severity</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
@@ -179,7 +181,8 @@ c_Diagnostic_get_category(VALUE self)
         <div class="method-description">
           
           <p>Retrieve the name of a particular diagnostic category.  This is now
-deprecated.  Use Clangc::Diagnostic#category_text  instead.</p>
+deprecated.  Use <a
+href="Diagnostic.html#method-i-category_text">#category_text</a>  instead.</p>
           
           
 
@@ -192,9 +195,52 @@ c_Diagnostic_get_category_name(VALUE self)
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
   CXString str = clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d-&gt;data));
-  VALUE category = rb_str_new2( clang_getCString(str) );
+  VALUE name = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
-  return category;
+  return name;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-category_text" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Diagnostic#category_text &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the diagnostic category text for a given diagnostic. Returns The
+text of the given diagnostic category.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="category_text-source">
+            <pre>VALUE
+c_Diagnostic_get_category_text(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticCategoryText(d-&gt;data);
+  VALUE text = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return text;
 }</pre>
           </div>
           
