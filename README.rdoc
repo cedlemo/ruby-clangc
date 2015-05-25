@@ -7,4 +7,4 @@ The libclang data are mapped to the following:
 
 [CXIndex]             Clangc::Index
 [CXTranslationUnit]   Clangc::TranslationUnit
-
+[CXDiagnostic]        Clangc::Diagnostic
