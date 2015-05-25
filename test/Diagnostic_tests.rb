@@ -59,11 +59,21 @@ class TestDiagnostic < MiniTest::Test
   def test_get_diagnostic_category_one_error
     tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
     diagnostics = tu.diagnostics
-    assert_equal 2 , diagnostics[0].category
+    assert_equal 4 , diagnostics[0].category
   end
-  def test_get_diagnostic_spelling_two_error
+  def test_get_diagnostic_category_two_error
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,[@clang_headers_path])
     diagnostics = tu.diagnostics
-    assert_equal 4 , diagnostics[1].category
+    assert_equal 2 , diagnostics[1].category
+  end
+  def test_get_diagnostic_category_name_one_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal "Parse Issue" , diagnostics[0].category_name
+  end
+  def test_get_diagnostic_category_name_two_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal "Semantic Issue" , diagnostics[1].category_name
   end
 end
