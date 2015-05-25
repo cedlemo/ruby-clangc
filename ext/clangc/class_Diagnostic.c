@@ -117,7 +117,7 @@ c_Diagnostic_get_category(VALUE self)
 *  is now deprecated.  Use Clangc::Diagnostic#category_text 
 *  instead.
 */
-
+// TODO deprecated write if macro based on clang vervion
 VALUE
 c_Diagnostic_get_category_name(VALUE self)
 {
