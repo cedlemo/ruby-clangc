@@ -154,7 +154,7 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
                                                           c_source_file,
                                                           len, c_args, 0, 0); // TODO manage unsaved files
-  c_tu->index = self;
+  c_tu->parent = self;
 
   if(c_tu->data != NULL)
     return tu;
@@ -181,7 +181,7 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
   c_ast_file = StringValueCStr(ast_file);
   c_tu->data = clang_createTranslationUnit( i->data, c_ast_file);
 
-  c_tu->index = self;
+  c_tu->parent = self;
 
   if(c_tu->data)
     return tu;
@@ -209,7 +209,7 @@ c_Index_create_TU2(VALUE self, VALUE ast_file) {
   c_ast_file = StringValueCStr(ast_file);
   uint er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
 
-  c_tu->index = self;
+  c_tu->parent = self;
 
   if(er != 0)
     return CUINT_2_NUM(er);
@@ -278,7 +278,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
                                                           0, 0, c_options); // TODO manage unsaved files
   
 
-  c_tu->index = self;
+  c_tu->parent = self;
 
   if (c_tu->data)
     return tu;
@@ -348,7 +348,7 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
                                         0, 0, c_options, // TODO manage unsaved files
                                         &(c_tu->data)); 
 
-  c_tu->index = self;
+  c_tu->parent = self;
 
   if(er != 0)
     return CUINT_2_NUM(er);

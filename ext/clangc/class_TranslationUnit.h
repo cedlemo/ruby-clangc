@@ -20,8 +20,8 @@
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
 typedef struct TranslationUnit_t {
-    CXTranslationUnit data; 
-    VALUE index;
+  CXTranslationUnit data; 
+  VALUE parent;
 } TranslationUnit_t;
 
 VALUE

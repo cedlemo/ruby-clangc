@@ -19,7 +19,8 @@
 #define DIAGNOSTIC_H
 #include <ruby/ruby.h>
 typedef struct Diagnostic_t {
-    CXDiagnostic data; 
+  CXDiagnostic data; 
+  VALUE parent;
 } Diagnostic_t;
 
 VALUE

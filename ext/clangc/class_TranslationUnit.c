@@ -35,8 +35,11 @@ c_TranslationUnit_struct_free(TranslationUnit_t *s)
 static void
 c_TranslationUnit_mark(void *s)
 {
-  TranslationUnit_t *t =(TranslationUnit_t *)s;
-  rb_gc_mark(t->index);
+  if(s)
+  {
+    TranslationUnit_t *t =(TranslationUnit_t *)s;
+    rb_gc_mark(t->parent);
+  }
 }
 
 VALUE
@@ -46,7 +49,7 @@ c_TranslationUnit_struct_alloc( VALUE klass)
     TranslationUnit_t * ptr;
     ptr = (TranslationUnit_t *) ruby_xmalloc(sizeof(TranslationUnit_t)); 
     ptr->data = NULL;
-    ptr->index = Qnil;
+    ptr->parent = Qnil;
   return Data_Wrap_Struct(klass, c_TranslationUnit_mark, c_TranslationUnit_struct_free, (void *) ptr);
 }
 
@@ -149,5 +152,6 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
   Diagnostic_t *d;
   R_GET_CLASS_DATA("Clangc", "Diagnostic", diagnostic, Diagnostic_t, d); 
   d->data = clang_getDiagnostic(t->data, c_num);
+  d->parent = self;
   return diagnostic;
 }

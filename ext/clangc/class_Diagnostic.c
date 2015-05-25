@@ -33,6 +33,15 @@ c_Diagnostic_struct_free(Diagnostic_t *s)
     ruby_xfree(s);
   }
 }  
+static void
+c_Diagnostic_mark(void *s)
+{
+  if(s)
+  {
+    Diagnostic_t *d = (Diagnostic_t *)s;
+    rb_gc_mark(d->parent);
+  }
+}
 VALUE
 c_Diagnostic_struct_alloc( VALUE klass)
 {
@@ -40,7 +49,7 @@ c_Diagnostic_struct_alloc( VALUE klass)
     Diagnostic_t * ptr;
     ptr = (Diagnostic_t *) ruby_xmalloc(sizeof(Diagnostic_t)); 
     ptr->data = NULL;
-
-  return Data_Wrap_Struct(klass, NULL, c_Diagnostic_struct_free, (void *) ptr);
+    ptr->parent = Qnil;
+  return Data_Wrap_Struct(klass, c_Diagnostic_mark, c_Diagnostic_struct_free, (void *) ptr);
 }
 
