@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-category">#category</a>
+    
     <li ><a href="#method-i-severity">#severity</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
@@ -109,6 +111,53 @@ text, source ranges, and fix-it hints.</p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-category" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Diagnostic#category &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the category number for this diagnostic.</p>
+
+<p>Diagnostics can be categorized into groups along with other, related
+diagnostics (e.g., diagnostics under the same warning flag). This routine 
+retrieves the category number for the given diagnostic.</p>
+
+<p>The number of the category that contains this diagnostic, or zero if this
+diagnostic is uncategorized.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="category-source">
+            <pre>VALUE
+c_Diagnostic_get_category(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int category = clang_getDiagnosticCategory(d-&gt;data);
+  return CUINT_2_NUM(category);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-severity" class="method-detail ">
