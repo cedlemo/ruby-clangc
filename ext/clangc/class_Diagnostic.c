@@ -161,3 +161,19 @@ c_Diagnostic_get_num_ranges(VALUE self)
   unsigned int num = clang_getDiagnosticNumRanges(d->data);
   return CUINT_2_NUM(num);
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#num_fixit => Fixnum
+*
+* Determine the number of fix-it hints associated with the given
+* diagnostic.
+*/
+VALUE
+c_Diagnostic_get_num_fixits(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int num = clang_getDiagnosticNumFixIts(d->data);
+  return CUINT_2_NUM(num);
+}

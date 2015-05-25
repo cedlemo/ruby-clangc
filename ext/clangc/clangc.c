@@ -65,4 +65,5 @@ void Init_clangc(void) {
   rb_define_method(c_Diagnostic, "category_name", RUBY_METHOD_FUNC(c_Diagnostic_get_category_name), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "category_text", RUBY_METHOD_FUNC(c_Diagnostic_get_category_text), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "num_ranges", RUBY_METHOD_FUNC(c_Diagnostic_get_num_ranges), 0);// in class_Diagnostic.c
+  rb_define_method(c_Diagnostic, "num_fixits", RUBY_METHOD_FUNC(c_Diagnostic_get_num_fixits), 0);// in class_Diagnostic.c
 }

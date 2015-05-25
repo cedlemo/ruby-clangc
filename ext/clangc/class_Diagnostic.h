@@ -43,4 +43,7 @@ c_Diagnostic_get_category_text(VALUE);
 
 VALUE
 c_Diagnostic_get_num_ranges(VALUE);
+
+VALUE
+c_Diagnostic_get_num_fixits(VALUE);
 #endif //DIAGNOSTIC_H
