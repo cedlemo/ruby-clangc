@@ -68,3 +68,20 @@ c_Diagnostic_get_severity(VALUE self)
   unsigned int severity = clang_getDiagnosticSeverity(d->data);
   return CUINT_2_NUM(severity);
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#spelling => String
+*
+* Retrieve the text of the given diagnostic.
+*/
+VALUE
+c_Diagnostic_get_spelling(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticSpelling(d->data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}

@@ -60,4 +60,5 @@ void Init_clangc(void) {
   VALUE c_Diagnostic = rb_define_class_under(m_Clangc, "Diagnostic", rb_cObject);
   rb_define_alloc_func(c_Diagnostic, c_Diagnostic_struct_alloc);
   rb_define_method(c_Diagnostic, "severity", RUBY_METHOD_FUNC(c_Diagnostic_get_severity), 0);// in class_Diagnostic.c
+  rb_define_method(c_Diagnostic, "spelling", RUBY_METHOD_FUNC(c_Diagnostic_get_spelling), 0);// in class_Diagnostic.c
 }
