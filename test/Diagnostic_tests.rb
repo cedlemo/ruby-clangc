@@ -46,4 +46,14 @@ class TestDiagnostic < MiniTest::Test
     assert_instance_of Fixnum, diagnostics[1].severity
     assert_equal Clangc::DiagnosticSeverity::Warning , diagnostics[1].severity
   end
+  def test_get_diagnostic_spelling_one_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal "expected \';\' after top level declarator" , diagnostics[0].spelling
+  end
+  def test_get_diagnostic_spelling_two_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal "type specifier missing, defaults to \'int\'" , diagnostics[1].spelling
+  end
 end
