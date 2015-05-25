@@ -76,6 +76,8 @@
     
     <li ><a href="#method-i-category_text">#category_text</a>
     
+    <li ><a href="#method-i-num_ranges">#num_ranges</a>
+    
     <li ><a href="#method-i-severity">#severity</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
@@ -241,6 +243,46 @@ c_Diagnostic_get_category_text(VALUE self)
   VALUE text = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
   return text;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-num_ranges" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Diagnostic#num_ranges &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the number of source ranges associated with the given diagnostic.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_ranges-source">
+            <pre>VALUE
+c_Diagnostic_get_num_ranges(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int num = clang_getDiagnosticNumRanges(d-&gt;data);
+  return CUINT_2_NUM(num);
 }</pre>
           </div>
           
