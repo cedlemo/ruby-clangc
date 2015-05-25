@@ -113,14 +113,14 @@ c_Diagnostic_get_category(VALUE self)
 * call-seq:
 *   Clangc::Diagnostic#category_name => String
 *
-*  Retrieve the name of a particular diagnostic category.  This
-*  is now deprecated.  Use Clangc::Diagnostic#category_text 
-*  instead.
+* Retrieve the name of a particular diagnostic category.  This
+* is now deprecated.  Use Clangc::Diagnostic#category_text 
+* instead.
 */
-// TODO deprecated write if macro based on clang vervion
 VALUE
 c_Diagnostic_get_category_name(VALUE self)
 {
+// TODO deprecated write if macro based on clang vervion
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
   CXString str = clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data));
