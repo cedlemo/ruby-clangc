@@ -56,4 +56,14 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal "type specifier missing, defaults to \'int\'" , diagnostics[1].spelling
   end
+  def test_get_diagnostic_category_one_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal 2 , diagnostics[0].category
+  end
+  def test_get_diagnostic_spelling_two_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal 4 , diagnostics[1].category
+  end
 end
