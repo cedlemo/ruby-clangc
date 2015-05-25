@@ -76,4 +76,14 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal "Semantic Issue" , diagnostics[1].category_name
   end
+  def test_get_diagnostic_category_text_one_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal "Parse Issue" , diagnostics[0].category_text
+  end
+  def test_get_diagnostic_category_text_two_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,[@clang_headers_path])
+    diagnostics = tu.diagnostics
+    assert_equal "Semantic Issue" , diagnostics[1].category_text
+  end
 end
