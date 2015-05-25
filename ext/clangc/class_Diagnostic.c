@@ -145,3 +145,19 @@ c_Diagnostic_get_category_text(VALUE self)
   clang_disposeString(str);
   return text;
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#num_ranges => Fixnum
+*
+* Determine the number of source ranges associated with the given
+* diagnostic.
+*/
+VALUE
+c_Diagnostic_get_num_ranges(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int num = clang_getDiagnosticNumRanges(d->data);
+  return CUINT_2_NUM(num);
+}
