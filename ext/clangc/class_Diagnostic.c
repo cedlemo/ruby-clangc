@@ -99,7 +99,6 @@ c_Diagnostic_get_spelling(VALUE self)
 * The number of the category that contains this diagnostic, or zero
 * if this diagnostic is uncategorized.
 */
-
 VALUE
 c_Diagnostic_get_category(VALUE self)
 {
@@ -124,7 +123,25 @@ c_Diagnostic_get_category_name(VALUE self)
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
   CXString str = clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data));
-  VALUE category = rb_str_new2( clang_getCString(str) );
+  VALUE name = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
-  return category;
+  return name;
+}
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#category_text => String
+*
+* Retrieve the diagnostic category text for a given diagnostic.
+* Returns The text of the given diagnostic category.
+*/
+VALUE
+c_Diagnostic_get_category_text(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticCategoryText(d->data);
+  VALUE text = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return text;
 }

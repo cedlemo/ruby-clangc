@@ -37,4 +37,7 @@ c_Diagnostic_get_category(VALUE);
 
 VALUE
 c_Diagnostic_get_category_name(VALUE);
+
+VALUE
+c_Diagnostic_get_category_text(VALUE);
 #endif //DIAGNOSTIC_H
