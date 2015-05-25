@@ -62,4 +62,5 @@ void Init_clangc(void) {
   rb_define_method(c_Diagnostic, "severity", RUBY_METHOD_FUNC(c_Diagnostic_get_severity), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "spelling", RUBY_METHOD_FUNC(c_Diagnostic_get_spelling), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "category", RUBY_METHOD_FUNC(c_Diagnostic_get_category), 0);// in class_Diagnostic.c
+  rb_define_method(c_Diagnostic, "category_name", RUBY_METHOD_FUNC(c_Diagnostic_get_category_name), 0);// in class_Diagnostic.c
 }

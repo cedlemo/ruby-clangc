@@ -108,3 +108,23 @@ c_Diagnostic_get_category(VALUE self)
   unsigned int category = clang_getDiagnosticCategory(d->data);
   return CUINT_2_NUM(category);
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#category_name => String
+*
+*  Retrieve the name of a particular diagnostic category.  This
+*  is now deprecated.  Use Clangc::Diagnostic#category_text 
+*  instead.
+*/
+
+VALUE
+c_Diagnostic_get_category_name(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data));
+  VALUE category = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return category;
+}

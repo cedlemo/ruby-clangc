@@ -34,4 +34,7 @@ c_Diagnostic_get_spelling(VALUE);
 
 VALUE
 c_Diagnostic_get_category(VALUE);
+
+VALUE
+c_Diagnostic_get_category_name(VALUE);
 #endif //DIAGNOSTIC_H
