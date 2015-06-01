@@ -64,8 +64,21 @@ def display_infos(object_name, generators, methods, wrapped_methods = [])
 #  puts "ouput_types:\n #{output_types.join(" ")}"
 #  puts "input_types:\n #{input_types.join(" ")}"
 end
-
-def sumup(functions, objects, wrapped_methods = [])
+def sumup_module_functions(functions, wrapped_methods = [])
+  puts "#{colorize(:bold,"Module")} functions"
+  functions.each do |f|
+    if f.parameters.size == 0
+      fname = f.name  
+      if wrapped_methods.include?(fname)
+        puts "\t\t#{colorize(:black,fname)}"
+      else
+        puts "\t\t#{fname}"
+      end
+    end
+  end
+  
+end
+def sumup_objects(functions, objects, wrapped_methods = [])
   objects.each do |obj|
     obj_generators = []
     obj_methods = []
@@ -124,5 +137,6 @@ print color.green, count.to_s, color.clear, "/", color.black, functions.size,
       (count/(functions.size*1.00)) * 100, color.clear, "%\n\n"
 
 # print specific informations
-sumup(functions, ["CXIndex", "CXTranslationUnit", "CXDiagnostic"], MANAGED_FUNCTIONS)
+sumup_module_functions(functions, MANAGED_FUNCTIONS)
+sumup_objects(functions, ["CXIndex", "CXTranslationUnit", "CXDiagnostic", "CXSourceRange", "CXSourceLocation"], MANAGED_FUNCTIONS)
 
