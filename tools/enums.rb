@@ -16,7 +16,7 @@ def create_module_constant(main_module, enum)
 end
 def create_module_constants(main_module, enums, id = nil )
   id = id ? "_" + id : ""
-  s="void init_clang_enums#{id}_to_constants(VALUE #{main_module}){\n"
+  s="void init_clang#{id}_enums_to_constants(VALUE #{main_module}){\n"
   enums.each_with_index do |e, i|
     s+="#{create_module_constant(main_module, e)}\n"
   end
