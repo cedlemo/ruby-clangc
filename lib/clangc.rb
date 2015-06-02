@@ -1,7 +1,6 @@
 require "clangc/clangc"
 
 module Clangc
-  VERSION = "0.0.0"
   class TranslationUnit
     def diagnostics
       ds = []
