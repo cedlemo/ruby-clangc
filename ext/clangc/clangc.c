@@ -19,12 +19,16 @@
 #include "clang-c/Index.h"
 
 #include "constants.h"
+#include "_clangc_functions.h"
 #include "class_Index.h"
 #include "class_TranslationUnit.h"
 #include "class_Diagnostic.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
+
+  rb_define_module_function(m_Clangc, "version", RUBY_METHOD_FUNC(m_clangc_get_version), 0);// in _clangc_methods.c
+
   init_clang_enums_to_constants(m_Clangc);
 
 /*
