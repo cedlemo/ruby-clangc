@@ -1,3 +1,4 @@
+
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
  * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
@@ -16,4 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <ruby/ruby.h>
-void init_clang_enums_to_constants(VALUE);
+void
+init_clang_enums_to_constants(VALUE);
+void
+init_clang_errors_enums_to_constants(VALUE);

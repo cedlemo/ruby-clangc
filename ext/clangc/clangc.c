@@ -30,7 +30,7 @@ void Init_clangc(void) {
   rb_define_module_function(m_Clangc, "version", RUBY_METHOD_FUNC(m_clangc_get_version), 0);// in _clangc_methods.c
 
   init_clang_enums_to_constants(m_Clangc);
-
+  init_clang_errors_enums_to_constants(m_Clangc);
 /*
 * An "index" consists of a set of translation units that would
 * typically be linked together into an executable or library.
