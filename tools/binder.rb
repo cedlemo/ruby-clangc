@@ -65,7 +65,8 @@ LICENCE=%q(
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
 typedef struct #{@class_name}_t {
-    #{@data_type} data; 
+  #{@data_type} data; 
+  VALUE parent;
 } #{@class_name}_t;
 }
     end
@@ -76,12 +77,15 @@ generate_#{@class_name}_under(VALUE, VALUE);
 #endif //#{@class_name.upcase}_H
 }
     end
-    def generate_free_callback
+    def add_includes_in_c_file
 %Q{/*#{@class_name} ruby class*/
 #include "class_#{@class_name}.h"
 #include "macros.h"
 
-static void
+}
+    end
+    def generate_free_callback
+%Q{static void
 c_#{@class_name}_struct_free(#{@class_name}_t *s)
 {
   if(s)
@@ -90,6 +94,18 @@ c_#{@class_name}_struct_free(#{@class_name}_t *s)
     ruby_xfree(s);
   }
 }  
+}
+    def generate_mark_callback
+%Q{
+static void
+c_#{@class_name}_mark(void *s)
+{
+  if(s)
+  {
+    #{@class_name}_t *t =(#{@class_name}_t *)s;
+    rb_gc_mark(t->parent);
+  }
+}
 }
     end
     def generate_basic_allocator
@@ -132,7 +148,9 @@ generate_#{@class_name}_under(VALUE module, VALUE superclass)
 }
     end
     def generate_c_file
+      @files._c.puts add_includes_in_c_file
       @files._c.puts generate_free_callback
+      @files._c.puts generate_mark_callback
       @files._c.puts generate_basic_allocator
       @files._c.puts generate_initialize
       @files._c.puts generate_main_function
