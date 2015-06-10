@@ -28,6 +28,7 @@ void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
 
   rb_define_module_function(m_Clangc, "version", RUBY_METHOD_FUNC(m_clangc_get_version), 0);// in _clangc_methods.c
+  rb_define_module_function(m_Clangc, "default_diagnostic_display_options", RUBY_METHOD_FUNC(m_clangc_get_default_diagnostic_display_options), 0);// in _clangc_methods.c
 
   init_clang_enums_to_constants(m_Clangc);
   init_clang_errors_enums_to_constants(m_Clangc);

@@ -34,3 +34,20 @@ m_clangc_get_version(VALUE self)
   clang_disposeString(str);
   return version;
 }
+
+/**
+* call-seq:
+*   Clangc::default_diagnostic_display_options => Fixnum
+* 
+* Retrieve the set of display options most similar to the
+* default behavior of the clang compiler.
+*
+* A set of display options suitable for use with Clangc::Diagnostic#format
+*/
+
+VALUE
+m_clangc_get_default_diagnostic_display_options(VALUE self)
+{
+  return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
+}
+
