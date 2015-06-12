@@ -61,7 +61,7 @@ m_clangc_get_default_diagnostic_display_options(VALUE self)
 * The set of flags returned provide options for Clangc::Index#parseTranslationUnit
 * to indicate that the translation unit is likely to be reparsed many times,
 * either explicitly (via Clangc::TranslationUnit#reparse) or implicitly
-* (e.g., by code completion ( clang_codeCompletionAt())). The returned flag
+* (e.g., by code completion ( Clangc::TranslationUnit#CodeCompleteAt). The returned flag
 * set contains an unspecified set of optimizations (e.g., the precompiled 
 * preamble) geared toward improving the performance of these routines. The
 * set of optimizations enabled may change from one version to the next.

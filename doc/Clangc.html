@@ -63,6 +63,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-default_code_complete_options">::default_code_complete_options</a>
+    
     <li ><a href="#method-c-default_diagnostic_display_options">::default_diagnostic_display_options</a>
     
     <li ><a href="#method-c-default_editing_translation_unit_options">::default_editing_translation_unit_options</a>
@@ -101,6 +103,45 @@
        <header>
          <h3>Public Class Methods</h3>
        </header>
+
+    
+      <div id="method-c-default_code_complete_options" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            default_code_complete_options &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns a default set of code-completion options that can be passed to
+Clangc::TranslationUnit#codeCompleteAt.  This set is be bitwise-OR&#39;d
+constants of the Clangc::CodeComplete_Flags</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default_code_complete_options-source">
+            <pre>VALUE
+m_clangc_get_default_code_complete_options(VALUE self)
+{
+  return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-c-default_diagnostic_display_options" class="method-detail ">
@@ -166,10 +207,10 @@ that is being edited. (Clangc::TranslationUnit_Flags constants)</p>
 Clangc::Index#parseTranslationUnit to indicate that the translation unit is
 likely to be reparsed many times, either explicitly (via
 Clangc::TranslationUnit#reparse) or implicitly (e.g., by code completion (
-clang_codeCompletionAt())). The returned flag set contains an unspecified
-set of optimizations (e.g., the precompiled  preamble) geared toward
-improving the performance of these routines. The set of optimizations
-enabled may change from one version to the next.</p>
+Clangc::TranslationUnit#CodeCompleteAt). The returned flag set contains an
+unspecified set of optimizations (e.g., the precompiled  preamble) geared
+toward improving the performance of these routines. The set of
+optimizations enabled may change from one version to the next.</p>
           
           
 
