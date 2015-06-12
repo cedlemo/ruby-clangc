@@ -57,7 +57,21 @@
     
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-default_diagnostic_display_options">::default_diagnostic_display_options</a>
+    
+    <li ><a href="#method-c-default_editing_translation_unit_options">::default_editing_translation_unit_options</a>
+    
+    <li ><a href="#method-c-version">::version</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -83,6 +97,142 @@
     
 
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-default_diagnostic_display_options" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            default_diagnostic_display_options &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the set of display options most similar to the default behavior of
+the clang compiler.</p>
+
+<p>A set of display options suitable for use with Clangc::Diagnostic#format</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default_diagnostic_display_options-source">
+            <pre>VALUE
+m_clangc_get_default_diagnostic_display_options(VALUE self)
+{
+  return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-default_editing_translation_unit_options" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            default_editing_translation_unit_options &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the set of flags that is suitable for parsing a translation unit
+that is being edited. (Clangc::TranslationUnit_Flags constants)</p>
+
+<p>The set of flags returned provide options for
+Clangc::Index#parseTranslationUnit to indicate that the translation unit is
+likely to be reparsed many times, either explicitly (via
+Clangc::TranslationUnit#reparse) or implicitly (e.g., by code completion (
+clang_codeCompletionAt())). The returned flag set contains an unspecified
+set of optimizations (e.g., the precompiled  preamble) geared toward
+improving the performance of these routines. The set of optimizations
+enabled may change from one version to the next.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default_editing_translation_unit_options-source">
+            <pre>VALUE
+m_clangc_get_default_editing_translation_unit_options(VALUE self)
+{
+  return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-version" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            version &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return a version string, suitable for showing to a user, but not intended
+to be parsed (the format is not guaranteed to be stable).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="version-source">
+            <pre>VALUE
+m_clangc_get_version(VALUE self)
+{
+  CXString str = clang_getClangVersion();
+  VALUE version = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return version;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
