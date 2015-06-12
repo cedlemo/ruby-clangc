@@ -10,5 +10,9 @@ class TestClangcMethods < MiniTest::Test
     assert_instance_of Fixnum, Clangc.default_diagnostic_display_options
 # TODO add a test with 1|2|8
 #    assert_equal 1, Clangc.default_diagnostic_display_options
+    default_display_options = Clangc::DiagnosticDisplayOptions::Displaysourcelocation|
+                              Clangc::DiagnosticDisplayOptions::Displaycolumn|
+                              Clangc::DiagnosticDisplayOptions::Displayoption
+    assert_equal default_display_options, Clangc.default_diagnostic_display_options
   end
 end
