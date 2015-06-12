@@ -72,3 +72,19 @@ m_clangc_get_default_editing_translation_unit_options(VALUE self)
 {
   return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
 }
+
+/**
+* call-seq:
+*   Clangc.default_code_complete_options => Fixnum
+*
+* Returns a default set of code-completion options that can be
+* passed to Clangc::TranslationUnit#codeCompleteAt. 
+* This set is be bitwise-OR'd constants of the Clangc::CodeComplete_Flags
+*/
+
+VALUE
+m_clangc_get_default_code_complete_options(VALUE self)
+{
+  return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
+}
+
