@@ -20,7 +20,7 @@
 
 /**
 * call-seq:
-*   Clangc::version => String
+*   Clangc.version => String
 *
 * Return a version string, suitable for showing to a user, but not
 * intended to be parsed (the format is not guaranteed to be stable).
@@ -37,7 +37,7 @@ m_clangc_get_version(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::default_diagnostic_display_options => Fixnum
+*   Clangc.default_diagnostic_display_options => Fixnum
 * 
 * Retrieve the set of display options most similar to the
 * default behavior of the clang compiler.
@@ -51,3 +51,24 @@ m_clangc_get_default_diagnostic_display_options(VALUE self)
   return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
 }
 
+/**
+* call-seq:
+*   Clangc.default_editing_translation_unit_options => Fixnum  
+*
+* Returns the set of flags that is suitable for parsing a translation
+* unit that is being edited. (Clangc::TranslationUnit_Flags constants)
+*
+* The set of flags returned provide options for Clangc::Index#parseTranslationUnit
+* to indicate that the translation unit is likely to be reparsed many times,
+* either explicitly (via Clangc::TranslationUnit#reparse) or implicitly
+* (e.g., by code completion ( clang_codeCompletionAt())). The returned flag
+* set contains an unspecified set of optimizations (e.g., the precompiled 
+* preamble) geared toward improving the performance of these routines. The
+* set of optimizations enabled may change from one version to the next.
+*/
+
+VALUE
+m_clangc_get_default_editing_translation_unit_options(VALUE self)
+{
+  return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
+}

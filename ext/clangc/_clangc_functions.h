@@ -23,4 +23,6 @@ VALUE
 m_clangc_get_version(VALUE);
 VALUE
 m_clangc_get_default_diagnostic_display_options(VALUE);
+VALUE
+m_clangc_get_default_editing_translation_unit_options(VALUE);
 #endif
