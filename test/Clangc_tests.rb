@@ -16,4 +16,7 @@ class TestClangcMethods < MiniTest::Test
   def test_clangc_default_editing_translation_unit_options
     assert_instance_of Fixnum, Clangc.default_editing_translation_unit_options
   end
+  def test_clangc_default_code_complete_options
+    assert_instance_of Fixnum, Clangc.default_code_complete_options
+  end
 end
