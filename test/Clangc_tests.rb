@@ -13,4 +13,7 @@ class TestClangcMethods < MiniTest::Test
                               Clangc::DiagnosticDisplayOptions::Displayoption
     assert_equal default_display_options, Clangc.default_diagnostic_display_options
   end
+  def test_clangc_default_editing_translation_unit_options
+    assert_instance_of Fixnum, Clangc.default_editing_translation_unit_options
+  end
 end
