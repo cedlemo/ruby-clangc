@@ -70,10 +70,10 @@ typedef struct #{@class_name}_t {
 } #{@class_name}_t;
 }
     end
-    def generate_main_function_header
+    def generate_allocator_call
 %Q{
 VALUE
-generate_#{@class_name}_under(VALUE, VALUE);
+c_#{@class_name}_struct_alloc(VALUE);
 #endif //#{@class_name.upcase}_H
 }
     end
@@ -112,16 +112,17 @@ c_#{@class_name}_mark(void *s)
     def generate_basic_allocator
       if @data_type =~ /\*/ || @is_ptr
         set_ptr_null = %Q{
-    #{@class_name}_t * ptr;
-    ptr = (#{@class_name}_t *) ruby_xmalloc(sizeof(#{@class_name}_t)); 
-    ptr->data = NULL;
+  #{@class_name}_t * ptr;
+  ptr = (#{@class_name}_t *) ruby_xmalloc(sizeof(#{@class_name}_t)); 
+  ptr->data = NULL;
+  ptr->parent = Qnil;
 }
         void_ptr = "(void *) ptr"
       else
         set_ptr_null = ""
         void_ptr = "ruby_xmalloc(sizeof(#{@class_name}_t))"
       end
-%Q{static VALUE
+%Q{VALUE
 c_#{@class_name}_struct_alloc( VALUE klass)
 {
   #{set_ptr_null}
@@ -158,7 +159,7 @@ generate_#{@class_name}_under(VALUE module, VALUE superclass)
     end
     def generate_h_file
       @files._h.puts generate_class_structure
-      @files._h.puts generate_main_function_header
+      @files._h.puts generate_allocator_call
     end
   end
 
