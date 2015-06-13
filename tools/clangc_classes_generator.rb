@@ -18,10 +18,13 @@ require "./binder"
 #}
 #tu_class.generate_files
 
-diagnostic_class = Binder::Ruby_C_Class_Generator.new("Diagnostic", "CXDiagnostic", true)
-diagnostic_class.free_instructions = %q{
-  if(s->data)
-    clang_disposeDiagnostic(s->data); 
-}
-diagnostic_class.generate_files
+#diagnostic_class = Binder::Ruby_C_Class_Generator.new("Diagnostic", "CXDiagnostic", true)
+#diagnostic_class.free_instructions = %q{
+#  if(s->data)
+#    clang_disposeDiagnostic(s->data); 
+#}
+#diagnostic_class.generate_files
 
+File_class = Binder::Ruby_C_Class_Generator.new("File", "CXFile", true)
+#File_class.free_instructions not needed here
+File_class.generate_files

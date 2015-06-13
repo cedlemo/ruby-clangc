@@ -95,6 +95,7 @@ c_#{@class_name}_struct_free(#{@class_name}_t *s)
   }
 }  
 }
+    end
     def generate_mark_callback
 %Q{
 static void
