@@ -18,6 +18,7 @@
 /*TranslationUnit ruby class*/
 #include "class_TranslationUnit.h"
 #include "class_Diagnostic.h"
+#include "class_File.h"
 #include "macros.h"
 
 static void
@@ -154,4 +155,30 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
   d->data = clang_getDiagnostic(t->data, c_num);
   d->parent = self;
   return diagnostic;
+}
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#file(file_name) => clangc::File or nil
+ *
+ * Retrieve a file handle within the given translation unit.
+ * file_name a String for the name of the file.
+ *
+ * it returns the file handle for the named file in the translation unit ,
+ * or a nil if the file was not a part of this translation unit.
+ */
+VALUE
+c_TranslationUnit_get_file(VALUE self, VALUE file_name)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  
+  VALUE file;
+  File_t *f;
+  R_GET_CLASS_DATA("Clangc", "File", file, File_t, f);
+  char * c_file_name;
+  RSTRING_2_CHAR(file_name, c_file_name);
+  f->data = clang_getFile(t->data, c_file_name); 
+  f->parent = self;
+  return file;
 }

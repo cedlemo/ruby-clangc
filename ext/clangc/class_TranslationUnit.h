@@ -41,4 +41,7 @@ c_TranslationUnit_get_default_reparse_options(VALUE);
 
 VALUE
 c_TranslationUnit_get_diagnostic(VALUE, VALUE);
+
+VALUE
+c_TranslationUnit_get_file(VALUE, VALUE);
 #endif //TRANSLATIONUNIT_H
