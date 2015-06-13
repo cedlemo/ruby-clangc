@@ -23,6 +23,7 @@
 #include "class_Index.h"
 #include "class_TranslationUnit.h"
 #include "class_Diagnostic.h"
+#include "class_File.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -73,4 +74,11 @@ void Init_clangc(void) {
   rb_define_method(c_Diagnostic, "category_text", RUBY_METHOD_FUNC(c_Diagnostic_get_category_text), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "num_ranges", RUBY_METHOD_FUNC(c_Diagnostic_get_num_ranges), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "num_fixits", RUBY_METHOD_FUNC(c_Diagnostic_get_num_fixits), 0);// in class_Diagnostic.c
+
+/*
+*  A particular source file that is part of a translation unit
+*/
+
+  VALUE c_File = rb_define_class_under(m_Clangc, "File", rb_cObject);
+  rb_define_alloc_func(c_File, c_File_struct_alloc);
 }
