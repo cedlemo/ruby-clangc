@@ -130,6 +130,6 @@ class TestTranslationUnitUsage < MiniTest::Test
   end
   def test_TU_get_file_that_doesnt_exist
     tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
-    assert_instance_of Clangc::File, tu.file(@bad_file)
+    assert_equal nil, tu.file(@bad_file)
   end
 end
