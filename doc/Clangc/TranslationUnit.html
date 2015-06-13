@@ -78,6 +78,8 @@
     
     <li ><a href="#method-i-diagnostics_num">#diagnostics_num</a>
     
+    <li ><a href="#method-i-file">#file</a>
+    
     <li ><a href="#method-i-spelling">#spelling</a>
     
   </ul>
@@ -290,6 +292,64 @@ c_TranslationUnit_get_diagnostics_num(VALUE self)
   Data_Get_Struct(self, TranslationUnit_t, t);
   unsigned int num = clang_getNumDiagnostics(t-&gt;data);
   return CUINT_2_NUM(num); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-file" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#file(file_name) &rarr; clangc::File or nil
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a file handle within the given translation unit. file_name a
+String for the name of the file.</p>
+
+<p>it returns the file handle for the named file in the translation unit , a
+nil if the file was not a part of this translation unit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="file-source">
+            <pre>VALUE
+c_TranslationUnit_get_file(VALUE self, VALUE file_name)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  CXFile cxfile;
+  char * c_file_name;
+  RSTRING_2_CHAR(file_name, c_file_name);
+  cxfile = clang_getFile(t-&gt;data, c_file_name); 
+ 
+  if(cxfile)
+  {  
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    f-&gt;data = cxfile;
+    f-&gt;parent = self;
+    return file;
+  }
+  else
+    return Qnil;
 }</pre>
           </div>
           
