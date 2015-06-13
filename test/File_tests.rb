@@ -26,6 +26,6 @@ class TestFile < MiniTest::Test
   end
   def test_File_time
     file = @tu.file(@source_file)
-    assert_equal File.mtime(@source_file), file.mtime
+    assert_equal File.mtime(@source_file).asctime, file.mtime.asctime
   end
 end
