@@ -1,6 +1,6 @@
-Sat, 13 Jun 2015 11:51:47 +0200
+Sat, 13 Jun 2015 12:32:43 +0200
 README.rdoc	Sat, 13 Jun 2015 10:49:02 +0200
-ext/clangc/clangc.c	Sat, 13 Jun 2015 11:39:15 +0200
+ext/clangc/clangc.c	Sat, 13 Jun 2015 12:27:19 +0200
 ext/clangc/constants.c	Tue, 02 Jun 2015 19:14:52 +0200
 ext/clangc/class_Index.c	Mon, 25 May 2015 10:01:13 +0200
 ext/clangc/class_TranslationUnit.c	Sat, 13 Jun 2015 11:49:37 +0200

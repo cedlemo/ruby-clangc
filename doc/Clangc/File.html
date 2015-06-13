@@ -64,7 +64,17 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-name">#name</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -92,6 +102,57 @@
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-name" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::File#name &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the complete file and path name of the given file.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="name-source">
+            <pre>VALUE
+c_File_get_name(VALUE self)
+{
+  File_t * f;
+  VALUE name = Qnil;
+  Data_Get_Struct(self, File_t, f);
+  CXString str = clang_getFileName(f-&gt;data);
+  name = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+  return name;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
