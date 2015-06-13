@@ -30,4 +30,7 @@ c_File_struct_alloc(VALUE);
 
 VALUE
 c_File_get_name(VALUE);
+
+VALUE
+c_File_get_mtime(VALUE);
 #endif //FILE_H

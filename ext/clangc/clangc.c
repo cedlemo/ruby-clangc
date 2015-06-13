@@ -83,4 +83,5 @@ void Init_clangc(void) {
   VALUE c_File = rb_define_class_under(m_Clangc, "File", rb_cObject);
   rb_define_alloc_func(c_File, c_File_struct_alloc);
   rb_define_method(c_File, "name", RUBY_METHOD_FUNC(c_File_get_name),0);// in class_File.c
+  rb_define_method(c_File, "mtime", RUBY_METHOD_FUNC(c_File_get_mtime),0);// in class_File.c
 }

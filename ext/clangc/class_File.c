@@ -76,3 +76,20 @@ c_File_get_name(VALUE self)
   clang_disposeString(str);
   return name;
 }
+
+/**
+ * call-seq:
+ *  Clangc::File#mtime => Time
+ *
+ * Retrieve the last modification time of the given file.
+ */
+
+VALUE
+c_File_get_mtime(VALUE self)
+{
+  File_t *f;
+  VALUE mtime = Qnil;
+  Data_Get_Struct(self, File_t, f);
+  mtime = rb_time_new(clang_getFileTime(f->data), 0);
+  return mtime;
+}
