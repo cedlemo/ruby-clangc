@@ -8,4 +8,5 @@ ruby $DIR/../test/Clangc_tests.rb --pride
 ruby $DIR/../test/Index_tests.rb --pride
 ruby $DIR/../test/TranslationUnit_tests.rb --pride
 ruby $DIR/../test/Diagnostic_tests.rb --pride
+ruby $DIR/../test/File_tests.rb --pride
 rm $W_DIR/clangc-0.0.1.gem
