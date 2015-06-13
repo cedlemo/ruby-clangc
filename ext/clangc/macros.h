@@ -57,6 +57,13 @@ if (TYPE(rval) == T_FIXNUM || TYPE(rval) == T_BIGNUM)\
 else\
   rb_raise(rb_eTypeError, "invalid type for input");
 
+//Ruby string to C char *
+#define RSTRING_2_CHAR(rval, cval)\
+if (TYPE(rval) == T_STRING)\
+  cval = StringValueCStr(rval);\
+else\
+  rb_raise(rb_eTypeError, "invalid type for input");
+
 /****************/
 /*Classes Macros*/
 /****************/
