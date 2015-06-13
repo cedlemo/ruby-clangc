@@ -124,4 +124,12 @@ class TestTranslationUnitUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,@clang_headers_path)
     assert_instance_of Clangc::Diagnostic, tu.diagnostic(0)
   end
+  def test_TU_get_file_that_exists
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    assert_instance_of Clangc::File, tu.file(@source_file)
+  end
+  def test_TU_get_file_that_doesnt_exist
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    assert_instance_of Clangc::File, tu.file(@bad_file)
+  end
 end
