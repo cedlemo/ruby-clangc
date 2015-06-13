@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /*Diagnostic ruby class*/
-#include "clang-c/Index.h"
 #include "class_Diagnostic.h"
 #include "macros.h"
 

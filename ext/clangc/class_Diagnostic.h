@@ -18,6 +18,7 @@
 #ifndef DIAGNOSTIC_H
 #define DIAGNOSTIC_H
 #include <ruby/ruby.h>
+#include "clang-c/Index.h"
 typedef struct Diagnostic_t {
   CXDiagnostic data; 
   VALUE parent;
