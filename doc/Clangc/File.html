@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-mtime">#mtime</a>
+    
     <li ><a href="#method-i-name">#name</a>
     
   </ul>
@@ -106,6 +108,47 @@
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-mtime" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::File#mtime &rarr; Time
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the last modification time of the given file.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mtime-source">
+            <pre>VALUE
+c_File_get_mtime(VALUE self)
+{
+  File_t *f;
+  VALUE mtime = Qnil;
+  Data_Get_Struct(self, File_t, f);
+  mtime = rb_time_new(clang_getFileTime(f-&gt;data), 0);
+  return mtime;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-name" class="method-detail ">
