@@ -26,5 +26,5 @@ m_clangc_get_default_diagnostic_display_options(VALUE);
 VALUE
 m_clangc_get_default_editing_translation_unit_options(VALUE);
 VALUE
-m_clangc_get_default_code_complete_options(VLAUE);
+m_clangc_get_default_code_complete_options(VALUE);
 #endif
