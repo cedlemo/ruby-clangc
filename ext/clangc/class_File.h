@@ -27,4 +27,7 @@ typedef struct File_t {
 
 VALUE
 c_File_struct_alloc(VALUE);
+
+VALUE
+c_File_get_name(VALUE);
 #endif //FILE_H

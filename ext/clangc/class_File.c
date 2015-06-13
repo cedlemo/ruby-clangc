@@ -39,6 +39,7 @@ c_File_mark(void *s)
     rb_gc_mark(t->parent);
   }
 }
+
 VALUE
 c_File_struct_alloc( VALUE klass)
 {
@@ -50,7 +51,6 @@ c_File_struct_alloc( VALUE klass)
   return Data_Wrap_Struct(klass, c_File_mark, c_File_struct_free, (void *) ptr);
 }
 
-
 VALUE
 generate_File_under(VALUE module, VALUE superclass)
 {
@@ -59,3 +59,20 @@ generate_File_under(VALUE module, VALUE superclass)
   return klass;
 }
 
+/**
+ * call-seq:
+ *  Clangc::File#name => String
+ *
+ * Retrieve the complete file and path name of the given file.
+ */
+VALUE
+c_File_get_name(VALUE self)
+{
+  File_t * f;
+  VALUE name = Qnil;
+  Data_Get_Struct(self, File_t, f);
+  CXString str = clang_getFileName(f->data);
+  name = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+  return name;
+}
