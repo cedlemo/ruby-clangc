@@ -5,11 +5,11 @@ require "clangc"
 # excludeDeclsFromPCH = 0, displayDiagnostics=0
 cindex = Clangc::Index.new(false, false)
 
-@clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
-@source = "#{File.expand_path(File.dirname(__FILE__))}/list.c"
+clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
+source = "#{File.expand_path(File.dirname(__FILE__))}/list.c"
 options = Clangc::TranslationUnit_Flags::None
 
-tu = cindex.parse_translation_unit(@source, @clang_headers_path, options)
+tu = cindex.parse_translation_unit(source, clang_headers_path, options)
 
 exit unless tu
 
