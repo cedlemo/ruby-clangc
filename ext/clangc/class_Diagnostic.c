@@ -175,3 +175,34 @@ c_Diagnostic_get_num_fixits(VALUE self)
   unsigned int num = clang_getDiagnosticNumFixIts(d->data);
   return CUINT_2_NUM(num);
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#format(options) => String
+*
+* Format the given diagnostic in a manner that is suitable for display.
+*
+* This routine will format the given diagnostic to a string, rendering
+* the diagnostic according to the various options given. The
+* Clangc.default_diagnostic_display_options function returns the set of
+* options that most closely mimics the behavior of the clang compiler.
+*
+* options A set of options that control the diagnostic display,
+* created by combining Clangc::DiagnosticDisplayOptions constants.
+*
+* It returns a new string containing for formatted diagnostic.
+*/
+VALUE
+c_Diagnostic_format(VALUE self, VALUE options)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int c_options;
+  RNUM_2_INT(options, c_options);
+  
+  CXString str = clang_formatDiagnostic(d->data, c_options);
+  VALUE format = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+
+  return format;
+}

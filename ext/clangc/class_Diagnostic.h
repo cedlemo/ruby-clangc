@@ -47,4 +47,7 @@ c_Diagnostic_get_num_ranges(VALUE);
 
 VALUE
 c_Diagnostic_get_num_fixits(VALUE);
+
+VALUE
+c_Diagnostic_format(VALUE, VALUE);
 #endif //DIAGNOSTIC_H
