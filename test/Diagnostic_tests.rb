@@ -116,7 +116,9 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     format = diagnostics[0].format(Clangc.default_diagnostic_display_options)
     assert_instance_of String, format 
-    format = diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaysourcelocation)
-    assert_equal @source_file_one_error , format
+#    format = diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaysourcelocation)
+    format = diagnostics[0].format(0)
+    reference = "error: expected \';\' after top level declarator [Parse Issue]"
+    assert_equal reference, diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaycategoryname)
   end
 end
