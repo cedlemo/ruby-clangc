@@ -111,4 +111,12 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal 0, diagnostics[1].num_fixits
   end
+  def test_format_diagnostic_one_error
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_one_error,@clang_headers_path)
+    diagnostics = tu.diagnostics
+    format = diagnostics[0].format(Clangc.default_diagnostic_display_options)
+    assert_instance_of String, format 
+    format = diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaysourcelocation)
+    assert_equal @source_file_one_error , format
+  end
 end
