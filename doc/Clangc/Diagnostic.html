@@ -76,6 +76,8 @@
     
     <li ><a href="#method-i-category_text">#category_text</a>
     
+    <li ><a href="#method-i-format">#format</a>
+    
     <li ><a href="#method-i-num_fixits">#num_fixits</a>
     
     <li ><a href="#method-i-num_ranges">#num_ranges</a>
@@ -245,6 +247,63 @@ c_Diagnostic_get_category_text(VALUE self)
   VALUE text = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
   return text;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-format" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Diagnostic#format(options) &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Format the given diagnostic in a manner that is suitable for display.</p>
+
+<p>This routine will format the given diagnostic to a string, rendering the
+diagnostic according to the various options given. The <a
+href="../Clangc.html#method-c-default_diagnostic_display_options">Clangc.default_diagnostic_display_options</a>
+function returns the set of options that most closely mimics the behavior
+of the clang compiler.</p>
+
+<p>options A set of options that control the diagnostic display, created by
+combining Clangc::DiagnosticDisplayOptions constants.</p>
+
+<p>It returns a new string containing for formatted diagnostic.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="format-source">
+            <pre>VALUE
+c_Diagnostic_format(VALUE self, VALUE options)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int c_options;
+  RNUM_2_INT(options, c_options);
+  
+  CXString str = clang_formatDiagnostic(d-&gt;data, c_options);
+  VALUE format = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+
+  return format;
 }</pre>
           </div>
           
