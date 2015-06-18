@@ -114,3 +114,24 @@ c_File_is_multiple_include_guarded(VALUE self)
   unsigned int ret = clang_isFileMultipleIncludeGuarded(t->data, f->data);
   return ret == 0 ? Qfalse : Qtrue;
 }
+
+/**
+* call-seq:
+*   clangc::File#is_equal(file) => true or false
+*
+* Returns true if the file1 and file2 point to the same file,
+* or both null.
+* Two ruby objects Clangc::File can be different but can hold the
+* same File_t data.
+*/
+
+VALUE
+c_File_is_equal(VALUE self, VALUE file)
+{
+// TODO add ruby object check here
+  File_t * f1;
+  File_t * f2;
+  Data_Get_Struct(self, File_t, f1);
+  Data_Get_Struct(file, File_t, f2);
+  return clang_File_isEqual(f1->data, f2->data) == 0 ? Qfalse : Qtrue;
+}

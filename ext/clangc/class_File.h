@@ -36,4 +36,7 @@ c_File_get_mtime(VALUE);
 
 VALUE
 c_File_is_multiple_include_guarded(VALUE);
+
+VALUE
+c_File_is_equal(VALUE, VALUE);
 #endif //FILE_H
