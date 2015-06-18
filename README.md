@@ -12,7 +12,7 @@ This is free software shared under the GNU GPL 3.
 
 #Status:
 
-*    32/249 functions wrapped => 12.851405622489958%
+*    33/249 functions wrapped => 13.253012048192772%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
