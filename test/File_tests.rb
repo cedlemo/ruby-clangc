@@ -38,4 +38,10 @@ class TestFile < MiniTest::Test
     file = tu.file(@source_file_with_include_guard)
     assert_equal true, file.is_multiple_include_guarded
   end
+  def test_File_equal_true
+    file = @tu.file(@source_file)
+    another_file_object = @tu.file(@source_file)
+    assert_equal false, file == another_file_object
+    assert_equal true, file.is_equal(another_file_object)
+  end
 end
