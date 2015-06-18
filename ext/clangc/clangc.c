@@ -85,4 +85,5 @@ void Init_clangc(void) {
   rb_define_alloc_func(c_File, c_File_struct_alloc);
   rb_define_method(c_File, "name", RUBY_METHOD_FUNC(c_File_get_name),0);// in class_File.c
   rb_define_method(c_File, "mtime", RUBY_METHOD_FUNC(c_File_get_mtime),0);// in class_File.c
+  rb_define_method(c_File, "is_multiple_include_guarded", RUBY_METHOD_FUNC(c_File_is_multiple_include_guarded),0);// in class_File.c
 }

@@ -19,6 +19,7 @@
 /*File ruby class*/
 #include "class_File.h"
 #include "macros.h"
+#include "class_TranslationUnit.h"
 
 static void
 c_File_struct_free(File_t *s)
@@ -92,4 +93,24 @@ c_File_get_mtime(VALUE self)
   Data_Get_Struct(self, File_t, f);
   mtime = rb_time_new(clang_getFileTime(f->data), 0);
   return mtime;
+}
+
+/**
+* call-seq:
+*   Clangc::File#is_multiple_include_guarded => true or false
+*
+* Determine whether the given header is guarded against
+* multiple inclusions, either with the conventional
+* \#ifndef/\#define/\#endif macro guards or with \#pragma once.
+*/
+
+VALUE
+c_File_is_multiple_include_guarded(VALUE self)
+{
+  File_t * f;
+  Data_Get_Struct(self, File_t, f);
+  TranslationUnit_t * t;
+  Data_Get_Struct(f->parent, TranslationUnit_t, t);
+  unsigned int ret = clang_isFileMultipleIncludeGuarded(t->data, f->data);
+  return ret == 0 ? Qfalse : Qtrue;
 }
