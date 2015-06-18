@@ -1,5 +1,1 @@
-TODO write ruby string argument to C string
-done write ruby string array to c string array macro
-done write ruby bool value argument to c int macro
-done write ruby Num to uint macro
-done write get data of class instance macro 
+Add ruby object check in c_File_is_equal
