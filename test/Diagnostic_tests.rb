@@ -8,6 +8,8 @@ class TestDiagnostic < MiniTest::Test
     @cindex = Clangc::Index.new(false, false)
     # Good C test file
     @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+    # Good C test file with gnu-binary-literal option warning
+    @source_file_option_warnings = "#{File.expand_path(File.dirname(__FILE__))}/source_option_warnings.c"
     # C source code with one error
     @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
     # C source code with two error
@@ -33,7 +35,7 @@ class TestDiagnostic < MiniTest::Test
     assert_instance_of Array, diagnostics
     assert_equal 1, diagnostics.size
   end
-  def test_get_diagnostics_array_two_error
+  def test_get_diagnostics_array_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_instance_of Array, diagnostics
@@ -45,7 +47,7 @@ class TestDiagnostic < MiniTest::Test
     assert_instance_of Fixnum, diagnostics[0].severity
     assert_equal Clangc::DiagnosticSeverity::Error , diagnostics[0].severity
   end
-  def test_get_diagnostic_severity_two_error
+  def test_get_diagnostic_severity_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_instance_of Fixnum, diagnostics[1].severity
@@ -56,7 +58,7 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal "expected \';\' after top level declarator" , diagnostics[0].spelling
   end
-  def test_get_diagnostic_spelling_two_error
+  def test_get_diagnostic_spelling_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_equal "type specifier missing, defaults to \'int\'" , diagnostics[1].spelling
@@ -66,7 +68,7 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal 4 , diagnostics[0].category
   end
-  def test_get_diagnostic_category_two_error
+  def test_get_diagnostic_category_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_equal 2 , diagnostics[1].category
@@ -76,7 +78,7 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal "Parse Issue" , diagnostics[0].category_name
   end
-  def test_get_diagnostic_category_name_two_error
+  def test_get_diagnostic_category_name_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_equal "Semantic Issue" , diagnostics[1].category_name
@@ -86,7 +88,7 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal "Parse Issue" , diagnostics[0].category_text
   end
-  def test_get_diagnostic_category_text_two_error
+  def test_get_diagnostic_category_text_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_equal "Semantic Issue" , diagnostics[1].category_text
@@ -96,7 +98,7 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal 0, diagnostics[0].num_ranges
   end
-  def test_get_diagnostic_num_ranges_two_error
+  def test_get_diagnostic_num_ranges_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_equal 1, diagnostics[1].num_ranges
@@ -106,7 +108,7 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     assert_equal 1, diagnostics[0].num_fixits
   end
-  def test_get_diagnostic_num_fixits_two_error
+  def test_get_diagnostic_num_fixits_two_errors
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
     diagnostics = tu.diagnostics
     assert_equal 0, diagnostics[1].num_fixits
@@ -120,5 +122,11 @@ class TestDiagnostic < MiniTest::Test
     format = diagnostics[0].format(0)
     reference = "error: expected \';\' after top level declarator [Parse Issue]"
     assert_equal reference, diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaycategoryname)
+  end
+  def test_get_diagnostic_options
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_option_warnings,@clang_headers_path + %w(-Wall -pedantic))
+    assert_equal 20, tu.diagnostics.size
+    assert_equal "-Wgnu-binary-literal", tu.diagnostics[15].option[0]
+    assert_equal "-Wno-gnu-binary-literal", tu.diagnostics[15].option[1]
   end
 end
