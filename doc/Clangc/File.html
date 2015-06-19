@@ -141,6 +141,7 @@ can hold the same File_t data.</p>
             <pre>VALUE
 c_File_is_equal(VALUE self, VALUE file)
 {
+// TODO add ruby object check here
   File_t * f1;
   File_t * f2;
   Data_Get_Struct(self, File_t, f1);

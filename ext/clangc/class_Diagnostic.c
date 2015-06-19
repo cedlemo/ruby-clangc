@@ -210,11 +210,12 @@ c_Diagnostic_format(VALUE self, VALUE options)
 /**
 * call-seq:
 *   Clangc::Diagnostic#option => Array
+*
 * Retrieve the name of the command-line option that enabled this
 * diagnostic such as ("-Wconversion" or "-pedantic") and the option 
 * that disables it if any.
-* array[0] == String command-line option that enabled the diagnostic
-* array[1] == String or nil command-line option that disable the diagnostic
+* returned_array[0] == String command-line option that enabled the diagnostic
+* returned_array[1] == String or nil command-line option that disable the diagnostic
 */
 
 VALUE
