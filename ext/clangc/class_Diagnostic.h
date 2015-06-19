@@ -50,4 +50,7 @@ c_Diagnostic_get_num_fixits(VALUE);
 
 VALUE
 c_Diagnostic_format(VALUE, VALUE);
+
+VALUE
+c_Diagnostic_get_option(VALUE);
 #endif //DIAGNOSTIC_H

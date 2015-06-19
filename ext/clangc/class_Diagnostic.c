@@ -206,3 +206,32 @@ c_Diagnostic_format(VALUE self, VALUE options)
 
   return format;
 }
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#option => Array
+* Retrieve the name of the command-line option that enabled this
+* diagnostic such as ("-Wconversion" or "-pedantic") and the option 
+* that disables it if any.
+* array[0] == String command-line option that enabled the diagnostic
+* array[1] == String or nil command-line option that disable the diagnostic
+*/
+
+VALUE
+c_Diagnostic_get_option(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+
+  CXString str1;
+  CXString str2;
+  str1 = clang_getDiagnosticOption(d->data, &str2);
+  VALUE ret = rb_ary_new();
+  rb_ary_push(ret, rb_str_new2(clang_getCString(str1)));
+  rb_ary_push(ret, rb_str_new2(clang_getCString(str2)));
+  
+  clang_disposeString(str1);
+  clang_disposeString(str2);
+
+  return ret;
+}
