@@ -28,5 +28,9 @@ require "./binder"
 #File_class = Binder::Ruby_C_Class_Generator.new("File", "CXFile", true)
 #File_class.free_instructions not needed here
 #File_class.generate_files
-SourceRange_class = Binder::Ruby_C_Class_Generator.new("SourceRange", "CXSourceRange", true)
-SourceRange_class.generate_files
+
+#SourceRange_class = Binder::Ruby_C_Class_Generator.new("SourceRange", "CXSourceRange", true)
+#SourceRange_class.generate_files
+
+SourceLocation_class = Binder::Ruby_C_Class_Generator.new("SourceLocation", "CXSourceLocation", false)
+SourceLocation_class.generate_files
