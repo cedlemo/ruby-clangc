@@ -25,6 +25,7 @@
 #include "class_Diagnostic.h"
 #include "class_File.h"
 #include "class_SourceRange.h"
+#include "class_SourceLocation.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -34,6 +35,7 @@ void Init_clangc(void) {
   rb_define_module_function(m_Clangc, "default_editing_translation_unit_options", RUBY_METHOD_FUNC(m_clangc_get_default_editing_translation_unit_options), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "default_code_complete_options", RUBY_METHOD_FUNC(m_clangc_get_default_code_complete_options), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "null_source_range", RUBY_METHOD_FUNC(m_clangc_get_null_source_range), 0);// in _clangc_functions.c
+  rb_define_module_function(m_Clangc, "null_source_location", RUBY_METHOD_FUNC(m_clangc_get_null_source_location), 0);// in _clangc_functions.c
 
   init_clang_enums_to_constants(m_Clangc);
   init_clang_errors_enums_to_constants(m_Clangc);
@@ -103,4 +105,15 @@ void Init_clangc(void) {
   rb_define_alloc_func(c_SourceRange, c_SourceRange_struct_alloc);
   rb_define_method(c_SourceRange, "is_null", RUBY_METHOD_FUNC(c_SourceRange_is_null), 0);// in class_SourceRange.c
   rb_define_method(c_SourceRange, "is_equal", RUBY_METHOD_FUNC(c_SourceRange_is_equal), 1);// in class_SourceRange.c
+
+/**
+* Identifies a specific source location within a translation
+* unit.
+*
+* Use Clangc::SourceLocation.expansion or Clangc::SourceLocation#spelling
+* to map a source location to a particular file, line, and column.
+*/
+
+  VALUE c_SourceLocation = rb_define_class_under(m_Clangc, "SourceLocation", rb_cObject);
+  rb_define_alloc_func(c_SourceLocation, c_SourceLocation_struct_alloc);
 }

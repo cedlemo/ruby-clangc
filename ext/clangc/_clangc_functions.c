@@ -19,6 +19,7 @@
 #include "_clangc_functions.h"
 #include "clang-c/Index.h"
 #include "class_SourceRange.h"
+#include "class_SourceLocation.h"
 
 /**
 * call-seq:
@@ -94,7 +95,7 @@ m_clangc_get_default_code_complete_options(VALUE self)
 * call-seq:
 *   Clangc.null_source_range
 *
-*Retrieve a NULL (invalid) source range
+* Retrieve a NULL (invalid) source range
 */
 
 VALUE
@@ -105,4 +106,21 @@ m_clangc_get_null_source_range(VALUE self)
   R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
   s->data = clang_getNullRange();
   return a_source_range;
+}
+
+/**
+* call-seq:
+*   Clangc.null_source_location
+*
+* Retrieve a NULL (invalid) source location.
+*/
+
+VALUE
+m_clangc_get_null_source_location(VALUE self)
+{
+  SourceLocation_t *s;
+  VALUE a_source_location;
+  R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, s);
+  s->data = clang_getNullLocation();
+  return a_source_location;
 }

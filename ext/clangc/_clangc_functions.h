@@ -29,4 +29,6 @@ VALUE
 m_clangc_get_default_code_complete_options(VALUE);
 VALUE
 m_clangc_get_null_source_range(VALUE);
+VALUE
+m_clangc_get_null_source_location(VALUE);
 #endif
