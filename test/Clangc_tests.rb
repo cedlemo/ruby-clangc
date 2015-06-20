@@ -19,4 +19,7 @@ class TestClangcMethods < MiniTest::Test
   def test_clangc_default_code_complete_options
     assert_instance_of Fixnum, Clangc.default_code_complete_options
   end
+  def test_clangc_null_range
+    assert_instance_of Clangc::SourceRange, Clangc.null_source_range
+  end
 end
