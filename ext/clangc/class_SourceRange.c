@@ -106,3 +106,23 @@ c_SourceRange_get_start(VALUE self)
   sl->data = clang_getRangeStart(sr->data);
   return a_source_location;
 }
+
+/**
+* call-seq:
+*   Clangc::SourceRange#end => clangc::SourceLocation
+*
+* Retrieve a source location representing the last character within a
+* source range.
+*/
+VALUE
+c_SourceRange_get_end(VALUE self)
+{
+  SourceRange_t *sr;
+  SourceLocation_t *sl;
+  VALUE a_source_location;
+  Data_Get_Struct(self, SourceRange_t, sr);
+
+  R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, sl);
+  sl->data = clang_getRangeEnd(sr->data);
+  return a_source_location;
+}
