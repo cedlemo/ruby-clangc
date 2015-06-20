@@ -22,4 +22,7 @@ class TestClangcMethods < MiniTest::Test
   def test_clangc_null_range
     assert_instance_of Clangc::SourceRange, Clangc.null_source_range
   end
+  def test_clangc_null_location
+    assert_instance_of Clangc::SourceLocation, Clangc.null_source_location
+  end
 end
