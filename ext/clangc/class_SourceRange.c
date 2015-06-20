@@ -48,3 +48,20 @@ c_SourceRange_struct_alloc( VALUE klass)
 
   return Data_Wrap_Struct(klass, NULL, c_SourceRange_struct_free, (void *) ptr);
 }
+
+/**
+* call-seq:
+*   Clangc::SourceRange#is_null => true or false
+*
+* Returns true is the underlying CXSourceRange is NULL or false otherwise
+*/
+VALUE
+c_SourceRange_is_null(VALUE self)
+{
+  SourceRange_t *s;
+  Data_Get_Struct(self, SourceRange_t, s);
+  if(clang_Range_isNull(s->data) == 0)
+    return Qfalse;
+  else
+    return Qtrue;
+}

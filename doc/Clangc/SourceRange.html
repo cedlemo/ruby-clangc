@@ -64,7 +64,17 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-is_null">#is_null</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -95,6 +105,56 @@ end locations from a source range, respectively.</p>
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-is_null" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceRange#is_null &rarr; true or false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns true is the underlying CXSourceRange is NULL or false otherwise</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_null-source">
+            <pre>VALUE
+c_SourceRange_is_null(VALUE self)
+{
+  SourceRange_t *s;
+  Data_Get_Struct(self, SourceRange_t, s);
+  if(clang_Range_isNull(s-&gt;data) == 0)
+    return Qfalse;
+  else
+    return Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 

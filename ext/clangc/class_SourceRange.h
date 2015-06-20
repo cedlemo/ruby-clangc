@@ -27,4 +27,7 @@ typedef struct SourceRange_t {
 
 VALUE
 c_SourceRange_struct_alloc(VALUE);
+
+VALUE
+c_SourceRange_is_null(VALUE);
 #endif //SOURCERANGE_H
