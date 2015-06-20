@@ -65,5 +65,11 @@ class TestSourceRange < MiniTest::Test
     source_range = diagnostics[1].source_ranges[range_number - 1]
     assert_instance_of Clangc::SourceLocation, source_range.start 
   end
-
+  def test_SourceRange_get_end
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
+    diagnostics = tu.diagnostics
+    range_number = tu.diagnostics[1].num_ranges
+    source_range = diagnostics[1].source_ranges[range_number - 1]
+    assert_instance_of Clangc::SourceLocation, source_range.end 
+  end
 end
