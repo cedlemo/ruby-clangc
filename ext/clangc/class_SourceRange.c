@@ -19,6 +19,7 @@
 /*SourceRange ruby class*/
 #include "class_SourceRange.h"
 #include "macros.h"
+#include "class_SourceLocation.h"
 
 static void
 c_SourceRange_struct_free(SourceRange_t *s)
@@ -84,4 +85,24 @@ c_SourceRange_is_equal(VALUE self, VALUE other_source_range)
     return Qtrue;
   else
     return Qfalse;
+}
+
+/**
+* call-seq:
+*   Clangc::SourceRange#start => clangc::SourceLocation
+*
+* Retrieve a source location representing the first character within a
+* source range.
+*/
+VALUE
+c_SourceRange_get_start(VALUE self)
+{
+  SourceRange_t *sr;
+  SourceLocation_t *sl;
+  VALUE a_source_location;
+  Data_Get_Struct(self, SourceRange_t, sr);
+
+  R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, sl);
+  sl->data = clang_getRangeStart(sr->data);
+  return a_source_location;
 }

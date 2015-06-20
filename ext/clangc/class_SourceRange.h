@@ -33,4 +33,7 @@ c_SourceRange_is_null(VALUE);
 
 VALUE
 c_SourceRange_is_equal(VALUE, VALUE);
+
+VALUE
+c_SourceRange_get_start(VALUE);
 #endif //SOURCERANGE_H

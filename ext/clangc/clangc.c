@@ -105,6 +105,7 @@ void Init_clangc(void) {
   rb_define_alloc_func(c_SourceRange, c_SourceRange_struct_alloc);
   rb_define_method(c_SourceRange, "is_null", RUBY_METHOD_FUNC(c_SourceRange_is_null), 0);// in class_SourceRange.c
   rb_define_method(c_SourceRange, "is_equal", RUBY_METHOD_FUNC(c_SourceRange_is_equal), 1);// in class_SourceRange.c
+  rb_define_method(c_SourceRange, "start", RUBY_METHOD_FUNC(c_SourceRange_get_start), 0);// in class_SourceRange.c
 
 /**
 * Identifies a specific source location within a translation
