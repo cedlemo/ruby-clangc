@@ -19,6 +19,7 @@
 #include "class_Diagnostic.h"
 #include "macros.h"
 #include "class_SourceRange.h"
+#include "class_SourceLocation.h"
 
 static void
 c_Diagnostic_struct_free(Diagnostic_t *s)
@@ -265,4 +266,26 @@ c_Diagnostic_get_source_range(VALUE self, VALUE index)
   R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
   s->data = clang_getDiagnosticRange(d->data, c_index);
   return a_source_range;
+}
+
+/**
+* call-seq:
+*   Clangc::Diagnostic#source_location => Clangc::SourceLocation
+*
+* Retrieve the source location of the given diagnostic.
+*
+* This location is where Clang would print the caret ('^') when
+* displaying the diagnostic on the command line.
+*/
+
+VALUE
+c_Diagnostic_get_source_location(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);  
+  VALUE a_source_location;
+  SourceLocation_t *sl;
+  R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, sl);
+  sl->data = clang_getDiagnosticLocation(d->data);
+  return a_source_location;  
 }
