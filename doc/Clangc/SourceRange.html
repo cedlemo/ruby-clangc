@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-end">#end</a>
+    
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
     <li ><a href="#method-i-is_null">#is_null</a>
@@ -113,6 +115,51 @@ end locations from a source range, respectively.</p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-end" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceRange#end &rarr; clangc::SourceLocation
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a source location representing the last character within a source
+range.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="end-source">
+            <pre>VALUE
+c_SourceRange_get_end(VALUE self)
+{
+  SourceRange_t *sr;
+  SourceLocation_t *sl;
+  VALUE a_source_location;
+  Data_Get_Struct(self, SourceRange_t, sr);
+
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, a_source_location, SourceLocation_t, sl);
+  sl-&gt;data = clang_getRangeEnd(sr-&gt;data);
+  return a_source_location;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-is_equal" class="method-detail ">

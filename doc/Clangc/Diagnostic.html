@@ -86,6 +86,8 @@
     
     <li ><a href="#method-i-severity">#severity</a>
     
+    <li ><a href="#method-i-source_location">#source_location</a>
+    
     <li ><a href="#method-i-source_range">#source_range</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
@@ -483,6 +485,52 @@ c_Diagnostic_get_severity(VALUE self)
   Data_Get_Struct(self, Diagnostic_t, d);
   unsigned int severity = clang_getDiagnosticSeverity(d-&gt;data);
   return CUINT_2_NUM(severity);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-source_location" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Diagnostic#source_location &rarr; Clangc::SourceLocation
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the source location of the given diagnostic.</p>
+
+<p>This location is where Clang would print the caret (&#39;^&#39;) when
+displaying the diagnostic on the command line.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="source_location-source">
+            <pre>VALUE
+c_Diagnostic_get_source_location(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);  
+  VALUE a_source_location;
+  SourceLocation_t *sl;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, a_source_location, SourceLocation_t, sl);
+  sl-&gt;data = clang_getDiagnosticLocation(d-&gt;data);
+  return a_source_location;  
 }</pre>
           </div>
           
