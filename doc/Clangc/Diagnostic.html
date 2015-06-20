@@ -86,6 +86,8 @@
     
     <li ><a href="#method-i-severity">#severity</a>
     
+    <li ><a href="#method-i-source_range">#source_range</a>
+    
     <li ><a href="#method-i-spelling">#spelling</a>
     
   </ul>
@@ -299,7 +301,7 @@ c_Diagnostic_format(VALUE self, VALUE options)
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
   unsigned int c_options;
-  RNUM_2_INT(options, c_options);
+  RNUM_2_UINT(options, c_options);
   
   CXString str = clang_formatDiagnostic(d-&gt;data, c_options);
   VALUE format = rb_str_new2(clang_getCString(str));
@@ -481,6 +483,62 @@ c_Diagnostic_get_severity(VALUE self)
   Data_Get_Struct(self, Diagnostic_t, d);
   unsigned int severity = clang_getDiagnosticSeverity(d-&gt;data);
   return CUINT_2_NUM(severity);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-source_range" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Diagnostic#source_range(index) &rarr; Clangc::SourceRange
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a source range associated with the diagnostic.</p>
+
+<p>A diagnostic&#39;s source ranges highlight important elements in the source
+code. On the command line, Clang displays source ranges by underlining them
+with &#39;~&#39; characters.</p>
+
+<p>param <a href="Diagnostic.html">Diagnostic</a> the diagnostic whose range
+is being extracted.</p>
+
+<p>param Range the zero-based index specifying which range to</p>
+
+<p>returns the requested source range.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="source_range-source">
+            <pre>VALUE
+c_Diagnostic_get_source_range(VALUE self, VALUE index)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);  
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  VALUE a_source_range;
+  SourceRange_t *s;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, a_source_range, SourceRange_t, s);
+  s-&gt;data = clang_getDiagnosticRange(d-&gt;data, c_index);
+  return a_source_range;
 }</pre>
           </div>
           

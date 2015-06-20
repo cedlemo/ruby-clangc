@@ -240,6 +240,8 @@ c_Diagnostic_get_option(VALUE self)
 
 /**
 * Retrieve a source range associated with the diagnostic.
+* call-seq:
+*   Clangc::Diagnostic#source_range(index) => Clangc::SourceRange
 *
 * A diagnostic's source ranges highlight important elements in the source
 * code. On the command line, Clang displays source ranges by
