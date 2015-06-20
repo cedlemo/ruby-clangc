@@ -74,6 +74,8 @@
     
     <li ><a href="#method-i-is_null">#is_null</a>
     
+    <li ><a href="#method-i-start">#start</a>
+    
   </ul>
 </div>
 
@@ -189,6 +191,51 @@ c_SourceRange_is_null(VALUE self)
     return Qfalse;
   else
     return Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceRange#start &rarr; clangc::SourceLocation
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a source location representing the first character within a source
+range.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre>VALUE
+c_SourceRange_get_start(VALUE self)
+{
+  SourceRange_t *sr;
+  SourceLocation_t *sl;
+  VALUE a_source_location;
+  Data_Get_Struct(self, SourceRange_t, sr);
+
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, a_source_location, SourceLocation_t, sl);
+  sl-&gt;data = clang_getRangeStart(sr-&gt;data);
+  return a_source_location;
 }</pre>
           </div>
           
