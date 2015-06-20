@@ -53,4 +53,7 @@ c_Diagnostic_format(VALUE, VALUE);
 
 VALUE
 c_Diagnostic_get_option(VALUE);
+
+VALUE
+c_Diagnostic_get_source_range(VALUE, VALUE);
 #endif //DIAGNOSTIC_H

@@ -79,6 +79,7 @@ void Init_clangc(void) {
   rb_define_method(c_Diagnostic, "num_fixits", RUBY_METHOD_FUNC(c_Diagnostic_get_num_fixits), 0);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "format", RUBY_METHOD_FUNC(c_Diagnostic_format), 1);// in class_Diagnostic.c
   rb_define_method(c_Diagnostic, "option", RUBY_METHOD_FUNC(c_Diagnostic_get_option), 0);// in class_Diagnostic.c
+  rb_define_method(c_Diagnostic, "source_range", RUBY_METHOD_FUNC(c_Diagnostic_get_source_range), 1);// in class_Diagnostic.c
 
 /*
 *  A particular source file that is part of a translation unit

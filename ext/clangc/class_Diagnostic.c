@@ -18,6 +18,7 @@
 /*Diagnostic ruby class*/
 #include "class_Diagnostic.h"
 #include "macros.h"
+#include "class_SourceRange.h"
 
 static void
 c_Diagnostic_struct_free(Diagnostic_t *s)
@@ -198,7 +199,7 @@ c_Diagnostic_format(VALUE self, VALUE options)
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
   unsigned int c_options;
-  RNUM_2_INT(options, c_options);
+  RNUM_2_UINT(options, c_options);
   
   CXString str = clang_formatDiagnostic(d->data, c_options);
   VALUE format = rb_str_new2(clang_getCString(str));
@@ -235,4 +236,31 @@ c_Diagnostic_get_option(VALUE self)
   clang_disposeString(str2);
 
   return ret;
+}
+
+/**
+* Retrieve a source range associated with the diagnostic.
+*
+* A diagnostic's source ranges highlight important elements in the source
+* code. On the command line, Clang displays source ranges by
+* underlining them with '~' characters.
+*
+* \param Diagnostic the diagnostic whose range is being extracted.
+*
+* \param Range the zero-based index specifying which range to
+*
+* \returns the requested source range.
+*/
+VALUE
+c_Diagnostic_get_source_range(VALUE self, VALUE index)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);  
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  VALUE a_source_range;
+  SourceRange_t *s;
+  R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
+  s->data = clang_getDiagnosticRange(d->data, c_index);
+  return a_source_range;
 }
