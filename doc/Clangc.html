@@ -69,6 +69,8 @@
     
     <li ><a href="#method-c-default_editing_translation_unit_options">::default_editing_translation_unit_options</a>
     
+    <li ><a href="#method-c-null_source_range">::null_source_range</a>
+    
     <li ><a href="#method-c-version">::version</a>
     
   </ul>
@@ -221,6 +223,47 @@ optimizations enabled may change from one version to the next.</p>
 m_clangc_get_default_editing_translation_unit_options(VALUE self)
 {
   return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-null_source_range" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            null_source_range
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a NULL (invalid) source range</p>
+          
+          
+
+          
+          <div class="method-source-code" id="null_source_range-source">
+            <pre>VALUE
+m_clangc_get_null_source_range(VALUE self)
+{
+  SourceRange_t *s;
+  VALUE a_source_range;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, a_source_range, SourceRange_t, s);
+  s-&gt;data = clang_getNullRange();
+  return a_source_range;
 }</pre>
           </div>
           
