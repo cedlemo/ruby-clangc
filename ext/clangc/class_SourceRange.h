@@ -30,4 +30,7 @@ c_SourceRange_struct_alloc(VALUE);
 
 VALUE
 c_SourceRange_is_null(VALUE);
+
+VALUE
+c_SourceRange_is_equal(VALUE, VALUE);
 #endif //SOURCERANGE_H

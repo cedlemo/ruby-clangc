@@ -102,4 +102,5 @@ void Init_clangc(void) {
   VALUE c_SourceRange = rb_define_class_under(m_Clangc, "SourceRange", rb_cObject);
   rb_define_alloc_func(c_SourceRange, c_SourceRange_struct_alloc);
   rb_define_method(c_SourceRange, "is_null", RUBY_METHOD_FUNC(c_SourceRange_is_null), 0);// in class_SourceRange.c
+  rb_define_method(c_SourceRange, "is_equal", RUBY_METHOD_FUNC(c_SourceRange_is_equal), 1);// in class_SourceRange.c
 }

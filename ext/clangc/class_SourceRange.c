@@ -65,3 +65,23 @@ c_SourceRange_is_null(VALUE self)
   else
     return Qtrue;
 }
+
+/**
+* call-seq:
+*   clangc::SourceRange#is_equal
+*
+* Determine whether two ranges are equivalent.
+* Returns true if the ranges are the same, false if they differ.
+*/
+VALUE
+c_SourceRange_is_equal(VALUE self, VALUE other_source_range)
+{
+  SourceRange_t * sr1;
+  SourceRange_t * sr2;
+  Data_Get_Struct(self, SourceRange_t, sr1);
+  Data_Get_Struct(other_source_range, SourceRange_t, sr2);
+  if(clang_equalRanges(sr1->data, sr2->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
