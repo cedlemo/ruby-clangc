@@ -135,4 +135,12 @@ class TestDiagnostic < MiniTest::Test
     range_number = tu.diagnostics[1].num_ranges
     assert_instance_of Clangc::SourceRange , diagnostics[1].source_range(range_number - 1)
   end
+  def test_get_diagnostic_ranges
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
+    diagnostics = tu.diagnostics
+    range_number = tu.diagnostics[1].num_ranges
+    source_ranges = diagnostics[1].source_ranges
+    assert_equal range_number, source_ranges.size
+    assert_instance_of Clangc::SourceRange, source_ranges[range_number - 1]
+  end
 end

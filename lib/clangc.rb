@@ -10,4 +10,13 @@ module Clangc
       ds
     end
   end
+  class Diagnostic
+    def source_ranges
+      sr = []
+      for i in 0..(num_ranges - 1) do
+        sr << source_range(i)
+      end
+      sr
+    end
+  end
 end
