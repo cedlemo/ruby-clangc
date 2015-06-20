@@ -10,3 +10,4 @@ The libclang data are mapped to the following:
 [CXDiagnostic]        Clangc::Diagnostic
 [CXFile]              Clangc::File
 [CXSourceRange]       Clangc::SourceRange
+[CXSourceLocation]    Clangc::SourceLocation

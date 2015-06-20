@@ -110,7 +110,7 @@ void Init_clangc(void) {
 * Identifies a specific source location within a translation
 * unit.
 *
-* Use Clangc::SourceLocation.expansion or Clangc::SourceLocation#spelling
+* Use Clangc::SourceLocation#expansion or Clangc::SourceLocation#spelling
 * to map a source location to a particular file, line, and column.
 */
 

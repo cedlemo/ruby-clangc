@@ -12,12 +12,13 @@ This is free software shared under the GNU GPL 3.
 
 # Status:
 
-*    39/249 functions wrapped => 15.66265060240964%
+*    40/249 functions wrapped => 16.06425702811245%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
 *    CXFile
 *    CXSourceRange
+*    CXSourceLocation
 
 # Examples (see samples directory): 
 
