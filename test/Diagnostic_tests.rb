@@ -129,4 +129,10 @@ class TestDiagnostic < MiniTest::Test
     assert_equal "-Wgnu-binary-literal", tu.diagnostics[15].option[0]
     assert_equal "-Wno-gnu-binary-literal", tu.diagnostics[15].option[1]
   end
+  def test_get_diagnostic_range
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
+    diagnostics = tu.diagnostics
+    range_number = tu.diagnostics[1].num_ranges
+    assert_instance_of Clangc::SourceRange , diagnostics[1].source_range(range_number - 1)
+  end
 end
