@@ -24,6 +24,7 @@
 #include "class_TranslationUnit.h"
 #include "class_Diagnostic.h"
 #include "class_File.h"
+#include "class_SourceRange.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -32,6 +33,7 @@ void Init_clangc(void) {
   rb_define_module_function(m_Clangc, "default_diagnostic_display_options", RUBY_METHOD_FUNC(m_clangc_get_default_diagnostic_display_options), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "default_editing_translation_unit_options", RUBY_METHOD_FUNC(m_clangc_get_default_editing_translation_unit_options), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "default_code_complete_options", RUBY_METHOD_FUNC(m_clangc_get_default_code_complete_options), 0);// in _clangc_functions.c
+  rb_define_module_function(m_Clangc, "null_source_range", RUBY_METHOD_FUNC(m_clangc_get_null_source_range), 0);// in _clangc_functions.c
 
   init_clang_enums_to_constants(m_Clangc);
   init_clang_errors_enums_to_constants(m_Clangc);
@@ -88,4 +90,14 @@ void Init_clangc(void) {
   rb_define_method(c_File, "mtime", RUBY_METHOD_FUNC(c_File_get_mtime),0);// in class_File.c
   rb_define_method(c_File, "is_multiple_include_guarded", RUBY_METHOD_FUNC(c_File_is_multiple_include_guarded),0);// in class_File.c
   rb_define_method(c_File, "is_equal", RUBY_METHOD_FUNC(c_File_is_equal), 1);// in class_File.c
+
+/*
+* Identifies a half-open character range in the source code.
+*
+* Use Clangc::Range#start and Clangc::Range#end to retrieve the
+* starting and end locations from a source range, respectively.
+*/
+
+  VALUE c_SourceRange = rb_define_class_under(m_Clangc, "SourceRange", rb_cObject);
+  rb_define_alloc_func(c_SourceRange, c_SourceRange_struct_alloc);
 }

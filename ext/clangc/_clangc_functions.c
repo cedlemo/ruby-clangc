@@ -15,8 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include "_clangc_functions.h"
 #include "clang-c/Index.h"
+#include "class_SourceRange.h"
 
 /**
 * call-seq:
@@ -88,3 +90,19 @@ m_clangc_get_default_code_complete_options(VALUE self)
   return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
 }
 
+/**
+* call-seq:
+*   Clangc.null_source_range
+*
+*Retrieve a NULL (invalid) source range
+*/
+
+VALUE
+m_clangc_get_null_source_range(VALUE self)
+{
+  SourceRange_t *s;
+  VALUE a_source_range;
+  R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
+  s->data = clang_getNullRange();
+  return a_source_range;
+}
