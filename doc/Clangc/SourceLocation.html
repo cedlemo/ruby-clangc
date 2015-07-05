@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-is_equal">#is_equal</a>
+    
     <li ><a href="#method-i-is_from_main_file">#is_from_main_file</a>
     
     <li ><a href="#method-i-is_in_system_header">#is_in_system_header</a>
@@ -111,6 +113,55 @@ map a source location to a particular file, line, and column.</p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-is_equal" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceLocation#equal(Clangc::SourceLocation) &rarr; true /false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether two source locations, which must refer into the same
+translation unit, refer to exactly the same point in the source code.</p>
+
+<p>true if the source locations refer to the same location, false if they
+refer to different locations.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_equal-source">
+            <pre>VALUE
+c_SourceLocation_is_equal(VALUE self, VALUE source_location)
+{
+  SourceLocation_t *s;
+  SourceLocation_t *sl;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  Data_Get_Struct(source_location, SourceLocation_t, sl);
+  
+  if(clang_equalLocations(s-&gt;data, sl-&gt;data) &gt; 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-is_from_main_file" class="method-detail ">
