@@ -39,9 +39,27 @@ c_SourceLocation_mark(void *s)
     rb_gc_mark(t->parent);
   }
 }
+
 VALUE
 c_SourceLocation_struct_alloc( VALUE klass)
 {
   
   return Data_Wrap_Struct(klass, NULL, c_SourceLocation_struct_free, ruby_xmalloc(sizeof(SourceLocation_t)));
+}
+
+/**
+* call-seq:
+*   Clangc::SourceLocation#is_in_system_header => true
+*
+* Returns true if the given source location is in a system header.
+*/
+VALUE
+c_SourceLocation_is_in_system_header(VALUE self)
+{
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  if(clang_Location_isInSystemHeader(s->data) > 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }

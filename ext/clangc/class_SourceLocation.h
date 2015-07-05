@@ -27,4 +27,7 @@ typedef struct SourceLocation_t {
 
 VALUE
 c_SourceLocation_struct_alloc(VALUE);
+
+VALUE
+c_SourceLocation_is_in_system_header(VALUE);
 #endif //SOURCELOCATION_H
