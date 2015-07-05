@@ -30,4 +30,7 @@ c_SourceLocation_struct_alloc(VALUE);
 
 VALUE
 c_SourceLocation_is_in_system_header(VALUE);
+
+VALUE
+c_SourceLocation_is_from_main_file(VALUE);
 #endif //SOURCELOCATION_H

@@ -63,3 +63,21 @@ c_SourceLocation_is_in_system_header(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::SourceLocation#is_from_main_file => true
+*
+* Returns true if the given source location is in the main file of
+* the corresponding translation unit.
+*/
+VALUE
+c_SourceLocation_is_from_main_file(VALUE self)
+{
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  if(clang_Location_isFromMainFile(s->data) > 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
