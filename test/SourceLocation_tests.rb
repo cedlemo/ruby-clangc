@@ -26,12 +26,18 @@ class TestSourceLocation < MiniTest::Test
     FileUtils.rm_f(@ast_file)
   end
   def test_SourceLocation_is_in_system_header
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
     diagnostics = tu.diagnostics
     range_number = tu.diagnostics[1].num_ranges
     source_range = diagnostics[1].source_ranges[range_number - 1]
     source_location = source_range.start
     assert_equal false, source_location.is_in_system_header 
+  end
+  def test_SourceLocation_is_from_main_file
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    diagnostics = tu.diagnostics
+    source_location = diagnostics[1].source_ranges.last.start
+    assert_equal true, source_location.is_from_main_file
   end
 #  def test_SourceRange_get_end
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
