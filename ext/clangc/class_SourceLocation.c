@@ -81,3 +81,28 @@ c_SourceLocation_is_from_main_file(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::SourceLocation#equal(Clangc::SourceLocation) => true /false
+*
+* Determine whether two source locations, which must refer into
+* the same translation unit, refer to exactly the same point in the source
+* code.
+*
+* true if the source locations refer to the same location, false
+* if they refer to different locations.
+*/
+VALUE
+c_SourceLocation_is_equal(VALUE self, VALUE source_location)
+{
+  SourceLocation_t *s;
+  SourceLocation_t *sl;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  Data_Get_Struct(source_location, SourceLocation_t, sl);
+  
+  if(clang_equalLocations(s->data, sl->data) > 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}

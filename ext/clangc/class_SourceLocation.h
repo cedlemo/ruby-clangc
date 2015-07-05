@@ -33,4 +33,7 @@ c_SourceLocation_is_in_system_header(VALUE);
 
 VALUE
 c_SourceLocation_is_from_main_file(VALUE);
+
+VALUE
+c_SourceLocation_is_equal(VALUE, VALUE);
 #endif //SOURCELOCATION_H
