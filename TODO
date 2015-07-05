@@ -1,3 +1,5 @@
+do clang_getSpellingLocation and clang_getFileLocation
+
 Add ruby object check in c_File_is_equal
 Add ruby object check in c_SourceRange_is_equal
 Add ruby object check in c_SourceLocation_is_equal
