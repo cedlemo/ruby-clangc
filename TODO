@@ -1,3 +1,4 @@
 Add ruby object check in c_File_is_equal
 Add ruby object check in c_SourceRange_is_equal
+Add ruby object check in c_SourceLocation_is_equal
 All methods starting with is_something must be in ruby something?
