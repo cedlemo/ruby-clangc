@@ -4,10 +4,7 @@ W_DIR=$(pwd)
 gem uninstall clangc
 gem build $DIR/../clangc.gemspec
 gem install --debug --verbose $W_DIR/clangc-0.0.1.gem -- --enable-debug
-ruby $DIR/../test/Clangc_tests.rb --pride
-ruby $DIR/../test/Index_tests.rb --pride
-ruby $DIR/../test/TranslationUnit_tests.rb --pride
-ruby $DIR/../test/Diagnostic_tests.rb --pride
-ruby $DIR/../test/File_tests.rb --pride
-ruby $DIR/../test/SourceRange_tests.rb --pride
+for N in "Clangc" "Index" "TranslationUnit" "Diagnostic" "File" "SourceRange" "SourceLocation"; do
+  ruby "${DIR}/../test/${N}_tests.rb" --pride
+done
 rm $W_DIR/clangc-0.0.1.gem
