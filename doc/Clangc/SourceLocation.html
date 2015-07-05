@@ -64,7 +64,17 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-is_in_system_header">#is_in_system_header</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -95,6 +105,56 @@ map a source location to a particular file, line, and column.</p>
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-is_in_system_header" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceLocation#is_in_system_header &rarr; true
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if the given source location is in a system header.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_in_system_header-source">
+            <pre>VALUE
+c_SourceLocation_is_in_system_header(VALUE self)
+{
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  if(clang_Location_isInSystemHeader(s-&gt;data) &gt; 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
