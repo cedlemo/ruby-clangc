@@ -48,6 +48,35 @@ class TestSourceLocation < MiniTest::Test
     assert_equal false, source_location_start.is_equal(source_location_end)
     assert_equal true, source_location_end.is_equal(source_location_end_1)
   end
+  def test_SourceLocation_spelling
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    diagnostics = tu.diagnostics
+    source_location = diagnostics[1].source_ranges.last.start
+    spelling = source_location.spelling
+    # file
+    assert_equal true, tu.file(@source_file_two_errors).is_equal(spelling[0])
+    # line
+    assert_equal 14, spelling[1]
+    # column
+    assert_equal 1, spelling[2]
+    #offset
+    assert_equal 179, spelling[3]
+  end
+  def test_SourceLocation_file_location
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    diagnostics = tu.diagnostics
+    source_location = diagnostics[1].source_ranges.last.end
+    spelling = source_location.spelling
+    # file
+    assert_equal nil, spelling[0]
+    #    assert_equal true, tu.file(@source_file_two_errors).is_equal(spelling[0])
+    # line
+    assert_equal 14, spelling[1]
+    # column
+    assert_equal 1, spelling[2]
+    #offset
+    assert_equal 179, spelling[3]
+  end
 #  def test_SourceRange_get_end
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
 #    diagnostics = tu.diagnostics
