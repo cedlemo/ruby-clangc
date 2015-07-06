@@ -122,4 +122,6 @@ void Init_clangc(void) {
   rb_define_method(c_SourceLocation, "is_in_system_header", RUBY_METHOD_FUNC(c_SourceLocation_is_in_system_header), 0);// in class_SourceLocation.c
   rb_define_method(c_SourceLocation, "is_from_main_file", RUBY_METHOD_FUNC(c_SourceLocation_is_from_main_file), 0);// in class_SourceLocation.c
   rb_define_method(c_SourceLocation, "is_equal", RUBY_METHOD_FUNC(c_SourceLocation_is_equal), 1);// in class_SourceLocation.c
+  rb_define_method(c_SourceLocation, "spelling", RUBY_METHOD_FUNC(c_SourceLocation_get_spelling), 0);// in class_SourceLocation.c
+  rb_define_method(c_SourceLocation, "file_location", RUBY_METHOD_FUNC(c_SourceLocation_get_file_location), 0);// in class_SourceLocation.c
 }

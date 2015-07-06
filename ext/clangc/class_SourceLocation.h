@@ -36,4 +36,10 @@ c_SourceLocation_is_from_main_file(VALUE);
 
 VALUE
 c_SourceLocation_is_equal(VALUE, VALUE);
+
+VALUE
+c_SourceLocation_get_spelling(VALUE);
+
+VALUE
+c_SourceLocation_get_file_location(VALUE);
 #endif //SOURCELOCATION_H

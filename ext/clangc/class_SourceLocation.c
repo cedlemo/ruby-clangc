@@ -18,6 +18,7 @@
 */
 /*SourceLocation ruby class*/
 #include "class_SourceLocation.h"
+#include "class_File.h"
 #include "macros.h"
 
 static void
@@ -105,4 +106,133 @@ c_SourceLocation_is_equal(VALUE self, VALUE source_location)
     return Qtrue;
   else
     return Qfalse;
+}
+
+/**
+* call-seq:
+*   Clangc::SourceLocation#spelling => Array
+*
+* Retrieve the file, line, column, and offset represented by
+* the given source location.
+*
+* If the location refers into a macro instantiation, return where the
+* location was originally spelled in the source file.
+*
+* The returned array contains four values:
+*
+* array[0] file if not nil, will be set to the file to which the given
+* source location points.(Clangc::File)
+*
+* array[1] if not nil, will be set to the line to which the given
+* source location points.
+*
+* array[2] if not nil, will be set to the column to which the given
+* source location points.
+*
+* array[3] if not nil, will be set to the offset into the
+* buffer to which the given source location points. (the position
+* in the file)
+*/
+VALUE c_SourceLocation_get_spelling(VALUE self)
+{
+  VALUE ret = rb_ary_new();
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  CXFile cxf; //= malloc(sizeof(CXFile));
+  unsigned int line;
+  unsigned int column;
+  unsigned int offset;
+  clang_getSpellingLocation(s->data, &cxf, &line, &column, &offset);
+  if(&cxf)
+  {
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA("Clangc", "File", file, File_t, f);
+    f->data = cxf;
+    f->parent = self;
+    rb_ary_push(ret, file);
+  }
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&line)
+    rb_ary_push(ret, CUINT_2_NUM(line));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&column)
+    rb_ary_push(ret, CUINT_2_NUM(column));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&offset)
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+  else
+    rb_ary_push(ret, Qnil);
+    
+  return ret;
+}
+/**
+* call-seq:
+*   Clangc::SourceLocation#file_location => Array
+*
+* Retrieve the file, line, column, and offset represented by
+* the given source location.
+*
+* If the location refers into a macro instantiation, return where the
+* location was originally spelled in the source file.
+*
+* The returned array contains four values:
+*
+* array[0] file if not nil, will be set to the file to which the given
+* source location points.(Clangc::File)
+*
+* array[1] if not nil, will be set to the line to which the given
+* source location points.
+*
+* array[2] if not nil, will be set to the column to which the given
+* source location points.
+*
+* array[3] if not nil, will be set to the offset into the
+* buffer to which the given source location points. (the position
+* in the file)
+*/
+VALUE c_SourceLocation_get_file_location(VALUE self)
+{
+  VALUE ret = rb_ary_new();
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  CXFile cxf; //= malloc(sizeof(CXFile));
+  unsigned int line;
+  unsigned int column;
+  unsigned int offset;
+  clang_getFileLocation(s->data, &cxf, &line, &column, &offset);
+  if(&cxf)
+  {
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA("Clangc", "File", file, File_t, f);
+    f->data = cxf;
+    f->parent = self;
+    rb_ary_push(ret, file);
+  }
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&line)
+    rb_ary_push(ret, CUINT_2_NUM(line));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&column)
+    rb_ary_push(ret, CUINT_2_NUM(column));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&offset)
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+  else
+    rb_ary_push(ret, Qnil);
+    
+  return ret;
 }
