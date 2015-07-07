@@ -5,3 +5,8 @@ Add ruby object check in c_SourceRange_is_equal
 Add ruby object check in c_SourceLocation_is_equal
 All methods starting with is_something must be in ruby something?
 See if the check in class_File.c clangc_File_get_name is the best solution
+
+To solve:
+when errors in file, Clangc::SourceRange.end return NULL file and position
+informations equal to 0. Check Clangc::SourceRange.end for other objects
+than Clangc::Diagnostic
