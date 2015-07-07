@@ -1,6 +1,7 @@
-clang_getFileLocation see the pb with NULL file
+Implement CXCursor
 
 Add ruby object check in c_File_is_equal
 Add ruby object check in c_SourceRange_is_equal
 Add ruby object check in c_SourceLocation_is_equal
 All methods starting with is_something must be in ruby something?
+See if the check in class_File.c clangc_File_get_name is the best solution

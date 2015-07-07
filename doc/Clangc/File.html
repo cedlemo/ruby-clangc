@@ -259,7 +259,8 @@ c_File_get_mtime(VALUE self)
 
         <div class="method-description">
           
-          <p>Retrieve the complete file and path name of the given file.</p>
+          <p>Retrieve the complete file and path name of the given file. Returns Qnil if
+the CXFile pointer is NULL (his can happen)</p>
           
           
 
@@ -271,9 +272,14 @@ c_File_get_name(VALUE self)
   File_t * f;
   VALUE name = Qnil;
   Data_Get_Struct(self, File_t, f);
-  CXString str = clang_getFileName(f-&gt;data);
-  name = rb_str_new2(clang_getCString(str));
-  clang_disposeString(str);
+  if(f-&gt;data)
+  {
+    CXString str = clang_getFileName(f-&gt;data);
+    name = rb_str_new2(clang_getCString(str));
+    clang_disposeString(str);
+  }
+  else
+    name = Qnil;
   return name;
 }</pre>
           </div>

@@ -70,11 +70,15 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-file_location">#file_location</a>
+    
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
     <li ><a href="#method-i-is_from_main_file">#is_from_main_file</a>
     
     <li ><a href="#method-i-is_in_system_header">#is_in_system_header</a>
+    
+    <li ><a href="#method-i-spelling">#spelling</a>
     
   </ul>
 </div>
@@ -91,8 +95,9 @@
     
 <p>Identifies a specific source location within a translation unit.</p>
 
-<p>Use Clangc::SourceLocation#expansion or Clangc::SourceLocation#spelling to
-map a source location to a particular file, line, and column.</p>
+<p>Use Clangc::SourceLocation#expansion or <a
+href="SourceLocation.html#method-i-spelling">#spelling</a> to map a source
+location to a particular file, line, and column.</p>
 
   </section>
 
@@ -113,6 +118,95 @@ map a source location to a particular file, line, and column.</p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-file_location" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceLocation#file_location &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the file, line, column, and offset represented by the given source
+location.</p>
+
+<p>If the location refers into a macro instantiation, return where the
+location was originally spelled in the source file.</p>
+
+<p>The returned array contains four values:</p>
+
+<p><a href="0">array</a> file if not nil, will be set to the file to which the
+given source location points.(Clangc::File)</p>
+
+<p><a href="1">array</a> if not nil, will be set to the line to which the
+given source location points.</p>
+
+<p><a href="2">array</a> if not nil, will be set to the column to which the
+given source location points.</p>
+
+<p><a href="3">array</a> if not nil, will be set to the offset into the buffer
+to which the given source location points. (the position in the file)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="file_location-source">
+            <pre>VALUE c_SourceLocation_get_file_location(VALUE self)
+{
+  VALUE ret = rb_ary_new();
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  CXFile cxf; //= malloc(sizeof(CXFile));
+  unsigned int line;
+  unsigned int column;
+  unsigned int offset;
+  clang_getFileLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
+  if(&amp;cxf)
+  {
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    f-&gt;data = cxf;
+    f-&gt;parent = self;
+    rb_ary_push(ret, file);
+  }
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;line)
+    rb_ary_push(ret, CUINT_2_NUM(line));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;column)
+    rb_ary_push(ret, CUINT_2_NUM(column));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;offset)
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+  else
+    rb_ary_push(ret, Qnil);
+    
+  return ret;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-is_equal" class="method-detail ">
@@ -238,6 +332,95 @@ c_SourceLocation_is_in_system_header(VALUE self)
     return Qtrue;
   else
     return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-spelling" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceLocation#spelling &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the file, line, column, and offset represented by the given source
+location.</p>
+
+<p>If the location refers into a macro instantiation, return where the
+location was originally spelled in the source file.</p>
+
+<p>The returned array contains four values:</p>
+
+<p><a href="0">array</a> file if not nil, will be set to the file to which the
+given source location points.(Clangc::File)</p>
+
+<p><a href="1">array</a> if not nil, will be set to the line to which the
+given source location points.</p>
+
+<p><a href="2">array</a> if not nil, will be set to the column to which the
+given source location points.</p>
+
+<p><a href="3">array</a> if not nil, will be set to the offset into the buffer
+to which the given source location points. (the position in the file)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="spelling-source">
+            <pre>VALUE c_SourceLocation_get_spelling(VALUE self)
+{
+  VALUE ret = rb_ary_new();
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  CXFile cxf; //= malloc(sizeof(CXFile));
+  unsigned int line;
+  unsigned int column;
+  unsigned int offset;
+  clang_getSpellingLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
+  if(&amp;cxf)
+  {
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    f-&gt;data = cxf;
+    f-&gt;parent = self;
+    rb_ary_push(ret, file);
+  }
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;line)
+    rb_ary_push(ret, CUINT_2_NUM(line));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;column)
+    rb_ary_push(ret, CUINT_2_NUM(column));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;offset)
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+  else
+    rb_ary_push(ret, Qnil);
+    
+  return ret;
 }</pre>
           </div>
           

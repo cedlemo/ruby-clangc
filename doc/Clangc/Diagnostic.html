@@ -530,6 +530,7 @@ c_Diagnostic_get_source_location(VALUE self)
   SourceLocation_t *sl;
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, a_source_location, SourceLocation_t, sl);
   sl-&gt;data = clang_getDiagnosticLocation(d-&gt;data);
+  sl-&gt;parent = self;
   return a_source_location;  
 }</pre>
           </div>
@@ -586,6 +587,7 @@ c_Diagnostic_get_source_range(VALUE self, VALUE index)
   SourceRange_t *s;
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, a_source_range, SourceRange_t, s);
   s-&gt;data = clang_getDiagnosticRange(d-&gt;data, c_index);
+  s-&gt;parent = self;
   return a_source_range;
 }</pre>
           </div>
