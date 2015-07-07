@@ -62,20 +62,47 @@ class TestSourceLocation < MiniTest::Test
     #offset
     assert_equal 179, spelling[3]
   end
-  def test_SourceLocation_file_location
+  def test_SourceLocation_spelling_end
     tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.end
     spelling = source_location.spelling
     # file
-    assert_equal nil, spelling[0]
-    #    assert_equal true, tu.file(@source_file_two_errors).is_equal(spelling[0])
+    assert_equal false, tu.file(@source_file_two_errors).is_equal(spelling[0])
     # line
-    assert_equal 14, spelling[1]
+    assert_equal 0, spelling[1]
     # column
-    assert_equal 1, spelling[2]
+    assert_equal 0, spelling[2]
     #offset
-    assert_equal 179, spelling[3]
+    assert_equal 0, spelling[3]
+  end
+  def test_SourceLocation_file_location
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    diagnostics = tu.diagnostics
+    source_location = diagnostics[1].source_ranges.last.start
+    file_location = source_location.file_location
+    # file
+    assert_equal true, tu.file(@source_file_two_errors).is_equal(file_location[0])
+    # line
+    assert_equal 14, file_location[1]
+    # column
+    assert_equal 1, file_location[2]
+    #offset
+    assert_equal 179, file_location[3]
+  end
+  def test_SourceLocation_file_location_end
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    diagnostics = tu.diagnostics
+    source_location = diagnostics[1].source_ranges.last.end
+    file_location = source_location.file_location
+    # file
+    assert_equal false, tu.file(@source_file_two_errors).is_equal(file_location[0])
+    # line
+    assert_equal 0, file_location[1]
+    # column
+    assert_equal 0, file_location[2]
+    #offset
+    assert_equal 0, file_location[3]
   end
 #  def test_SourceRange_get_end
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
