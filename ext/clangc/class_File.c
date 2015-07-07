@@ -65,6 +65,7 @@ generate_File_under(VALUE module, VALUE superclass)
  *  Clangc::File#name => String
  *
  * Retrieve the complete file and path name of the given file.
+ * Returns Qnil if the CXFile pointer is NULL (his can happen)
  */
 VALUE
 c_File_get_name(VALUE self)
@@ -72,9 +73,14 @@ c_File_get_name(VALUE self)
   File_t * f;
   VALUE name = Qnil;
   Data_Get_Struct(self, File_t, f);
-  CXString str = clang_getFileName(f->data);
-  name = rb_str_new2(clang_getCString(str));
-  clang_disposeString(str);
+  if(f->data)
+  {
+    CXString str = clang_getFileName(f->data);
+    name = rb_str_new2(clang_getCString(str));
+    clang_disposeString(str);
+  }
+  else
+    name = Qnil;
   return name;
 }
 
