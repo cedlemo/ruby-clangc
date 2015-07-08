@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-cursor">#cursor</a>
+    
     <li ><a href="#method-i-default_reparse_options">#default_reparse_options</a>
     
     <li ><a href="#method-i-default_save_options">#default_save_options</a>
@@ -117,6 +119,52 @@ in an <a href="Index.html">Index</a></p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-cursor" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#cursor &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the cursor that represents the given translation unit.</p>
+
+<p>The translation unit cursor can be used to start traversing the various
+declarations within the given translation unit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cursor-source">
+            <pre>VALUE
+c_TranslationUnit_get_cursor(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  Cursor_t *c;
+  VALUE a_cursor;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, a_cursor, Cursor_t, c);
+  c-&gt;data = clang_getTranslationUnitCursor(t-&gt;data);
+  return a_cursor;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-default_reparse_options" class="method-detail ">

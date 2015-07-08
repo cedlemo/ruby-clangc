@@ -11,7 +11,7 @@ This is free software shared under the GNU GPL 3.
     gem install clangc-x.x.x.gem
 
 # Status:
-*    48/249 functions wrapped => 19.27710843373494%
+*    50/249 functions wrapped => 20.080321285140563%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
