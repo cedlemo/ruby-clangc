@@ -11,3 +11,4 @@ The libclang data are mapped to the following:
 [CXFile]              Clangc::File
 [CXSourceRange]       Clangc::SourceRange
 [CXSourceLocation]    Clangc::SourceLocation
+[CXCursor]            Clangc::Cursor

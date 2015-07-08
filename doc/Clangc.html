@@ -69,6 +69,8 @@
     
     <li ><a href="#method-c-default_editing_translation_unit_options">::default_editing_translation_unit_options</a>
     
+    <li ><a href="#method-c-null_cursor">::null_cursor</a>
+    
     <li ><a href="#method-c-null_source_location">::null_source_location</a>
     
     <li ><a href="#method-c-null_source_range">::null_source_range</a>
@@ -225,6 +227,47 @@ optimizations enabled may change from one version to the next.</p>
 m_clangc_get_default_editing_translation_unit_options(VALUE self)
 {
   return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-null_cursor" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            null_cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a NULL cursor which represents no entity</p>
+          
+          
+
+          
+          <div class="method-source-code" id="null_cursor-source">
+            <pre>VALUE
+m_clangc_get_null_cursor(VALUE self)
+{
+  Cursor_t *c;
+  VALUE a_cursor;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, a_cursor, Cursor_t, c);
+  c-&gt;data = clang_getNullCursor();
+  return a_cursor;
 }</pre>
           </div>
           

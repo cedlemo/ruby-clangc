@@ -18,6 +18,7 @@ This is free software shared under the GNU GPL 3.
 *    CXFile
 *    CXSourceRange
 *    CXSourceLocation
+*    CXCursor
 
 # Examples (see samples directory): 
 
