@@ -24,7 +24,6 @@ c_Cursor_struct_free(Cursor_t *s)
 {
   if(s)
   {
-    
     ruby_xfree(s);
   }
 }  
@@ -44,7 +43,6 @@ c_Cursor_struct_alloc( VALUE klass)
   
   Cursor_t * ptr;
   ptr = (Cursor_t *) ruby_xmalloc(sizeof(Cursor_t)); 
-  ptr->data = NULL;
   ptr->parent = Qnil;
 
   return Data_Wrap_Struct(klass, NULL, c_Cursor_struct_free, (void *) ptr);

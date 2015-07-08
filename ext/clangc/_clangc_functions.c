@@ -20,6 +20,7 @@
 #include "clang-c/Index.h"
 #include "class_SourceRange.h"
 #include "class_SourceLocation.h"
+#include "class_Cursor.h"
 
 /**
 * call-seq:
@@ -123,4 +124,21 @@ m_clangc_get_null_source_location(VALUE self)
   R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, s);
   s->data = clang_getNullLocation();
   return a_source_location;
+}
+
+/**
+* call-seq:
+*   Clangc.null_cursor
+*
+* Retrieve a NULL cursor which represents no entity
+*/
+
+VALUE
+m_clangc_get_null_cursor(VALUE self)
+{
+  Cursor_t *c;
+  VALUE a_cursor;
+  R_GET_CLASS_DATA("Clangc", "Cursor", a_cursor, Cursor_t, c);
+  c->data = clang_getNullCursor();
+  return a_cursor;
 }

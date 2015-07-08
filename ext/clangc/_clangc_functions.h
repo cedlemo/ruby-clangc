@@ -21,14 +21,22 @@
 #include "macros.h"
 VALUE
 m_clangc_get_version(VALUE);
+
 VALUE
 m_clangc_get_default_diagnostic_display_options(VALUE);
+
 VALUE
 m_clangc_get_default_editing_translation_unit_options(VALUE);
+
 VALUE
 m_clangc_get_default_code_complete_options(VALUE);
+
 VALUE
 m_clangc_get_null_source_range(VALUE);
+
 VALUE
 m_clangc_get_null_source_location(VALUE);
+
+VALUE
+m_clangc_get_null_cursor(VALUE);
 #endif

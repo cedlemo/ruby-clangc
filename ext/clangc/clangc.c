@@ -37,6 +37,7 @@ void Init_clangc(void) {
   rb_define_module_function(m_Clangc, "default_code_complete_options", RUBY_METHOD_FUNC(m_clangc_get_default_code_complete_options), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "null_source_range", RUBY_METHOD_FUNC(m_clangc_get_null_source_range), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "null_source_location", RUBY_METHOD_FUNC(m_clangc_get_null_source_location), 0);// in _clangc_functions.c
+  rb_define_module_function(m_Clangc, "null_cursor", RUBY_METHOD_FUNC(m_clangc_get_null_cursor), 0);// in _clangc_functions.c
 
   init_clang_enums_to_constants(m_Clangc);
   init_clang_errors_enums_to_constants(m_Clangc);
