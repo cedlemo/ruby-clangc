@@ -26,6 +26,7 @@
 #include "class_File.h"
 #include "class_SourceRange.h"
 #include "class_SourceLocation.h"
+#include "class_Cursor.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -124,4 +125,7 @@ void Init_clangc(void) {
   rb_define_method(c_SourceLocation, "is_equal", RUBY_METHOD_FUNC(c_SourceLocation_is_equal), 1);// in class_SourceLocation.c
   rb_define_method(c_SourceLocation, "spelling", RUBY_METHOD_FUNC(c_SourceLocation_get_spelling), 0);// in class_SourceLocation.c
   rb_define_method(c_SourceLocation, "file_location", RUBY_METHOD_FUNC(c_SourceLocation_get_file_location), 0);// in class_SourceLocation.c
+
+  VALUE c_Cursor = rb_define_class_under(m_Clangc, "Cursor", rb_cObject);
+  rb_define_alloc_func(c_Cursor, c_Cursor_struct_alloc);
 }

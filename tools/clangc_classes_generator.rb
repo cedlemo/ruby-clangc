@@ -32,5 +32,8 @@ require "./binder"
 #SourceRange_class = Binder::Ruby_C_Class_Generator.new("SourceRange", "CXSourceRange", true)
 #SourceRange_class.generate_files
 
-SourceLocation_class = Binder::Ruby_C_Class_Generator.new("SourceLocation", "CXSourceLocation", false)
-SourceLocation_class.generate_files
+#SourceLocation_class = Binder::Ruby_C_Class_Generator.new("SourceLocation", "CXSourceLocation", false)
+#SourceLocation_class.generate_files
+
+Cursor_class = Binder::Ruby_C_Class_Generator.new("Cursor", "CXCursor", true)
+Cursor_class.generate_files
