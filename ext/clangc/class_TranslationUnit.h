@@ -44,4 +44,7 @@ c_TranslationUnit_get_diagnostic(VALUE, VALUE);
 
 VALUE
 c_TranslationUnit_get_file(VALUE, VALUE);
+
+VALUE
+c_TranslationUnit_get_cursor(VALUE);
 #endif //TRANSLATIONUNIT_H

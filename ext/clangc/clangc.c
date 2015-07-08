@@ -67,7 +67,7 @@ void Init_clangc(void) {
   rb_define_method(c_TranslationUnit, "default_reparse_options", RUBY_METHOD_FUNC(c_TranslationUnit_get_default_reparse_options), 0);// in class_TranslationUnit.c
   rb_define_method(c_TranslationUnit, "diagnostic", RUBY_METHOD_FUNC(c_TranslationUnit_get_diagnostic), 1);// in class_TranslationUnit.c  
   rb_define_method(c_TranslationUnit, "file", RUBY_METHOD_FUNC(c_TranslationUnit_get_file), 1);// in class_TranslationUnit.c  
-
+  rb_define_method(c_TranslationUnit, "cursor", RUBY_METHOD_FUNC(c_TranslationUnit_get_cursor), 0);// in class_TranslationUnit.c
 /*
 * A diagnostic object, containing the diagnostic's severity,
 * location, text, source ranges, and fix-it hints.
@@ -126,6 +126,26 @@ void Init_clangc(void) {
   rb_define_method(c_SourceLocation, "is_equal", RUBY_METHOD_FUNC(c_SourceLocation_is_equal), 1);// in class_SourceLocation.c
   rb_define_method(c_SourceLocation, "spelling", RUBY_METHOD_FUNC(c_SourceLocation_get_spelling), 0);// in class_SourceLocation.c
   rb_define_method(c_SourceLocation, "file_location", RUBY_METHOD_FUNC(c_SourceLocation_get_file_location), 0);// in class_SourceLocation.c
+
+/**
+* A cursor representing some element in the abstract syntax tree for
+* a translation unit.
+*
+* The cursor abstraction unifies the different kinds of entities in a
+* program--declaration, statements, expressions, references to declarations,
+* etc.--under a single "cursor" abstraction with a common set of operations.
+* Common operation for a cursor include: getting the physical location in
+* a source file where the cursor points, getting the name associated with a
+* cursor, and retrieving cursors for any child nodes of a particular cursor.
+*
+* Cursors can be produced in two specific ways.
+* clangc::TranslationUnit.cursor produces a cursor for a translation unit,
+* from which one can use clang.visitChildren to explore the rest of the
+* translation unit. clang.getCursor maps from a physical source location
+* to the entity that resides at that location, allowing one to map from the
+* source code into the AST.
+*/
+
 
   VALUE c_Cursor = rb_define_class_under(m_Clangc, "Cursor", rb_cObject);
   rb_define_alloc_func(c_Cursor, c_Cursor_struct_alloc);

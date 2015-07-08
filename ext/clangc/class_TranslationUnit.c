@@ -19,6 +19,7 @@
 #include "class_TranslationUnit.h"
 #include "class_Diagnostic.h"
 #include "class_File.h"
+#include "class_Cursor.h"
 #include "macros.h"
 
 static void
@@ -188,4 +189,25 @@ c_TranslationUnit_get_file(VALUE self, VALUE file_name)
   }
   else
     return Qnil;
+}
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#cursor => Clangc::Cursor
+ *
+ * Retrieve the cursor that represents the given translation unit.
+ *
+ * The translation unit cursor can be used to start traversing the
+ * various declarations within the given translation unit.
+ */
+VALUE
+c_TranslationUnit_get_cursor(VALUE self)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  Cursor_t *c;
+  VALUE a_cursor;
+  R_GET_CLASS_DATA("Clangc", "Cursor", a_cursor, Cursor_t, c);
+  c->data = clang_getTranslationUnitCursor(t->data);
+  return a_cursor;
 }
