@@ -177,6 +177,33 @@ static enum CXChildVisitResult visitor(CXCursor cursor,
   return CXChildVisit_Break;  
 }
 
+/**
+* call-seq:
+*   Clangc.visit_children_with_proc(cursor, visitor) => Qtrue/ Qfalse
+*
+* Visit the children of a particular cursor.
+*
+* This function visits all the direct children of the given cursor,
+* invoking the given visitor Proc with the cursors of each
+* visited child. The traversal may be recursive, if the visitor returns
+* Clangc::ChildVisitResult::Recurse. The traversal may also be ended prematurely, if
+* the visitor returns Clangc::ChildVisit::Break.
+*
+* cursor the cursor whose child may be visited. All kinds of
+* cursors can be visited, including invalid cursors (which, by
+* definition, have no children).
+*
+* visitor the visitor function that will be invoked for each
+* child of cursor.
+*
+* returns a true if the traversal was terminated
+* prematurely by the visitor returning Clangc::ChildVisitiResult::Break.
+*
+* You should prefer to use :
+*
+*     Clangc.visit_children(cursor: cursor, visitor: callback)
+*/
+
 VALUE
 m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
 {
@@ -195,6 +222,34 @@ m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc.visit_children_with_block(cursor) => Qtrue/ Qfalse
+*
+* Visit the children of a particular cursor.
+*
+* This function visits all the direct children of the given cursor,
+* invoking the block with the cursors of each
+* visited child. The traversal may be recursive, if the visitor returns
+* Clangc::ChildVisitResult::Recurse. The traversal may also be ended prematurely, if
+* the visitor returns Clangc::ChildVisit::Break.
+*
+* cursor the cursor whose child may be visited. All kinds of
+* cursors can be visited, including invalid cursors (which, by
+* definition, have no children).
+*
+* visitor the visitor function that will be invoked for each
+* child of cursor.
+*
+* returns a true if the traversal was terminated
+* prematurely by the visitor returning Clangc::ChildVisitiResult::Break.
+*
+* You should prefer to use :
+*
+*     Clangc.visit_children(cursor: cursor, visitor: callback)
+*/
+
 VALUE
 m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
 {
