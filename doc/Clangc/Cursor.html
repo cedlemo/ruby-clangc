@@ -64,7 +64,17 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-is_null">#is_null</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -107,6 +117,57 @@ source code into the AST.</p>
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-is_null" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_null &rarr; true /false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>return true is the cursor is a null <a href="Cursor.html">Cursor</a> or
+false otherwise</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_null-source">
+            <pre>VALUE
+c_Cursor_is_null(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isNull(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
