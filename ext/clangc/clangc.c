@@ -151,4 +151,5 @@ void Init_clangc(void) {
 
   VALUE c_Cursor = rb_define_class_under(m_Clangc, "Cursor", rb_cObject);
   rb_define_alloc_func(c_Cursor, c_Cursor_struct_alloc);
+  rb_define_method(c_Cursor, "is_null", RUBY_METHOD_FUNC(c_Cursor_is_null), 0);// in class_Cursor.c
 }

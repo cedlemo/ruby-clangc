@@ -37,6 +37,7 @@ c_Cursor_mark(void *s)
     rb_gc_mark(t->parent);
   }
 }
+
 VALUE
 c_Cursor_struct_alloc( VALUE klass)
 {
@@ -46,4 +47,21 @@ c_Cursor_struct_alloc( VALUE klass)
   ptr->parent = Qnil;
 
   return Data_Wrap_Struct(klass, NULL, c_Cursor_struct_free, (void *) ptr);
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_null => true /false
+*
+*   return true is the cursor is a null Cursor or false otherwise
+*/
+VALUE
+c_Cursor_is_null(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isNull(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }

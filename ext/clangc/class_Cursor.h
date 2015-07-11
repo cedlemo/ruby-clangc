@@ -26,4 +26,7 @@ typedef struct Cursor_t {
 
 VALUE
 c_Cursor_struct_alloc(VALUE);
+
+VALUE
+c_Cursor_is_null(VALUE);
 #endif //CURSOR_H
