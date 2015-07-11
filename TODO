@@ -1,5 +1,4 @@
-Implement clang_getCursor
-Implement clang_visitChildren 
+Implement Clangc::Cursor methods
 
 Add ruby object check in c_File_is_equal
 Add ruby object check in c_SourceRange_is_equal
