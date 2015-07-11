@@ -1,6 +1,17 @@
 require "clangc/clangc"
 
 module Clangc
+  def self.visit_children(args)
+    cursor = args[:cursor]
+    callback = args[:visitor] || nil
+    if(callback)
+      visit_children_with_proc(cursor, callback)
+    else
+      visit_children_with_block(cursor) do |cursor, parent|
+        yield(cursor, parent)
+      end
+    end
+  end
   class TranslationUnit
     def diagnostics
       ds = []

@@ -142,3 +142,74 @@ m_clangc_get_null_cursor(VALUE self)
   c->data = clang_getNullCursor();
   return a_cursor;
 }
+static enum CXChildVisitResult visitor(CXCursor cursor, 
+                                       CXCursor parent,
+                                       CXClientData client_data)
+{
+  VALUE callback = (VALUE) client_data;
+  
+  VALUE mClangc = rb_const_get(rb_cObject, rb_intern("Clangc"));
+  VALUE cCursor = rb_const_get(mClangc, rb_intern("Cursor"));
+
+  VALUE r_cursor = rb_class_new_instance(0, NULL, cCursor);
+  Cursor_t * c;
+  Data_Get_Struct(r_cursor, Cursor_t, c);
+  c->data = cursor;
+
+  VALUE r_parent = rb_class_new_instance(0, NULL,cCursor);
+  Cursor_t *p;
+  Data_Get_Struct(r_parent, Cursor_t, p);
+  p->data = parent;
+
+  VALUE r_ret = rb_funcall(callback, rb_intern("call"), 2, r_cursor, r_parent);
+  if(TYPE(r_ret) == T_FIXNUM)
+  {
+    unsigned ret;
+    RNUM_2_UINT(r_ret, ret);
+    if(ret == CXChildVisit_Break ||
+       ret == CXChildVisit_Continue ||
+       ret == CXChildVisit_Recurse)
+      return ret;
+    else
+      return CXChildVisit_Break;
+  }
+  else
+  return CXChildVisit_Break;  
+}
+
+VALUE
+m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
+{
+  if (rb_class_of(aproc) != rb_cProc)
+    rb_raise(rb_eTypeError, "Need a block");
+
+  VALUE callback = aproc;
+
+  Cursor_t *c;
+  Data_Get_Struct(cursor, Cursor_t, c);
+  unsigned ret_with_break = clang_visitChildren(c->data,
+                                                visitor,
+                                                (CXClientData) callback);
+  if (ret_with_break > 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
+VALUE
+m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
+{
+  if(rb_block_given_p() == 0)
+      rb_raise(rb_eTypeError, "Need a block");
+
+  VALUE callback = rb_block_proc();
+
+  Cursor_t *c;
+  Data_Get_Struct(cursor, Cursor_t, c);
+  unsigned ret_with_break = clang_visitChildren(c->data,
+                                                visitor,
+                                                (CXClientData) callback);
+  if (ret_with_break > 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
