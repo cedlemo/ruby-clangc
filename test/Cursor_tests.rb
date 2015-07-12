@@ -30,4 +30,11 @@ class TestTranslationUnitUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
     assert_equal false, tu.cursor.is_null
   end
+  def test_Cursor_is_equal
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    cursor = tu.cursor
+    cursor1 = tu.cursor
+    assert_equal false, cursor.is_equal(Clangc.null_cursor)
+    assert_equal true, cursor.is_equal(cursor1)
+  end
 end
