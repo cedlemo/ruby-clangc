@@ -119,7 +119,7 @@ c_Cursor_get_kind(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#kind => Fixnum
+*   Clangc::Cursor#linkage => Fixnum
 *
 * Determine the linkage of the entity referred to by a given cursor.
 * The value should refer to the constants in

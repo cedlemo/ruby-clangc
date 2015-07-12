@@ -70,7 +70,15 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-hash">#hash</a>
+    
+    <li ><a href="#method-i-is_equal">#is_equal</a>
+    
     <li ><a href="#method-i-is_null">#is_null</a>
+    
+    <li ><a href="#method-i-kind">#kind</a>
+    
+    <li ><a href="#method-i-linkage">#linkage</a>
     
   </ul>
 </div>
@@ -123,6 +131,91 @@ source code into the AST.</p>
        </header>
 
     
+      <div id="method-i-hash" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#hash &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Compute a hash value for the given cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="hash-source">
+            <pre>VALUE
+c_Cursor_get_hash(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_hashCursor(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_equal" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_equal(cursor1) &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether two cursors are equivalent.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_equal-source">
+            <pre>VALUE
+c_Cursor_is_equal(VALUE self, VALUE cursor1)
+{
+  Cursor_t *c;
+  Cursor_t *c1;
+
+  Data_Get_Struct(self, Cursor_t, c);
+  Data_Get_Struct(cursor1, Cursor_t, c1);
+
+  if(clang_equalCursors(c-&gt;data, c1-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_null" class="method-detail ">
         
         
@@ -155,6 +248,86 @@ c_Cursor_is_null(VALUE self)
     return Qtrue;
   else
     return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-kind" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#kind &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the kind of the given cursor. The value should refer to the
+constants in Clangc::CursorKind</p>
+          
+          
+
+          
+          <div class="method-source-code" id="kind-source">
+            <pre>VALUE
+c_Cursor_get_kind(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorKind(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-linkage" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#linkage &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the linkage of the entity referred to by a given cursor. The
+value should refer to the constants in Clangc::LinkageKind</p>
+          
+          
+
+          
+          <div class="method-source-code" id="linkage-source">
+            <pre>VALUE
+c_Cursor_get_linkage(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorLinkage(c-&gt;data)); 
 }</pre>
           </div>
           
