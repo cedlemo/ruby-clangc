@@ -151,3 +151,19 @@ c_Cursor_get_availability(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorAvailability(c->data)); 
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#language => Fixnum
+*
+* Determine the "language" of the entity referred to by a given cursor.
+* The value should refer to the constants in
+* Clangc::LanguageKind
+*/
+VALUE
+c_Cursor_get_language(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorLanguage(c->data));
+}
