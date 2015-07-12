@@ -35,4 +35,7 @@ c_Cursor_is_equal(VALUE, VALUE);
 
 VALUE
 c_Cursor_get_hash(VALUE);
+
+VALUE
+c_Cursor_get_kind(VALUE);
 #endif //CURSOR_H

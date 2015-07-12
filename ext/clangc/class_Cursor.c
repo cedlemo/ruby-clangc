@@ -98,5 +98,21 @@ c_Cursor_get_hash(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return CUINt_2_NUM(clang_hashCursor(c->data)); 
+  return CUINT_2_NUM(clang_hashCursor(c->data)); 
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#kind => Fixnum
+*
+* Retrieve the kind of the given cursor.
+* The value should refer to the constants in
+* Clangc::CursorKind
+*/
+VALUE
+c_Cursor_get_kind(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorKind(c->data)); 
 }
