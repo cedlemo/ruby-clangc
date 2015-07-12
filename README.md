@@ -4,6 +4,7 @@ ruby bindings to the clang C interface
 
 Just a hobby project for now.
 This is free software shared under the GNU GPL 3.
+Clang version used are 3.5.0 to 3.6.2
 
 # Installation:
 
@@ -11,7 +12,7 @@ This is free software shared under the GNU GPL 3.
     gem install clangc-x.x.x.gem
 
 # Status:
-*    51/249 functions wrapped => 20.481927710843372%
+*    56/249 functions wrapped => 22.48995983935743%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
