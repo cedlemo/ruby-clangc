@@ -2,7 +2,7 @@
 require "minitest/autorun"
 require "clangc"
 require "fileutils"
-class TestTranslationUnitUsage < MiniTest::Test
+class TestCursorUsage < MiniTest::Test
   def setup
     @cindex = Clangc::Index.new(false, false)
     # Good C test file
@@ -92,6 +92,23 @@ class TestTranslationUnitUsage < MiniTest::Test
       end
       assert_equal true, cursor_availability_found
       assert_equal true, parent_availability_found
+    end
+  end
+  def test_Cursor_get_language
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      parent_language_found = false
+      cursor_language_found = false
+      Clangc::LanguageKind.constants.each do |l|
+        if parent.language == Clangc::LanguageKind.const_get(l)
+          parent_language_found = true
+        end
+        if cursor.language == Clangc::LanguageKind.const_get(l)
+          cursor_language_found = true
+        end
+      end
+      assert_equal true, cursor_language_found
+      assert_equal true, parent_language_found
     end
   end
 end
