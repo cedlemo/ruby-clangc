@@ -132,3 +132,22 @@ c_Cursor_get_linkage(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorLinkage(c->data)); 
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#availability => Fixnum
+*
+* Determine the availability of the entity that this cursor refers to,
+* taking the current target platform into account.
+*
+* The availability of the cursor.
+* The value should refer to the constants in
+* Clangc::AvailabilityKind
+*/
+VALUE
+c_Cursor_get_availability(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorAvailability(c->data)); 
+}

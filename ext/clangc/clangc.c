@@ -156,4 +156,5 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "hash", RUBY_METHOD_FUNC(c_Cursor_get_hash), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "kind", RUBY_METHOD_FUNC(c_Cursor_get_kind), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "linkage", RUBY_METHOD_FUNC(c_Cursor_get_linkage), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "availability", RUBY_METHOD_FUNC(c_Cursor_get_availability), 0);// in class_Cursor.c
 }

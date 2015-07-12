@@ -41,4 +41,7 @@ c_Cursor_get_kind(VALUE);
 
 VALUE
 c_Cursor_get_linkage(VALUE);
+
+VALUE
+c_Cursor_get_availability(VALUE);
 #endif //CURSOR_H
