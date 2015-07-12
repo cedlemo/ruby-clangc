@@ -43,4 +43,22 @@ class TestTranslationUnitUsage < MiniTest::Test
     hash = tu.hash
     assert_instance_of Fixnum, hash
   end
+  def test_Cursor_get_kind
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      parent_kind_found = false
+      cursor_kind_found = false
+      Clangc::CursorKind.constants.each do |c|
+        if parent.kind == Clangc::CursorKind.const_get(c)
+          parent_kind_found = true
+        end
+        if cursor.kind == Clangc::CursorKind.const_get(c)
+          cursor_kind_found = true
+        end
+      end
+      assert_equal true, cursor_kind_found
+      assert_equal true, parent_kind_found
+    end
+  end
+
 end
