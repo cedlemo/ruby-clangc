@@ -65,3 +65,24 @@ c_Cursor_is_null(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_equal(cursor1) => true/false
+*
+* Determine whether two cursors are equivalent.
+*/
+VALUE
+c_Cursor_is_equal(VALUE self, VALUE cursor1)
+{
+  Cursor_t *c;
+  Cursor_t *c1;
+
+  Data_Get_Struct(self, Cursor_t, c);
+  Data_Get_Struct(cursor1, Cursor_t, c1);
+
+  if(clang_equalCursors(c->data, c1->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}

@@ -29,4 +29,7 @@ c_Cursor_struct_alloc(VALUE);
 
 VALUE
 c_Cursor_is_null(VALUE);
+
+VALUE
+c_Cursor_is_equal(VALUE, VALUE);
 #endif //CURSOR_H
