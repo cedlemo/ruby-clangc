@@ -32,4 +32,7 @@ c_Cursor_is_null(VALUE);
 
 VALUE
 c_Cursor_is_equal(VALUE, VALUE);
+
+VALUE
+c_Cursor_get_hash(VALUE);
 #endif //CURSOR_H

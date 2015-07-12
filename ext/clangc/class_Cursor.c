@@ -86,3 +86,17 @@ c_Cursor_is_equal(VALUE self, VALUE cursor1)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#hash => Fixnum
+*
+* Compute a hash value for the given cursor.
+*/
+VALUE
+c_Cursor_get_hash(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINt_2_NUM(clang_hashCursor(c->data)); 
+}
