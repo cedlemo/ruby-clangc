@@ -116,3 +116,19 @@ c_Cursor_get_kind(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorKind(c->data)); 
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#kind => Fixnum
+*
+* Determine the linkage of the entity referred to by a given cursor.
+* The value should refer to the constants in
+* Clangc::LinkageKind
+*/
+VALUE
+c_Cursor_get_linkage(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorLinkage(c->data)); 
+}

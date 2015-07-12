@@ -38,4 +38,7 @@ c_Cursor_get_hash(VALUE);
 
 VALUE
 c_Cursor_get_kind(VALUE);
+
+VALUE
+c_Cursor_get_linkage(VALUE);
 #endif //CURSOR_H
