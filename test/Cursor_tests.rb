@@ -37,4 +37,10 @@ class TestTranslationUnitUsage < MiniTest::Test
     assert_equal false, cursor.is_equal(Clangc.null_cursor)
     assert_equal true, cursor.is_equal(cursor1)
   end
+  def test_Cursor_hash
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    cursor = tu.cursor
+    hash = tu.hash
+    assert_instance_of Fixnum, hash
+  end
 end
