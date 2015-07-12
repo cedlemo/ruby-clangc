@@ -60,5 +60,21 @@ class TestTranslationUnitUsage < MiniTest::Test
       assert_equal true, parent_kind_found
     end
   end
-
+  def test_Cursor_get_linkage
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      parent_linkage_found = false
+      cursor_linkage_found = false
+      Clangc::LinkageKind.constants.each do |l|
+        if parent.linkage == Clangc::LinkageKind.const_get(l)
+          parent_linkage_found = true
+        end
+        if cursor.linkage == Clangc::LinkageKind.const_get(l)
+          cursor_linkage_found = true
+        end
+      end
+      assert_equal true, cursor_linkage_found
+      assert_equal true, parent_linkage_found
+    end
+  end
 end
