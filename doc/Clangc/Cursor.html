@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-availability">#availability</a>
+    
     <li ><a href="#method-i-hash">#hash</a>
     
     <li ><a href="#method-i-is_equal">#is_equal</a>
@@ -77,6 +79,8 @@
     <li ><a href="#method-i-is_null">#is_null</a>
     
     <li ><a href="#method-i-kind">#kind</a>
+    
+    <li ><a href="#method-i-language">#language</a>
     
     <li ><a href="#method-i-linkage">#linkage</a>
     
@@ -129,6 +133,49 @@ source code into the AST.</p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-availability" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#availability &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the availability of the entity that this cursor refers to, taking
+the current target platform into account.</p>
+
+<p>The availability of the cursor. The value should refer to the constants in
+Clangc::AvailabilityKind</p>
+          
+          
+
+          
+          <div class="method-source-code" id="availability-source">
+            <pre>VALUE
+c_Cursor_get_availability(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-hash" class="method-detail ">
@@ -288,6 +335,46 @@ c_Cursor_get_kind(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorKind(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-language" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#language &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the “language” of the entity referred to by a given cursor. The
+value should refer to the constants in Clangc::LanguageKind</p>
+          
+          
+
+          
+          <div class="method-source-code" id="language-source">
+            <pre>VALUE
+c_Cursor_get_language(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorLanguage(c-&gt;data));
 }</pre>
           </div>
           
