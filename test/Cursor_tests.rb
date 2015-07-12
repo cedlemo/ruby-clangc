@@ -77,4 +77,21 @@ class TestTranslationUnitUsage < MiniTest::Test
       assert_equal true, parent_linkage_found
     end
   end
+  def test_Cursor_get_availability
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      parent_availability_found = false
+      cursor_availability_found = false
+      Clangc::AvailabilityKind.constants.each do |l|
+        if parent.availability == Clangc::AvailabilityKind.const_get(l)
+          parent_availability_found = true
+        end
+        if cursor.availability == Clangc::AvailabilityKind.const_get(l)
+          cursor_availability_found = true
+        end
+      end
+      assert_equal true, cursor_availability_found
+      assert_equal true, parent_availability_found
+    end
+  end
 end
