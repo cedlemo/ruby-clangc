@@ -84,6 +84,8 @@
     
     <li ><a href="#method-i-linkage">#linkage</a>
     
+    <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
+    
     <li ><a href="#method-i-type">#type</a>
     
   </ul>
@@ -428,6 +430,81 @@ c_Cursor_get_linkage(VALUE self)
       </div>
 
     
+      <div id="method-i-semantic_parent" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#semantic_parent &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the semantic parent of the given cursor.</p>
+
+<p>The semantic parent of a cursor is the cursor that semantically contains
+the given cursor. For many declarations, the lexical and semantic parents
+are equivalent (the lexical parent is returned by 
+Clang::Cursor#lexical_parent). They diverge when declarations or
+definitions are provided out-of-line. For example:</p>
+
+<p>&lt;code&gt;  class C {</p>
+
+<pre class="ruby"><span class="ruby-identifier">void</span> <span class="ruby-identifier">f</span>();
+</pre>
+
+<p>};</p>
+
+<p>void C::f() { } &lt;/code&gt;</p>
+
+<p>In the out-of-line definition of “C::f”, the semantic parent is the class
+“C”, of which this function is a member. The lexical parent is the place
+where the declaration actually occurs in the source code; in this case, the
+definition occurs in the translation unit. In general, the lexical parent
+for a given entity can change without affecting the semantics of the
+program, and the lexical parent of different declarations of the same
+entity may be different. Changing the semantic parent of a declaration, on
+the other hand, can have a major impact on semantics, and redeclarations of
+a particular entity should all have the same semantic context.</p>
+
+<p>In the example above, both declarations of “C::f” have “C” as their
+semantic context, while the lexical context of the first “C::f” is “C” and
+the lexical context of the second “C::f” is the translation unit.</p>
+
+<p>For global declarations, the semantic parent is the translation unit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="semantic_parent-source">
+            <pre>VALUE
+c_Cursor_get_semantic_parent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *s;
+  VALUE sem_par;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, sem_par, Cursor_t, s);
+  s-&gt;data = clang_getCursorSemanticParent(c-&gt;data);
+  s-&gt;parent = c-&gt;parent;
+  return sem_par;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-type" class="method-detail ">
         
         
@@ -459,6 +536,7 @@ c_Cursor_get_type(VALUE self)
   VALUE type;
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
   t-&gt;data = clang_getCursorType(c-&gt;data);
+  t-&gt;parent = self;
   return type;
 }</pre>
           </div>
