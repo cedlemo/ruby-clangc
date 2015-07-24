@@ -184,5 +184,55 @@ c_Cursor_get_type(VALUE self)
   VALUE type;
   R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
   t->data = clang_getCursorType(c->data);
+  t->parent = self;
   return type;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#semantic_parent => Clangc::Cursor
+*
+* Determine the semantic parent of the given cursor.
+*
+* The semantic parent of a cursor is the cursor that semantically contains
+* the given \p cursor. For many declarations, the lexical and semantic parents
+* are equivalent (the lexical parent is returned by 
+* \c clang_getCursorLexicalParent()). They diverge when declarations or
+* definitions are provided out-of-line. For example:
+*
+* \code
+* class C {
+*  void f();
+* };
+*
+* void C::f() { }
+* \endcode
+*
+* In the out-of-line definition of \c C::f, the semantic parent is
+* the class \c C, of which this function is a member. The lexical parent is
+* the place where the declaration actually occurs in the source code; in this
+* case, the definition occurs in the translation unit. In general, the
+* lexical parent for a given entity can change without affecting the semantics
+* of the program, and the lexical parent of different declarations of the
+* same entity may be different. Changing the semantic parent of a declaration,
+* on the other hand, can have a major impact on semantics, and redeclarations
+* of a particular entity should all have the same semantic context.
+*
+* In the example above, both declarations of \c C::f have \c C as their
+* semantic context, while the lexical context of the first \c C::f is \c C
+* and the lexical context of the second \c C::f is the translation unit.
+*
+* For global declarations, the semantic parent is the translation unit.
+*/
+VALUE
+c_Cursor_get_semantic_parent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *s;
+  VALUE sem_par;
+  R_GET_CLASS_DATA("Clangc", "Cursor", sem_par, Cursor_t, s);
+  s->data = clang_getCursorSemanticParent(c->data);
+  s->parent = c->parent;
+  return sem_par;
 }

@@ -160,6 +160,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "availability", RUBY_METHOD_FUNC(c_Cursor_get_availability), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "language", RUBY_METHOD_FUNC(c_Cursor_get_language), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "type", RUBY_METHOD_FUNC(c_Cursor_get_type), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "semantic_parent", RUBY_METHOD_FUNC(c_Cursor_get_semantic_parent), 0);// in class_Cursor.c
 
 /*
 * Type informations for Clangc::Cursor

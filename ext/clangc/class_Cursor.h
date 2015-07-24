@@ -50,4 +50,7 @@ c_Cursor_get_language(VALUE);
 
 VALUE
 c_Cursor_get_type(VALUE);
+
+VALUE
+c_Cursor_get_semantic_parent(VALUE);
 #endif //CURSOR_H
