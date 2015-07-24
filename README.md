@@ -12,7 +12,8 @@ Clang version used are 3.5.0 to 3.6.2
     gem install clangc-x.x.x.gem
 
 # Status:
-*    58/249 functions wrapped => 23.293172690763054%
+
+*    59/249 functions wrapped => 23.694779116465863%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
@@ -20,6 +21,7 @@ Clang version used are 3.5.0 to 3.6.2
 *    CXSourceRange
 *    CXSourceLocation
 *    CXCursor
+*    CXType
 
 # Examples (see samples directory): 
 
