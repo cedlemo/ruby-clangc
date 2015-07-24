@@ -138,5 +138,5 @@ print color.green, count.to_s, color.clear, "/", color.black, functions.size,
 
 # print specific informations
 sumup_module_functions(functions, MANAGED_FUNCTIONS)
-sumup_objects(functions, ["CXIndex", "CXTranslationUnit", "CXDiagnostic", "CXFile","CXSourceRange", "CXSourceLocation", "CXCursor"], MANAGED_FUNCTIONS)
+sumup_objects(functions, ["CXIndex", "CXTranslationUnit", "CXDiagnostic", "CXFile","CXSourceRange", "CXSourceLocation", "CXCursor", "CXType"], MANAGED_FUNCTIONS)
 
