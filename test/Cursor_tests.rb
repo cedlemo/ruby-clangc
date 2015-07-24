@@ -125,4 +125,11 @@ class TestCursorUsage < MiniTest::Test
       assert_instance_of Clangc::Cursor, parent.semantic_parent
     end
   end
+  def test_Cursor_get_lexical_parent
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      assert_instance_of Clangc::Cursor, cursor.lexical_parent
+      assert_instance_of Clangc::Cursor, parent.lexical_parent
+    end
+  end
 end
