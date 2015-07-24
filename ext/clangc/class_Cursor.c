@@ -17,6 +17,7 @@
 */
 /*Cursor ruby class*/
 #include "class_Cursor.h"
+#include "class_Type.h"
 #include "macros.h"
 
 static void
@@ -166,4 +167,22 @@ c_Cursor_get_language(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorLanguage(c->data));
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#type => Clangc::Type
+*
+* Retrieve the type of a CXCursor (if any).
+*/
+VALUE
+c_Cursor_get_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  t->data = clang_getCursorType(c->data);
+  return type;
 }

@@ -27,6 +27,7 @@
 #include "class_SourceRange.h"
 #include "class_SourceLocation.h"
 #include "class_Cursor.h"
+#include "class_Type.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -158,4 +159,12 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "linkage", RUBY_METHOD_FUNC(c_Cursor_get_linkage), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "availability", RUBY_METHOD_FUNC(c_Cursor_get_availability), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "language", RUBY_METHOD_FUNC(c_Cursor_get_language), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "type", RUBY_METHOD_FUNC(c_Cursor_get_type), 0);// in class_Cursor.c
+
+/*
+* Type informations for Clangc::Cursor
+*/
+
+  VALUE c_Type = rb_define_class_under(m_Clangc, "Type", rb_cObject);
+  rb_define_alloc_func(c_Type, c_Type_struct_alloc);
 }

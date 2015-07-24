@@ -47,4 +47,7 @@ c_Cursor_get_availability(VALUE);
 
 VALUE
 c_Cursor_get_language(VALUE);
+
+VALUE
+c_Cursor_get_type(VALUE);
 #endif //CURSOR_H
