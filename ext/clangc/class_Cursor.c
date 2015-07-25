@@ -18,6 +18,7 @@
 /*Cursor ruby class*/
 #include "class_Cursor.h"
 #include "class_Type.h"
+#include "class_SourceLocation.h"
 #include "macros.h"
 
 static void
@@ -283,4 +284,29 @@ c_Cursor_get_lexical_parent(VALUE self)
   l->data = clang_getCursorLexicalParent(c->data);
   l->parent = c->parent;
   return lex_par;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#location => Clangc::SourceLocation
+*
+* Retrieve the physical location of the source constructor referenced
+* by the given cursor.
+*
+* The location of a declaration is typically the location of the name of that
+* declaration, where the name of that declaration would occur if it is
+* unnamed, or some keyword that introduces that particular declaration.
+* The location of a reference is where that reference occurs within the
+* source code.
+*/
+VALUE
+c_Cursor_get_source_location(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceLocation_t *s;
+  VALUE src_loc;
+  R_GET_CLASS_DATA("Clangc", "SourceLocation", src_loc, SourceLocation_t, s);
+  s->data = clang_getCursorLocation(c->data);
+  return src_loc;
 }
