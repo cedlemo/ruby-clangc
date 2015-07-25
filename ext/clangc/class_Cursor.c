@@ -339,4 +339,19 @@ c_Cursor_get_extent(VALUE self)
   s->parent = self;
   return src_rge;
 }
-
+/**
+* call-seq:
+*   Clangc::Cursor#spelling => String
+*
+* Retrieve a name for the entity referenced by this cursor.
+*/
+VALUE
+c_Cursor_get_spelling(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorSpelling(c->data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}

@@ -62,4 +62,7 @@ c_Cursor_get_source_location(VALUE);
 
 VALUE
 c_Cursor_get_extent(VALUE);
+
+VALUE
+c_Cursor_get_spelling(VALUE);
 #endif //CURSOR_H
