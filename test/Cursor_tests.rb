@@ -146,4 +146,11 @@ class TestCursorUsage < MiniTest::Test
       assert_instance_of Clangc::SourceRange, parent.extent
     end
   end
+  def test_Cursor_get_spelling
+  tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      assert_instance_of String, cursor.spelling
+      assert_instance_of String, parent.spelling
+    end
+  end
 end
