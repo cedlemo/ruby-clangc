@@ -86,6 +86,8 @@
     
     <li ><a href="#method-i-linkage">#linkage</a>
     
+    <li ><a href="#method-i-location">#location</a>
+    
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
     
     <li ><a href="#method-i-type">#type</a>
@@ -498,6 +500,56 @@ c_Cursor_get_linkage(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorLinkage(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-location" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#location &rarr; Clangc::SourceLocation
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the physical location of the source constructor referenced by the
+given cursor.</p>
+
+<p>The location of a declaration is typically the location of the name of that
+declaration, where the name of that declaration would occur if it is
+unnamed, or some keyword that introduces that particular declaration. The
+location of a reference is where that reference occurs within the source
+code.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="location-source">
+            <pre>VALUE
+c_Cursor_get_source_location(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceLocation_t *s;
+  VALUE src_loc;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, src_loc, SourceLocation_t, s);
+  s-&gt;data = clang_getCursorLocation(c-&gt;data);
+  return src_loc;
 }</pre>
           </div>
           
