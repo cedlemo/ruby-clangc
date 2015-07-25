@@ -132,4 +132,11 @@ class TestCursorUsage < MiniTest::Test
       assert_instance_of Clangc::Cursor, parent.lexical_parent
     end
   end
+  def test_Cursor_get_location
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      assert_instance_of Clangc::SourceLocation, cursor.location
+      assert_instance_of Clangc::SourceLocation, parent.location
+    end
+  end
 end
