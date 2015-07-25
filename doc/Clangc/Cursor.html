@@ -72,6 +72,8 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-extent">#extent</a>
+    
     <li ><a href="#method-i-hash">#hash</a>
     
     <li ><a href="#method-i-is_equal">#is_equal</a>
@@ -89,6 +91,8 @@
     <li ><a href="#method-i-location">#location</a>
     
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
+    
+    <li ><a href="#method-i-spelling">#spelling</a>
     
     <li ><a href="#method-i-type">#type</a>
     
@@ -175,6 +179,58 @@ c_Cursor_get_availability(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-extent" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#extent &rarr; Clangc::SourceRange
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the physical extent of the source construct referenced by the
+given cursor.</p>
+
+<p>The extent of a cursor starts with the file/line/column pointing at the
+first character within the source construct that the cursor refers to and
+ends with the last character within that source construct. For a
+declaration, the extent covers the declaration itself. For a reference, the
+extent covers the location of the reference (e.g., where the referenced
+entity was actually used).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="extent-source">
+            <pre>VALUE
+c_Cursor_get_extent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *s;
+  VALUE src_rge;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, src_rge, SourceRange_t, s);
+  s-&gt;data = clang_getCursorExtent(c-&gt;data);
+  s-&gt;parent = self;
+  return src_rge;
 }</pre>
           </div>
           
@@ -549,6 +605,7 @@ c_Cursor_get_source_location(VALUE self)
   VALUE src_loc;
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, src_loc, SourceLocation_t, s);
   s-&gt;data = clang_getCursorLocation(c-&gt;data);
+  s-&gt;parent = self;
   return src_loc;
 }</pre>
           </div>
@@ -625,6 +682,48 @@ c_Cursor_get_semantic_parent(VALUE self)
   s-&gt;data = clang_getCursorSemanticParent(c-&gt;data);
   s-&gt;parent = c-&gt;parent;
   return sem_par;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-spelling" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#spelling &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a name for the entity referenced by this cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="spelling-source">
+            <pre>VALUE
+c_Cursor_get_spelling(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorSpelling(c-&gt;data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
 }</pre>
           </div>
           
