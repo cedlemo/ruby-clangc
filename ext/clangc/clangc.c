@@ -163,6 +163,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "semantic_parent", RUBY_METHOD_FUNC(c_Cursor_get_semantic_parent), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "lexical_parent", RUBY_METHOD_FUNC(c_Cursor_get_lexical_parent), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "location", RUBY_METHOD_FUNC(c_Cursor_get_source_location), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "extent", RUBY_METHOD_FUNC(c_Cursor_get_extent), 0);// in class_Cursor.c
 
 /*
 * Type informations for Clangc::Cursor

@@ -19,6 +19,7 @@
 #include "class_Cursor.h"
 #include "class_Type.h"
 #include "class_SourceLocation.h"
+#include "class_SourceRange.h"
 #include "macros.h"
 
 static void
@@ -308,5 +309,34 @@ c_Cursor_get_source_location(VALUE self)
   VALUE src_loc;
   R_GET_CLASS_DATA("Clangc", "SourceLocation", src_loc, SourceLocation_t, s);
   s->data = clang_getCursorLocation(c->data);
+  s->parent = self;
   return src_loc;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#extent => Clangc::SourceRange
+*
+* Retrieve the physical extent of the source construct referenced by
+* the given cursor.
+*
+* The extent of a cursor starts with the file/line/column pointing at the
+* first character within the source construct that the cursor refers to and
+* ends with the last character within that source construct. For a
+* declaration, the extent covers the declaration itself. For a reference,
+* the extent covers the location of the reference (e.g., where the referenced
+* entity was actually used).
+*/
+VALUE
+c_Cursor_get_extent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *s;
+  VALUE src_rge;
+  R_GET_CLASS_DATA("Clangc", "SourceRange", src_rge, SourceRange_t, s);
+  s->data = clang_getCursorExtent(c->data);
+  s->parent = self;
+  return src_rge;
+}
+

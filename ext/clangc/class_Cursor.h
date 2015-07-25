@@ -59,4 +59,7 @@ c_Cursor_get_lexical_parent(VALUE);
 
 VALUE
 c_Cursor_get_source_location(VALUE);
+
+VALUE
+c_Cursor_get_extent(VALUE);
 #endif //CURSOR_H
