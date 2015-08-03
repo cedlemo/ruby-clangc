@@ -37,9 +37,22 @@ class TestTypeUsage < MiniTest::Test
   end
   def test_Type_spelling
     tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    cursor_type = nil
+    parent_type = nil
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
       assert_instance_of String, cursor.type.spelling
       assert_instance_of String, parent.type.spelling
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
+  def test_Type_is_equal
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      assert_equal false, cursor.type == cursor.type
+      assert_equal false, parent.type == parent.type
+      assert_equal true, cursor.type.is_equal(cursor.type)
+      assert_equal true, parent.type.is_equal(parent.type)
+      Clangc::ChildVisitResult::Break
     end
   end
 #  def test_Cursor_get_typedef_decl_underlying_type
