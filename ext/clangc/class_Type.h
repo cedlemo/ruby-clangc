@@ -30,4 +30,7 @@ c_Type_struct_alloc(VALUE);
 
 VALUE
 c_Type_get_kind(VALUE);
+
+VALUE
+c_Type_get_spelling(VALUE);
 #endif //TYPE_H

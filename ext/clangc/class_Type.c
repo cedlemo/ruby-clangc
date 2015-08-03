@@ -59,3 +59,23 @@ c_Type_get_kind(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CUINT_2_NUM(t->data.kind);
 }
+
+/**
+* call-seq:
+*   Clangc::Type#spelling => String
+*
+* Pretty-print the underlying type using the rules of the
+* language of the translation unit from which it came.
+*
+* If the type is invalid, an empty string is returned.
+*/
+VALUE
+c_Type_get_spelling(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  CXString str = clang_getTypeSpelling(t->data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}
