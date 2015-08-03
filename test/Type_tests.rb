@@ -35,6 +35,13 @@ class TestTypeUsage < MiniTest::Test
       assert_equal true, parent_kind_found
     end
   end
+  def test_Type_spelling
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      assert_instance_of String, cursor.type.spelling
+      assert_instance_of String, parent.type.spelling
+    end
+  end
 #  def test_Cursor_get_typedef_decl_underlying_type
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
 #    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
