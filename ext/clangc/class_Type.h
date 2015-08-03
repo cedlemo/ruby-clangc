@@ -33,4 +33,7 @@ c_Type_get_kind(VALUE);
 
 VALUE
 c_Type_get_spelling(VALUE);
+
+VALUE
+c_Type_is_equal(VALUE, VALUE);
 #endif //TYPE_H

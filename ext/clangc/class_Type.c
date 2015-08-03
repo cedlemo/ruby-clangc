@@ -79,3 +79,22 @@ c_Type_get_spelling(VALUE self)
   clang_disposeString(str);
   return spelling;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#is_equal(Clangc::Type) => boolean
+*
+* Determine whether two Clangc::Type represent the same type.
+*
+* Returns true if the Clangc::Type represent the same type and
+* false otherwise.
+*/
+VALUE
+c_Type_is_equal(VALUE self, VALUE type)
+{
+  Type_t *t1;
+  Type_t *t2;
+  Data_Get_Struct(self, Type_t, t1);
+  Data_Get_Struct(type, Type_t, t2);
+  return clang_equalTypes(t1->data, t2->data) == 0 ? Qfalse : Qtrue;
+}
