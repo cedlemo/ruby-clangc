@@ -45,3 +45,17 @@ c_Type_struct_alloc( VALUE klass)
   
   return Data_Wrap_Struct(klass, NULL, c_Type_struct_free, ruby_xmalloc(sizeof(Type_t)));
 }
+/**
+* call-seq:
+*   Clangc::Type#kind => Fixnum
+*
+* Get the kind of type. The returned value is a postive integer contained in
+* Clangc::TypeKind.constants
+*/
+VALUE
+c_Type_get_kind(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CUINT_2_NUM(t->data.kind);
+}

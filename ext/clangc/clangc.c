@@ -172,4 +172,5 @@ void Init_clangc(void) {
 
   VALUE c_Type = rb_define_class_under(m_Clangc, "Type", rb_cObject);
   rb_define_alloc_func(c_Type, c_Type_struct_alloc);
+  rb_define_method(c_Type, "kind", RUBY_METHOD_FUNC(c_Type_get_kind), 0);// in class_Type.c
 }

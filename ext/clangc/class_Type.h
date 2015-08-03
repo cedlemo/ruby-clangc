@@ -27,4 +27,7 @@ typedef struct Type_t {
 
 VALUE
 c_Type_struct_alloc(VALUE);
+
+VALUE
+c_Type_get_kind(VALUE);
 #endif //TYPE_H
