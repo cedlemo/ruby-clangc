@@ -64,7 +64,21 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-is_equal">#is_equal</a>
+    
+    <li ><a href="#method-i-kind">#kind</a>
+    
+    <li ><a href="#method-i-spelling">#spelling</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -93,6 +107,144 @@ href="Cursor.html">Clangc::Cursor</a></p>
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-is_equal" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#is_equal(Clangc::Type) &rarr; boolean
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether two <a href="Type.html">Clangc::Type</a> represent the
+same type.</p>
+
+<p>Returns true if the <a href="Type.html">Clangc::Type</a> represent the same
+type and false otherwise.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_equal-source">
+            <pre>VALUE
+c_Type_is_equal(VALUE self, VALUE type)
+{
+  Type_t *t1;
+  Type_t *t2;
+  Data_Get_Struct(self, Type_t, t1);
+  Data_Get_Struct(type, Type_t, t2);
+  return clang_equalTypes(t1-&gt;data, t2-&gt;data) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-kind" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#kind &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Get the kind of type. The returned value is a postive integer contained in
+Clangc::TypeKind.constants</p>
+          
+          
+
+          
+          <div class="method-source-code" id="kind-source">
+            <pre>VALUE
+c_Type_get_kind(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CUINT_2_NUM(t-&gt;data.kind);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-spelling" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#spelling &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Pretty-print the underlying type using the rules of the language of the
+translation unit from which it came.</p>
+
+<p>If the type is invalid, an empty string is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="spelling-source">
+            <pre>VALUE
+c_Type_get_spelling(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  CXString str = clang_getTypeSpelling(t-&gt;data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
