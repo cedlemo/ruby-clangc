@@ -50,4 +50,7 @@ c_Type_is_volatile_qualified(VALUE);
 
 VALUE
 c_Type_is_restrict_qualified(VALUE);
+
+VALUE
+c_Type_get_result_type(VALUE);
 #endif //TYPE_H

@@ -188,3 +188,22 @@ c_Type_is_restrict_qualified(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return clang_isRestrictQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
 }
+
+/**
+* Retrieve the return type associated with a function type.
+*
+* If a non-function type is passed in (Clangc::Type#kind != Clangc::TypeKind::FunctionNoProto for example),
+* an invalid type is returned.
+*/
+VALUE
+c_Type_get_result_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *r;
+  VALUE result;
+  R_GET_CLASS_DATA("Clangc", "Type", result, Type_t, r);
+  r->data = clang_getResultType(t->data);
+  r->parent = t->parent;
+  return result;
+}
