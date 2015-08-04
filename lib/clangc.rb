@@ -30,4 +30,13 @@ module Clangc
       sr
     end
   end
+  class Type
+    def arg_types
+      types = []
+      for i in 0..(num_arg_types - 1) do
+        types << arg_type(i)
+      end
+      types
+    end
+  end
 end
