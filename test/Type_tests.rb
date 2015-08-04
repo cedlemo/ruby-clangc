@@ -55,6 +55,13 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::Break
     end
   end
+  def test_Type_canonical_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_instance_of Clangc::Type, cursor.type.canonical_type
+      assert_instance_of Clangc::Type, parent.type.canonical_type
+    end
+  end
 #  def test_Cursor_get_typedef_decl_underlying_type
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
 #    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
