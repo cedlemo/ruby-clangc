@@ -172,3 +172,19 @@ c_Type_is_volatile_qualified(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return clang_isVolatileQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#is_restrict_qualified => true/false
+*
+* Determine whether a Clangc::Type instance has the "restrict" qualifier set,
+* without looking through typedefs that may have added "const" at a
+* different level.
+*/
+VALUE
+c_Type_is_restrict_qualified(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isRestrictQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
+}
