@@ -121,3 +121,22 @@ c_Type_get_canonical_type(VALUE self)
   c->parent = t->parent;
   return canonical;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#pointee_type => Clangc::Type
+*
+* For pointer types, returns the type of the pointee.
+*/
+VALUE
+c_Type_get_pointee_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *p;
+  VALUE pointee;
+  R_GET_CLASS_DATA("Clangc", "Type", pointee, Type_t, p);
+  p->data = clang_getPointeeType(t->data);
+  p->parent = t->parent;
+  return pointee;
+}
