@@ -140,3 +140,18 @@ c_Type_get_pointee_type(VALUE self)
   p->parent = t->parent;
   return pointee;
 }
+/**
+* call-seq:
+*   Clangc::Type#is_const_qualified => true/false
+*
+* Determine whether a Clangc::Type instance has the "const" qualifier set,
+* without looking through typedefs that may have added "const" at a
+* different level.
+*/
+VALUE
+c_Type_is_const_qualified(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isConstQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
+}

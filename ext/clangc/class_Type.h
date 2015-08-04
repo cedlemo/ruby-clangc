@@ -1,4 +1,3 @@
-
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
  * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
@@ -42,4 +41,7 @@ c_Type_get_canonical_type(VALUE);
 
 VALUE
 c_Type_get_pointee_type(VALUE);
+
+VALUE
+c_Type_is_const_qualified(VALUE);
 #endif //TYPE_H
