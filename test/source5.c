@@ -1,0 +1,2 @@
+int * whoops;
+char toto;

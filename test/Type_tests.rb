@@ -9,6 +9,8 @@ class TestTypeUsage < MiniTest::Test
     @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
     # C source code with one error
     @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+    # C source file with pointer
+    @source_file_pointer = "#{File.expand_path(File.dirname(__FILE__))}/source5.c"
     # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
@@ -60,6 +62,28 @@ class TestTypeUsage < MiniTest::Test
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       assert_instance_of Clangc::Type, cursor.type.canonical_type
       assert_instance_of Clangc::Type, parent.type.canonical_type
+    end
+  end
+  def test_Type_canonical_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_instance_of Clangc::Type, cursor.type.canonical_type
+      assert_instance_of Clangc::Type, parent.type.canonical_type
+    end
+  end
+  def test_Type_pointee_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_pointer, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      cursor_pointee = cursor.type.pointee_type
+      parent_pointee = parent.type.pointee_type
+      assert_instance_of Clangc::Type, cursor_pointee
+      assert_instance_of Clangc::Type, parent_pointee
+      if cursor.type.kind == Clangc::TypeKind::Pointer
+        assert_equal Clangc::TypeKind::Int, cursor_pointee.kind, cursor_pointee.spelling
+      else
+        assert_equal Clangc::TypeKind::Invalid, cursor_pointee.kind, cursor_pointee.spelling
+      end
+      Clangc::ChildVisitResult::Recurse
     end
   end
 #  def test_Cursor_get_typedef_decl_underlying_type
