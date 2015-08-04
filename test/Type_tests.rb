@@ -111,7 +111,18 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
-
+  def test_Type_restrict_qualified_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_qualified, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+    location = cursor.location.spelling
+      if location[1] == 2 && location[2] == 15
+        assert_equal true, cursor.type.is_restrict_qualified, location[2]
+      else
+       assert_equal false, cursor.type.is_restrict_qualified, location[2]
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 #  def test_Cursor_get_typedef_decl_underlying_type
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
 #    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
