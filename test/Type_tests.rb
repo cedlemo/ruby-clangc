@@ -137,6 +137,19 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Type_function_calling_conv
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      cursor_kind = cursor.type.kind
+      if cursor_kind == Clangc::TypeKind::Functionnoproto || cursor_kind == Clangc::TypeKind::Functionproto
+        convention_found = false
+        Clangc::CallingConv.constants.each do |c|
+          convention_found = true if Clangc::CallingConv.const_get(c) == cursor.type.calling_conv
+        end
+        assert_equal true, convention_found
+      end
+    end
+  end
 #  def test_Cursor_get_typedef_decl_underlying_type
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
 #    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
