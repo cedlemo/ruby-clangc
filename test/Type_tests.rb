@@ -11,6 +11,8 @@ class TestTypeUsage < MiniTest::Test
     @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
     # C source file with pointer
     @source_file_pointer = "#{File.expand_path(File.dirname(__FILE__))}/source5.c"
+    # C source file with qualified type
+    @source_file_qualified = "#{File.expand_path(File.dirname(__FILE__))}/source6.c"
     # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
@@ -82,6 +84,17 @@ class TestTypeUsage < MiniTest::Test
         assert_equal Clangc::TypeKind::Int, cursor_pointee.kind, cursor_pointee.spelling
       else
         assert_equal Clangc::TypeKind::Invalid, cursor_pointee.kind, cursor_pointee.spelling
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
+  def test_Type_constant_qualified_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_qualified, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[1] == 1
+        assert_equal true, cursor.type.is_const_qualified
+      else
+        assert_equal false, cursor.type.is_const_qualified
       end
       Clangc::ChildVisitResult::Recurse
     end
