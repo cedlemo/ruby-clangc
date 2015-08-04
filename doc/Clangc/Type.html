@@ -70,9 +70,19 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-canonical_type">#canonical_type</a>
+    
+    <li ><a href="#method-i-is_const_qualified">#is_const_qualified</a>
+    
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
+    <li ><a href="#method-i-is_restrict_qualified">#is_restrict_qualified</a>
+    
+    <li ><a href="#method-i-is_volatile_qualified">#is_volatile_qualified</a>
+    
     <li ><a href="#method-i-kind">#kind</a>
+    
+    <li ><a href="#method-i-pointee_type">#pointee_type</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
     
@@ -111,6 +121,97 @@ href="Cursor.html">Clangc::Cursor</a></p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-canonical_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#canonical_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the canonical type for a <a href="Type.html">Clangc::Type</a>.</p>
+
+<p>Clang&#39;s type system explicitly models typedefs and all the ways a
+specific type can be represented.  The canonical type is the underlying
+type with all the “sugar” removed.  For example, if &#39;T&#39; is a
+typedef for &#39;int&#39;, the canonical type for &#39;T&#39; would be
+&#39;int&#39;.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="canonical_type-source">
+            <pre>VALUE
+c_Type_get_canonical_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *c;
+  VALUE canonical;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, canonical, Type_t, c);
+  c-&gt;data = clang_getCanonicalType(t-&gt;data);
+  c-&gt;parent = t-&gt;parent;
+  return canonical;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_const_qualified" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#is_const_qualified &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether a <a href="Type.html">Clangc::Type</a> instance has the
+“const” qualifier set, without looking through typedefs that may have added
+“const” at a different level.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_const_qualified-source">
+            <pre>VALUE
+c_Type_is_const_qualified(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isConstQualifiedType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-is_equal" class="method-detail ">
@@ -158,6 +259,88 @@ c_Type_is_equal(VALUE self, VALUE type)
       </div>
 
     
+      <div id="method-i-is_restrict_qualified" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#is_restrict_qualified &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether a <a href="Type.html">Clangc::Type</a> instance has the
+“restrict” qualifier set, without looking through typedefs that may have
+added “const” at a different level.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_restrict_qualified-source">
+            <pre>VALUE
+c_Type_is_restrict_qualified(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isRestrictQualifiedType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_volatile_qualified" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#is_volatile_qualified &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether a <a href="Type.html">Clangc::Type</a> instance has the
+“volatile” qualifier set, without looking through typedefs that may have
+added “const” at a different level.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_volatile_qualified-source">
+            <pre>VALUE
+c_Type_is_volatile_qualified(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isVolatileQualifiedType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-kind" class="method-detail ">
         
         
@@ -187,6 +370,50 @@ c_Type_get_kind(VALUE self)
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
   return CUINT_2_NUM(t-&gt;data.kind);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-pointee_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#pointee_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>For pointer types, returns the type of the pointee.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="pointee_type-source">
+            <pre>VALUE
+c_Type_get_pointee_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *p;
+  VALUE pointee;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, pointee, Type_t, p);
+  p-&gt;data = clang_getPointeeType(t-&gt;data);
+  p-&gt;parent = t-&gt;parent;
+  return pointee;
 }</pre>
           </div>
           

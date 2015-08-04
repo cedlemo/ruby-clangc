@@ -102,7 +102,7 @@ c_Type_is_equal(VALUE self, VALUE type)
 * call-seq:
 *   Clangc::Type#canonical_type => Clangc::Type
 *
-* Return the canonical type for a CXType.
+* Return the canonical type for a Clangc::Type.
 *
 * Clang's type system explicitly models typedefs and all the ways
 * a specific type can be represented.  The canonical type is the underlying
