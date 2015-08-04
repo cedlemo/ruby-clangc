@@ -207,3 +207,19 @@ c_Type_get_result_type(VALUE self)
   r->parent = t->parent;
   return result;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#calling_conv => Clangc::CallingConv
+*
+* Retrieve the calling convention associated with a function type.
+*
+* If a non-function type is passed in, Clangc::CallingConv::Invalid is returned.
+*/
+VALUE
+c_Type_get_calling_conv(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CUINT_2_NUM(clang_getFunctionTypeCallingConv(t->data));
+}

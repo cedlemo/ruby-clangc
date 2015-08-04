@@ -53,4 +53,7 @@ c_Type_is_restrict_qualified(VALUE);
 
 VALUE
 c_Type_get_result_type(VALUE);
+
+VALUE
+c_Type_get_calling_conv(VALUE);
 #endif //TYPE_H

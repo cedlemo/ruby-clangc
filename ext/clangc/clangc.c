@@ -181,4 +181,5 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "is_volatile_qualified", RUBY_METHOD_FUNC(c_Type_is_volatile_qualified), 0);// in class_Type.c
   rb_define_method(c_Type, "is_restrict_qualified", RUBY_METHOD_FUNC(c_Type_is_restrict_qualified), 0);// in class_Type.c
   rb_define_method(c_Type, "result_type", RUBY_METHOD_FUNC(c_Type_get_result_type), 0);// in class_Type.c
+  rb_define_method(c_Type, "calling_conv", RUBY_METHOD_FUNC(c_Type_get_calling_conv), 0);// in class_Type.c
 }
