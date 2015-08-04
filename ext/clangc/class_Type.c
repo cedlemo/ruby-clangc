@@ -1,4 +1,3 @@
-
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
  * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
@@ -97,4 +96,28 @@ c_Type_is_equal(VALUE self, VALUE type)
   Data_Get_Struct(self, Type_t, t1);
   Data_Get_Struct(type, Type_t, t2);
   return clang_equalTypes(t1->data, t2->data) == 0 ? Qfalse : Qtrue;
+}
+
+/**
+* call-seq:
+*   Clangc::Type#canonical_type => Clangc::Type
+*
+* Return the canonical type for a CXType.
+*
+* Clang's type system explicitly models typedefs and all the ways
+* a specific type can be represented.  The canonical type is the underlying
+* type with all the "sugar" removed.  For example, if 'T' is a typedef
+* for 'int', the canonical type for 'T' would be 'int'.
+*/
+VALUE
+c_Type_get_canonical_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *c;
+  VALUE canonical;
+  R_GET_CLASS_DATA("Clangc", "Type", canonical, Type_t, c);
+  c->data = clang_getCanonicalType(t->data);
+  c->parent = t->parent;
+  return canonical;
 }

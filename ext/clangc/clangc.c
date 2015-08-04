@@ -175,4 +175,5 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "kind", RUBY_METHOD_FUNC(c_Type_get_kind), 0);// in class_Type.c
   rb_define_method(c_Type, "spelling", RUBY_METHOD_FUNC(c_Type_get_spelling), 0);// in class_Type.c
   rb_define_method(c_Type, "is_equal", RUBY_METHOD_FUNC(c_Type_is_equal), 1);// in class_Type.c
+  rb_define_method(c_Type, "canonical_type", RUBY_METHOD_FUNC(c_Type_get_canonical_type), 0);// in class_Type.c
 }

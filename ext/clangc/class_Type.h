@@ -36,4 +36,7 @@ c_Type_get_spelling(VALUE);
 
 VALUE
 c_Type_is_equal(VALUE, VALUE);
+
+VALUE
+c_Type_get_canonical_type(VALUE);
 #endif //TYPE_H
