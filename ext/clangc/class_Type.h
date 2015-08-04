@@ -44,4 +44,7 @@ c_Type_get_pointee_type(VALUE);
 
 VALUE
 c_Type_is_const_qualified(VALUE);
+
+VALUE
+c_Type_is_volatile_qualified(VALUE);
 #endif //TYPE_H

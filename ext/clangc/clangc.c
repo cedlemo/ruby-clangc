@@ -178,4 +178,5 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "canonical_type", RUBY_METHOD_FUNC(c_Type_get_canonical_type), 0);// in class_Type.c
   rb_define_method(c_Type, "pointee_type", RUBY_METHOD_FUNC(c_Type_get_pointee_type), 0);// in class_Type.c
   rb_define_method(c_Type, "is_const_qualified", RUBY_METHOD_FUNC(c_Type_is_const_qualified), 0);// in class_Type.c
+  rb_define_method(c_Type, "is_volatile_qualified", RUBY_METHOD_FUNC(c_Type_is_volatile_qualified), 0);// in class_Type.c
 }
