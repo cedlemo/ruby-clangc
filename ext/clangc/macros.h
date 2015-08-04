@@ -85,5 +85,5 @@ VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
 /*C values to Ruby value*/
 /************************/
 #define CUINT_2_NUM(c_val) UINT2NUM(c_val)
-
+#define CINT_2_NUM(c_val) INT2NUM(c_val)
 #endif //MACROS_H
