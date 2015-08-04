@@ -223,3 +223,19 @@ c_Type_get_calling_conv(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CUINT_2_NUM(clang_getFunctionTypeCallingConv(t->data));
 }
+/**
+* call-seq:
+*   Clangc::Type#num_arg_types => Integer
+*
+* Retrieve the number of non-variadic parameters associated with a
+* function type.
+*
+* If a non-function type is passed in, -1 is returned.
+*/
+VALUE
+c_Type_get_num_arg_types(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CINT_2_NUM(clang_getNumArgTypes(t->data));
+}

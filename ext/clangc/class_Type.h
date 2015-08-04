@@ -56,4 +56,7 @@ c_Type_get_result_type(VALUE);
 
 VALUE
 c_Type_get_calling_conv(VALUE);
+
+VALUE
+c_Type_get_num_arg_types(VALUE);
 #endif //TYPE_H
