@@ -183,4 +183,5 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "result_type", RUBY_METHOD_FUNC(c_Type_get_result_type), 0);// in class_Type.c
   rb_define_method(c_Type, "calling_conv", RUBY_METHOD_FUNC(c_Type_get_calling_conv), 0);// in class_Type.c
   rb_define_method(c_Type, "num_arg_types", RUBY_METHOD_FUNC(c_Type_get_num_arg_types), 0);// in class_Type.c
+  rb_define_method(c_Type, "arg_type", RUBY_METHOD_FUNC(c_Type_get_arg_type), 1);// in class_Type.c
 }

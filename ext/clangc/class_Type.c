@@ -239,3 +239,38 @@ c_Type_get_num_arg_types(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CINT_2_NUM(clang_getNumArgTypes(t->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Type#arg_type(Integer) => Clangc::Type
+*
+* Retrieve the type of a parameter of a function type.
+*
+* If a non-function type is passed in or the function does not have enough
+* parameters, an invalid type is returned.
+* Better alternative is 
+* <code>Clangc::Type#arg_types => Array</code>
+*/
+VALUE
+c_Type_get_arg_type(VALUE self, VALUE index)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  int max = clang_getNumArgTypes(t->data);
+  /*args number can be < 0 if self is not a function type
+    In this case I set max to zero and let this method returns
+    an invalid type. It the user responsabilitty to check
+    if the Clangc::Type#kind is a Functionproto or Functionnoproto
+  */
+  if(max < 0)
+    max = 0; 
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  CHECK_IN_RANGE(c_index, 0, max);
+  Type_t *a;
+  VALUE arg;
+  R_GET_CLASS_DATA("Clangc", "Type", arg, Type_t, a);
+  a->data = clang_getArgType(t->data, c_index);
+  a->parent = t->parent;
+  return arg;
+}
