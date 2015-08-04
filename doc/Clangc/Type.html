@@ -70,6 +70,12 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-arg_type">#arg_type</a>
+    
+    <li ><a href="#method-i-arg_types">#arg_types</a>
+    
+    <li ><a href="#method-i-calling_conv">#calling_conv</a>
+    
     <li ><a href="#method-i-canonical_type">#canonical_type</a>
     
     <li ><a href="#method-i-is_const_qualified">#is_const_qualified</a>
@@ -82,7 +88,11 @@
     
     <li ><a href="#method-i-kind">#kind</a>
     
+    <li ><a href="#method-i-num_arg_types">#num_arg_types</a>
+    
     <li ><a href="#method-i-pointee_type">#pointee_type</a>
+    
+    <li ><a href="#method-i-result_type">#result_type</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
     
@@ -121,6 +131,144 @@ href="Cursor.html">Clangc::Cursor</a></p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-arg_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#arg_type(Integer) &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the type of a parameter of a function type.</p>
+
+<p>If a non-function type is passed in or the function does not have enough
+parameters, an invalid type is returned. Better alternative is 
+<code>Clangc::Type#arg_types =&gt; Array</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="arg_type-source">
+            <pre>VALUE
+c_Type_get_arg_type(VALUE self, VALUE index)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  int max = clang_getNumArgTypes(t-&gt;data);
+  /*args number can be &lt; 0 if self is not a function type
+    In this case I set max to zero and let this method returns
+    an invalid type. It the user responsabilitty to check
+    if the Clangc::Type#kind is a Functionproto or Functionnoproto
+  */
+  if(max &lt; 0)
+    max = 0; 
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  CHECK_IN_RANGE(c_index, 0, max);
+  Type_t *a;
+  VALUE arg;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, arg, Type_t, a);
+  a-&gt;data = clang_getArgType(t-&gt;data, c_index);
+  a-&gt;parent = t-&gt;parent;
+  return arg;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-arg_types" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">arg_types</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="arg_types-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">arg_types</span>
+  <span class="ruby-identifier">types</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num_arg_types</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg_type</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">types</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-calling_conv" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#calling_conv &rarr; Clangc::CallingConv
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the calling convention associated with a function type.</p>
+
+<p>If a non-function type is passed in, Clangc::CallingConv::Invalid is
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="calling_conv-source">
+            <pre>VALUE
+c_Type_get_calling_conv(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CUINT_2_NUM(clang_getFunctionTypeCallingConv(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-canonical_type" class="method-detail ">
@@ -381,6 +529,48 @@ c_Type_get_kind(VALUE self)
       </div>
 
     
+      <div id="method-i-num_arg_types" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#num_arg_types &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the number of non-variadic parameters associated with a function
+type.</p>
+
+<p>If a non-function type is passed in, -1 is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_arg_types-source">
+            <pre>VALUE
+c_Type_get_num_arg_types(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CINT_2_NUM(clang_getNumArgTypes(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-pointee_type" class="method-detail ">
         
         
@@ -414,6 +604,51 @@ c_Type_get_pointee_type(VALUE self)
   p-&gt;data = clang_getPointeeType(t-&gt;data);
   p-&gt;parent = t-&gt;parent;
   return pointee;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-result_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">result_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the return type associated with a function type.</p>
+
+<p>If a non-function type is passed in (Clangc::Type#kind !=
+Clangc::TypeKind::FunctionNoProto for example), an invalid type is
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="result_type-source">
+            <pre>VALUE
+c_Type_get_result_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *r;
+  VALUE result;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, result, Type_t, r);
+  r-&gt;data = clang_getResultType(t-&gt;data);
+  r-&gt;parent = t-&gt;parent;
+  return result;
 }</pre>
           </div>
           
