@@ -160,6 +160,17 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Type_function_arg_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+    ck = cursor.type.kind
+      if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
+        assert_equal Clangc::TypeKind::Char_s, cursor.type.arg_type(0).kind, cursor.type.arg_type(0).kind
+        assert_equal Clangc::TypeKind::Int, cursor.type.arg_type(1).kind, cursor.type.arg_type(1).kind
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 
 #  def test_Cursor_get_typedef_decl_underlying_type
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
