@@ -65,4 +65,7 @@ c_Type_get_arg_type(VALUE, VALUE);
 
 VALUE
 c_Type_get_element_type(VALUE);
+
+VALUE
+c_Type_get_num_elements(VALUE);
 #endif //TYPE_H

@@ -296,3 +296,20 @@ c_Type_get_element_type(VALUE self)
   e->parent = t->parent;
   return element;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#num_elements => Num
+*
+* Return the number of elements of an array or vector type.
+*
+* If a type is passed in that is not an array or vector type,
+* -1 is returned.
+*/
+VALUE
+c_Type_get_num_elements(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_getNumElements(t->data));
+}
