@@ -274,3 +274,25 @@ c_Type_get_arg_type(VALUE self, VALUE index)
   a->parent = t->parent;
   return arg;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#element_type => Clangc::Type
+*
+* Return the element type of an array, complex, or vector type.
+*
+* If a type is passed in that is not an array, complex, or vector type,
+* an invalid type is returned.
+*/
+VALUE
+c_Type_get_element_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *e;
+  VALUE element;
+  R_GET_CLASS_DATA("Clangc", "Type", element, Type_t, e);
+  e->data = clang_getElementType(t->data);
+  e->parent = t->parent;
+  return element;
+}
