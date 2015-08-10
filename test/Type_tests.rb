@@ -15,6 +15,8 @@ class TestTypeUsage < MiniTest::Test
     @source_file_qualified = "#{File.expand_path(File.dirname(__FILE__))}/source6.c"
     # C source file with only one function
     @source_file_function = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
+    # C source file with only one array 
+    @source_file_array= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
     # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
@@ -179,6 +181,19 @@ class TestTypeUsage < MiniTest::Test
         args = cursor.type.arg_types
         assert_equal Clangc::TypeKind::Char_s, args[0].kind
         assert_equal Clangc::TypeKind::Int, args[1].kind
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
+  def test_Type_element_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_array, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
+        assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal Clangc::TypeKind::Int, cursor.type.element_type.kind, cursor.location.spelling.inspect
+      elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
+        assert_equal Clangc::TypeKind::Vector, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal Clangc::TypeKind::Int, cursor.type.element_type.kind, cursor.location.spelling.inspect
       end
       Clangc::ChildVisitResult::Recurse
     end
