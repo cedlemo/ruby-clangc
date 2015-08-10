@@ -198,6 +198,20 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Type_num_elements
+  tu = @cindex.create_translation_unit_from_source_file(@source_file_array, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
+        assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal 10, cursor.type.num_elements, cursor.location.spelling.inspect
+      elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
+        assert_equal Clangc::TypeKind::Vector, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal 2, cursor.type.num_elements, cursor.location.spelling.inspect
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
+
 #  def test_Cursor_get_typedef_decl_underlying_type
 #    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
 #    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
