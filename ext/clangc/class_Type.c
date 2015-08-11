@@ -190,6 +190,9 @@ c_Type_is_restrict_qualified(VALUE self)
 }
 
 /**
+* call-seq:
+*   Clangc::Type#result_type => Clangc::Type
+*
 * Retrieve the return type associated with a function type.
 *
 * If a non-function type is passed in (Clangc::Type#kind != Clangc::TypeKind::FunctionNoProto for example),
@@ -338,6 +341,7 @@ c_Type_get_array_element_type(VALUE self)
 /**
 * call-seq:
 *   Clangc::Type#array_size => Num
+*
 * Return the array size of a constant array.
 *
 * If a non-array type is passed in, -1 is returned.
