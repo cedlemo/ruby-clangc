@@ -313,3 +313,24 @@ c_Type_get_num_elements(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CLLONG_2_NUM(clang_getNumElements(t->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Type#array_element_type => Num
+*
+* Return the element type of an array type.
+*
+* If a non-array type is passed in, an invalid type is returned.
+*/
+VALUE
+c_Type_get_array_element_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *e;
+  VALUE element;
+  R_GET_CLASS_DATA("Clangc", "Type", element, Type_t, e);
+  e->data = clang_getElementType(t->data);
+  e->parent = t->parent;
+  return element;
+}
