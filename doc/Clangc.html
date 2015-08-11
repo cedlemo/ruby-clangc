@@ -410,24 +410,45 @@ m_clangc_get_version(VALUE self)
     
       <div id="method-c-visit_children" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">visit_children</span><span
-            class="method-args">(args) { |cursor, parent| ... }</span>
+          <span class="method-callseq">
+            visit_children(Hash)
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>This is a convenient method that call <a
+href="Clangc.html#method-c-visit_children_with_proc">::visit_children_with_proc</a>
+or <a
+href="Clangc.html#method-c-visit_children_with_block">::visit_children_with_block</a>.
+the Hash arguments can accept two keys:</p>
+<ul><li>
+<p>cursor</p>
+</li><li>
+<p>visitor</p>
+
+<pre class="ruby"><span class="ruby-constant">Clangc</span>.<span class="ruby-identifier">visit_children</span>(<span class="ruby-identifier">cursor</span><span class="ruby-operator">:</span> <span class="ruby-identifier">acursor</span>, <span class="ruby-identifier">visitor</span><span class="ruby-operator">:</span> <span class="ruby-identifier">aproc</span>)
+
+<span class="ruby-constant">Clangc</span>.<span class="ruby-identifier">visit_children</span>(<span class="ruby-identifier">cursor</span><span class="ruby-operator">:</span> <span class="ruby-identifier">acursor</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cursor</span>, <span class="ruby-identifier">parent</span><span class="ruby-operator">|</span>
+  <span class="ruby-comment">#do your stuf</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">ChildVisitResult</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurse</span>
+  <span class="ruby-comment">#return Clangc::ChildVisitResult::Break</span>
+<span class="ruby-keyword">end</span>
+</pre>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="visit_children-source">
-            <pre><span class="ruby-comment"># File lib/clangc.rb, line 4</span>
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">visit_children</span>(<span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">cursor</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">:cursor</span>]
   <span class="ruby-identifier">callback</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">:visitor</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword">nil</span>

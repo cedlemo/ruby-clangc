@@ -604,26 +604,34 @@ c_Diagnostic_get_source_range(VALUE self, VALUE index)
     
       <div id="method-i-source_ranges" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">source_ranges</span><span
-            class="method-args">()</span>
+          <span class="method-callseq">
+            Clangc::Diagnostic#source_ranges &rarr; Array
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>Returns an array of <a href="SourceRange.html">Clangc::SourceRange</a> for
+the current <a href="Diagnostic.html">Clangc::Diagnostic</a>. The array is
+empty if there is no <a href="SourceRange.html">Clangc::SourceRange</a></p>
           
           
 
           
           <div class="method-source-code" id="source_ranges-source">
-            <pre><span class="ruby-comment"># File lib/clangc.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">source_ranges</span>
+  <span class="ruby-identifier">num</span>
   <span class="ruby-identifier">sr</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">sr</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num_ranges</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">sr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">source_range</span>(<span class="ruby-identifier">i</span>)
   <span class="ruby-keyword">end</span>

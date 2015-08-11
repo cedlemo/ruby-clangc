@@ -314,24 +314,30 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
     
       <div id="method-i-diagnostics" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">diagnostics</span><span
-            class="method-args">()</span>
+          <span class="method-callseq">
+            Clangc::TranslationUnit#diagnostics &rarr; Array
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>Returns an array of <a href="Diagnostic.html">Clangc::Diagnostic</a> for
+the current <a href="TranslationUnit.html">Clangc::TranslationUnit</a>. The
+array is empty if no <a href="Diagnostic.html">Clangc::Diagnostic</a> can
+be found.</p>
           
           
 
           
           <div class="method-source-code" id="diagnostics-source">
-            <pre><span class="ruby-comment"># File lib/clangc.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diagnostics</span>
   <span class="ruby-identifier">ds</span> = []
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">diagnostics_num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>

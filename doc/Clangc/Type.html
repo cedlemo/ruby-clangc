@@ -74,9 +74,15 @@
     
     <li ><a href="#method-i-arg_types">#arg_types</a>
     
+    <li ><a href="#method-i-array_element_type">#array_element_type</a>
+    
+    <li ><a href="#method-i-array_size">#array_size</a>
+    
     <li ><a href="#method-i-calling_conv">#calling_conv</a>
     
     <li ><a href="#method-i-canonical_type">#canonical_type</a>
+    
+    <li ><a href="#method-i-element_type">#element_type</a>
     
     <li ><a href="#method-i-is_const_qualified">#is_const_qualified</a>
     
@@ -89,6 +95,8 @@
     <li ><a href="#method-i-kind">#kind</a>
     
     <li ><a href="#method-i-num_arg_types">#num_arg_types</a>
+    
+    <li ><a href="#method-i-num_elements">#num_elements</a>
     
     <li ><a href="#method-i-pointee_type">#pointee_type</a>
     
@@ -194,31 +202,126 @@ c_Type_get_arg_type(VALUE self, VALUE index)
     
       <div id="method-i-arg_types" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">arg_types</span><span
-            class="method-args">()</span>
+          <span class="method-callseq">
+            Clangc::Type#arg_types &rarr; Array
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>Return an array that contains all the  types for the argument of the
+function that is related to the current type. If the current type is not a
+function, it returns an empty array.</p>
           
           
 
           
           <div class="method-source-code" id="arg_types-source">
-            <pre><span class="ruby-comment"># File lib/clangc.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">arg_types</span>
-  <span class="ruby-identifier">types</span> = []
-  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num_arg_types</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
-    <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg_type</span>(<span class="ruby-identifier">i</span>)
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">types</span>
-<span class="ruby-keyword">end</span></pre>
+    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_args_types</span>
+    <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+    <span class="ruby-identifier">types</span> = []
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg_type</span>(<span class="ruby-identifier">i</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">types</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-array_element_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#array_element_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the element type of an array type.</p>
+
+<p>If a non-array type is passed in, an invalid type is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="array_element_type-source">
+            <pre>VALUE
+c_Type_get_array_element_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *e;
+  VALUE element;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, element, Type_t, e);
+  e-&gt;data = clang_getElementType(t-&gt;data);
+  e-&gt;parent = t-&gt;parent;
+  return element;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-array_size" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#array_size &rarr; Num
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the array size of a constant array.</p>
+
+<p>If a non-array type is passed in, -1 is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="array_size-source">
+            <pre>VALUE
+c_Type_get_array_size(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_getArraySize(t-&gt;data));
+}</pre>
           </div>
           
         </div>
@@ -310,6 +413,53 @@ c_Type_get_canonical_type(VALUE self)
   c-&gt;data = clang_getCanonicalType(t-&gt;data);
   c-&gt;parent = t-&gt;parent;
   return canonical;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-element_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#element_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the element type of an array, complex, or vector type.</p>
+
+<p>If a type is passed in that is not an array, complex, or vector type, an
+invalid type is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="element_type-source">
+            <pre>VALUE
+c_Type_get_element_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Type_t *e;
+  VALUE element;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, element, Type_t, e);
+  e-&gt;data = clang_getElementType(t-&gt;data);
+  e-&gt;parent = t-&gt;parent;
+  return element;
 }</pre>
           </div>
           
@@ -571,6 +721,47 @@ c_Type_get_num_arg_types(VALUE self)
       </div>
 
     
+      <div id="method-i-num_elements" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#num_elements &rarr; Num
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the number of elements of an array or vector type.</p>
+
+<p>If a type is passed in that is not an array or vector type, -1 is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_elements-source">
+            <pre>VALUE
+c_Type_get_num_elements(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_getNumElements(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-pointee_type" class="method-detail ">
         
         
@@ -617,13 +808,16 @@ c_Type_get_pointee_type(VALUE self)
     
       <div id="method-i-result_type" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">result_type</span><span
-            class="method-args">()</span>
+          <span class="method-callseq">
+            Clangc::Type#result_type &rarr; Clangc::Type
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
+        
         
 
         <div class="method-description">
