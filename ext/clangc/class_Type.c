@@ -316,7 +316,7 @@ c_Type_get_num_elements(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Type#array_element_type => Num
+*   Clangc::Type#array_element_type => Clangc::Type
 *
 * Return the element type of an array type.
 *
@@ -333,4 +333,19 @@ c_Type_get_array_element_type(VALUE self)
   e->data = clang_getElementType(t->data);
   e->parent = t->parent;
   return element;
+}
+
+/**
+* call-seq:
+*   Clangc::Type#array_size => Num
+* Return the array size of a constant array.
+*
+* If a non-array type is passed in, -1 is returned.
+*/
+VALUE
+c_Type_get_array_size(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_getArraySize(t->data));
 }

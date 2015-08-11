@@ -71,4 +71,7 @@ c_Type_get_num_elements(VALUE);
 
 VALUE
 c_Type_get_array_element_type(VALUE);
+
+VALUE
+c_Type_get_array_size(VALUE);
 #endif //TYPE_H
