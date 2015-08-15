@@ -333,7 +333,7 @@ c_Type_get_array_element_type(VALUE self)
   Type_t *e;
   VALUE element;
   R_GET_CLASS_DATA("Clangc", "Type", element, Type_t, e);
-  e->data = clang_getElementType(t->data);
+  e->data = clang_getArrayElementType(t->data);
   e->parent = t->parent;
   return element;
 }
