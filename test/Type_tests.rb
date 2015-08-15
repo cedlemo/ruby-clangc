@@ -17,6 +17,8 @@ class TestTypeUsage < MiniTest::Test
     @source_file_function = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
     # C source file with only one array 
     @source_file_array= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
+    # C source file with one non POD and one POD
+    @source_file_pod = "#{File.expand_path(File.dirname(__FILE__))}/source9.cpp"
     # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
