@@ -52,11 +52,11 @@ module Clangc
     # Returns an array of Clangc::SourceRange for the current Clangc::Diagnostic.
     # The array is empty if there is no Clangc::SourceRange
     def source_ranges
-      num
+      num = num_ranges
       sr = []
       return sr if num == 0
 
-      for i in 0..(num_ranges - 1) do
+      for i in 0..(num - 1) do
         sr << source_range(i)
       end
       sr
@@ -73,7 +73,7 @@ module Clangc
   # If the current type is not a function, it returns
   # an empty array.
   def arg_types
-      num = num_args_types
+      num = num_arg_types
       return [] if num == -1
 
       types = []
