@@ -1,16 +1,24 @@
-Implement Clangc::Cursor methods
+# TODO
 
-Add ruby object check in c_File_is_equal
-Add ruby object check in c_SourceRange_is_equal
-Add ruby object check in c_SourceLocation_is_equal
-Add ruby object check in c_Cursor_is_equal
-Add ruby object check in c_Type_is_equal
-All methods starting with is_something must be in ruby something?
-See if the check in class_File.c clangc_File_get_name is the best solution
+## Primary
+[] Implement Clangc::Cursor methods
 
-To solve:
-Use code in rdoc comments
+[] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
-when errors in file, Clangc::SourceRange.end return NULL file and position
-informations equal to 0. Check Clangc::SourceRange.end for other objects
-than Clangc::Diagnostic
+  *    Add ruby object check in c_File_is_equal
+  *    Add ruby object check in c_SourceRange_is_equal
+  *    Add ruby object check in c_SourceLocation_is_equal
+  *    Add ruby object check in c_Cursor_is_equal
+  *    Add ruby object check in c_Type_is_equal
+
+[] See if the check in class_File.c clangc_File_get_name is the best solution
+
+[] See how to handle/parse properly C++ files in order to create tests for Clangc::Type#is_POD
+
+## Secondary:
+
+[] Use/display code in rdoc comments
+
+[] when errors in file, Clangc::SourceRange.end return NULL file and position
+    informations equal to 0. Check Clangc::SourceRange.end for other objects
+    than Clangc::Diagnostic
