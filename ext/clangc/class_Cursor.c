@@ -202,13 +202,11 @@ c_Cursor_get_type(VALUE self)
 * Clang::Cursor#lexical_parent). They diverge when declarations or
 * definitions are provided out-of-line. For example:
 *
-* <code> 
-* class C {
-*  void f();
-* };
-*
-* void C::f() { }
-* </code>
+*     class C {
+*      void f();
+*     };
+*    
+*     void C::f() { }
 *
 * In the out-of-line definition of "C::f", the semantic parent is
 * the class "C", of which this function is a member. The lexical parent is
@@ -251,11 +249,11 @@ c_Cursor_get_semantic_parent(VALUE self)
 * Clangc::Cursor#semantic_parent). They diverge when declarations or
 * definitions are provided out-of-line. For example:
 *
-* class C {
-*  void f();
-* };
-*
-* void C::f() { }
+*     class C {
+*      void f();
+*     };
+*    
+*     void C::f() { }
 *
 * In the out-of-line definition of "C::f", the semantic parent is
 * the class "C", of which this function is a member. The lexical parent is
