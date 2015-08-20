@@ -475,14 +475,11 @@ href="Cursor.html#method-i-semantic_parent">#semantic_parent</a>). They
 diverge when declarations or definitions are provided out-of-line. For
 example:</p>
 
-<p>class C {</p>
+<pre>class C {
+ void f();
+};
 
-<pre class="ruby"><span class="ruby-identifier">void</span> <span class="ruby-identifier">f</span>();
-</pre>
-
-<p>};</p>
-
-<p>void C::f() { }</p>
+void C::f() { }</pre>
 
 <p>In the out-of-line definition of “C::f”, the semantic parent is the class
 “C”, of which this function is a member. The lexical parent is the place
@@ -642,14 +639,11 @@ are equivalent (the lexical parent is returned by
 Clang::Cursor#lexical_parent). They diverge when declarations or
 definitions are provided out-of-line. For example:</p>
 
-<p>&lt;code&gt;  class C {</p>
+<pre>class C {
+ void f();
+};
 
-<pre class="ruby"><span class="ruby-identifier">void</span> <span class="ruby-identifier">f</span>();
-</pre>
-
-<p>};</p>
-
-<p>void C::f() { } &lt;/code&gt;</p>
+void C::f() { }</pre>
 
 <p>In the out-of-line definition of “C::f”, the semantic parent is the class
 “C”, of which this function is a member. The lexical parent is the place

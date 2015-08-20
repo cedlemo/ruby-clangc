@@ -226,7 +226,7 @@ function, it returns an empty array.</p>
           <div class="method-source-code" id="arg_types-source">
             <pre><span class="ruby-comment"># File lib/clangc.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">arg_types</span>
-    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_args_types</span>
+    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_arg_types</span>
     <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
 
     <span class="ruby-identifier">types</span> = []
@@ -277,7 +277,7 @@ c_Type_get_array_element_type(VALUE self)
   Type_t *e;
   VALUE element;
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, element, Type_t, e);
-  e-&gt;data = clang_getElementType(t-&gt;data);
+  e-&gt;data = clang_getArrayElementType(t-&gt;data);
   e-&gt;parent = t-&gt;parent;
   return element;
 }</pre>
