@@ -232,12 +232,5 @@ class TestTypeUsage < MiniTest::Test
       end
       Clangc::ChildVisitResult::Recurse
     end
-  end#  def test_Cursor_get_typedef_decl_underlying_type
-#    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
-#    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-#      if cursor.type == Clangc::TypeKind::Typedef
-#        assert_instance_of Clangc::Type, cursor.typedef_decl_underlying_type
-#      end
-#    end
-#  end
+  end
 end
