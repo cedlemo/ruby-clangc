@@ -339,6 +339,7 @@ c_Cursor_get_extent(VALUE self)
   s->parent = self;
   return src_rge;
 }
+
 /**
 * call-seq:
 *   Clangc::Cursor#spelling => String
@@ -354,4 +355,25 @@ c_Cursor_get_spelling(VALUE self)
   VALUE spelling = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
   return spelling;
+}
+
+/**
+*   Clangc::Cursor#typedef_decl_underlying_type => Clangc::Type
+*
+* Retrieve the underlying type of a typedef declaration.
+*
+* If the cursor does not reference a typedef declaration, an invalid type is
+* returned.
+*/
+VALUE
+c_Cursor_get_typedef_decl_underlying_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  t->data = clang_getTypedefDeclUnderlyingType(c->data);
+  t->parent = c->parent;
+  return type;
 }

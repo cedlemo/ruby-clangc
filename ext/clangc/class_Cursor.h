@@ -65,4 +65,7 @@ c_Cursor_get_extent(VALUE);
 
 VALUE
 c_Cursor_get_spelling(VALUE);
+
+VALUE
+c_Cursor_get_typedef_decl_underlying_type(VALUE);
 #endif //CURSOR_H
