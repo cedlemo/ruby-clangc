@@ -353,3 +353,18 @@ c_Type_get_array_size(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CLLONG_2_NUM(clang_getArraySize(t->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Type#is_pod => true/false
+*
+*  Return true if the Clangc::Type is a POD (plain old data) type, and false
+*  otherwise.
+*/
+VALUE
+c_Type_is_pod(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isPODType(t->data) == 0 ? Qfalse : Qtrue;
+}
