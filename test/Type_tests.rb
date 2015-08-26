@@ -233,4 +233,17 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Type_is_pod
+  tu = @cindex.create_translation_unit_from_source_file(@source_file_pod, ['-x', 'c++'] + @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == @source_file_pod # ensure this is not include file
+        if cursor.type.kind == Clangc::TypeKind::Int
+          assert_equal true, cursor.type.is_pod, cursor.location.spelling.inspect + cursor.spelling
+        elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
+          assert_equal false, cursor.type.is_pod, cursor.location.spelling.inspect + cursor.spelling
+        end
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
