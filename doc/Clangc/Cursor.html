@@ -96,6 +96,8 @@
     
     <li ><a href="#method-i-type">#type</a>
     
+    <li ><a href="#method-i-typedef_decl_underlying_type">#typedef_decl_underlying_type</a>
+    
   </ul>
 </div>
 
@@ -761,6 +763,53 @@ c_Cursor_get_type(VALUE self)
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
   t-&gt;data = clang_getCursorType(c-&gt;data);
   t-&gt;parent = self;
+  return type;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-typedef_decl_underlying_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">typedef_decl_underlying_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <pre class="ruby"><span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">Cursor</span><span class="ruby-comment">#typedef_decl_underlying_type =&gt; Clangc::Type</span>
+</pre>
+
+<p>Retrieve the underlying type of a typedef declaration.</p>
+
+<p>If the cursor does not reference a typedef declaration, an invalid type is
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="typedef_decl_underlying_type-source">
+            <pre>VALUE
+c_Cursor_get_typedef_decl_underlying_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  t-&gt;data = clang_getTypedefDeclUnderlyingType(c-&gt;data);
+  t-&gt;parent = c-&gt;parent;
   return type;
 }</pre>
           </div>

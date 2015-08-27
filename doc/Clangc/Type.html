@@ -88,6 +88,8 @@
     
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
+    <li ><a href="#method-i-is_pod">#is_pod</a>
+    
     <li ><a href="#method-i-is_restrict_qualified">#is_restrict_qualified</a>
     
     <li ><a href="#method-i-is_volatile_qualified">#is_volatile_qualified</a>
@@ -546,6 +548,46 @@ c_Type_is_equal(VALUE self, VALUE type)
   Data_Get_Struct(self, Type_t, t1);
   Data_Get_Struct(type, Type_t, t2);
   return clang_equalTypes(t1-&gt;data, t2-&gt;data) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_pod" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#is_pod &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return true if the <a href="Type.html">Clangc::Type</a> is a POD (plain old
+data) type, and false otherwise.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_pod-source">
+            <pre>VALUE
+c_Type_is_pod(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return clang_isPODType(t-&gt;data) == 0 ? Qfalse : Qtrue;
 }</pre>
           </div>
           
