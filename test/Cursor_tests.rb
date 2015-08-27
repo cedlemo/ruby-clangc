@@ -161,4 +161,13 @@ class TestCursorUsage < MiniTest::Test
       end
     end
   end
+  def test_Cursor_get_included_file
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.kind == Clangc::CursorKind::Inclusiondirective
+        assert_instance_of Clangc::File, cursor.included_file
+        assert_equal @source_file, cursor.included_file.name
+      end
+    end
+  end
 end
