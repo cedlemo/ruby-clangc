@@ -76,6 +76,10 @@
     
     <li ><a href="#method-i-hash">#hash</a>
     
+    <li ><a href="#method-i-included_file">#included_file</a>
+    
+    <li ><a href="#method-i-is_declaration">#is_declaration</a>
+    
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
     <li ><a href="#method-i-is_null">#is_null</a>
@@ -272,6 +276,89 @@ c_Cursor_get_hash(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_hashCursor(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-included_file" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#included_file &rarr; Clangc::File
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the file that is included by the given inclusion directive cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="included_file-source">
+            <pre>VALUE
+c_Cursor_get_included_file(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  VALUE included;
+  File_t *f;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, included, File_t, f);
+  f-&gt;data = clang_getIncludedFile(c-&gt;data);
+  f-&gt;parent = c-&gt;parent;
+  return included;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_declaration" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_declaration &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents a declaration.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_declaration-source">
+            <pre>VALUE
+c_Cursor_is_declaration(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isDeclaration(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
 }</pre>
           </div>
           
