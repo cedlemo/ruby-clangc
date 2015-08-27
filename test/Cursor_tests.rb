@@ -170,4 +170,16 @@ class TestCursorUsage < MiniTest::Test
       end
     end
   end
+  def test_Cursor_is_declaration
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == @source_file
+#        assert_instance_of Clangc::File, cursor.included_file
+        assert_equal false, cursor.is_declaration, cursor.spelling
+      else
+        assert_equal false, cursor.is_declaration, cursor.location.spelling[0].name
+
+      end
+    end
+  end
 end
