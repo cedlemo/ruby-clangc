@@ -165,8 +165,8 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "location", RUBY_METHOD_FUNC(c_Cursor_get_source_location), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "extent", RUBY_METHOD_FUNC(c_Cursor_get_extent), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "spelling", RUBY_METHOD_FUNC(c_Cursor_get_spelling), 0);// in class_Cursor.c
-  rb_define_method(c_Cursor, "typedef_decl_underlying_type", RUBY_METHOD_FUNC(c_Cursor_get_typedef_decl_underlying_type), 0);
-
+  rb_define_method(c_Cursor, "typedef_decl_underlying_type", RUBY_METHOD_FUNC(c_Cursor_get_typedef_decl_underlying_type), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "included_file", RUBY_METHOD_FUNC(c_Cursor_get_included_file), 0);// inc class_Cursor.c
 /*
 * Type informations for Clangc::Cursor
 */

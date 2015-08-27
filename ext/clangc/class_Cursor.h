@@ -68,4 +68,7 @@ c_Cursor_get_spelling(VALUE);
 
 VALUE
 c_Cursor_get_typedef_decl_underlying_type(VALUE);
+
+VALUE
+c_Cursor_get_included_file(VALUE);
 #endif //CURSOR_H

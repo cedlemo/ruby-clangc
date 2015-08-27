@@ -20,6 +20,7 @@
 #include "class_Type.h"
 #include "class_SourceLocation.h"
 #include "class_SourceRange.h"
+#include "class_File.h"
 #include "macros.h"
 
 static void
@@ -374,4 +375,25 @@ c_Cursor_get_typedef_decl_underlying_type(VALUE self)
   t->data = clang_getTypedefDeclUnderlyingType(c->data);
   t->parent = c->parent;
   return type;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#included_file => Clangc::File
+*
+* Retrieve the file that is included by the given inclusion directive
+* cursor.
+*/
+//CINDEX_LINKAGE CXFile clang_getIncludedFile(CXCursor cursor);
+VALUE
+c_Cursor_get_included_file(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  VALUE included;
+  File_t *f;
+  R_GET_CLASS_DATA("Clangc", "File", included, File_t, f);
+  f->data = clang_getIncludedFile(c->data);
+  f->parent = c->parent;
+  return included;
 }
