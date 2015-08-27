@@ -384,7 +384,6 @@ c_Cursor_get_typedef_decl_underlying_type(VALUE self)
 * Retrieve the file that is included by the given inclusion directive
 * cursor.
 */
-//CINDEX_LINKAGE CXFile clang_getIncludedFile(CXCursor cursor);
 VALUE
 c_Cursor_get_included_file(VALUE self)
 {
@@ -396,4 +395,18 @@ c_Cursor_get_included_file(VALUE self)
   f->data = clang_getIncludedFile(c->data);
   f->parent = c->parent;
   return included;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_declaration => true/false
+*
+* Determine whether the given cursor kind represents a declaration.
+*/
+VALUE
+c_Cursor_is_declaration(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isDeclaration(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }
