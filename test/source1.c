@@ -8,6 +8,7 @@ typedef struct data {
 int
 stupid_function (double d) {
   printf("This is a stupid function\n");
+  struct data o;
   return 0;
 }
 

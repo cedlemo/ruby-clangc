@@ -179,4 +179,13 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_is_reference
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == @source_file && cursor.spelling == "struct data"
+        assert_equal true, cursor.is_reference, cursor.spelling
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
