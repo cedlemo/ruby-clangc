@@ -1,7 +1,6 @@
 # TODO
 
 ## Primary
-[ ] Check Clangc::Cursor#is_declaration tests pb
 [ ] Try to write C macros for boolean Clangc::Cursor#is_ methods with C stringify functionnalities
 [ ] Implement Clangc::Cursor methods
 
