@@ -197,4 +197,14 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_is_statement
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == @source_file && 
+        cursor.location.spelling[1] == 9 && cursor.location.spelling[2] == 28 
+        assert_equal true, cursor.is_statement, cursor.location.spelling
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
