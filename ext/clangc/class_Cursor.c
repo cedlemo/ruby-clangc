@@ -419,7 +419,7 @@ c_Cursor_is_declaration(VALUE self)
 * reference.
 *
 * Note that other kinds of cursors (such as expressions) can also refer to
-* other cursors. Use clang_getCursorReferenced() to determine whether a
+* other cursors. Use Clangc::Curosr#cursor_referenced to determine whether a
 * particular cursor refers to another entity.
 */
 VALUE
@@ -428,4 +428,18 @@ c_Cursor_is_reference(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isReference(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_expression => true/false
+*
+* Determine whether the given cursor kind represents an expression.
+*/
+VALUE
+c_Cursor_is_expression(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isExpression(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }

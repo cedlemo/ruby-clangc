@@ -77,4 +77,7 @@ c_Cursor_is_declaration(VALUE);
 
 VALUE
 c_Cursor_is_reference(VALUE);
+
+VALUE
+c_Cursor_is_expression(VALUE);
 #endif //CURSOR_H
