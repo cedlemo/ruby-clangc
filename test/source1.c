@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-typedef struct data_t {
+typedef struct data {
   int index;
   char * array[256];
   } data_t;
