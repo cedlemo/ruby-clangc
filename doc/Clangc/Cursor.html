@@ -82,7 +82,13 @@
     
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
+    <li ><a href="#method-i-is_expression">#is_expression</a>
+    
     <li ><a href="#method-i-is_null">#is_null</a>
+    
+    <li ><a href="#method-i-is_reference">#is_reference</a>
+    
+    <li ><a href="#method-i-is_statement">#is_statement</a>
     
     <li ><a href="#method-i-kind">#kind</a>
     
@@ -416,6 +422,45 @@ c_Cursor_is_equal(VALUE self, VALUE cursor1)
       </div>
 
     
+      <div id="method-i-is_expression" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_expression &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents an expression.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_expression-source">
+            <pre>VALUE
+c_Cursor_is_expression(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isExpression(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_null" class="method-detail ">
         
         
@@ -448,6 +493,88 @@ c_Cursor_is_null(VALUE self)
     return Qtrue;
   else
     return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_reference" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_reference &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents a simple reference.</p>
+
+<p>Note that other kinds of cursors (such as expressions) can also refer to
+other cursors. Use Clangc::Curosr#cursor_referenced to determine whether a
+particular cursor refers to another entity.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_reference-source">
+            <pre>VALUE
+c_Cursor_is_reference(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isReference(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_statement" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_statement &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents a statement.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_statement-source">
+            <pre>VALUE
+c_Cursor_is_statement(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isStatement(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
 }</pre>
           </div>
           
