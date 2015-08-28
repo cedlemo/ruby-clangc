@@ -443,3 +443,17 @@ c_Cursor_is_expression(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isExpression(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_statement => true/false
+*
+* Determine whether the given cursor kind represents a statement.
+*/
+VALUE
+c_Cursor_is_statement(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isStatement(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+}
