@@ -168,6 +168,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "typedef_decl_underlying_type", RUBY_METHOD_FUNC(c_Cursor_get_typedef_decl_underlying_type), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "included_file", RUBY_METHOD_FUNC(c_Cursor_get_included_file), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_declaration", RUBY_METHOD_FUNC(c_Cursor_is_declaration), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "is_reference", RUBY_METHOD_FUNC(c_Cursor_is_reference), 0);// in class_Cursor.c
   
 /*
 * Type informations for Clangc::Cursor
