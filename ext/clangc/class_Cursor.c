@@ -457,3 +457,16 @@ c_Cursor_is_statement(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isStatement(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }
+
+/**
+*   Clangc::Cursor#is_attribute => true/false
+*
+* Determine whether the given cursor kind represents an attribute.
+*/
+VALUE
+c_Cursor_is_attribute(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isAttribute(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+}

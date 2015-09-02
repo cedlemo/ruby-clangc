@@ -83,4 +83,8 @@ c_Cursor_is_expression(VALUE);
 
 VALUE
 c_Cursor_is_statement(VALUE);
+
+VALUE
+c_Cursor_is_attribute(VALUE);
+
 #endif //CURSOR_H
