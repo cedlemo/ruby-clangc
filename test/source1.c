@@ -14,7 +14,7 @@ stupid_function (double d) {
 
 int
 main (int argc, char **argv) {
-
+  int x __attribute__ ((aligned (16))) = 0;
   return 0;
 }
 
