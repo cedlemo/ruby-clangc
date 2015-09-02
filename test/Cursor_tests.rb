@@ -217,4 +217,7 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_is_invalid
+    assert_equal true, Clangc.null_cursor.is_invalid, "Not null"
+  end
 end
