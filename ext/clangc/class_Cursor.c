@@ -357,6 +357,7 @@ c_Cursor_get_spelling(VALUE self)
 }
 
 /**
+* call-seq:
 *   Clangc::Cursor#typedef_decl_underlying_type => Clangc::Type
 *
 * Retrieve the underlying type of a typedef declaration.
@@ -503,6 +504,7 @@ c_Cursor_is_translation_unit(VALUE self)
 }
 
 /**
+* call-seq:
 *   Clangc::Cursor#is_preprocessing => true/false
 *
 * Determine whether the given cursor represents a preprocessing

@@ -78,17 +78,25 @@
     
     <li ><a href="#method-i-included_file">#included_file</a>
     
+    <li ><a href="#method-i-is_attribute">#is_attribute</a>
+    
     <li ><a href="#method-i-is_declaration">#is_declaration</a>
     
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
     <li ><a href="#method-i-is_expression">#is_expression</a>
     
+    <li ><a href="#method-i-is_invalid">#is_invalid</a>
+    
     <li ><a href="#method-i-is_null">#is_null</a>
+    
+    <li ><a href="#method-i-is_preprocessing">#is_preprocessing</a>
     
     <li ><a href="#method-i-is_reference">#is_reference</a>
     
     <li ><a href="#method-i-is_statement">#is_statement</a>
+    
+    <li ><a href="#method-i-is_translation_unit">#is_translation_unit</a>
     
     <li ><a href="#method-i-kind">#kind</a>
     
@@ -337,6 +345,45 @@ c_Cursor_get_included_file(VALUE self)
       </div>
 
     
+      <div id="method-i-is_attribute" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_attribute &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents an attribute.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_attribute-source">
+            <pre>VALUE
+c_Cursor_is_attribute(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isAttribute(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_declaration" class="method-detail ">
         
         
@@ -461,6 +508,45 @@ c_Cursor_is_expression(VALUE self)
       </div>
 
     
+      <div id="method-i-is_invalid" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_invalid &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents an invalid cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_invalid-source">
+            <pre>VALUE
+c_Cursor_is_invalid(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isInvalid(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_null" class="method-detail ">
         
         
@@ -493,6 +579,46 @@ c_Cursor_is_null(VALUE self)
     return Qtrue;
   else
     return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_preprocessing" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_preprocessing &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor represents a preprocessing element, such
+as a preprocessor directive or macro instantiation.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_preprocessing-source">
+            <pre>VALUE
+c_Cursor_is_preprocessing(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isPreprocessing(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
 }</pre>
           </div>
           
@@ -575,6 +701,45 @@ c_Cursor_is_statement(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isStatement(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_translation_unit" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_translation_unit &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor kind represents a translation unit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_translation_unit-source">
+            <pre>VALUE
+c_Cursor_is_translation_unit(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isTranslationUnit(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
 }</pre>
           </div>
           
@@ -991,21 +1156,21 @@ c_Cursor_get_type(VALUE self)
     
       <div id="method-i-typedef_decl_underlying_type" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">typedef_decl_underlying_type</span><span
-            class="method-args">()</span>
+          <span class="method-callseq">
+            Clangc::Cursor#typedef_decl_underlying_type &rarr; Clangc::Type
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          <pre class="ruby"><span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">Cursor</span><span class="ruby-comment">#typedef_decl_underlying_type =&gt; Clangc::Type</span>
-</pre>
-
-<p>Retrieve the underlying type of a typedef declaration.</p>
+          <p>Retrieve the underlying type of a typedef declaration.</p>
 
 <p>If the cursor does not reference a typedef declaration, an invalid type is
 returned.</p>
