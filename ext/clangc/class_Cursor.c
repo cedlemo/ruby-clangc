@@ -489,7 +489,7 @@ c_Cursor_is_invalid(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#is_translation_unit
+*   Clangc::Cursor#is_translation_unit => true/false
 *
 * Determine whether the given cursor kind represents a translation
 * unit.
@@ -500,4 +500,18 @@ c_Cursor_is_translation_unit(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isTranslationUnit(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+}
+
+/**
+*   Clangc::Cursor#is_preprocessing => true/false
+*
+* Determine whether the given cursor represents a preprocessing
+* element, such as a preprocessor directive or macro instantiation.
+*/
+VALUE
+c_Cursor_is_preprocessing(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isPreprocessing(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }

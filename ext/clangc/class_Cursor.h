@@ -92,4 +92,7 @@ c_Cursor_is_invalid(VALUE);
 
 VALUE
 c_Cursor_is_translation_unit(VALUE);
+
+VALUE
+c_Cursor_is_preprocessing(VALUE);
 #endif //CURSOR_H
