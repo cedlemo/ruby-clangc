@@ -9,6 +9,8 @@ class TestCursorUsage < MiniTest::Test
     @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
     # C source code with one error
     @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+    # C source with macro
+    @source_file_macro =  "#{File.expand_path(File.dirname(__FILE__))}/source10.c"
     # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
@@ -223,5 +225,13 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_is_translation_unit
     tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
     assert_equal true, tu.cursor.is_translation_unit
+  end
+  def test_Cursor_is_preprocessing
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_macro, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+        assert_equal true, cursor.is_preprocessing, cursor.location.spelling
+      Clangc::ChildVisitResult::Recurse
+    end
+
   end
 end
