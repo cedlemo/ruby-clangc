@@ -220,4 +220,8 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_is_invalid
     assert_equal true, Clangc.null_cursor.is_invalid, "Not null"
   end
+  def test_Cursor_is_translation_unit
+    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    assert_equal true, tu.cursor.is_translation_unit
+  end
 end
