@@ -89,4 +89,7 @@ c_Cursor_is_attribute(VALUE);
 
 VALUE
 c_Cursor_is_invalid(VALUE);
+
+VALUE
+c_Cursor_is_translation_unit(VALUE);
 #endif //CURSOR_H

@@ -486,3 +486,18 @@ c_Cursor_is_invalid(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isInvalid(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_translation_unit
+*
+* Determine whether the given cursor kind represents a translation
+* unit.
+*/
+VALUE
+c_Cursor_is_translation_unit(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isTranslationUnit(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+}
