@@ -87,4 +87,6 @@ c_Cursor_is_statement(VALUE);
 VALUE
 c_Cursor_is_attribute(VALUE);
 
+VALUE
+c_Cursor_is_invalid(VALUE);
 #endif //CURSOR_H

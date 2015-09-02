@@ -172,6 +172,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "is_expression", RUBY_METHOD_FUNC(c_Cursor_is_expression), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_statement", RUBY_METHOD_FUNC(c_Cursor_is_statement), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_attribute", RUBY_METHOD_FUNC(c_Cursor_is_attribute), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "is_invalid", RUBY_METHOD_FUNC(c_Cursor_is_invalid), 0);// in class_Cursor.c
   
 /*
 * Type informations for Clangc::Cursor

@@ -459,6 +459,7 @@ c_Cursor_is_statement(VALUE self)
 }
 
 /**
+* call-seq:
 *   Clangc::Cursor#is_attribute => true/false
 *
 * Determine whether the given cursor kind represents an attribute.
@@ -469,4 +470,19 @@ c_Cursor_is_attribute(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isAttribute(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_invalid => true/false
+*
+* Determine whether the given cursor kind represents an invalid
+* cursor.
+*/
+VALUE
+c_Cursor_is_invalid(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isInvalid(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }
