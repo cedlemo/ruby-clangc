@@ -11,6 +11,8 @@ class TestCursorUsage < MiniTest::Test
     @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
     # C source with macro
     @source_file_macro =  "#{File.expand_path(File.dirname(__FILE__))}/source10.c"
+    # C with enum
+    @source_file_enum = "#{File.expand_path(File.dirname(__FILE__))}/source11.c"
     # Inexistant file
     @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
     @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
@@ -232,6 +234,14 @@ class TestCursorUsage < MiniTest::Test
         assert_equal true, cursor.is_preprocessing, cursor.location.spelling
       Clangc::ChildVisitResult::Recurse
     end
-
+  end
+  def test_Cursor_get_enum_decl_integer_type
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_enum, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.kind == Clangc::CursorKind::Enumdecl
+        assert_instance_of Clangc::Type, cursor.enum_decl_integer_type
+        assert_equal Clangc::TypeKind::Uint, cursor.enum_decl_integer_type.kind, cursor.enum_decl_integer_type.spelling
+      end
+    end
   end
 end
