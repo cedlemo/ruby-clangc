@@ -72,6 +72,8 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-enum_decl_integer_type">#enum_decl_integer_type</a>
+    
     <li ><a href="#method-i-extent">#extent</a>
     
     <li ><a href="#method-i-hash">#hash</a>
@@ -199,6 +201,53 @@ c_Cursor_get_availability(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-enum_decl_integer_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#enum_integer_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the integer type of an enum declaration.</p>
+
+<p>If the cursor does not reference an enum declaration, an invalid type is
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="enum_decl_integer_type-source">
+            <pre>VALUE
+c_Cursor_get_enum_decl_integer_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  t-&gt;data = clang_getEnumDeclIntegerType(c-&gt;data);
+  t-&gt;parent = c-&gt;parent;
+  return type;
 }</pre>
           </div>
           
