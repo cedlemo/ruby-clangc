@@ -517,3 +517,24 @@ c_Cursor_is_preprocessing(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isPreprocessing(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#enum_integer_type => Clangc::Type
+*
+* Retrieve the integer type of an enum declaration.
+*
+* If the cursor does not reference an enum declaration, an invalid type is
+* returned.
+*/
+VALUE
+c_Cursor_get_enum_decl_integer_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  t->data = clang_getEnumDeclIntegerType(c->data);
+  t->parent = c->parent;
+  return type;
+}

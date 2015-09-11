@@ -95,4 +95,7 @@ c_Cursor_is_translation_unit(VALUE);
 
 VALUE
 c_Cursor_is_preprocessing(VALUE);
+
+VALUE
+c_Cursor_get_enum_decl_integer_type(VALUE);
 #endif //CURSOR_H
