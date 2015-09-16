@@ -176,7 +176,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "is_translation_unit", RUBY_METHOD_FUNC(c_Cursor_is_translation_unit), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_preprocessing", RUBY_METHOD_FUNC(c_Cursor_is_preprocessing), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "enum_decl_integer_type", RUBY_METHOD_FUNC(c_Cursor_get_enum_decl_integer_type), 0);// in class_Cursor.c
-  
+  rb_define_method(c_Cursor, "enum_const_decl_value", RUBY_METHOD_FUNC(c_Cursor_get_enum_const_decl_value), 0);// in class_Cursor.c  
 /*
 * Type informations for Clangc::Cursor
 */
