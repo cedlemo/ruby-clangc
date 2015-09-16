@@ -557,3 +557,22 @@ c_Cursor_get_enum_const_decl_value(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CLLONG_2_NUM(clang_getEnumConstantDeclValue(c->data));
 }
+
+/**
+*  call-seq:
+*   Clangc::Cursor#enum_const_decl_unsigned_value => Number
+*
+*  Retrieve the integer value of an enum constant declaration as an unsigned
+*  long long.
+*
+* If the cursor does not reference an enum constant declaration, ULLONG_MAX is returned.
+* Since this is also potentially a valid constant value, the kind of the cursor
+* must be verified before calling this function.
+*/
+VALUE
+c_Cursor_get_enum_const_decl_unsigned_value(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CULLONG_2_NUM(clang_getEnumConstantDeclUnsignedValue(c->data));
+}

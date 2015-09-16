@@ -101,4 +101,7 @@ c_Cursor_get_enum_decl_integer_type(VALUE);
 
 VALUE
 c_Cursor_get_enum_const_decl_value(VALUE);
+
+VALUE
+c_Cursor_get_enum_const_decl_unsigned_value(VALUE);
 #endif //CURSOR_H
