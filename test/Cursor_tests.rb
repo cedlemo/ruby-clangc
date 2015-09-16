@@ -244,4 +244,20 @@ class TestCursorUsage < MiniTest::Test
       end
     end
   end
+  def test_Cursor_get_enum_const_decl_value
+    tu = @cindex.create_translation_unit_from_source_file(@source_file_enum, @clang_headers_path)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.kind == Clangc::CursorKind::Enumconstantdecl
+        case cursor.spelling
+        when "RANDOM"
+          assert_equal 0, cursor.enum_const_decl_value, cursor.spelling
+        when "IMMEDIATE"
+          assert_equal 1, cursor.enum_const_decl_value, cursor.spelling
+        when "SEARCH"
+          assert_equal 2, cursor.enum_const_decl_value, cursor.spelling
+        end
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
