@@ -544,7 +544,7 @@ c_Cursor_get_enum_decl_integer_type(VALUE self)
 *   Clangc::Cursor#enum_const_decl_value => Number
 *
 * Retrieve the integer value of an enum constant declaration as a signed
-*  long long.
+* long long.
 *
 * If the cursor does not reference an enum constant declaration, ULLONG_MIN is returned.
 * Since this is also potentially a valid constant value, the kind of the cursor
@@ -559,11 +559,11 @@ c_Cursor_get_enum_const_decl_value(VALUE self)
 }
 
 /**
-*  call-seq:
+* call-seq:
 *   Clangc::Cursor#enum_const_decl_unsigned_value => Number
 *
-*  Retrieve the integer value of an enum constant declaration as an unsigned
-*  long long.
+* Retrieve the integer value of an enum constant declaration as an unsigned
+* long long.
 *
 * If the cursor does not reference an enum constant declaration, ULLONG_MAX is returned.
 * Since this is also potentially a valid constant value, the kind of the cursor

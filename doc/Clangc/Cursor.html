@@ -72,6 +72,10 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-enum_const_decl_unsigned_value">#enum_const_decl_unsigned_value</a>
+    
+    <li ><a href="#method-i-enum_const_decl_value">#enum_const_decl_value</a>
+    
     <li ><a href="#method-i-enum_decl_integer_type">#enum_decl_integer_type</a>
     
     <li ><a href="#method-i-extent">#extent</a>
@@ -201,6 +205,94 @@ c_Cursor_get_availability(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-enum_const_decl_unsigned_value" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#enum_const_decl_unsigned_value &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the integer value of an enum constant declaration as an unsigned
+long long.</p>
+
+<p>If the cursor does not reference an enum constant declaration, ULLONG_MAX
+is returned. Since this is also potentially a valid constant value, the
+kind of the cursor must be verified before calling this function.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="enum_const_decl_unsigned_value-source">
+            <pre>VALUE
+c_Cursor_get_enum_const_decl_unsigned_value(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CULLONG_2_NUM(clang_getEnumConstantDeclUnsignedValue(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-enum_const_decl_value" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#enum_const_decl_value &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the integer value of an enum constant declaration as a signed long
+long.</p>
+
+<p>If the cursor does not reference an enum constant declaration, ULLONG_MIN
+is returned. Since this is also potentially a valid constant value, the
+kind of the cursor must be verified before calling this function.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="enum_const_decl_value-source">
+            <pre>VALUE
+c_Cursor_get_enum_const_decl_value(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CLLONG_2_NUM(clang_getEnumConstantDeclValue(c-&gt;data));
 }</pre>
           </div>
           
