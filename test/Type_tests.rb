@@ -2,34 +2,37 @@
 require "minitest/autorun"
 require "clangc"
 require "fileutils"
+require "./clangc_utils.rb"
+
 class TestTypeUsage < MiniTest::Test
+  include ClangcUtils
   def setup
     @cindex = Clangc::Index.new(false, false)
-    # Good C test file
-    @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-    # C source code with one error
-    @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
-    # C source file with pointer
-    @source_file_pointer = "#{File.expand_path(File.dirname(__FILE__))}/source5.c"
-    # C source file with qualified type
-    @source_file_qualified = "#{File.expand_path(File.dirname(__FILE__))}/source6.c"
-    # C source file with only one function
-    @source_file_function = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
-    # C source file with only one array 
-    @source_file_array= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
-    # C source file with one non POD and one POD
-    @source_file_pod = "#{File.expand_path(File.dirname(__FILE__))}/source9.cpp"
-    # Inexistant file
-    @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
-    @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
-    system *%W(clang -emit-ast -o #{@ast_file} #{@source_file})
-    @clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
+#    # Good C test file
+#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+#    # C source code with one error
+#    SOURCE_FILE_ONE_ERROR = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+#    # C source file with pointer
+#    SOURCE_FILE_POINTER = "#{File.expand_path(File.dirname(__FILE__))}/source5.c"
+#    # C source file with qualified type
+#    SOURCE_FILE_QUALIFIED = "#{File.expand_path(File.dirname(__FILE__))}/source6.c"
+#    # C source file with only one function
+#    SOURCE_FILE_FUNCTION = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
+#    # C source file with only one array 
+#    SOURCE_FILE_ARRAY= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
+#    # C source file with one non POD and one POD
+#    SOURCE_FILE_POD = "#{File.expand_path(File.dirname(__FILE__))}/source9.cpp"
+#    # Inexistant file
+#    BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
+#    AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
+    system *%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE})
+#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
   end
   def teardown
-    FileUtils.rm_f(@ast_file)
+    FileUtils.rm_f(AST_FILE)
   end
   def test_Type_kind
-    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
       parent_kind_found = false
       cursor_kind_found = false
@@ -46,7 +49,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_spelling
-    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     cursor_type = nil
     parent_type = nil
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
@@ -56,7 +59,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_is_equal
-    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
       assert_equal false, cursor.type == cursor.type
       assert_equal false, parent.type == parent.type
@@ -66,21 +69,21 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_canonical_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       assert_instance_of Clangc::Type, cursor.type.canonical_type
       assert_instance_of Clangc::Type, parent.type.canonical_type
     end
   end
   def test_Type_canonical_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       assert_instance_of Clangc::Type, cursor.type.canonical_type
       assert_instance_of Clangc::Type, parent.type.canonical_type
     end
   end
   def test_Type_pointee_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_pointer, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_POINTER, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       cursor_pointee = cursor.type.pointee_type
       parent_pointee = parent.type.pointee_type
@@ -95,7 +98,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_constant_qualified_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_qualified, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_QUALIFIED, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[1] == 1
         assert_equal true, cursor.type.is_const_qualified
@@ -106,7 +109,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_volatile_qualified_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_qualified, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_QUALIFIED, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     location = cursor.location.spelling
     if location[1] == 3 && location[2] == 14
@@ -118,7 +121,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_restrict_qualified_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_qualified, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_QUALIFIED, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     location = cursor.location.spelling
       if location[1] == 2 && location[2] == 15
@@ -130,7 +133,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_function_return_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     location = cursor.location.spelling
       if cursor.type.kind == Clangc::TypeKind::Functionproto
@@ -142,7 +145,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_function_calling_conv
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       cursor_kind = cursor.type.kind
       if cursor_kind == Clangc::TypeKind::Functionnoproto || cursor_kind == Clangc::TypeKind::Functionproto
@@ -155,7 +158,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_function_num_arg_types
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     ck = cursor.type.kind
       if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
@@ -165,7 +168,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_function_arg_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     ck = cursor.type.kind
       if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
@@ -176,7 +179,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_function_arg_types
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_function, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       ck = cursor.type.kind
       if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
@@ -188,7 +191,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_element_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_array, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
         assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
@@ -201,7 +204,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_num_elements
-  tu = @cindex.create_translation_unit_from_source_file(@source_file_array, @clang_headers_path)
+  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
         assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
@@ -214,7 +217,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_array_element_type
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_array, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
         assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
@@ -224,7 +227,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_array_size
-  tu = @cindex.create_translation_unit_from_source_file(@source_file_array, @clang_headers_path)
+  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
         assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
@@ -234,9 +237,9 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_is_pod
-  tu = @cindex.create_translation_unit_from_source_file(@source_file_pod, ['-x', 'c++'] + @clang_headers_path)
+  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_POD, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.location.spelling[0].name == @source_file_pod # ensure this is not include file
+      if cursor.location.spelling[0].name == SOURCE_FILE_POD # ensure this is not include file
         if cursor.type.kind == Clangc::TypeKind::Int
           assert_equal true, cursor.type.is_pod, cursor.location.spelling.inspect + cursor.spelling
         elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
