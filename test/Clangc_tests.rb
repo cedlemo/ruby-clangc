@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 require "minitest/autorun"
 require "clangc"
+require "./clangc_utils.rb"
 
 class TestClangcMethods < MiniTest::Test
+  include ClangcUtils
   def test_clangc_version
     assert_instance_of String, Clangc.version
   end
@@ -30,10 +32,10 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clang_visit_children_with_block
     index = Clangc::Index.new(false, false)
-    source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-    clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
-    tu = index.create_translation_unit_from_source_file(source_file, 
-                                                         clang_headers_path)
+#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
+    tu = index.create_translation_unit_from_source_file(SOURCE_FILE, 
+                                                         CLANG_HEADERS_PATH)
     cursor = tu.cursor
     Clangc.visit_children_with_block(cursor) do |cursor, parent| 
       assert_instance_of Clangc::Cursor, cursor
@@ -42,10 +44,10 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clang_visit_children_with_proc
     index = Clangc::Index.new(false, false)
-    source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-    clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
-    tu = index.create_translation_unit_from_source_file(source_file, 
-                                                         clang_headers_path)
+#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
+    tu = index.create_translation_unit_from_source_file(SOURCE_FILE, 
+                                                         CLANG_HEADERS_PATH)
     cursor = tu.cursor
     myproc = proc do |cursor, parent| 
       assert_instance_of Clangc::Cursor, cursor
@@ -55,10 +57,10 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clang_visit_children
     index = Clangc::Index.new(false, false)
-    source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-    clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
-    tu = index.create_translation_unit_from_source_file(source_file, 
-                                                         clang_headers_path)
+#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
+    tu = index.create_translation_unit_from_source_file(SOURCE_FILE, 
+                                                         CLANG_HEADERS_PATH)
     cursor = tu.cursor
     Clangc.visit_children(cursor: cursor) do |cursor, parent| 
       assert_instance_of Clangc::Cursor, cursor
