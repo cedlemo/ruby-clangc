@@ -8,25 +8,7 @@ class TestTypeUsage < MiniTest::Test
   include ClangcUtils
   def setup
     @cindex = Clangc::Index.new(false, false)
-#    # Good C test file
-#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-#    # C source code with one error
-#    SOURCE_FILE_ONE_ERROR = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
-#    # C source file with pointer
-#    SOURCE_FILE_POINTER = "#{File.expand_path(File.dirname(__FILE__))}/source5.c"
-#    # C source file with qualified type
-#    SOURCE_FILE_QUALIFIED = "#{File.expand_path(File.dirname(__FILE__))}/source6.c"
-#    # C source file with only one function
-#    SOURCE_FILE_FUNCTION = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
-#    # C source file with only one array 
-#    SOURCE_FILE_ARRAY= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
-#    # C source file with one non POD and one POD
-#    SOURCE_FILE_POD = "#{File.expand_path(File.dirname(__FILE__))}/source9.cpp"
-#    # Inexistant file
-#    BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
-#    AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
     system *%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE})
-#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
   end
   def teardown
     FileUtils.rm_f(AST_FILE)

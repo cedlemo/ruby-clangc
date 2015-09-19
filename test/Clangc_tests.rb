@@ -32,8 +32,6 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clang_visit_children_with_block
     index = Clangc::Index.new(false, false)
-#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
     tu = index.create_translation_unit_from_source_file(SOURCE_FILE, 
                                                          CLANG_HEADERS_PATH)
     cursor = tu.cursor
@@ -44,8 +42,6 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clang_visit_children_with_proc
     index = Clangc::Index.new(false, false)
-#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
     tu = index.create_translation_unit_from_source_file(SOURCE_FILE, 
                                                          CLANG_HEADERS_PATH)
     cursor = tu.cursor
@@ -57,8 +53,6 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clang_visit_children
     index = Clangc::Index.new(false, false)
-#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
     tu = index.create_translation_unit_from_source_file(SOURCE_FILE, 
                                                          CLANG_HEADERS_PATH)
     cursor = tu.cursor

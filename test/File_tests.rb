@@ -8,16 +8,7 @@ class TestFile < MiniTest::Test
   include ClangcUtils
   def setup
     @cindex = Clangc::Index.new(false, false)
-#    # Good C test file
-#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-#    # C source code with one error
-#    SOURCE_FILE_ONE_ERROR = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
-#    # Inexistant file
-#    BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
-#    SOURCE_FILE_WITH_INCLUDE_GUARD = "#{File.expand_path(File.dirname(__FILE__))}/include_guarded_header.h"
-#    AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
     system *%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE})
-#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
     @tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
   end
   def teardown

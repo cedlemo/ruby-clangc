@@ -27,6 +27,5 @@ module ClangcUtils
   # Inexistant file
   BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
   AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
-#  system *%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE})
   CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
 end

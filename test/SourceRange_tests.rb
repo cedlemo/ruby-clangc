@@ -8,21 +8,7 @@ class TestSourceRange < MiniTest::Test
   include ClangcUtils
   def setup
     @cindex = Clangc::Index.new(false, false)
-#    # Good C test file
-#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-#    # Good C test file with gnu-binary-literal option warning
-#    SOURCE_FILE_OPTION_WARNINGS = "#{File.expand_path(File.dirname(__FILE__))}/source_option_warnings.c"
-#    # C source code with one error
-#    SOURCE_FILE_ONE_ERROR = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
-#    # C source code with two error
-#    SOURCE_FILE_TWO_ERRORS = "#{File.expand_path(File.dirname(__FILE__))}/source3.c"
-#    # C source code with three error
-#    SOURCE_FILE_THREE_ERRORS = "#{File.expand_path(File.dirname(__FILE__))}/source4.c"
-#    # Inexistant file
-#    BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
-#    AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
     system *%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE})
-#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
   end
   def teardown
     FileUtils.rm_f(AST_FILE)
