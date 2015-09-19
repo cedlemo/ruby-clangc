@@ -2,31 +2,33 @@
 require "minitest/autorun"
 require "clangc"
 require "fileutils"
+require "./clangc_utils.rb"
 
 class TestSourceLocation < MiniTest::Test
+    include ClangcUtils
   def setup
     @cindex = Clangc::Index.new(false, false)
-    # Good C test file
-    @source_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
-    # Good C test file with gnu-binary-literal option warning
-    @source_file_option_warnings = "#{File.expand_path(File.dirname(__FILE__))}/source_option_warnings.c"
-    # C source code with one error
-    @source_file_one_error = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
-    # C source code with two error
-    @source_file_two_errors = "#{File.expand_path(File.dirname(__FILE__))}/source3.c"
-    # C source code with three error
-    @source_file_three_errors = "#{File.expand_path(File.dirname(__FILE__))}/source4.c"
-    # Inexistant file
-    @bad_file = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
-    @ast_file = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
-    system *%W(clang -emit-ast -o #{@ast_file} #{@source_file})
-    @clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
+#    # Good C test file
+#    SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+#    # Good C test file with gnu-binary-literal option warning
+#    SOURCE_FILE_OPTION_WARNINGS = "#{File.expand_path(File.dirname(__FILE__))}/source_option_warnings.c"
+#    # C source code with one error
+#    SOURCE_FILE_ONE_ERROR = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+#    # C source code with two error
+#    SOURCE_FILE_TWO_ERRORS = "#{File.expand_path(File.dirname(__FILE__))}/source3.c"
+#    # C source code with three error
+#    SOURCE_FILE_THREE_ERRORS = "#{File.expand_path(File.dirname(__FILE__))}/source4.c"
+#    # Inexistant file
+#    BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
+#    AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
+    system *%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE})
+#    CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
   end
   def teardown
-    FileUtils.rm_f(@ast_file)
+    FileUtils.rm_f(AST_FILE)
   end
   def test_SourceLocation_is_in_system_header
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     range_number = tu.diagnostics[1].num_ranges
     source_range = diagnostics[1].source_ranges[range_number - 1]
@@ -34,13 +36,13 @@ class TestSourceLocation < MiniTest::Test
     assert_equal false, source_location.is_in_system_header 
   end
   def test_SourceLocation_is_from_main_file
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.start
     assert_equal true, source_location.is_from_main_file
   end
   def test_SourceLocation_equal
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     source_location_start = diagnostics[1].source_ranges.last.start
     source_location_end = diagnostics[1].source_ranges.last.end
@@ -49,12 +51,12 @@ class TestSourceLocation < MiniTest::Test
     assert_equal true, source_location_end.is_equal(source_location_end_1)
   end
   def test_SourceLocation_spelling
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.start
     spelling = source_location.spelling
     # file
-    assert_equal true, tu.file(@source_file_two_errors).is_equal(spelling[0])
+    assert_equal true, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(spelling[0])
     # line
     assert_equal 14, spelling[1]
     # column
@@ -63,12 +65,12 @@ class TestSourceLocation < MiniTest::Test
     assert_equal 179, spelling[3]
   end
   def test_SourceLocation_spelling_end
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.end
     spelling = source_location.spelling
     # file
-    assert_equal false, tu.file(@source_file_two_errors).is_equal(spelling[0])
+    assert_equal false, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(spelling[0])
     # line
     assert_equal 0, spelling[1]
     # column
@@ -77,12 +79,12 @@ class TestSourceLocation < MiniTest::Test
     assert_equal 0, spelling[3]
   end
   def test_SourceLocation_file_location
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.start
     file_location = source_location.file_location
     # file
-    assert_equal true, tu.file(@source_file_two_errors).is_equal(file_location[0])
+    assert_equal true, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(file_location[0])
     # line
     assert_equal 14, file_location[1]
     # column
@@ -91,12 +93,12 @@ class TestSourceLocation < MiniTest::Test
     assert_equal 179, file_location[3]
   end
   def test_SourceLocation_file_location_end
-    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors, @clang_headers_path)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.end
     file_location = source_location.file_location
     # file
-    assert_equal false, tu.file(@source_file_two_errors).is_equal(file_location[0])
+    assert_equal false, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(file_location[0])
     # line
     assert_equal 0, file_location[1]
     # column
@@ -105,7 +107,7 @@ class TestSourceLocation < MiniTest::Test
     assert_equal 0, file_location[3]
   end
 #  def test_SourceRange_get_end
-#    tu = @cindex.create_translation_unit_from_source_file(@source_file_two_errors,@clang_headers_path)
+#    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS,CLANG_HEADERS_PATH)
 #    diagnostics = tu.diagnostics
 #    range_number = tu.diagnostics[1].num_ranges
 #    source_range = diagnostics[1].source_ranges[range_number - 1]
