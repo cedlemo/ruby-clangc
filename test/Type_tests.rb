@@ -2,7 +2,7 @@
 require "minitest/autorun"
 require "clangc"
 require "fileutils"
-require "./clangc_utils.rb"
+require "#{File.expand_path(File.dirname(__FILE__))}/clangc_utils.rb"
 
 class TestTypeUsage < MiniTest::Test
   include ClangcUtils
