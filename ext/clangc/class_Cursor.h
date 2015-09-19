@@ -104,4 +104,7 @@ c_Cursor_get_enum_const_decl_value(VALUE);
 
 VALUE
 c_Cursor_get_enum_const_decl_unsigned_value(VALUE);
+
+VALUE
+c_Cursor_get_field_decl_bit_width(VALUE);
 #endif //CURSOR_H

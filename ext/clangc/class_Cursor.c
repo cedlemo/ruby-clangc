@@ -576,3 +576,19 @@ c_Cursor_get_enum_const_decl_unsigned_value(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CULLONG_2_NUM(clang_getEnumConstantDeclUnsignedValue(c->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#field_decl_bit_width => Integer
+*
+* Retrieve the bit width of a bit field declaration as an integer.
+*
+* If a cursor that is not a bit field declaration is passed in, -1 is returned.
+*/
+VALUE
+c_Cursor_get_field_decl_bit_width(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_getFieldDeclBitWidth(c->data));
+}
