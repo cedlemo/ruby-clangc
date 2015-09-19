@@ -269,4 +269,18 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_get_field_decl_bit_width
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_STRUCT_BITFIELD, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.kind == Clangc::CursorKind::Fielddecl
+        case cursor.spelling
+        when "opaque"
+          assert_equal 1, cursor.field_decl_bit_width, cursor.spelling
+        when "fill_color"
+          assert_equal 3, cursor.field_decl_bit_width, cursor.spelling
+        end
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end

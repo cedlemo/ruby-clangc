@@ -17,12 +17,14 @@ module ClangcUtils
   SOURCE_FILE_FUNCTION = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
   # C source file with only one array 
   SOURCE_FILE_ARRAY= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
-  # C source file with one non POD and one POD
+  # C++ source file with one non POD and one POD
   SOURCE_FILE_POD = "#{File.expand_path(File.dirname(__FILE__))}/source9.cpp"
   # C source with macro
   SOURCE_FILE_MACRO =  "#{File.expand_path(File.dirname(__FILE__))}/source10.c"
   # C with enum
   SOURCE_FILE_ENUM = "#{File.expand_path(File.dirname(__FILE__))}/source11.c"
+  # C with struct and bitfield 
+  SOURCE_FILE_STRUCT_BITFIELD = "#{File.expand_path(File.dirname(__FILE__))}/source12.c"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{File.expand_path(File.dirname(__FILE__))}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
