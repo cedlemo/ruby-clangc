@@ -83,4 +83,25 @@ module Clangc
       types
     end
   end
+  class Cursor 
+  ## 
+  # :call-seq:
+  # Clangc::Cursor#arguments -> Array
+  #
+  # Return an array that contains all the 
+  # cursors for the arguments of the function that
+  # is related to the current cursor.
+  # If the current cursor is not a function, it returns
+  # an empty array.
+  def arguments
+      num = num_arguments
+      cursors = []
+      return cursors if num == -1
+
+      for i in 0..(num - 1) do
+        cursors << argument(i)
+      end
+      cursors
+    end
+  end
 end
