@@ -592,3 +592,21 @@ c_Cursor_get_field_decl_bit_width(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_getFieldDeclBitWidth(c->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#num_arguments => Integer
+*
+* Retrieve the number of non-variadic arguments associated with a given
+* cursor.
+*
+* The number of arguments can be determined for calls as well as for
+* declarations of functions or methods. For other cursors -1 is returned.
+*/
+VALUE
+c_Cursor_get_num_arguments(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getNumArguments(c->data));
+}
