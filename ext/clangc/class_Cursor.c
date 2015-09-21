@@ -610,3 +610,32 @@ c_Cursor_get_num_arguments(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_Cursor_getNumArguments(c->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#get_argument(index) => Clangc::Cursor
+*
+* Retrieve the argument cursor of a function or method.
+*
+* The argument cursor can be determined for calls as well as for declarations
+* of functions or methods. For other cursors and for invalid indices, an
+* invalid cursor is returned.
+*/
+VALUE
+c_Cursor_get_argument(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  int max = clang_Cursor_getNumArguments(c->data);
+  if(max < 0)
+    max = 0;
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  CHECK_IN_RANGE(c_index, 0, max);
+  Cursor_t *a;
+  VALUE arg;
+  R_GET_CLASS_DATA("Clangc", "Cursor", arg, Cursor_t, a);
+  a->data = clang_Cursor_getArgument(c->data, c_index);
+  a->parent = c->parent;
+  return arg;
+}

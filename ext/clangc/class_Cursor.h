@@ -110,4 +110,7 @@ c_Cursor_get_field_decl_bit_width(VALUE);
 
 VALUE
 c_Cursor_get_num_arguments(VALUE);
+
+VALUE
+c_Cursor_get_argument(VALUE, VALUE);
 #endif //CURSOR_H

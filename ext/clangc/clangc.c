@@ -180,6 +180,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "enum_const_decl_unsigned_value", RUBY_METHOD_FUNC(c_Cursor_get_enum_const_decl_unsigned_value), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "field_decl_bit_width", RUBY_METHOD_FUNC(c_Cursor_get_field_decl_bit_width), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "num_arguments", RUBY_METHOD_FUNC(c_Cursor_get_num_arguments), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "argument", RUBY_METHOD_FUNC(c_Cursor_get_argument), 1);// in class_Cursor.c
 
 /*
 * Type informations for Clangc::Cursor
