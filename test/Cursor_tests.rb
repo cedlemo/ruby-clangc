@@ -297,4 +297,40 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_get_argument
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::Functiondecl 
+        case cursor.spelling
+        when "stupid_function"
+          arg = cursor.argument(0)
+          assert_equal Clangc::TypeKind::Double, arg.type.kind, arg.type.spelling
+        when "main"
+          arg = cursor.argument(0)
+          assert_equal Clangc::TypeKind::Int, arg.type.kind, arg.type.spelling
+        end
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
+#  def test_Cursor_get_arguments
+#    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+#    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+#      if cursor.kind == Clangc::CursorKind::Functiondecl 
+#        case cursor.spelling
+#        when "stupid_function"
+#          args = cursor.arguments
+#          assert_instance_of Array, args
+#          assert_equal 1, args.size, args.inspect
+#          assert_equal Clangc::TypeKind::Double, args[0].type.kind, args[0].type.spelling
+#        when "main"
+#          args = cursor.arguments
+#          assert_instance_of Array, args
+#          assert_equal 2, args.size, args.inspect
+#          assert_equal Clangc::TypeKind::Int, args[0].type.kind, args[0].type.spelling
+#        end
+#      end
+#      Clangc::ChildVisitResult::Recurse
+#    end
+#  end
 end
