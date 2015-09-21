@@ -283,4 +283,18 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_get_num_arguments
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::Functiondecl 
+        case cursor.spelling
+        when "stupid_function"
+          assert_equal 1, cursor.num_arguments, cursor.spelling
+        when "main"
+          assert_equal 2, cursor.num_arguments, cursor.spelling
+        end
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
