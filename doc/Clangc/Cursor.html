@@ -70,6 +70,10 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-argument">#argument</a>
+    
+    <li ><a href="#method-i-arguments">#arguments</a>
+    
     <li ><a href="#method-i-availability">#availability</a>
     
     <li ><a href="#method-i-enum_const_decl_unsigned_value">#enum_const_decl_unsigned_value</a>
@@ -79,6 +83,8 @@
     <li ><a href="#method-i-enum_decl_integer_type">#enum_decl_integer_type</a>
     
     <li ><a href="#method-i-extent">#extent</a>
+    
+    <li ><a href="#method-i-field_decl_bit_width">#field_decl_bit_width</a>
     
     <li ><a href="#method-i-hash">#hash</a>
     
@@ -113,6 +119,8 @@
     <li ><a href="#method-i-linkage">#linkage</a>
     
     <li ><a href="#method-i-location">#location</a>
+    
+    <li ><a href="#method-i-num_arguments">#num_arguments</a>
     
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
     
@@ -171,6 +179,105 @@ source code into the AST.</p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-argument" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#get_argument(index) &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the argument cursor of a function or method.</p>
+
+<p>The argument cursor can be determined for calls as well as for declarations
+of functions or methods. For other cursors and for invalid indices, an
+invalid cursor is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="argument-source">
+            <pre>VALUE
+c_Cursor_get_argument(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  int max = clang_Cursor_getNumArguments(c-&gt;data);
+  if(max &lt; 0)
+    max = 0;
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  CHECK_IN_RANGE(c_index, 0, max);
+  Cursor_t *a;
+  VALUE arg;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, arg, Cursor_t, a);
+  a-&gt;data = clang_Cursor_getArgument(c-&gt;data, c_index);
+  a-&gt;parent = c-&gt;parent;
+  return arg;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-arguments" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#arguments &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  cursors for the arguments of the
+function that is related to the current cursor. If the current cursor is
+not a function, it returns an empty array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="arguments-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">arguments</span>
+    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_arguments</span>
+    <span class="ruby-identifier">cursors</span> = []
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">cursors</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">cursors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">argument</span>(<span class="ruby-identifier">i</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">cursors</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-availability" class="method-detail ">
@@ -392,6 +499,48 @@ c_Cursor_get_extent(VALUE self)
   s-&gt;data = clang_getCursorExtent(c-&gt;data);
   s-&gt;parent = self;
   return src_rge;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-field_decl_bit_width" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#field_decl_bit_width &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the bit width of a bit field declaration as an integer.</p>
+
+<p>If a cursor that is not a bit field declaration is passed in, -1 is
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="field_decl_bit_width-source">
+            <pre>VALUE
+c_Cursor_get_field_decl_bit_width(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_getFieldDeclBitWidth(c-&gt;data));
 }</pre>
           </div>
           
@@ -1126,6 +1275,49 @@ c_Cursor_get_source_location(VALUE self)
   s-&gt;data = clang_getCursorLocation(c-&gt;data);
   s-&gt;parent = self;
   return src_loc;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-num_arguments" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#num_arguments &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the number of non-variadic arguments associated with a given
+cursor.</p>
+
+<p>The number of arguments can be determined for calls as well as for
+declarations of functions or methods. For other cursors -1 is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_arguments-source">
+            <pre>VALUE
+c_Cursor_get_num_arguments(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getNumArguments(c-&gt;data));
 }</pre>
           </div>
           
