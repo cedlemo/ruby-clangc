@@ -113,4 +113,7 @@ c_Cursor_get_num_arguments(VALUE);
 
 VALUE
 c_Cursor_get_argument(VALUE, VALUE);
+
+VALUE
+c_Cursor_get_num_template_arguments(VALUE);
 #endif //CURSOR_H

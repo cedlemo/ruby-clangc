@@ -639,3 +639,31 @@ c_Cursor_get_argument(VALUE self, VALUE index)
   a->parent = c->parent;
   return arg;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#num_template_arguments => Integer
+*
+* Returns the number of template args of a function decl representing a
+* template specialization.
+*
+* If the argument cursor cannot be converted into a template function
+* declaration, -1 is returned.
+*
+* For example, for the following declaration and specialization:
+
+*    template <typename T, int kInt, bool kBool>
+*    void foo() { ... }
+*    
+*    template <>
+*    void foo<float, -7, true>();
+*
+* The value 3 would be returned from this call.
+*/
+VALUE
+c_Cursor_get_num_template_arguments(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getNumTemplateArguments(c->data));  
+}
