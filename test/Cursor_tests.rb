@@ -333,4 +333,13 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_get_num_template_arguments
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::Functiondecl
+        assert_equal 3, cursor.num_template_arguments, cursor.spelling
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
