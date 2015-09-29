@@ -122,6 +122,8 @@
     
     <li ><a href="#method-i-num_arguments">#num_arguments</a>
     
+    <li ><a href="#method-i-num_template_arguments">#num_template_arguments</a>
+    
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
@@ -1318,6 +1320,59 @@ c_Cursor_get_num_arguments(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_Cursor_getNumArguments(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-num_template_arguments" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#num_template_arguments &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the number of template args of a function decl representing a
+template specialization.</p>
+
+<p>If the argument cursor cannot be converted into a template function
+declaration, -1 is returned.</p>
+
+<p>For example, for the following declaration and specialization:</p>
+
+<pre>template &lt;typename T, int kInt, bool kBool&gt;
+void foo() { ... }
+
+template &lt;&gt;
+void foo&lt;float, -7, true&gt;();</pre>
+
+<p>The value 3 would be returned from this call.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_template_arguments-source">
+            <pre>VALUE
+c_Cursor_get_num_template_arguments(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getNumTemplateArguments(c-&gt;data));  
 }</pre>
           </div>
           
