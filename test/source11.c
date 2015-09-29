@@ -5,6 +5,6 @@ enum {
 } strategy;
 
 enum {
-  HOP = -1;
+  HOP = -1,
   TOTO = -2
 };

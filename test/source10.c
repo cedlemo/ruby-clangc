@@ -1,3 +1,4 @@
 #ifndef TOTO
-MAX(a,b) a >= b ? a : b
+#define TOTO
+#define MAX(a,b)    (a >= b ? a : b)
 #endif
