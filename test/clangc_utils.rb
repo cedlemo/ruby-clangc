@@ -25,6 +25,8 @@ module ClangcUtils
   SOURCE_FILE_ENUM = "#{File.expand_path(File.dirname(__FILE__))}/source11.c"
   # C with struct and bitfield 
   SOURCE_FILE_STRUCT_BITFIELD = "#{File.expand_path(File.dirname(__FILE__))}/source12.c"
+  # C++ source file with function template example
+  SOURCE_FILE_FUNCTION_TEMPLATE = "#{File.expand_path(File.dirname(__FILE__))}/source13.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{File.expand_path(File.dirname(__FILE__))}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
