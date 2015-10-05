@@ -16,7 +16,7 @@ end
 YARD_FILES = FileList["ext/clangc/clangc.c", "ext/clangc/class_Index.c", "ext/clangc/class_TranslationUnit.c", "lib/clangc.rb"]
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb', YARD_FILES]   # optional
+  t.files   = YARD_FILES   # optional
   t.options = %w(-o yard_documentation --readme README.rdoc) # optional
 end
 
