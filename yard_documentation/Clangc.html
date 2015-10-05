@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Clangc
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!Clangc.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (C)</a> &raquo;
+    
+    
+    <span class="title">Clangc</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Clangc
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/clangc.rb<span class="defines">,<br />
+  ext/clangc/clangc.c</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Clangc/Cursor.html" title="Clangc::Cursor (class)">Cursor</a></span>, <span class='object_link'><a href="Clangc/Diagnostic.html" title="Clangc::Diagnostic (class)">Diagnostic</a></span>, <span class='object_link'><a href="Clangc/File.html" title="Clangc::File (class)">File</a></span>, <span class='object_link'><a href="Clangc/Index.html" title="Clangc::Index (class)">Index</a></span>, <span class='object_link'><a href="Clangc/SourceLocation.html" title="Clangc::SourceLocation (class)">SourceLocation</a></span>, <span class='object_link'><a href="Clangc/SourceRange.html" title="Clangc::SourceRange (class)">SourceRange</a></span>, <span class='object_link'><a href="Clangc/TranslationUnit.html" title="Clangc::TranslationUnit (class)">TranslationUnit</a></span>, <span class='object_link'><a href="Clangc/Type.html" title="Clangc::Type (class)">Type</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_code_complete_options-class_method" title="default_code_complete_options (class method)">+ (Object) <strong>default_code_complete_options</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_diagnostic_display_options-class_method" title="default_diagnostic_display_options (class method)">+ (Object) <strong>default_diagnostic_display_options</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_editing_translation_unit_options-class_method" title="default_editing_translation_unit_options (class method)">+ (Object) <strong>default_editing_translation_unit_options</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#null_cursor-class_method" title="null_cursor (class method)">+ (Object) <strong>null_cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#null_source_location-class_method" title="null_source_location (class method)">+ (Object) <strong>null_source_location</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#null_source_range-class_method" title="null_source_range (class method)">+ (Object) <strong>null_source_range</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#version-class_method" title="version (class method)">+ (Object) <strong>version</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#visit_children-class_method" title="visit_children (class method)">+ (Object) <strong>visit_children</strong>(args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>:call-seq: Clangc.visit_children(Hash).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#visit_children_with_block-class_method" title="visit_children_with_block (class method)">+ (Object) <strong>visit_children_with_block</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#visit_children_with_proc-class_method" title="visit_children_with_proc (class method)">+ (Object) <strong>visit_children_with_proc</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="default_code_complete_options-class_method">
+  
+    + (<tt>Object</tt>) <strong>default_code_complete_options</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_diagnostic_display_options-class_method">
+  
+    + (<tt>Object</tt>) <strong>default_diagnostic_display_options</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_editing_translation_unit_options-class_method">
+  
+    + (<tt>Object</tt>) <strong>default_editing_translation_unit_options</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="null_cursor-class_method">
+  
+    + (<tt>Object</tt>) <strong>null_cursor</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="null_source_location-class_method">
+  
+    + (<tt>Object</tt>) <strong>null_source_location</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="null_source_range-class_method">
+  
+    + (<tt>Object</tt>) <strong>null_source_range</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="version-class_method">
+  
+    + (<tt>Object</tt>) <strong>version</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="visit_children-class_method">
+  
+    + (<tt>Object</tt>) <strong>visit_children</strong>(args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>:call-seq: Clangc.visit_children(Hash)</p>
+
+<p>This is a convenient method that call Clangc.visit_children_with_proc or
+Clangc.visit_children_with_block. the Hash arguments can accept two keys:</p>
+<ul><li>
+<p>cursor</p>
+</li><li>
+<p>visitor</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Clangc</span><span class='period'>.</span><span class='id identifier rubyid_visit_children'>visit_children</span><span class='lparen'>(</span><span class='label'>cursor:</span> <span class='id identifier rubyid_acursor'>acursor</span><span class='comma'>,</span> <span class='label'>visitor:</span> <span class='id identifier rubyid_aproc'>aproc</span><span class='rparen'>)</span>
+
+<span class='const'>Clangc</span><span class='period'>.</span><span class='id identifier rubyid_visit_children'>visit_children</span><span class='lparen'>(</span><span class='label'>cursor:</span> <span class='id identifier rubyid_acursor'>acursor</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cursor'>cursor</span><span class='comma'>,</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>|</span>
+  <span class='comment'>#do your stuf
+</span>  <span class='kw'>return</span> <span class='const'>Clangc</span><span class='op'>::</span><span class='const'>ChildVisitResult</span><span class='op'>::</span><span class='const'>Recurse</span>
+  <span class='comment'>#return Clangc::ChildVisitResult::Break
+</span><span class='kw'>end</span>
+</code></pre>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/clangc.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_visit_children'>visit_children</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_cursor'>cursor</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:cursor</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:visitor</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>nil</span>
+  <span class='kw'>if</span><span class='lparen'>(</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_visit_children_with_proc'>visit_children_with_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_cursor'>cursor</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_visit_children_with_block'>visit_children_with_block</span><span class='lparen'>(</span><span class='id identifier rubyid_cursor'>cursor</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cursor'>cursor</span><span class='comma'>,</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>|</span>
+      <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_cursor'>cursor</span><span class='comma'>,</span> <span class='id identifier rubyid_parent'>parent</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="visit_children_with_block-class_method">
+  
+    + (<tt>Object</tt>) <strong>visit_children_with_block</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="visit_children_with_proc-class_method">
+  
+    + (<tt>Object</tt>) <strong>visit_children_with_proc</strong> 
+  
+
+  
+
+  
+</h3>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon Oct  5 19:03:39 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>
