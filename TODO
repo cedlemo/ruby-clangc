@@ -1,7 +1,6 @@
 # TODO
 
 ## Primary
-[ ] Try to write C macros for boolean Clangc::Cursor#is_ methods with C stringify functionnalities
 [ ] Implement Clangc::Cursor methods
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
@@ -15,6 +14,8 @@
 [ ] See if the check in class_File.c clangc_File_get_name is the best solution
 
 [ ] See how to handle/parse properly C++ files in order to create tests for Clangc::Type#is_POD
+
+[ ] Continue / improve YARD usage
 
 ## Secondary:
 
