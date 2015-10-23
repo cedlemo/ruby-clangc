@@ -342,4 +342,14 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::Recurse
     end
   end
+  def test_Cursor_get_decl_ObjectC_type_encoding
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE_OBJECTC)) &&
+         cursor.spelling == "tata"
+        assert_equal "i", cursor.decl_objectC_type_encoding, cursor.spelling
+      end
+      Clangc::ChildVisitResult::Recurse
+    end
+  end
 end
