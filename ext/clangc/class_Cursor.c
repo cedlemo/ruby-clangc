@@ -667,3 +667,19 @@ c_Cursor_get_num_template_arguments(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_Cursor_getNumTemplateArguments(c->data));  
 }
+/**
+* call-seq:
+*   Clangc::Cursor#decl_objectC_type_encoding => string
+*
+* Returns the Objective-C type encoding for the specified declaration.
+*/
+VALUE
+c_Cursor_get_decl_objectC_type_encoding(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getDeclObjCTypeEncoding(c->data);
+  VALUE type_encoding = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return type_encoding;
+}
