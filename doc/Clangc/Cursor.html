@@ -76,6 +76,8 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-decl_objectC_type_encoding">#decl_objectC_type_encoding</a>
+    
     <li ><a href="#method-i-enum_const_decl_unsigned_value">#enum_const_decl_unsigned_value</a>
     
     <li ><a href="#method-i-enum_const_decl_value">#enum_const_decl_value</a>
@@ -314,6 +316,48 @@ c_Cursor_get_availability(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-decl_objectC_type_encoding" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#decl_objectC_type_encoding &rarr; string
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the Objective-C type encoding for the specified declaration.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="decl_objectC_type_encoding-source">
+            <pre>VALUE
+c_Cursor_get_decl_objectC_type_encoding(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getDeclObjCTypeEncoding(c-&gt;data);
+  VALUE type_encoding = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return type_encoding;
 }</pre>
           </div>
           

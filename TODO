@@ -3,6 +3,10 @@
 ## Primary
 [ ] Implement Clangc::Cursor methods
 
+[ ] Continue / improve YARD usage
+
+[ ] Rename all constants (modify tool to do it)
+
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
   *    Add ruby object check in c_File_is_equal
@@ -12,10 +16,6 @@
   *    Add ruby object check in c_Type_is_equal
 
 [ ] See if the check in class_File.c clangc_File_get_name is the best solution
-
-[ ] See how to handle/parse properly C++ files in order to create tests for Clangc::Type#is_POD
-
-[ ] Continue / improve YARD usage
 
 ## Secondary:
 

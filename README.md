@@ -13,7 +13,7 @@ Clang version used are 3.5.0 to 3.6.2
 
 # Status:
 
-*    97/252 functions wrapped => 38.492063492063494%
+*    98/252 functions wrapped => 38.88888888888889%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
