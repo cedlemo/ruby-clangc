@@ -2,7 +2,7 @@
 
 ## Primary
 
-[ ] Rename all constants (modify tool to do it) use SCREAMING_SNAKE_CASE
+[ ] Rename all constants use SCREAMING_SNAKE_CASE in README and samples
 
 [ ] Implement Clangc::Cursor methods
 
