@@ -10,9 +10,9 @@ class TestClangcMethods < MiniTest::Test
   end
   def test_clangc_default_diagnostic_display_options
     assert_instance_of Fixnum, Clangc.default_diagnostic_display_options
-    default_display_options = Clangc::DiagnosticDisplayOptions::Displaysourcelocation|
-                              Clangc::DiagnosticDisplayOptions::Displaycolumn|
-                              Clangc::DiagnosticDisplayOptions::Displayoption
+    default_display_options = Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION|
+                              Clangc::DiagnosticDisplayOptions::DISPLAY_COLUMN|
+                              Clangc::DiagnosticDisplayOptions::DISPLAY_OPTION
     assert_equal default_display_options, Clangc.default_diagnostic_display_options
   end
   def test_clangc_default_editing_translation_unit_options

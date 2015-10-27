@@ -37,7 +37,7 @@ class TestTypeUsage < MiniTest::Test
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
       assert_instance_of String, cursor.type.spelling
       assert_instance_of String, parent.type.spelling
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_is_equal
@@ -47,7 +47,7 @@ class TestTypeUsage < MiniTest::Test
       assert_equal false, parent.type == parent.type
       assert_equal true, cursor.type.is_equal(cursor.type)
       assert_equal true, parent.type.is_equal(parent.type)
-      Clangc::ChildVisitResult::Break
+      Clangc::ChildVisitResult::BREAK
     end
   end
   def test_Type_canonical_type
@@ -71,12 +71,12 @@ class TestTypeUsage < MiniTest::Test
       parent_pointee = parent.type.pointee_type
       assert_instance_of Clangc::Type, cursor_pointee
       assert_instance_of Clangc::Type, parent_pointee
-      if cursor.type.kind == Clangc::TypeKind::Pointer
-        assert_equal Clangc::TypeKind::Int, cursor_pointee.kind, cursor_pointee.spelling
+      if cursor.type.kind == Clangc::TypeKind::POINTER
+        assert_equal Clangc::TypeKind::INT, cursor_pointee.kind, cursor_pointee.spelling
       else
-        assert_equal Clangc::TypeKind::Invalid, cursor_pointee.kind, cursor_pointee.spelling
+        assert_equal Clangc::TypeKind::INVALID, cursor_pointee.kind, cursor_pointee.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_constant_qualified_type
@@ -87,7 +87,7 @@ class TestTypeUsage < MiniTest::Test
       else
         assert_equal false, cursor.type.is_const_qualified
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_volatile_qualified_type
@@ -99,7 +99,7 @@ class TestTypeUsage < MiniTest::Test
       else
         assert_equal false, cursor.type.is_volatile_qualified, cursor.location.spelling[2]
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_restrict_qualified_type
@@ -111,26 +111,26 @@ class TestTypeUsage < MiniTest::Test
       else
        assert_equal false, cursor.type.is_restrict_qualified, location[2]
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_function_return_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     location = cursor.location.spelling
-      if cursor.type.kind == Clangc::TypeKind::Functionproto
-        assert_equal Clangc::TypeKind::Int, cursor.type.result_type.kind
-      elsif cursor.type.kind == Clangc::TypeKind::Functionnoproto
-        assert_equal Clangc::TypeKind::Int, cursor.type.result_type.kind
+      if cursor.type.kind == Clangc::TypeKind::FUNCTION_PROTO
+        assert_equal Clangc::TypeKind::INT, cursor.type.result_type.kind
+      elsif cursor.type.kind == Clangc::TypeKind::FUNCTION_NO_PROTO
+        assert_equal Clangc::TypeKind::INT, cursor.type.result_type.kind
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_function_calling_conv
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       cursor_kind = cursor.type.kind
-      if cursor_kind == Clangc::TypeKind::Functionnoproto || cursor_kind == Clangc::TypeKind::Functionproto
+      if cursor_kind == Clangc::TypeKind::FUNCTION_NO_PROTO || cursor_kind == Clangc::TypeKind::FUNCTION_PROTO
         convention_found = false
         Clangc::CallingConv.constants.each do |c|
           convention_found = true if Clangc::CallingConv.const_get(c) == cursor.type.calling_conv
@@ -143,92 +143,92 @@ class TestTypeUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     ck = cursor.type.kind
-      if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
+      if ck == Clangc::TypeKind::FUNCTION_PROTO || ck == Clangc::TypeKind::FUNCTION_NO_PROTO
         assert_equal 2, cursor.type.num_arg_types
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_function_arg_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
     ck = cursor.type.kind
-      if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
-        assert_equal Clangc::TypeKind::Char_s, cursor.type.arg_type(0).kind, cursor.type.arg_type(0).kind
-        assert_equal Clangc::TypeKind::Int, cursor.type.arg_type(1).kind, cursor.type.arg_type(1).kind
+      if ck == Clangc::TypeKind::FUNCTION_PROTO || ck == Clangc::TypeKind::FUNCTION_NO_PROTO
+        assert_equal Clangc::TypeKind::CHAR_S, cursor.type.arg_type(0).kind, cursor.type.arg_type(0).kind
+        assert_equal Clangc::TypeKind::INT, cursor.type.arg_type(1).kind, cursor.type.arg_type(1).kind
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_function_arg_types
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       ck = cursor.type.kind
-      if ck == Clangc::TypeKind::Functionproto || ck == Clangc::TypeKind::Functionnoproto
+      if ck == Clangc::TypeKind::FUNCTION_PROTO || ck == Clangc::TypeKind::FUNCTION_NO_PROTO
         args = cursor.type.arg_types
-        assert_equal Clangc::TypeKind::Char_s, args[0].kind
-        assert_equal Clangc::TypeKind::Int, args[1].kind
+        assert_equal Clangc::TypeKind::CHAR_S, args[0].kind
+        assert_equal Clangc::TypeKind::INT, args[1].kind
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_element_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
-        assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
-        assert_equal Clangc::TypeKind::Int, cursor.type.element_type.kind, cursor.location.spelling.inspect
-      elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
-        assert_equal Clangc::TypeKind::Vector, cursor.type.kind, cursor.location.spelling.inspect
-        assert_equal Clangc::TypeKind::Int, cursor.type.element_type.kind, cursor.location.spelling.inspect
+      if cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
+        assert_equal Clangc::TypeKind::CONSTANT_ARRAY, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal Clangc::TypeKind::INT, cursor.type.element_type.kind, cursor.location.spelling.inspect
+      elsif cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
+        assert_equal Clangc::TypeKind::VECTOR, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal Clangc::TypeKind::INT, cursor.type.element_type.kind, cursor.location.spelling.inspect
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_num_elements
   tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
-        assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
+      if cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
+        assert_equal Clangc::TypeKind::CONSTANT_ARRAY, cursor.type.kind, cursor.location.spelling.inspect
         assert_equal 10, cursor.type.num_elements, cursor.location.spelling.inspect
-      elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
-        assert_equal Clangc::TypeKind::Vector, cursor.type.kind, cursor.location.spelling.inspect
+      elsif cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
+        assert_equal Clangc::TypeKind::VECTOR, cursor.type.kind, cursor.location.spelling.inspect
         assert_equal 2, cursor.type.num_elements, cursor.location.spelling.inspect
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_array_element_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
-        assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
-        assert_equal Clangc::TypeKind::Int, cursor.type.array_element_type.kind, cursor.location.spelling.inspect
+      if cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
+        assert_equal Clangc::TypeKind::CONSTANT_ARRAY, cursor.type.kind, cursor.location.spelling.inspect
+        assert_equal Clangc::TypeKind::INT, cursor.type.array_element_type.kind, cursor.location.spelling.inspect
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_array_size
   tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
-        assert_equal Clangc::TypeKind::Constantarray, cursor.type.kind, cursor.location.spelling.inspect
+      if cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
+        assert_equal Clangc::TypeKind::CONSTANT_ARRAY, cursor.type.kind, cursor.location.spelling.inspect
         assert_equal 10, cursor.type.array_size, cursor.location.spelling.inspect
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Type_is_pod
   tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_POD, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE_POD # ensure this is not include file
-        if cursor.type.kind == Clangc::TypeKind::Int
+        if cursor.type.kind == Clangc::TypeKind::INT
           assert_equal true, cursor.type.is_pod, cursor.location.spelling.inspect + cursor.spelling
-        elsif cursor.type.kind != Clangc::TypeKind::Invalid && cursor.type.kind != Clangc::TypeKind::Int
+        elsif cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
           assert_equal false, cursor.type.is_pod, cursor.location.spelling.inspect + cursor.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
 end

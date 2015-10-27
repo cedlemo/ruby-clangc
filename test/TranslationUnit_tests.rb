@@ -53,29 +53,29 @@ class TestTranslationUnitCreation < MiniTest::Test
   def test_fail_create_TU2
     tu = @cindex.create_translation_unit2(BAD_FILE)
     assert_equal Integer, tu.class.superclass
-    assert_equal Clangc::ErrorCode::Failure, tu
+    assert_equal Clangc::ErrorCode::FAILURE, tu
   end
   def test_parse_TU
-    options = Clangc::TranslationUnit_Flags::None
+    options = Clangc::TranslationUnit_Flags::NONE
     tu = @cindex.parse_translation_unit(SOURCE_FILE,CLANG_HEADERS_PATH, options)
     assert_instance_of Clangc::TranslationUnit, tu
   end
   def test_fail_parse_TU
-    options = Clangc::TranslationUnit_Flags::None
+    options = Clangc::TranslationUnit_Flags::NONE
     tu = @cindex.parse_translation_unit(BAD_FILE,CLANG_HEADERS_PATH, options)
     assert_nil tu
   end
   # return an error code if the Translation Unit creation fail
   def test_parse_TU2
-    options = Clangc::TranslationUnit_Flags::None
+    options = Clangc::TranslationUnit_Flags::NONE
     tu = @cindex.parse_translation_unit2(SOURCE_FILE,CLANG_HEADERS_PATH, options)
     assert_instance_of Clangc::TranslationUnit, tu
   end
   def test_failparse_TU2
-    options = Clangc::TranslationUnit_Flags::None
+    options = Clangc::TranslationUnit_Flags::NONE
     tu = @cindex.parse_translation_unit2(BAD_FILE,CLANG_HEADERS_PATH, options)
     assert_equal Integer, tu.class.superclass
-    assert_equal Clangc::ErrorCode::Failure, tu
+    assert_equal Clangc::ErrorCode::FAILURE, tu
   end
 end
 class TestTranslationUnitUsage < MiniTest::Test
@@ -105,7 +105,7 @@ class TestTranslationUnitUsage < MiniTest::Test
   end  
   def test_TU_get_default_save_options
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE,CLANG_HEADERS_PATH)
-    assert_equal Clangc::SaveTranslationUnit_Flags::None, tu.default_save_options
+    assert_equal Clangc::SaveTranslationUnit_Flags::NONE, tu.default_save_options
   end
   def test_TU_get_spelling
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE,CLANG_HEADERS_PATH)
@@ -113,7 +113,7 @@ class TestTranslationUnitUsage < MiniTest::Test
   end
   def test_TU_get_default_reparse_options
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE,CLANG_HEADERS_PATH)
-    assert_equal Clangc::Reparse_Flags::None, tu.default_reparse_options
+    assert_equal Clangc::Reparse_Flags::NONE, tu.default_reparse_options
   end
   def test_TU_get_diagnostic_one
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ONE_ERROR,CLANG_HEADERS_PATH)

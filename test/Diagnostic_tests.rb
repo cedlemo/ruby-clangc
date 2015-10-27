@@ -35,13 +35,13 @@ class TestDiagnostic < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ONE_ERROR,CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     assert_instance_of Fixnum, diagnostics[0].severity
-    assert_equal Clangc::DiagnosticSeverity::Error , diagnostics[0].severity
+    assert_equal Clangc::DiagnosticSeverity::ERROR , diagnostics[0].severity
   end
   def test_get_diagnostic_severity_two_errors
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS,CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     assert_instance_of Fixnum, diagnostics[1].severity
-    assert_equal Clangc::DiagnosticSeverity::Warning , diagnostics[1].severity
+    assert_equal Clangc::DiagnosticSeverity::WARNING , diagnostics[1].severity
   end
   def test_get_diagnostic_spelling_one_error
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ONE_ERROR,CLANG_HEADERS_PATH)
@@ -108,10 +108,10 @@ class TestDiagnostic < MiniTest::Test
     diagnostics = tu.diagnostics
     format = diagnostics[0].format(Clangc.default_diagnostic_display_options)
     assert_instance_of String, format 
-#    format = diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaysourcelocation)
+#    format = diagnostics[0].format(Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION)
     format = diagnostics[0].format(0)
     reference = "error: expected \';\' after top level declarator [Parse Issue]"
-    assert_equal reference, diagnostics[0].format(Clangc::DiagnosticDisplayOptions::Displaycategoryname)
+    assert_equal reference, diagnostics[0].format(Clangc::DiagnosticDisplayOptions::DISPLAY_CATEGORY_NAME)
   end
   def test_get_diagnostic_options
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OPTION_WARNINGS,CLANG_HEADERS_PATH + %w(-Wall -pedantic))

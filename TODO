@@ -1,11 +1,12 @@
 # TODO
 
 ## Primary
+
+[ ] Rename all constants (modify tool to do it) use SCREAMING_SNAKE_CASE
+
 [ ] Implement Clangc::Cursor methods
 
 [ ] Continue / improve YARD usage
-
-[ ] Rename all constants (modify tool to do it)
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 

@@ -151,7 +151,7 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_typedef_decl_underlying_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      if cursor.kind == Clangc::CursorKind::Typedefdecl
+      if cursor.kind == Clangc::CursorKind::TYPEDEF_DECL
         assert_instance_of Clangc::Type, cursor.typedef_decl_underlying_type
       end
     end
@@ -159,7 +159,7 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_included_file
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      if cursor.kind == Clangc::CursorKind::Inclusiondirective
+      if cursor.kind == Clangc::CursorKind::INCLUSION_DIRECTIVE
         assert_instance_of Clangc::File, cursor.included_file
         assert_equal SOURCE_FILE, cursor.included_file.name
       end
@@ -171,7 +171,7 @@ class TestCursorUsage < MiniTest::Test
       if cursor.location.spelling[0].name == SOURCE_FILE && cursor.spelling == "data"
         assert_equal true, cursor.is_declaration, cursor.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_is_reference
@@ -180,7 +180,7 @@ class TestCursorUsage < MiniTest::Test
       if cursor.location.spelling[0].name == SOURCE_FILE && cursor.spelling == "struct data"
         assert_equal true, cursor.is_reference, cursor.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_is_expression
@@ -189,7 +189,7 @@ class TestCursorUsage < MiniTest::Test
       if cursor.location.spelling[0].name == SOURCE_FILE && cursor.spelling == "printf"
         assert_equal true, cursor.is_expression, cursor.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_is_statement
@@ -199,7 +199,7 @@ class TestCursorUsage < MiniTest::Test
         cursor.location.spelling[1] == 9 && cursor.location.spelling[2] == 28 
         assert_equal true, cursor.is_statement, cursor.location.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_is_attribute
@@ -209,7 +209,7 @@ class TestCursorUsage < MiniTest::Test
         cursor.location.spelling[1] == 17 && cursor.location.spelling[2] == 25 
         assert_equal true, cursor.is_attribute, cursor.location.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_is_invalid
@@ -223,22 +223,22 @@ class TestCursorUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_MACRO, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
         assert_equal true, cursor.is_preprocessing, cursor.location.spelling
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_enum_decl_integer_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ENUM, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      if cursor.kind == Clangc::CursorKind::Enumdecl
+      if cursor.kind == Clangc::CursorKind::ENUM_DECL
         assert_instance_of Clangc::Type, cursor.enum_decl_integer_type
-        assert_equal Clangc::TypeKind::Uint, cursor.enum_decl_integer_type.kind, cursor.enum_decl_integer_type.spelling
+        assert_equal Clangc::TypeKind::U_INT, cursor.enum_decl_integer_type.kind, cursor.enum_decl_integer_type.spelling
       end
     end
   end
   def test_Cursor_get_enum_const_decl_value
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ENUM, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      if cursor.kind == Clangc::CursorKind::Enumconstantdecl
+      if cursor.kind == Clangc::CursorKind::ENUM_CONSTANT_DECL
         case cursor.spelling
         when "RANDOM"
           assert_equal 0, cursor.enum_const_decl_value, cursor.spelling
@@ -252,13 +252,13 @@ class TestCursorUsage < MiniTest::Test
           assert_equal -2, cursor.enum_const_decl_value, cursor.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_enum_const_decl_unsigned_value
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ENUM, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      if cursor.kind == Clangc::CursorKind::Enumconstantdecl
+      if cursor.kind == Clangc::CursorKind::ENUM_CONSTANT_DECL
         case cursor.spelling
         when "RANDOM"
           assert_equal 0, cursor.enum_const_decl_unsigned_value, cursor.spelling
@@ -266,13 +266,13 @@ class TestCursorUsage < MiniTest::Test
           assert_equal 1, cursor.enum_const_decl_unsigned_value, cursor.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_field_decl_bit_width
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_STRUCT_BITFIELD, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      if cursor.kind == Clangc::CursorKind::Fielddecl
+      if cursor.kind == Clangc::CursorKind::FIELD_DECL
         case cursor.spelling
         when "opaque"
           assert_equal 1, cursor.field_decl_bit_width, cursor.spelling
@@ -280,13 +280,13 @@ class TestCursorUsage < MiniTest::Test
           assert_equal 3, cursor.field_decl_bit_width, cursor.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_num_arguments
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::Functiondecl 
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL 
         case cursor.spelling
         when "stupid_function"
           assert_equal 1, cursor.num_arguments, cursor.spelling
@@ -294,52 +294,52 @@ class TestCursorUsage < MiniTest::Test
           assert_equal 2, cursor.num_arguments, cursor.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_argument
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::Functiondecl 
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL 
         case cursor.spelling
         when "stupid_function"
           arg = cursor.argument(0)
-          assert_equal Clangc::TypeKind::Double, arg.type.kind, arg.type.spelling
+          assert_equal Clangc::TypeKind::DOUBLE, arg.type.kind, arg.type.spelling
         when "main"
           arg = cursor.argument(0)
-          assert_equal Clangc::TypeKind::Int, arg.type.kind, arg.type.spelling
+          assert_equal Clangc::TypeKind::INT, arg.type.kind, arg.type.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_arguments
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::Functiondecl 
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL 
         case cursor.spelling
         when "stupid_function"
           args = cursor.arguments
           assert_instance_of Array, args
           assert_equal 1, args.size, args.inspect
-          assert_equal Clangc::TypeKind::Double, args[0].type.kind, args[0].type.spelling
+          assert_equal Clangc::TypeKind::DOUBLE, args[0].type.kind, args[0].type.spelling
         when "main"
           args = cursor.arguments
           assert_instance_of Array, args
           assert_equal 2, args.size, args.inspect
-          assert_equal Clangc::TypeKind::Int, args[0].type.kind, args[0].type.spelling
+          assert_equal Clangc::TypeKind::INT, args[0].type.kind, args[0].type.spelling
         end
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_num_template_arguments
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::Functiondecl
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
         assert_equal 3, cursor.num_template_arguments, cursor.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_decl_ObjectC_type_encoding
@@ -349,7 +349,7 @@ class TestCursorUsage < MiniTest::Test
          cursor.spelling == "tata"
         assert_equal "i", cursor.decl_objectC_type_encoding, cursor.spelling
       end
-      Clangc::ChildVisitResult::Recurse
+      Clangc::ChildVisitResult::RECURSE
     end
   end
 end
