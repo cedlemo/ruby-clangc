@@ -7,7 +7,7 @@ cindex = Clangc::Index.new(false, false)
 
 clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
 source = "#{File.expand_path(File.dirname(__FILE__))}/list.c"
-options = Clangc::TranslationUnit_Flags::None
+options = Clangc::TranslationUnit_Flags::NONE
 
 tu = cindex.parse_translation_unit(source, clang_headers_path, options)
 
@@ -19,12 +19,12 @@ tu.diagnostics.each do |diagnostic|
   puts "None"
   puts  "\t #{diagnostic.format(0)}"
   puts "None + Source Location"
-  puts  "\t #{diagnostic.format(Clangc::DiagnosticDisplayOptions::Displaysourcelocation)}"
+  puts  "\t #{diagnostic.format(Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION)}"
   puts "None + Source Location + Column"
-  puts "\t #{diagnostic.format( Clangc::DiagnosticDisplayOptions::Displaysourcelocation|
-                                Clangc::DiagnosticDisplayOptions::Displaycolumn)}"
+  puts "\t #{diagnostic.format( Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION|
+                                Clangc::DiagnosticDisplayOptions::DISPLAY_COLUMN)}"
   puts "None + Source Location + Column + Category Name"
-  puts "\t #{diagnostic.format( Clangc::DiagnosticDisplayOptions::Displaysourcelocation|
-                                Clangc::DiagnosticDisplayOptions::Displaycolumn|
-                                Clangc::DiagnosticDisplayOptions::Displaycategoryname)}"
+  puts "\t #{diagnostic.format( Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION|
+                                Clangc::DiagnosticDisplayOptions::DISPLAY_COLUMN|
+                                Clangc::DiagnosticDisplayOptions::DISPLAY_CATEGORY_NAME)}"
 end

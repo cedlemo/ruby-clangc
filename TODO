@@ -2,9 +2,7 @@
 
 ## Primary
 
-[ ] Rename all constants use SCREAMING_SNAKE_CASE in README and samples
-
-[ ] Implement Clangc::Cursor methods
+[ ] Finish Implement Clangc::Cursor methods
 
 [ ] Continue / improve YARD usage
 

@@ -23,15 +23,15 @@ end
 Clangc.visit_children(cursor: cursor) do |cursor, parent| 
   if cursor.location.spelling[0].name == source_file
     case cursor.kind 
-    when Clangc::CursorKind::Typedefdecl
+    when Clangc::CursorKind::TYPEDEF_DECL
       pretty_print("typedef     ", cursor)
-    when Clangc::CursorKind::Structdecl
+    when Clangc::CursorKind::STRUCT_DECL
       pretty_print("structure   ", cursor)
-    when Clangc::CursorKind::Enumdecl
+    when Clangc::CursorKind::ENUM_DECL
       pretty_print("Enumeration ", cursor)
-    when Clangc::CursorKind::Uniondecl
+    when Clangc::CursorKind::UNION_DECL
       pretty_print("Union       ", cursor)
-    when Clangc::CursorKind::Functiondecl
+    when Clangc::CursorKind::FUNCTION_DECL
       pretty_print("Function    ", cursor)
       arguments = cursor.type.arg_types
       puts "\t#{arguments.size} argument(s)"
@@ -40,5 +40,5 @@ Clangc.visit_children(cursor: cursor) do |cursor, parent|
       end
     end
   end
-  Clangc::ChildVisitResult::Recurse
+  Clangc::ChildVisitResult::RECURSE
 end
