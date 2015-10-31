@@ -1,0 +1,1310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Clangc::Diagnostic
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Clangc/Diagnostic.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Clangc.html" title="Clangc (module)">Clangc</a></span></span>
+     &raquo; 
+    <span class="title">Diagnostic</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Clangc::Diagnostic
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Clangc::Diagnostic</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/clangc.c</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#category-instance_method" title="#Clangc::Diagnostic (instance method)">- (Fixnum) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the category number for this diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#category_name-instance_method" title="#Clangc::Diagnostic (instance method)">- (String) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the name of a particular diagnostic category.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#category_text-instance_method" title="#Clangc::Diagnostic (instance method)">- (String) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the diagnostic category text for a given diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#format-instance_method" title="#Clangc::Diagnostic (instance method)">- (String) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Format the given diagnostic in a manner that is suitable for display.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#num_fixits-instance_method" title="#Clangc::Diagnostic (instance method)">- (Fixnum) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the number of fix-it hints associated with the given diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#num_ranges-instance_method" title="#Clangc::Diagnostic (instance method)">- (Fixnum) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the number of source ranges associated with the given diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#option-instance_method" title="#Clangc::Diagnostic (instance method)">- (Array) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the name of the command-line option that enabled this diagnostic
+such as (“-Wconversion” or “-pedantic”) and the option that disables it if
+any.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#severity-instance_method" title="#Clangc::Diagnostic (instance method)">- (Fixnum) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the severity of the given diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source_location-instance_method" title="#Clangc::Diagnostic (instance method)">- (Clangc::SourceLocation) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the source location of the given diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source_range-instance_method" title="#source_range (instance method)">- (Object) <strong>source_range</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve a source range associated with the diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#spelling-instance_method" title="#Clangc::Diagnostic (instance method)">- (String) <strong>Clangc::Diagnostic</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the text of the given diagnostic.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="category-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the category number for this diagnostic.</p>
+
+<p>Diagnostics can be categorized into groups along with other, related
+diagnostics (e.g., diagnostics under the same warning flag). This routine
+retrieves the category number for the given diagnostic.</p>
+
+<p>The number of the category that contains this diagnostic, or zero if this
+diagnostic is uncategorized.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 102</span>
+
+VALUE
+c_Diagnostic_get_category(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int category = clang_getDiagnosticCategory(d-&gt;data);
+  return CUINT_2_NUM(category);
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="category_name-instance_method">
+  
+    - (<tt>String</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the name of a particular diagnostic category.  This is now
+deprecated.  Use Clangc::Diagnostic#category_text instead.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 119</span>
+
+VALUE
+c_Diagnostic_get_category_name(VALUE self)
+{
+// TODO deprecated write if macro based on clang vervion
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d-&gt;data));
+  VALUE name = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return name;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="category_text-instance_method">
+  
+    - (<tt>String</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the diagnostic category text for a given diagnostic. Returns The
+text of the given diagnostic category.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 138</span>
+
+VALUE
+c_Diagnostic_get_category_text(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticCategoryText(d-&gt;data);
+  VALUE text = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return text;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="format-instance_method">
+  
+    - (<tt>String</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Format the given diagnostic in a manner that is suitable for display.</p>
+
+<p>This routine will format the given diagnostic to a string, rendering the
+diagnostic according to the various options given. The
+Clangc.default_diagnostic_display_options function returns the set of
+options that most closely mimics the behavior of the clang compiler.</p>
+
+<p>options A set of options that control the diagnostic display, created by
+combining Clangc::DiagnosticDisplayOptions constants.</p>
+
+<p>It returns a new string containing for formatted diagnostic.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 197</span>
+
+VALUE
+c_Diagnostic_format(VALUE self, VALUE options)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int c_options;
+  RNUM_2_UINT(options, c_options);
+  
+  CXString str = clang_formatDiagnostic(d-&gt;data, c_options);
+  VALUE format = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+
+  return format;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="num_fixits-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the number of fix-it hints associated with the given diagnostic.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 172</span>
+
+VALUE
+c_Diagnostic_get_num_fixits(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int num = clang_getDiagnosticNumFixIts(d-&gt;data);
+  return CUINT_2_NUM(num);
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="num_ranges-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the number of source ranges associated with the given diagnostic.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+156
+157
+158
+159
+160
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 156</span>
+
+VALUE
+c_Diagnostic_get_num_ranges(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int num = clang_getDiagnosticNumRanges(d-&gt;data);
+  return CUINT_2_NUM(num);
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="option-instance_method">
+  
+    - (<tt>Array</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the name of the command-line option that enabled this diagnostic
+such as (“-Wconversion” or “-pedantic”) and the option that disables it if
+any. <a href="0">returned_array</a> == String command-line option that
+enabled the diagnostic <a href="1">returned_array</a> == String or nil
+command-line option that disable the diagnostic</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 223</span>
+
+VALUE
+c_Diagnostic_get_option(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+
+  CXString str1;
+  CXString str2;
+  str1 = clang_getDiagnosticOption(d-&gt;data, &amp;str2);
+  VALUE ret = rb_ary_new();
+  rb_ary_push(ret, rb_str_new2(clang_getCString(str1)));
+  rb_ary_push(ret, rb_str_new2(clang_getCString(str2)));
+  
+  clang_disposeString(str1);
+  clang_disposeString(str2);
+
+  return ret;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="severity-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the severity of the given diagnostic. It returns one of the
+constants defined in Clangc::DiagnosticSeverity.constants</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 63</span>
+
+VALUE
+c_Diagnostic_get_severity(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  unsigned int severity = clang_getDiagnosticSeverity(d-&gt;data);
+  return CUINT_2_NUM(severity);
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="source_location-instance_method">
+  
+    - (<tt><span class='object_link'><a href="SourceLocation.html" title="Clangc::SourceLocation (class)">Clangc::SourceLocation</a></span></tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the source location of the given diagnostic.</p>
+
+<p>This location is where Clang would print the caret (&#39;^&#39;) when
+displaying the diagnostic on the command line.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SourceLocation.html" title="Clangc::SourceLocation (class)">Clangc::SourceLocation</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 282</span>
+
+VALUE
+c_Diagnostic_get_source_location(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);  
+  VALUE a_source_location;
+  SourceLocation_t *sl;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, a_source_location, SourceLocation_t, sl);
+  sl-&gt;data = clang_getDiagnosticLocation(d-&gt;data);
+  sl-&gt;parent = self;
+  return a_source_location;  
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="source_range-instance_method">
+  
+    - (<tt>Object</tt>) <strong>source_range</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve a source range associated with the diagnostic. call-seq:</p>
+
+<pre class="code"><code class=""><span class='const'>Clangc</span><span class='op'>::</span><span class='const'>Diagnostic</span><span class='comment'>#source_range(index) =&gt; Clangc::SourceRange
+</span></code></pre>
+
+<p>A diagnostic&#39;s source ranges highlight important elements in the source
+code. On the command line, Clang displays source ranges by underlining them
+with &#39;~&#39; characters.</p>
+
+<p>param Diagnostic the diagnostic whose range is being extracted.</p>
+
+<p>param Range the zero-based index specifying which range to</p>
+
+<p>returns the requested source range.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 257</span>
+
+VALUE
+c_Diagnostic_get_source_range(VALUE self, VALUE index)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);  
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  VALUE a_source_range;
+  SourceRange_t *s;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, a_source_range, SourceRange_t, s);
+  s-&gt;data = clang_getDiagnosticRange(d-&gt;data, c_index);
+  s-&gt;parent = self;
+  return a_source_range;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="spelling-instance_method">
+  
+    - (<tt>String</tt>) <strong>Clangc::Diagnostic</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the text of the given diagnostic.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Diagnostic.c', line 78</span>
+
+VALUE
+c_Diagnostic_get_spelling(VALUE self)
+{
+  Diagnostic_t *d;
+  Data_Get_Struct(self, Diagnostic_t, d);
+  CXString str = clang_getDiagnosticSpelling(d-&gt;data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Oct 31 10:31:35 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>

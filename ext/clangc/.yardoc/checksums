@@ -1,0 +1,10 @@
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/_clangc_functions.c e55a5f08c1d4c6fe0deabec0c520c1e9bff6492f
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/clangc.c 3a57ebfbfedad258d7cafc2a9c94e69f49811356
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Cursor.c 141626de51fa27832fdcb72521e5ffa52cc63e4d
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Diagnostic.c 44a7085c3d038a471bb6924ef8ab7ee08127df06
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_File.c 2400a71ab8cf49e7b6cfd1ffa27182bad5a0bea4
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Index.c 929e2b3a168d17b59306a966403b3f5c2d790233
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_SourceLocation.c 5dba9b876f0b8c839ff0057f3ccdd248f23a5552
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_SourceRange.c c0239688de9b82e2bd9cd5fd03b1ab1ed44408d7
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_TranslationUnit.c 9f25196f358091b0de4b269f2dec3a1196a11c2e
+/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Type.c abe86de4d24c533552efa6501399b37d37d221f8

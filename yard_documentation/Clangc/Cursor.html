@@ -1,0 +1,3191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Clangc::Cursor
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Clangc/Cursor.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Clangc.html" title="Clangc (module)">Clangc</a></span></span>
+     &raquo; 
+    <span class="title">Cursor</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Clangc::Cursor
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Clangc::Cursor</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/clangc.c</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#argument-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::Cursor) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the argument cursor of a function or method.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#availability-instance_method" title="#Clangc::Cursor (instance method)">- (Fixnum) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the availability of the entity that this cursor refers to, taking
+the current target platform into account.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#decl_objectC_type_encoding-instance_method" title="#Clangc::Cursor (instance method)">- (String) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the Objective-C type encoding for the specified declaration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_const_decl_unsigned_value-instance_method" title="#Clangc::Cursor (instance method)">- (Number) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the integer value of an enum constant declaration as an unsigned
+long long.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_const_decl_value-instance_method" title="#Clangc::Cursor (instance method)">- (Number) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the integer value of an enum constant declaration as a signed long
+long.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_decl_integer_type-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::Type) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the integer type of an enum declaration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extent-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::SourceRange) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the physical extent of the source construct referenced by the
+given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#field_decl_bit_width-instance_method" title="#Clangc::Cursor (instance method)">- (Integer) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the bit width of a bit field declaration as an integer.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hash-instance_method" title="#Clangc::Cursor (instance method)">- (Fixnum) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Compute a hash value for the given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#included_file-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::File) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the file that is included by the given inclusion directive cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_attribute-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents an attribute.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_declaration-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents a declaration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_equal-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether two cursors are equivalent.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_expression-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents an expression.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_invalid-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents an invalid cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_null-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>return true is the cursor is a null Cursor or false otherwise.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_preprocessing-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor represents a preprocessing element, such
+as a preprocessor directive or macro instantiation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_reference-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents a simple reference.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_statement-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents a statement.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_translation_unit-instance_method" title="#Clangc::Cursor (instance method)">- (Object) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether the given cursor kind represents a translation unit.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#kind-instance_method" title="#Clangc::Cursor (instance method)">- (Fixnum) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the kind of the given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#language-instance_method" title="#Clangc::Cursor (instance method)">- (Fixnum) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the “language” of the entity referred to by a given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#lexical_parent-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::Cursor) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the lexical parent of the given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#linkage-instance_method" title="#Clangc::Cursor (instance method)">- (Fixnum) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the linkage of the entity referred to by a given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#location-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::SourceLocation) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the physical location of the source constructor referenced by the
+given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#num_arguments-instance_method" title="#Clangc::Cursor (instance method)">- (Integer) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the number of non-variadic arguments associated with a given
+cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#num_template_arguments-instance_method" title="#Clangc::Cursor (instance method)">- (Integer) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the number of template args of a function decl representing a
+template specialization.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#semantic_parent-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::Cursor) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine the semantic parent of the given cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#spelling-instance_method" title="#Clangc::Cursor (instance method)">- (String) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve a name for the entity referenced by this cursor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#type-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::Type) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the type of a CXCursor (if any).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#typedef_decl_underlying_type-instance_method" title="#Clangc::Cursor (instance method)">- (Clangc::Type) <strong>Clangc::Cursor</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the underlying type of a typedef declaration.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="argument-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Clangc::Cursor (class)">Clangc::Cursor</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the argument cursor of a function or method.</p>
+
+<p>The argument cursor can be determined for calls as well as for declarations
+of functions or methods. For other cursors and for invalid indices, an
+invalid cursor is returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Clangc::Cursor (class)">Clangc::Cursor</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 624</span>
+
+VALUE
+c_Cursor_get_argument(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  int max = clang_Cursor_getNumArguments(c-&gt;data);
+  if(max &lt; 0)
+    max = 0;
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  CHECK_IN_RANGE(c_index, 0, max);
+  Cursor_t *a;
+  VALUE arg;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, arg, Cursor_t, a);
+  a-&gt;data = clang_Cursor_getArgument(c-&gt;data, c_index);
+  a-&gt;parent = c-&gt;parent;
+  return arg;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="availability-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the availability of the entity that this cursor refers to, taking
+the current target platform into account.</p>
+
+<p>The availability of the cursor. The value should refer to the constants in
+Clangc::AvailabilityKind</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+151
+152
+153
+154
+155
+156
+157</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 151</span>
+
+VALUE
+c_Cursor_get_availability(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="decl_objectC_type_encoding-instance_method">
+  
+    - (<tt>String</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the Objective-C type encoding for the specified declaration.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 676</span>
+
+VALUE
+c_Cursor_get_decl_objectC_type_encoding(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getDeclObjCTypeEncoding(c-&gt;data);
+  VALUE type_encoding = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return type_encoding;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enum_const_decl_unsigned_value-instance_method">
+  
+    - (<tt>Number</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the integer value of an enum constant declaration as an unsigned
+long long.</p>
+
+<p>If the cursor does not reference an enum constant declaration, ULLONG_MAX
+is returned. Since this is also potentially a valid constant value, the
+kind of the cursor must be verified before calling this function.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+572
+573
+574
+575
+576
+577
+578</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 572</span>
+
+VALUE
+c_Cursor_get_enum_const_decl_unsigned_value(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CULLONG_2_NUM(clang_getEnumConstantDeclUnsignedValue(c-&gt;data));
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enum_const_decl_value-instance_method">
+  
+    - (<tt>Number</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the integer value of an enum constant declaration as a signed long
+long.</p>
+
+<p>If the cursor does not reference an enum constant declaration, ULLONG_MIN
+is returned. Since this is also potentially a valid constant value, the
+kind of the cursor must be verified before calling this function.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+553
+554
+555
+556
+557
+558
+559</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 553</span>
+
+VALUE
+c_Cursor_get_enum_const_decl_value(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CLLONG_2_NUM(clang_getEnumConstantDeclValue(c-&gt;data));
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enum_decl_integer_type-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Type.html" title="Clangc::Type (class)">Clangc::Type</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the integer type of an enum declaration.</p>
+
+<p>If the cursor does not reference an enum declaration, an invalid type is
+returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Type.html" title="Clangc::Type (class)">Clangc::Type</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 529</span>
+
+VALUE
+c_Cursor_get_enum_decl_integer_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  t-&gt;data = clang_getEnumDeclIntegerType(c-&gt;data);
+  t-&gt;parent = c-&gt;parent;
+  return type;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="extent-instance_method">
+  
+    - (<tt><span class='object_link'><a href="SourceRange.html" title="Clangc::SourceRange (class)">Clangc::SourceRange</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the physical extent of the source construct referenced by the
+given cursor.</p>
+
+<p>The extent of a cursor starts with the file/line/column pointing at the
+first character within the source construct that the cursor refers to and
+ends with the last character within that source construct. For a
+declaration, the extent covers the declaration itself. For a reference, the
+extent covers the location of the reference (e.g., where the referenced
+entity was actually used).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SourceRange.html" title="Clangc::SourceRange (class)">Clangc::SourceRange</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 329</span>
+
+VALUE
+c_Cursor_get_extent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *s;
+  VALUE src_rge;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, src_rge, SourceRange_t, s);
+  s-&gt;data = clang_getCursorExtent(c-&gt;data);
+  s-&gt;parent = self;
+  return src_rge;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="field_decl_bit_width-instance_method">
+  
+    - (<tt>Integer</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the bit width of a bit field declaration as an integer.</p>
+
+<p>If a cursor that is not a bit field declaration is passed in, -1 is
+returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+588
+589
+590
+591
+592
+593
+594</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 588</span>
+
+VALUE
+c_Cursor_get_field_decl_bit_width(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_getFieldDeclBitWidth(c-&gt;data));
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="hash-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Compute a hash value for the given cursor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 100</span>
+
+VALUE
+c_Cursor_get_hash(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_hashCursor(c-&gt;data)); 
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="included_file-instance_method">
+  
+    - (<tt><span class='object_link'><a href="File.html" title="Clangc::File (class)">Clangc::File</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the file that is included by the given inclusion directive cursor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="File.html" title="Clangc::File (class)">Clangc::File</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 388</span>
+
+VALUE
+c_Cursor_get_included_file(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  VALUE included;
+  File_t *f;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, included, File_t, f);
+  f-&gt;data = clang_getIncludedFile(c-&gt;data);
+  f-&gt;parent = c-&gt;parent;
+  return included;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_attribute-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents an attribute.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+468
+469
+470
+471
+472
+473
+474</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 468</span>
+
+VALUE
+c_Cursor_is_attribute(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isAttribute(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_declaration-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents a declaration.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+407
+408
+409
+410
+411
+412
+413</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 407</span>
+
+VALUE
+c_Cursor_is_declaration(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isDeclaration(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_equal-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether two cursors are equivalent.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 79</span>
+
+VALUE
+c_Cursor_is_equal(VALUE self, VALUE cursor1)
+{
+  Cursor_t *c;
+  Cursor_t *c1;
+
+  Data_Get_Struct(self, Cursor_t, c);
+  Data_Get_Struct(cursor1, Cursor_t, c1);
+
+  if(clang_equalCursors(c-&gt;data, c1-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_expression-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents an expression.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+440
+441
+442
+443
+444
+445
+446</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 440</span>
+
+VALUE
+c_Cursor_is_expression(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isExpression(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_invalid-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents an invalid cursor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+483
+484
+485
+486
+487
+488
+489</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 483</span>
+
+VALUE
+c_Cursor_is_invalid(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isInvalid(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_null-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>return true is the cursor is a null Cursor or false otherwise</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 62</span>
+
+VALUE
+c_Cursor_is_null(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isNull(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_preprocessing-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor represents a preprocessing element, such
+as a preprocessor directive or macro instantiation.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+513
+514
+515
+516
+517
+518
+519</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 513</span>
+
+VALUE
+c_Cursor_is_preprocessing(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isPreprocessing(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_reference-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents a simple reference.</p>
+
+<p>Note that other kinds of cursors (such as expressions) can also refer to
+other cursors. Use Clangc::Curosr#cursor_referenced to determine whether a
+particular cursor refers to another entity.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+426
+427
+428
+429
+430
+431
+432</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 426</span>
+
+VALUE
+c_Cursor_is_reference(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isReference(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_statement-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents a statement.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+454
+455
+456
+457
+458
+459
+460</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 454</span>
+
+VALUE
+c_Cursor_is_statement(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isStatement(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_translation_unit-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether the given cursor kind represents a translation unit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+498
+499
+500
+501
+502
+503
+504</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 498</span>
+
+VALUE
+c_Cursor_is_translation_unit(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return clang_isTranslationUnit(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="kind-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the kind of the given cursor. The value should refer to the
+constants in Clangc::CursorKind</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118
+119
+120
+121
+122</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 116</span>
+
+VALUE
+c_Cursor_get_kind(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorKind(c-&gt;data)); 
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="language-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the “language” of the entity referred to by a given cursor. The
+value should refer to the constants in Clangc::LanguageKind</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+167
+168
+169
+170
+171
+172
+173</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 167</span>
+
+VALUE
+c_Cursor_get_language(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorLanguage(c-&gt;data));
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="lexical_parent-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Clangc::Cursor (class)">Clangc::Cursor</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the lexical parent of the given cursor.</p>
+
+<p>The lexical parent of a cursor is the cursor in which the given cursor was
+actually written. For many declarations, the lexical and semantic parents
+are equivalent (the semantic parent is returned by
+Clangc::Cursor#semantic_parent). They diverge when declarations or
+definitions are provided out-of-line. For example:</p>
+
+<pre class="code"><code class="">class C {
+ void f();
+};
+
+void C::f() { }</code></pre>
+
+<p>In the out-of-line definition of “C::f”, the semantic parent is the class
+“C”, of which this function is a member. The lexical parent is the place
+where the declaration actually occurs in the source code; in this case, the
+definition occurs in the translation unit. In general, the lexical parent
+for a given entity can change without affecting the semantics of the
+program, and the lexical parent of different declarations of the same
+entity may be different. Changing the semantic parent of a declaration, on
+the other hand, can have a major impact on semantics, and redeclarations of
+a particular entity should all have the same semantic context.</p>
+
+<p>In the example above, both declarations of “C::f” have “C” as their
+semantic context, while the lexical context of the first “C::f” is “C” and
+the lexical context of the second “C::f” is the translation unit.</p>
+
+<p>For declarations written in the global scope, the lexical parent is the
+translation unit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Clangc::Cursor (class)">Clangc::Cursor</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 276</span>
+
+VALUE
+c_Cursor_get_lexical_parent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *l;
+  VALUE lex_par;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, lex_par, Cursor_t, l);
+  l-&gt;data = clang_getCursorLexicalParent(c-&gt;data);
+  l-&gt;parent = c-&gt;parent;
+  return lex_par;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="linkage-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the linkage of the entity referred to by a given cursor. The
+value should refer to the constants in Clangc::LinkageKind</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 132</span>
+
+VALUE
+c_Cursor_get_linkage(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCursorLinkage(c-&gt;data)); 
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="location-instance_method">
+  
+    - (<tt><span class='object_link'><a href="SourceLocation.html" title="Clangc::SourceLocation (class)">Clangc::SourceLocation</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the physical location of the source constructor referenced by the
+given cursor.</p>
+
+<p>The location of a declaration is typically the location of the name of that
+declaration, where the name of that declaration would occur if it is
+unnamed, or some keyword that introduces that particular declaration. The
+location of a reference is where that reference occurs within the source
+code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SourceLocation.html" title="Clangc::SourceLocation (class)">Clangc::SourceLocation</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 302</span>
+
+VALUE
+c_Cursor_get_source_location(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceLocation_t *s;
+  VALUE src_loc;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, src_loc, SourceLocation_t, s);
+  s-&gt;data = clang_getCursorLocation(c-&gt;data);
+  s-&gt;parent = self;
+  return src_loc;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="num_arguments-instance_method">
+  
+    - (<tt>Integer</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the number of non-variadic arguments associated with a given
+cursor.</p>
+
+<p>The number of arguments can be determined for calls as well as for
+declarations of functions or methods. For other cursors -1 is returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+606
+607
+608
+609
+610
+611
+612</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 606</span>
+
+VALUE
+c_Cursor_get_num_arguments(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getNumArguments(c-&gt;data));
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="num_template_arguments-instance_method">
+  
+    - (<tt>Integer</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the number of template args of a function decl representing a
+template specialization.</p>
+
+<p>If the argument cursor cannot be converted into a template function
+declaration, -1 is returned.</p>
+
+<p>For example, for the following declaration and specialization:</p>
+
+<pre class="code"><code class="">template &lt;typename T, int kInt, bool kBool&gt;
+void foo() { ... }
+
+template &lt;&gt;
+void foo&lt;float, -7, true&gt;();</code></pre>
+
+<p>The value 3 would be returned from this call.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+663
+664
+665
+666
+667
+668
+669</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 663</span>
+
+VALUE
+c_Cursor_get_num_template_arguments(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getNumTemplateArguments(c-&gt;data));  
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="semantic_parent-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Clangc::Cursor (class)">Clangc::Cursor</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine the semantic parent of the given cursor.</p>
+
+<p>The semantic parent of a cursor is the cursor that semantically contains
+the given cursor. For many declarations, the lexical and semantic parents
+are equivalent (the lexical parent is returned by
+Clang::Cursor#lexical_parent). They diverge when declarations or
+definitions are provided out-of-line. For example:</p>
+
+<pre class="code"><code class="">class C {
+ void f();
+};
+
+void C::f() { }</code></pre>
+
+<p>In the out-of-line definition of “C::f”, the semantic parent is the class
+“C”, of which this function is a member. The lexical parent is the place
+where the declaration actually occurs in the source code; in this case, the
+definition occurs in the translation unit. In general, the lexical parent
+for a given entity can change without affecting the semantics of the
+program, and the lexical parent of different declarations of the same
+entity may be different. Changing the semantic parent of a declaration, on
+the other hand, can have a major impact on semantics, and redeclarations of
+a particular entity should all have the same semantic context.</p>
+
+<p>In the example above, both declarations of “C::f” have “C” as their
+semantic context, while the lexical context of the first “C::f” is “C” and
+the lexical context of the second “C::f” is the translation unit.</p>
+
+<p>For global declarations, the semantic parent is the translation unit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Clangc::Cursor (class)">Clangc::Cursor</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 228</span>
+
+VALUE
+c_Cursor_get_semantic_parent(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *s;
+  VALUE sem_par;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, sem_par, Cursor_t, s);
+  s-&gt;data = clang_getCursorSemanticParent(c-&gt;data);
+  s-&gt;parent = c-&gt;parent;
+  return sem_par;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="spelling-instance_method">
+  
+    - (<tt>String</tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve a name for the entity referenced by this cursor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 348</span>
+
+VALUE
+c_Cursor_get_spelling(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorSpelling(c-&gt;data);
+  VALUE spelling = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return spelling;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="type-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Type.html" title="Clangc::Type (class)">Clangc::Type</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the type of a CXCursor (if any).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Type.html" title="Clangc::Type (class)">Clangc::Type</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 181</span>
+
+VALUE
+c_Cursor_get_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  t-&gt;data = clang_getCursorType(c-&gt;data);
+  t-&gt;parent = self;
+  return type;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="typedef_decl_underlying_type-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Type.html" title="Clangc::Type (class)">Clangc::Type</a></span></tt>) <strong>Clangc::Cursor</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the underlying type of a typedef declaration.</p>
+
+<p>If the cursor does not reference a typedef declaration, an invalid type is
+returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Type.html" title="Clangc::Type (class)">Clangc::Type</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Cursor.c', line 368</span>
+
+VALUE
+c_Cursor_get_typedef_decl_underlying_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  t-&gt;data = clang_getTypedefDeclUnderlyingType(c-&gt;data);
+  t-&gt;parent = c-&gt;parent;
+  return type;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Oct 31 10:31:35 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>

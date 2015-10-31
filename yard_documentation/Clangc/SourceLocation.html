@@ -1,0 +1,797 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Clangc::SourceLocation
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Clangc/SourceLocation.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Clangc.html" title="Clangc (module)">Clangc</a></span></span>
+     &raquo; 
+    <span class="title">SourceLocation</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Clangc::SourceLocation
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Clangc::SourceLocation</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/clangc.c</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_location-instance_method" title="#Clangc::SourceLocation (instance method)">- (Array) <strong>Clangc::SourceLocation</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the file, line, column, and offset represented by the given source
+location.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_equal-instance_method" title="#Clangc::SourceLocation (instance method)">- (Object) <strong>Clangc::SourceLocation</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether two source locations, which must refer into the same
+translation unit, refer to exactly the same point in the source code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_from_main_file-instance_method" title="#Clangc::SourceLocation (instance method)">- (true) <strong>Clangc::SourceLocation</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns true if the given source location is in the main file of the
+corresponding translation unit.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_in_system_header-instance_method" title="#Clangc::SourceLocation (instance method)">- (true) <strong>Clangc::SourceLocation</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns true if the given source location is in a system header.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#spelling-instance_method" title="#Clangc::SourceLocation (instance method)">- (Array) <strong>Clangc::SourceLocation</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the file, line, column, and offset represented by the given source
+location.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="file_location-instance_method">
+  
+    - (<tt>Array</tt>) <strong>Clangc::SourceLocation</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the file, line, column, and offset represented by the given source
+location.</p>
+
+<p>If the location refers into a macro instantiation, return where the
+location was originally spelled in the source file.</p>
+
+<p>The returned array contains four values:</p>
+
+<p><a href="0">array</a> file if not nil, will be set to the file to which the
+given source location points.(Clangc::File)</p>
+
+<p><a href="1">array</a> if not nil, will be set to the line to which the
+given source location points.</p>
+
+<p><a href="2">array</a> if not nil, will be set to the column to which the
+given source location points.</p>
+
+<p><a href="3">array</a> if not nil, will be set to the offset into the buffer
+to which the given source location points. (the position in the file)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_SourceLocation.c', line 200</span>
+
+VALUE c_SourceLocation_get_file_location(VALUE self)
+{
+  VALUE ret = rb_ary_new();
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  CXFile cxf; //= malloc(sizeof(CXFile));
+  unsigned int line;
+  unsigned int column;
+  unsigned int offset;
+  clang_getFileLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
+  if(&amp;cxf)
+  {
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    f-&gt;data = cxf;
+    f-&gt;parent = self;
+    rb_ary_push(ret, file);
+  }
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;line)
+    rb_ary_push(ret, CUINT_2_NUM(line));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;column)
+    rb_ary_push(ret, CUINT_2_NUM(column));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;offset)
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+  else
+    rb_ary_push(ret, Qnil);
+    
+  return ret;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_equal-instance_method">
+  
+    - (<tt>Object</tt>) <strong>Clangc::SourceLocation</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether two source locations, which must refer into the same
+translation unit, refer to exactly the same point in the source code.</p>
+
+<p>true if the source locations refer to the same location, false if they
+refer to different locations.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_SourceLocation.c', line 97</span>
+
+VALUE
+c_SourceLocation_is_equal(VALUE self, VALUE source_location)
+{
+  SourceLocation_t *s;
+  SourceLocation_t *sl;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  Data_Get_Struct(source_location, SourceLocation_t, sl);
+  
+  if(clang_equalLocations(s-&gt;data, sl-&gt;data) &gt; 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_from_main_file-instance_method">
+  
+    - (<tt>true</tt>) <strong>Clangc::SourceLocation</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns true if the given source location is in the main file of the
+corresponding translation unit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_SourceLocation.c', line 75</span>
+
+VALUE
+c_SourceLocation_is_from_main_file(VALUE self)
+{
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  if(clang_Location_isFromMainFile(s-&gt;data) &gt; 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_in_system_header-instance_method">
+  
+    - (<tt>true</tt>) <strong>Clangc::SourceLocation</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns true if the given source location is in a system header.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_SourceLocation.c', line 57</span>
+
+VALUE
+c_SourceLocation_is_in_system_header(VALUE self)
+{
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  if(clang_Location_isInSystemHeader(s-&gt;data) &gt; 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="spelling-instance_method">
+  
+    - (<tt>Array</tt>) <strong>Clangc::SourceLocation</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the file, line, column, and offset represented by the given source
+location.</p>
+
+<p>If the location refers into a macro instantiation, return where the
+location was originally spelled in the source file.</p>
+
+<p>The returned array contains four values:</p>
+
+<p><a href="0">array</a> file if not nil, will be set to the file to which the
+given source location points.(Clangc::File)</p>
+
+<p><a href="1">array</a> if not nil, will be set to the line to which the
+given source location points.</p>
+
+<p><a href="2">array</a> if not nil, will be set to the column to which the
+given source location points.</p>
+
+<p><a href="3">array</a> if not nil, will be set to the offset into the buffer
+to which the given source location points. (the position in the file)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_SourceLocation.c', line 136</span>
+
+VALUE c_SourceLocation_get_spelling(VALUE self)
+{
+  VALUE ret = rb_ary_new();
+  SourceLocation_t *s;
+  Data_Get_Struct(self, SourceLocation_t, s);
+  CXFile cxf; //= malloc(sizeof(CXFile));
+  unsigned int line;
+  unsigned int column;
+  unsigned int offset;
+  clang_getSpellingLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
+  if(&amp;cxf)
+  {
+    VALUE file;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    f-&gt;data = cxf;
+    f-&gt;parent = self;
+    rb_ary_push(ret, file);
+  }
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;line)
+    rb_ary_push(ret, CUINT_2_NUM(line));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;column)
+    rb_ary_push(ret, CUINT_2_NUM(column));
+  else
+    rb_ary_push(ret, Qnil);
+
+  if(&amp;offset)
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+  else
+    rb_ary_push(ret, Qnil);
+    
+  return ret;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Oct 31 10:31:35 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>

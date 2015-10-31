@@ -1,0 +1,1138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Clangc::Index
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Clangc/Index.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Clangc.html" title="Clangc (module)">Clangc</a></span></span>
+     &raquo; 
+    <span class="title">Index</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Clangc::Index
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Clangc::Index</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/clangc.c</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_translation_unit-instance_method" title="#Clangc::Index (instance method)">- (Clangc::TranslationUnit) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a translation unit from an AST file name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_translation_unit2-instance_method" title="#Clangc::Index (instance method)">- (Clangc::TranslationUnit) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a translation unit from an AST file name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_translation_unit_from_source_file-instance_method" title="#Clangc::Index (instance method)">- (Clangc::TranslationUnit) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return a TranslationUnit instance for a given source file and the provided
+command line arguments one would pass to the compiler.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#global_options-instance_method" title="#Clangc::Index (instance method)">- (Numeric) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Gets the general options associated with an Index.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#global_options%3D-instance_method" title="#Clangc::Index (instance method)">- (nil) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets general options associated with an Index instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_translation_unit-instance_method" title="#Clangc::Index (instance method)">- (Clangc::TranslationUnit) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse the given source file and generate the translation unit corresponding
+to that file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_translation_unit2-instance_method" title="#Clangc::Index (instance method)">- (Clangc::TranslationUnit) <strong>Clangc::Index</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse the given source file and generate the translation unit corresponding
+to that file.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="create_translation_unit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a translation unit from an AST file name. If the creation fail, it
+returns nil. The AST file is created by clang with the option -emit-ast</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 172</span>
+
+VALUE
+c_Index_create_TU(VALUE self, VALUE ast_file) {
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+  char *c_ast_file;
+//  if(TYPE(source_file == T_STRING))
+  c_ast_file = StringValueCStr(ast_file);
+  c_tu-&gt;data = clang_createTranslationUnit( i-&gt;data, c_ast_file);
+
+  c_tu-&gt;parent = self;
+
+  if(c_tu-&gt;data)
+    return tu;
+  else
+    return Qnil;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_translation_unit2-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a translation unit from an AST file name. If the creation fail, it
+returns an error code Clangc::ErrorCode. With this implementation,
+Clangc::ErrorCode::Success is not used. The AST file is created by clang
+with the option -emit-ast</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 200</span>
+
+VALUE
+c_Index_create_TU2(VALUE self, VALUE ast_file) {
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+  char *c_ast_file;
+//  if(TYPE(source_file == T_STRING))
+  c_ast_file = StringValueCStr(ast_file);
+  uint er = clang_createTranslationUnit2( i-&gt;data, c_ast_file, &amp;(c_tu-&gt;data));
+
+  c_tu-&gt;parent = self;
+
+  if(er != 0)
+    return CUINT_2_NUM(er);
+  else
+    return tu;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_translation_unit_from_source_file-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return a TranslationUnit instance for a given source file and the provided
+command line arguments one would pass to the compiler.</p>
+<ul><li>
+<p>source:</p>
+</li></ul>
+
+<p>The source filename argument must be a string but is optional.  If the
+caller provides a nil value, the name of the source file is expected to
+reside in the specified command line arguments.</p>
+<ul><li>
+<p>args:</p>
+</li></ul>
+
+<p>Must be an array of strings or empty. The command-line arguments that would
+be passed to the clang executable if it were being invoked out-of-process.
+These command-line options will be parsed and will affect how the
+translation unit is parsed. Note that the following options are ignored:
+&#39;-c&#39;, &#39;-emit-ast&#39;, &#39;-fsyntax-only&#39; (which is the
+default), and &#39;-o &lt;output file&gt;&#39;.</p>
+
+<p>TODO : (not implemented yet)</p>
+<ul><li>
+<p>num_unsaved_files</p>
+</li></ul>
+
+<p>the number of unsaved file entries in unsaved_files.</p>
+<ul><li>
+<p>unsaved_files</p>
+</li></ul>
+
+<p>the files that have not yet been saved to disk but may be required for code
+completion, including the contents of those files.  The contents and name
+of these files (as specified by CXUnsavedFile) are copied when necessary,
+so the client only needs to guarantee their validity until the call to this
+function returns.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 140</span>
+
+VALUE
+c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
+  char *c_source_file;
+  if(TYPE(source_file == T_STRING))
+    c_source_file = StringValueCStr(source_file);
+  else
+    c_source_file = NULL;
+
+  RARRAY_OF_STRINGS_2_C(args);
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+  c_tu-&gt;data = clang_createTranslationUnitFromSourceFile( i-&gt;data,
+                                                          c_source_file,
+                                                          len, c_args, 0, 0); // TODO manage unsaved files
+  c_tu-&gt;parent = self;
+
+  if(c_tu-&gt;data != NULL)
+    return tu;
+  else
+    return Qnil;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="global_options-instance_method">
+  
+    - (<tt>Numeric</tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets the general options associated with an Index. A bitmask of options, a
+bitwise OR of the Clangc::GlobalOptFlags constants.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 102</span>
+
+VALUE
+c_Index_get_global_options(VALUE self) {
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+
+  return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i-&gt;data));
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="global_options=-instance_method">
+  
+    - (<tt>nil</tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets general options associated with an Index instance.</p>
+<ul><li>
+<p>options:</p>
+</li></ul>
+
+<p>A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+86
+87
+88
+89
+90
+91
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 86</span>
+
+VALUE
+c_Index_set_global_options(VALUE self, VALUE options) {
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  uint c_options;
+  RNUM_2_UINT(options, c_options);
+  clang_CXIndex_setGlobalOptions(i-&gt;data,c_options);
+  return Qnil;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_translation_unit-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse the given source file and generate the translation unit corresponding
+to that file.</p>
+
+<p>This routine is the main entry point for the Clang C API, providing the
+ability to parse a source file into a translation unit that can then be
+queried by other functions in the API. This routine accepts a set of
+command-line arguments so that the compilation can be configured in the
+same way that the compiler is configured on the command line.</p>
+<ul><li>
+<p>source_file:</p>
+</li></ul>
+
+<p>The name of the source file to load, or nil if the source file is included
+in the command line arguments.</p>
+<ul><li>
+<p>args:</p>
+</li></ul>
+
+<p>The command-line arguments that would be passed to the clang executable if
+it were being invoked out-of-process. These command-line options will be
+parsed and will affect how the translation unit is parsed. Note that the
+following options are ignored: &#39;-c&#39;, &#39;-emit-ast&#39;,
+&#39;-fsyntax-only&#39; (which is the default), and &#39;-o &lt;output
+file&gt;&#39;.</p>
+<ul><li>
+<p>options:</p>
+</li></ul>
+
+<p>A bitmask of options that affects how the translation unit is managed but
+not its compilation. This should be a bitwise OR of the
+TranslationUnit_Flags constants.</p>
+
+<p>TODO:</p>
+<ul><li>
+<p>unsaved_files:</p>
+</li></ul>
+
+<p>The files that have not yet been saved to disk but may be required for
+parsing, including the contents of those files.  The contents and name of
+these files (as specified by CXUnsavedFile) are copied when necessary, so
+the client only needs to guarantee their validity until the call to this
+function returns.</p>
+<ul><li>
+<p>num_unsaved_files:</p>
+</li></ul>
+
+<p>The number of unsaved file entries in unsaved_files.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 257</span>
+
+VALUE
+c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
+  char *c_source_file;
+  if(TYPE(source_file == T_STRING))
+    c_source_file = StringValueCStr(source_file);
+  else
+    c_source_file = NULL;
+  
+  uint c_options;
+  RNUM_2_UINT(options, c_options);
+
+  RARRAY_OF_STRINGS_2_C(args);
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+
+  c_tu-&gt;data = clang_parseTranslationUnit( i-&gt;data,
+                                                          c_source_file,
+                                                          c_args, len, 
+                                                          0, 0, c_options); // TODO manage unsaved files
+  
+
+  c_tu-&gt;parent = self;
+
+  if (c_tu-&gt;data)
+    return tu;
+  else
+    return Qnil;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_translation_unit2-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>) <strong>Clangc::Index</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse the given source file and generate the translation unit corresponding
+to that file. If its fails, it returns an Integer corresponding to the
+error code a Clangc::ErrorCode constant.</p>
+
+<p>This routine is the main entry point for the Clang C API, providing the
+ability to parse a source file into a translation unit that can then be
+queried by other functions in the API. This routine accepts a set of
+command-line arguments so that the compilation can be configured in the
+same way that the compiler is configured on the command line.</p>
+<ul><li>
+<p>source_file:</p>
+</li></ul>
+
+<p>The name of the source file to load, or nil if the source file is included
+in the command line arguments.</p>
+<ul><li>
+<p>args:</p>
+</li></ul>
+
+<p>The command-line arguments that would be passed to the clang executable if
+it were being invoked out-of-process. These command-line options will be
+parsed and will affect how the translation unit is parsed. Note that the
+following options are ignored: &#39;-c&#39;, &#39;-emit-ast&#39;,
+&#39;-fsyntax-only&#39; (which is the default), and &#39;-o &lt;output
+file&gt;&#39;.</p>
+<ul><li>
+<p>options:</p>
+</li></ul>
+
+<p>A bitmask of options that affects how the translation unit is managed but
+not its compilation. This should be a bitwise OR of the
+TranslationUnit_Flags constants.</p>
+
+<p>TODO:</p>
+<ul><li>
+<p>unsaved_files:</p>
+</li></ul>
+
+<p>The files that have not yet been saved to disk but may be required for
+parsing, including the contents of those files.  The contents and name of
+these files (as specified by CXUnsavedFile) are copied when necessary, so
+the client only needs to guarantee their validity until the call to this
+function returns.</p>
+<ul><li>
+<p>num_unsaved_files:</p>
+</li></ul>
+
+<p>The number of unsaved file entries in unsaved_files.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TranslationUnit.html" title="Clangc::TranslationUnit (class)">Clangc::TranslationUnit</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'class_Index.c', line 327</span>
+
+VALUE
+c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
+  char *c_source_file;
+  if(TYPE(source_file == T_STRING))
+    c_source_file = StringValueCStr(source_file);
+  else
+    c_source_file = NULL;
+  
+  uint c_options;
+  RNUM_2_UINT(options, c_options);
+
+  RARRAY_OF_STRINGS_2_C(args);
+  Index_t *i;
+  Data_Get_Struct(self, Index_t, i);
+  VALUE tu;
+  TranslationUnit_t *c_tu;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+
+  uint er = clang_parseTranslationUnit2(i-&gt;data,
+                                        c_source_file,
+                                        c_args, len, 
+                                        0, 0, c_options, // TODO manage unsaved files
+                                        &amp;(c_tu-&gt;data)); 
+
+  c_tu-&gt;parent = self;
+
+  if(er != 0)
+    return CUINT_2_NUM(er);
+  else
+    return tu;
+}</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Oct 31 10:31:35 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>
