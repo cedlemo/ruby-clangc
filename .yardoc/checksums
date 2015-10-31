@@ -1,4 +1,0 @@
-ext/clangc/clangc.c 3a57ebfbfedad258d7cafc2a9c94e69f49811356
-ext/clangc/class_Index.c 929e2b3a168d17b59306a966403b3f5c2d790233
-ext/clangc/class_TranslationUnit.c 9f25196f358091b0de4b269f2dec3a1196a11c2e
-lib/clangc.rb 9220ba45a2fe22f9df10fe25e946de4a2c722a94
