@@ -34,7 +34,9 @@ end
 YARD::Rake::YardocTask.new do |t|
   t.before  = change_dir
   t.files   = YARD_FILES   # optional
-  t.options = ["-o", "#{PATH}/yard_documentation", "-r" ,"#{PATH}/README.rdoc"] # optional
+  t.options = ["-o", "#{PATH}/yard_documentation",
+               "-r", "#{PATH}/README.rdoc",
+               "-m", "rdoc"] # optional
   t.after   = reset_change_dir
 end
 Rake::ExtensionTask.new "clangc", spec do |ext|
