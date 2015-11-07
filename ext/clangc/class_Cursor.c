@@ -683,3 +683,25 @@ c_Cursor_get_decl_objectC_type_encoding(VALUE self)
   clang_disposeString(str);
   return type_encoding;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#result_tye => Clangc::Type
+*
+* Retrieve the return type associated with a function type.
+*
+* If a non-function type is passed in, an invalid type is returned.
+*/
+VALUE
+c_Cursor_get_result_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE result_type;
+  R_GET_CLASS_DATA("Clangc", "Type", result_type, Type_t, t);
+  t->data = clang_getCursorType(c->data);
+  t->parent = self;
+  return result_type;
+}
+

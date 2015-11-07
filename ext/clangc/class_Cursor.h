@@ -119,4 +119,7 @@ c_Cursor_get_num_template_arguments(VALUE);
 
 VALUE
 c_Cursor_get_decl_objectC_type_encoding(VALUE);
+
+VALUE
+c_Cursor_get_result_type(VALUE);
 #endif //CURSOR_H
