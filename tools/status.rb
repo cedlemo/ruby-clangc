@@ -140,3 +140,8 @@ print color.green, count.to_s, color.clear, "/", color.black, functions.size,
 sumup_module_functions(functions, MANAGED_FUNCTIONS)
 sumup_objects(functions, ["CXIndex", "CXTranslationUnit", "CXDiagnostic", "CXFile","CXSourceRange", "CXSourceLocation", "CXCursor", "CXType"], MANAGED_FUNCTIONS)
 
+
+print "\n", color.green, count.to_s, color.clear, "/", color.black, functions.size,
+      color.clear, " functions wrapped => ", color.yellow, 
+      (count/(functions.size*1.00)) * 100, color.clear, "%\n\n"
+
