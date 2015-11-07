@@ -747,3 +747,22 @@ c_Cursor_is_anonymous(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_bit_field => True/False
+*
+* Returns true if the cursor specifies a Record member that is a
+*   bitfield.
+*/
+VALUE
+c_Cursor_is_bit_field(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+
+  if(clang_Cursor_isBitField(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
