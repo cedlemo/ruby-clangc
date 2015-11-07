@@ -700,7 +700,7 @@ c_Cursor_get_result_type(VALUE self)
   Type_t *t;
   VALUE result_type;
   R_GET_CLASS_DATA("Clangc", "Type", result_type, Type_t, t);
-  t->data = clang_getCursorType(c->data);
+  t->data = clang_getCursorResultType(c->data);
   t->parent = self;
   return result_type;
 }
