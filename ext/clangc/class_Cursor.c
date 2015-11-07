@@ -785,3 +785,21 @@ c_Cursor_is_virtual_base(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* Returns the access control level for the referenced object. 
+* The returned value is one of the Clangc::CXXAccesSpecifier.constants.
+* It represents the C++ access control level to a base class for a
+* cursor with kind Clangc::Cursor::CXX_BASE_SPECIFIER.
+*
+* If the cursor refers to a C++ declaration, its access control level within its
+* parent scope is returned. Otherwise, if the cursor refers to a base specifier or
+* access specifier, the specifier itself is returned.
+*/
+VALUE
+c_Cursor_get_cxx_access_specifier(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCXXAccessSpecifier(c->data));  
+}

@@ -188,6 +188,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "is_anonymous", RUBY_METHOD_FUNC(c_Cursor_is_anonymous), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_bit_field", RUBY_METHOD_FUNC(c_Cursor_is_bit_field), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_virtual_base", RUBY_METHOD_FUNC(c_Cursor_is_virtual_base), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "cxx_access_specifier", RUBY_METHOD_FUNC(c_Cursor_get_cxx_access_specifier), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor
