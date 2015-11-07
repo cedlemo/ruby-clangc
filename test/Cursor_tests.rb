@@ -352,4 +352,15 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_result_type
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+        if cursor.spelling == "stupid_function"
+          assert_instance_of Clangc::Type, cursor.result_type
+          assert_equal "int", cursor.result_type.spelling
+        end
+      end
+    end
+  end
 end
