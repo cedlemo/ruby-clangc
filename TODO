@@ -8,6 +8,10 @@
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
+[ ] Check issue with clang_Cursor_isAnonymous http://stackoverflow.com/questions/33582339/libclang-clang-cursor-isanonymous-what-is-an-anonymous-declaration
+
+[ ] Add check when Clangc objects are passed as parameters:
+
   *    Add ruby object check in c_File_is_equal
   *    Add ruby object check in c_SourceRange_is_equal
   *    Add ruby object check in c_SourceLocation_is_equal
@@ -17,8 +21,6 @@
 [ ] See if the check in class_File.c clangc_File_get_name is the best solution
 
 ## Secondary:
-
-[ ] Use/display code in rdoc comments
 
 [ ] when errors in file, Clangc::SourceRange.end return NULL file and position
     informations equal to 0. Check Clangc::SourceRange.end for other objects
