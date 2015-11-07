@@ -386,4 +386,13 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_is_bit_field
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_STRUCT_BITFIELD, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FIELD_DECL
+        assert_equal true, cursor.is_bit_field, cursor.spelling
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
