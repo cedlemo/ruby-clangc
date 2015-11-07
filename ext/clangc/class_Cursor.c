@@ -713,13 +713,13 @@ c_Cursor_get_result_type(VALUE self)
 *
 * If the cursor is not a field declaration, -1 is returned.
 * If the cursor semantic parent is not a record field declaration,
-*   Clangc::TypeLayoutError::INVALID is returned.
+* Clangc::TypeLayoutError::INVALID is returned.
 * If the field's type declaration is an incomplete type,
-*   Clangc::TypeLayoutError::INCOMPLETE is returned.
+* Clangc::TypeLayoutError::INCOMPLETE is returned.
 * If the field's type declaration is a dependent type,
-*   Clangc::TypeLayoutError::DEPENDENT is returned.
+* Clangc::TypeLayoutError::DEPENDENT is returned.
 * If the field's name S is not found,
-*   Clangc::TypeLayoutError::INVALIDfIELD_NAME is returned.
+* Clangc::TypeLayoutError::INVALIDfIELD_NAME is returned.
 */
 VALUE
 c_Cursor_get_offset_of_field(VALUE self)
@@ -731,7 +731,7 @@ c_Cursor_get_offset_of_field(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#is_anonymous => True / False
+*   Clangc::Cursor#is_anonymous => true / false
 *
 * Determine whether the given cursor represents an anonymous record
 * declaration.
@@ -750,10 +750,10 @@ c_Cursor_is_anonymous(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#is_bit_field => True/False
+*   Clangc::Cursor#is_bit_field => true/false
 *
 * Returns true if the cursor specifies a Record member that is a
-*   bitfield.
+* bitfield.
 */
 VALUE
 c_Cursor_is_bit_field(VALUE self)
@@ -769,10 +769,10 @@ c_Cursor_is_bit_field(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#is_virtual_base => True/False
+*   Clangc::Cursor#is_virtual_base => true/false
 *
 * Returns true if the base class specified by the cursor with kind
-*   Clangc::CursorKind::CXX_BASE_SPECIFIER is virtual.
+* Clangc::CursorKind::CXX_BASE_SPECIFIER is virtual.
 */
 VALUE
 c_Cursor_is_virtual_base(VALUE self)

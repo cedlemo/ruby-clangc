@@ -76,6 +76,8 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-cxx_access_specifier">#cxx_access_specifier</a>
+    
     <li ><a href="#method-i-decl_objectC_type_encoding">#decl_objectC_type_encoding</a>
     
     <li ><a href="#method-i-enum_const_decl_unsigned_value">#enum_const_decl_unsigned_value</a>
@@ -92,7 +94,11 @@
     
     <li ><a href="#method-i-included_file">#included_file</a>
     
+    <li ><a href="#method-i-is_anonymous">#is_anonymous</a>
+    
     <li ><a href="#method-i-is_attribute">#is_attribute</a>
+    
+    <li ><a href="#method-i-is_bit_field">#is_bit_field</a>
     
     <li ><a href="#method-i-is_declaration">#is_declaration</a>
     
@@ -112,6 +118,8 @@
     
     <li ><a href="#method-i-is_translation_unit">#is_translation_unit</a>
     
+    <li ><a href="#method-i-is_virtual_base">#is_virtual_base</a>
+    
     <li ><a href="#method-i-kind">#kind</a>
     
     <li ><a href="#method-i-language">#language</a>
@@ -125,6 +133,10 @@
     <li ><a href="#method-i-num_arguments">#num_arguments</a>
     
     <li ><a href="#method-i-num_template_arguments">#num_template_arguments</a>
+    
+    <li ><a href="#method-i-offset_of_field">#offset_of_field</a>
+    
+    <li ><a href="#method-i-result_type">#result_type</a>
     
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
     
@@ -316,6 +328,49 @@ c_Cursor_get_availability(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCursorAvailability(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cxx_access_specifier" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cxx_access_specifier</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the access control level for the referenced object.  The returned
+value is one of the Clangc::CXXAccesSpecifier.constants. It represents the
+C++ access control level to a base class for a cursor with kind
+Clangc::Cursor::CXX_BASE_SPECIFIER.</p>
+
+<p>If the cursor refers to a C++ declaration, its access control level within
+its parent scope is returned. Otherwise, if the cursor refers to a base
+specifier or access specifier, the specifier itself is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cxx_access_specifier-source">
+            <pre>VALUE
+c_Cursor_get_cxx_access_specifier(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getCXXAccessSpecifier(c-&gt;data));  
 }</pre>
           </div>
           
@@ -681,6 +736,50 @@ c_Cursor_get_included_file(VALUE self)
       </div>
 
     
+      <div id="method-i-is_anonymous" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_anonymous &rarr; true / false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the given cursor represents an anonymous record
+declaration.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_anonymous-source">
+            <pre>VALUE
+c_Cursor_is_anonymous(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  
+  if(clang_Cursor_isAnonymous(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_attribute" class="method-detail ">
         
         
@@ -709,6 +808,49 @@ c_Cursor_is_attribute(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isAttribute(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_bit_field" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_bit_field &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if the cursor specifies a Record member that is a bitfield.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_bit_field-source">
+            <pre>VALUE
+c_Cursor_is_bit_field(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+
+  if(clang_Cursor_isBitField(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }</pre>
           </div>
           
@@ -1087,6 +1229,50 @@ c_Cursor_is_translation_unit(VALUE self)
       </div>
 
     
+      <div id="method-i-is_virtual_base" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_virtual_base &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if the base class specified by the cursor with kind
+Clangc::CursorKind::CXX_BASE_SPECIFIER is virtual.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_virtual_base-source">
+            <pre>VALUE
+c_Cursor_is_virtual_base(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+
+  if(clang_isVirtualBase(c-&gt;data) == 1)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-kind" class="method-detail ">
         
         
@@ -1417,6 +1603,100 @@ c_Cursor_get_num_template_arguments(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_Cursor_getNumTemplateArguments(c-&gt;data));  
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-offset_of_field" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#offset_field &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the offset of the field represented by the <a
+href="Cursor.html">Cursor</a>.</p>
+
+<p>If the cursor is not a field declaration, -1 is returned. If the cursor
+semantic parent is not a record field declaration,
+Clangc::TypeLayoutError::INVALID is returned. If the field&#39;s type
+declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE is
+returned. If the field&#39;s type declaration is a dependent type,
+Clangc::TypeLayoutError::DEPENDENT is returned. If the field&#39;s name S
+is not found, Clangc::TypeLayoutError::INVALIDfIELD_NAME is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="offset_of_field-source">
+            <pre>VALUE
+c_Cursor_get_offset_of_field(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CLLONG_2_NUM(clang_Cursor_getOffsetOfField(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-result_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#result_tye &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the return type associated with a function type.</p>
+
+<p>If a non-function type is passed in, an invalid type is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="result_type-source">
+            <pre>VALUE
+c_Cursor_get_result_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE result_type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, result_type, Type_t, t);
+  t-&gt;data = clang_getCursorResultType(c-&gt;data);
+  t-&gt;parent = self;
+  return result_type;
 }</pre>
           </div>
           
