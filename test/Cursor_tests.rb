@@ -363,4 +363,16 @@ class TestCursorUsage < MiniTest::Test
       end
     end
   end
+  def test_Cursor_get_offset_of_field
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.kind == Clangc::CursorKind::FIELD_DECL
+        if cursor.spelling == "index"
+          assert_equal 0, cursor.offset_of_field
+        end
+      else
+        assert_equal -1, cursor.offset_of_field
+      end
+    end
+  end
 end
