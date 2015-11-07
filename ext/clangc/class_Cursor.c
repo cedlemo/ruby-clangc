@@ -766,3 +766,22 @@ c_Cursor_is_bit_field(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_virtual_base => True/False
+*
+* Returns true if the base class specified by the cursor with kind
+*   Clangc::CursorKind::CXX_BASE_SPECIFIER is virtual.
+*/
+VALUE
+c_Cursor_is_virtual_base(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+
+  if(clang_isVirtualBase(c->data) == 1)
+    return Qtrue;
+  else
+    return Qfalse;
+}
