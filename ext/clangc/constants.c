@@ -401,21 +401,21 @@ rb_define_const(m_RefQualifierKind,"NONE", INT2NUM(0));
 rb_define_const(m_RefQualifierKind,"L_VALUE", INT2NUM(1));
 rb_define_const(m_RefQualifierKind,"R_VALUE", INT2NUM(2));
 
-VALUE m__XAccessSpecifier = rb_define_module_under(m_clang,"_XAccessSpecifier");
-rb_define_const(m__XAccessSpecifier,"CXX_INVALID_ACCESS_SPECIFIER", INT2NUM(0));
-rb_define_const(m__XAccessSpecifier,"CXX_PUBLIC", INT2NUM(1));
-rb_define_const(m__XAccessSpecifier,"CXX_PROTECTED", INT2NUM(2));
-rb_define_const(m__XAccessSpecifier,"CXX_PRIVATE", INT2NUM(3));
+VALUE m_CXXAccessSpecifier = rb_define_module_under(m_clang,"CXXAccessSpecifier");
+rb_define_const(m_CXXAccessSpecifier,"CXX_INVALID_ACCESS_SPECIFIER", INT2NUM(0));
+rb_define_const(m_CXXAccessSpecifier,"CXX_PUBLIC", INT2NUM(1));
+rb_define_const(m_CXXAccessSpecifier,"CXX_PROTECTED", INT2NUM(2));
+rb_define_const(m_CXXAccessSpecifier,"CXX_PRIVATE", INT2NUM(3));
 
-VALUE m__StorageClass = rb_define_module_under(m_clang,"_StorageClass");
-rb_define_const(m__StorageClass,"SC_INVALID", INT2NUM(0));
-rb_define_const(m__StorageClass,"SC_NONE", INT2NUM(1));
-rb_define_const(m__StorageClass,"SC_EXTERN", INT2NUM(2));
-rb_define_const(m__StorageClass,"SC_STATIC", INT2NUM(3));
-rb_define_const(m__StorageClass,"SC_PRIVATE_EXTERN", INT2NUM(4));
-rb_define_const(m__StorageClass,"SC_OPEN_CL_WORK_GROUP_LOCAL", INT2NUM(5));
-rb_define_const(m__StorageClass,"SC_AUTO", INT2NUM(6));
-rb_define_const(m__StorageClass,"SC_REGISTER", INT2NUM(7));
+VALUE m_StorageClass = rb_define_module_under(m_clang,"StorageClass");
+rb_define_const(m_StorageClass,"SC_INVALID", INT2NUM(0));
+rb_define_const(m_StorageClass,"SC_NONE", INT2NUM(1));
+rb_define_const(m_StorageClass,"SC_EXTERN", INT2NUM(2));
+rb_define_const(m_StorageClass,"SC_STATIC", INT2NUM(3));
+rb_define_const(m_StorageClass,"SC_PRIVATE_EXTERN", INT2NUM(4));
+rb_define_const(m_StorageClass,"SC_OPEN_CL_WORK_GROUP_LOCAL", INT2NUM(5));
+rb_define_const(m_StorageClass,"SC_AUTO", INT2NUM(6));
+rb_define_const(m_StorageClass,"SC_REGISTER", INT2NUM(7));
 
 VALUE m_ChildVisitResult = rb_define_module_under(m_clang,"ChildVisitResult");
 rb_define_const(m_ChildVisitResult,"BREAK", INT2NUM(0));
@@ -556,11 +556,11 @@ rb_define_const(m_IdxEntityLanguage,"C", INT2NUM(1));
 rb_define_const(m_IdxEntityLanguage,"OBJ_C", INT2NUM(2));
 rb_define_const(m_IdxEntityLanguage,"CXX", INT2NUM(3));
 
-VALUE m_IdxEntityXTemplateKind = rb_define_module_under(m_clang,"IdxEntityXTemplateKind");
-rb_define_const(m_IdxEntityXTemplateKind,"NON_TEMPLATE", INT2NUM(0));
-rb_define_const(m_IdxEntityXTemplateKind,"TEMPLATE", INT2NUM(1));
-rb_define_const(m_IdxEntityXTemplateKind,"TEMPLATE_PARTIAL_SPECIALIZATION", INT2NUM(2));
-rb_define_const(m_IdxEntityXTemplateKind,"TEMPLATE_SPECIALIZATION", INT2NUM(3));
+VALUE m_IdxEntityCXXTemplateKind = rb_define_module_under(m_clang,"IdxEntityCXXTemplateKind");
+rb_define_const(m_IdxEntityCXXTemplateKind,"NON_TEMPLATE", INT2NUM(0));
+rb_define_const(m_IdxEntityCXXTemplateKind,"TEMPLATE", INT2NUM(1));
+rb_define_const(m_IdxEntityCXXTemplateKind,"TEMPLATE_PARTIAL_SPECIALIZATION", INT2NUM(2));
+rb_define_const(m_IdxEntityCXXTemplateKind,"TEMPLATE_SPECIALIZATION", INT2NUM(3));
 
 VALUE m_IdxAttrKind = rb_define_module_under(m_clang,"IdxAttrKind");
 rb_define_const(m_IdxAttrKind,"UNEXPOSED", INT2NUM(0));
