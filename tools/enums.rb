@@ -24,7 +24,7 @@ end
 
 def create_module_constant(main_module, enum)
   name = enum.name == "" ? enum.typedef_name : enum.name
-  enum_module_name = name.gsub(/CX/,"")
+  enum_module_name = name.gsub(/^CX\_?/,"")
   c_value_enum_module_name = "m_#{enum_module_name}"
   s="VALUE #{c_value_enum_module_name} = rb_define_module_under(#{main_module},\"#{enum_module_name}\");\n"
   enum.enum_constants.each do |c|
