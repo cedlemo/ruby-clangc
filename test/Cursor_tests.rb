@@ -395,4 +395,17 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_is_virtual_base
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::CXX_BASE_SPECIFIER
+        if cursor.spelling == "class Animal"
+          assert_equal true, cursor.is_virtual_base, cursor.spelling
+        else  
+          assert_equal false, cursor.is_virtual_base, cursor.spelling
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
