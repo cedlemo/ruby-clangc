@@ -361,6 +361,7 @@ class TestCursorUsage < MiniTest::Test
           assert_equal "int", cursor.result_type.spelling
         end
       end
+      Clangc::ChildVisitResult::RECURSE
     end
   end
   def test_Cursor_get_offset_of_field
@@ -373,6 +374,16 @@ class TestCursorUsage < MiniTest::Test
       else
         assert_equal -1, cursor.offset_of_field
       end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_Cursor_is_anonymous
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ANON_DECLS, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::UNION_DECL
+        assert_equal false, cursor.is_anonymous, cursor.spelling
+      end
+      Clangc::ChildVisitResult::RECURSE
     end
   end
 end

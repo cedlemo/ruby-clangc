@@ -125,4 +125,7 @@ c_Cursor_get_result_type(VALUE);
 
 VALUE
 c_Cursor_get_offset_of_field(VALUE);
+
+VALUE
+c_Cursor_is_anonymous(VALUE);
 #endif //CURSOR_H

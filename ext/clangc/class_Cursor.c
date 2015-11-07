@@ -706,6 +706,9 @@ c_Cursor_get_result_type(VALUE self)
 }
 
 /**
+* call-seq:
+*   Clangc::Cursor#offset_field => Integer
+*
 * Return the offset of the field represented by the Cursor.
 *
 * If the cursor is not a field declaration, -1 is returned.
@@ -724,4 +727,23 @@ c_Cursor_get_offset_of_field(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CLLONG_2_NUM(clang_Cursor_getOffsetOfField(c->data));
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_anonymous => True / False
+*
+* Determine whether the given cursor represents an anonymous record
+* declaration.
+*/
+VALUE
+c_Cursor_is_anonymous(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  
+  if(clang_Cursor_isAnonymous(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }
