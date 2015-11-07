@@ -122,4 +122,7 @@ c_Cursor_get_decl_objectC_type_encoding(VALUE);
 
 VALUE
 c_Cursor_get_result_type(VALUE);
+
+VALUE
+c_Cursor_get_offset_of_field(VALUE);
 #endif //CURSOR_H

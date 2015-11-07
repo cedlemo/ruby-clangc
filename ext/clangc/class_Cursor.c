@@ -705,3 +705,23 @@ c_Cursor_get_result_type(VALUE self)
   return result_type;
 }
 
+/**
+* Return the offset of the field represented by the Cursor.
+*
+* If the cursor is not a field declaration, -1 is returned.
+* If the cursor semantic parent is not a record field declaration,
+*   Clangc::TypeLayoutError::INVALID is returned.
+* If the field's type declaration is an incomplete type,
+*   Clangc::TypeLayoutError::INCOMPLETE is returned.
+* If the field's type declaration is a dependent type,
+*   Clangc::TypeLayoutError::DEPENDENT is returned.
+* If the field's name S is not found,
+*   Clangc::TypeLayoutError::INVALIDfIELD_NAME is returned.
+*/
+VALUE
+c_Cursor_get_offset_of_field(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CLLONG_2_NUM(clang_Cursor_getOffsetOfField(c->data));
+}
