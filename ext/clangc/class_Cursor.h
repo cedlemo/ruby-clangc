@@ -137,4 +137,7 @@ c_Cursor_is_virtual_base(VALUE);
 
 VALUE
 c_Cursor_get_cxx_access_specifier(VALUE);
+
+VALUE
+c_Cursor_get_storage_class(VALUE);
 #endif //CURSOR_H

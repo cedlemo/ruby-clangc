@@ -787,6 +787,9 @@ c_Cursor_is_virtual_base(VALUE self)
 }
 
 /**
+* call-seq:
+*   Clangc::Cursor#cxx_access_specifier =>  Clangc::CXXAccessSpecifier.constants
+*
 * Returns the access control level for the referenced object. 
 * The returned value is one of the Clangc::CXXAccesSpecifier.constants.
 * It represents the C++ access control level to a base class for a
@@ -802,4 +805,20 @@ c_Cursor_get_cxx_access_specifier(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCXXAccessSpecifier(c->data));  
+}
+/**
+* call-seq:
+*   Clangc::Cursor#storage_class => Clangc::StorageClass.constants
+*
+* Returns the storage class for a function or variable declaration.
+*
+* If the passed in Cursor is not a function or variable declaration,
+* Clangc::StorageClass::SC_INVALID is returned else the storage class.
+*/
+VALUE
+c_Cursor_get_storage_class(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_Cursor_getStorageClass(c->data));  
 }

@@ -419,4 +419,14 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_storage_class
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+        assert_equal Clangc::StorageClass::SC_NONE, cursor.storage_class
+      elsif cursor.kind != Clangc::CursorKind::VAR_DECL
+        assert_equal Clangc::StorageClass::SC_INVALID, cursor.storage_class
+      end
+    end
+  end
 end
