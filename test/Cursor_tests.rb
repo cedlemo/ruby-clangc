@@ -449,4 +449,15 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_overloaded_decls
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OVERL_FUNC, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::OVERLOADED_DECL_REF
+        assert_equal 2, cursor.overloaded_decls.size
+        assert_equal 10, cursor.overloaded_decls[1].location.spelling[1]
+        assert_equal 13, cursor.overloaded_decls[0].location.spelling[1]
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
