@@ -33,6 +33,8 @@ module ClangcUtils
   SOURCE_FILE_ANON_DECLS = "#{File.expand_path(File.dirname(__FILE__))}/source15.c"
   # C++ source with classes and a virtual class
   SOURCE_FILE_VIRT_BASE_CLASS = "#{File.expand_path(File.dirname(__FILE__))}/source16.cpp"
+  # C++ source with function overloading 
+  SOURCE_FILE_OVERL_FUNC = "#{File.expand_path(File.dirname(__FILE__))}/source17.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{File.expand_path(File.dirname(__FILE__))}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"

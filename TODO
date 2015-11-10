@@ -2,8 +2,6 @@
 
 ## Primary
 
-[ ] Finish Clangc::Cursor#num_overloaded_decls
-
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] Continue / improve YARD usage

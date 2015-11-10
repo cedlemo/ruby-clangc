@@ -822,3 +822,21 @@ c_Cursor_get_storage_class(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_Cursor_getStorageClass(c->data));  
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#num_overloaded_decls => Integer >= 0
+*
+* Determine the number of overloaded declarations referenced by a 
+* Clangc::CursorKind::OVERLOADED_DECL_REF cursor.
+*
+* The number of overloaded declarations referenced by cursor. If it
+* is not a Clangc::CursorKind::OVERLOADED_DECL_REF cursor, returns 0.
+*/
+VALUE
+c_Cursor_get_num_overloaded_decls(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getNumOverloadedDecls(c->data));  
+}

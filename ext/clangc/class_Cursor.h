@@ -140,4 +140,7 @@ c_Cursor_get_cxx_access_specifier(VALUE);
 
 VALUE
 c_Cursor_get_storage_class(VALUE);
+
+VALUE
+c_Cursor_get_num_overloaded_decls(VALUE);
 #endif //CURSOR_H
