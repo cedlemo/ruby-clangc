@@ -143,4 +143,7 @@ c_Cursor_get_storage_class(VALUE);
 
 VALUE
 c_Cursor_get_num_overloaded_decls(VALUE);
+
+VALUE
+c_Cursor_get_overloaded_decl(VALUE, VALUE);
 #endif //CURSOR_H

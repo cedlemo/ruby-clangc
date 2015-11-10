@@ -840,3 +840,33 @@ c_Cursor_get_num_overloaded_decls(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getNumOverloadedDecls(c->data));  
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#overloaded_decl(index) => Clangc::Cursor
+*
+* Retrieve a cursor for one of the overloaded declarations referenced
+* by a Clangc::CursorKind::OVERLOADED_DECL_REF cursor.
+*
+* index The zero-based index into the set of overloaded declarations in
+* the cursor.
+*
+* Returns a cursor representing the declaration referenced by the given 
+* cursor at the specified index. If the cursor does not have an 
+* associated set of overloaded declarations, or if the index is out of bounds,
+* returns a nul cursor;
+*/
+VALUE
+c_Cursor_get_overloaded_decl(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  Cursor_t *o;
+  VALUE overl_decl;
+  R_GET_CLASS_DATA("Clangc", "Cursor", overl_decl, Cursor_t, o);
+  o->data = clang_getOverloadedDecl(c->data, c_index);
+  o->parent = c->parent;
+  return overl_decl;
+}

@@ -191,6 +191,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "cxx_access_specifier", RUBY_METHOD_FUNC(c_Cursor_get_cxx_access_specifier), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "storage_class", RUBY_METHOD_FUNC(c_Cursor_get_storage_class), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "num_overloaded_decls", RUBY_METHOD_FUNC(c_Cursor_get_num_overloaded_decls), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "overloaded_decl", RUBY_METHOD_FUNC(c_Cursor_get_overloaded_decl), 1);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor
