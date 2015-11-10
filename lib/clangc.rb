@@ -103,5 +103,24 @@ module Clangc
       end
       cursors
     end
+  ## 
+  # :call-seq:
+  # Clangc::Cursor#overloaded_decls -> Array
+  #
+  # Return an array that contains all the 
+  # cursors for the overloaded declarations that
+  # are related to the current cursor.
+  # If the current cursor is not an overloaded declaration, it returns
+  # an empty array.
+  def overloaded_decls
+      num = num_overloaded_decls
+      cursors = []
+      return cursors if num == 0
+
+      for i in 0..(num - 1) do
+        cursors << overloaded_decl(i)
+      end
+      cursors
+    end
   end
 end
