@@ -429,4 +429,13 @@ class TestCursorUsage < MiniTest::Test
       end
     end
   end
+  def test_Cursor_get_num_overloaded_decls
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OVERL_FUNC, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::OVERLOADED_DECL_REF
+        assert_equal 2, cursor.num_overloaded_decls, cursor.location.spelling[1]
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
