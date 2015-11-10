@@ -1,7 +1,7 @@
-Sat, 07 Nov 2015 16:27:14 +0100
+Tue, 10 Nov 2015 19:09:02 +0100
 README.rdoc	Fri, 24 Jul 2015 18:53:20 +0200
-ext/clangc/clangc.c	Sat, 07 Nov 2015 16:17:04 +0100
+ext/clangc/clangc.c	Tue, 10 Nov 2015 18:54:09 +0100
 ext/clangc/constants.c	Sat, 07 Nov 2015 16:06:20 +0100
 ext/clangc/class_Index.c	Sat, 31 Oct 2015 10:30:05 +0100
 ext/clangc/class_TranslationUnit.c	Tue, 04 Aug 2015 16:00:26 +0200
-lib/clangc.rb	Mon, 21 Sep 2015 18:42:02 +0200
+lib/clangc.rb	Tue, 10 Nov 2015 19:06:49 +0100

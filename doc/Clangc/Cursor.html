@@ -132,15 +132,23 @@
     
     <li ><a href="#method-i-num_arguments">#num_arguments</a>
     
+    <li ><a href="#method-i-num_overloaded_decls">#num_overloaded_decls</a>
+    
     <li ><a href="#method-i-num_template_arguments">#num_template_arguments</a>
     
     <li ><a href="#method-i-offset_of_field">#offset_of_field</a>
+    
+    <li ><a href="#method-i-overloaded_decl">#overloaded_decl</a>
+    
+    <li ><a href="#method-i-overloaded_decls">#overloaded_decls</a>
     
     <li ><a href="#method-i-result_type">#result_type</a>
     
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
+    
+    <li ><a href="#method-i-storage_class">#storage_class</a>
     
     <li ><a href="#method-i-type">#type</a>
     
@@ -341,13 +349,16 @@ c_Cursor_get_availability(VALUE self)
     
       <div id="method-i-cxx_access_specifier" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">cxx_access_specifier</span><span
-            class="method-args">()</span>
+          <span class="method-callseq">
+            Clangc::Cursor#cxx_access_specifier &rarr;  Clangc::CXXAccessSpecifier.constants
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
+        
         
 
         <div class="method-description">
@@ -1561,6 +1572,49 @@ c_Cursor_get_num_arguments(VALUE self)
       </div>
 
     
+      <div id="method-i-num_overloaded_decls" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#num_overloaded_decls &rarr; Integer &gt;= 0
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the number of overloaded declarations referenced by a 
+Clangc::CursorKind::OVERLOADED_DECL_REF cursor.</p>
+
+<p>The number of overloaded declarations referenced by cursor. If it is not a
+Clangc::CursorKind::OVERLOADED_DECL_REF cursor, returns 0.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_overloaded_decls-source">
+            <pre>VALUE
+c_Cursor_get_num_overloaded_decls(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getNumOverloadedDecls(c-&gt;data));  
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-num_template_arguments" class="method-detail ">
         
         
@@ -1652,6 +1706,106 @@ c_Cursor_get_offset_of_field(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CLLONG_2_NUM(clang_Cursor_getOffsetOfField(c-&gt;data));
 }</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-overloaded_decl" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#overloaded_decl(index) &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a cursor for one of the overloaded declarations referenced by a
+Clangc::CursorKind::OVERLOADED_DECL_REF cursor.</p>
+
+<p>index The zero-based index into the set of overloaded declarations in the
+cursor.</p>
+
+<p>Returns a cursor representing the declaration referenced by the given 
+cursor at the specified index. If the cursor does not have an  associated
+set of overloaded declarations, or if the index is out of bounds, returns a
+nul cursor;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="overloaded_decl-source">
+            <pre>VALUE
+c_Cursor_get_overloaded_decl(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned int c_index;
+  RNUM_2_UINT(index, c_index);
+  Cursor_t *o;
+  VALUE overl_decl;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, overl_decl, Cursor_t, o);
+  o-&gt;data = clang_getOverloadedDecl(c-&gt;data, c_index);
+  o-&gt;parent = c-&gt;parent;
+  return overl_decl;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-overloaded_decls" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#overloaded_decls &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  cursors for the overloaded
+declarations that are related to the current cursor. If the current cursor
+is not an overloaded declaration, it returns an empty array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="overloaded_decls-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">overloaded_decls</span>
+    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_overloaded_decls</span>
+    <span class="ruby-identifier">cursors</span> = []
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">cursors</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">cursors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">overloaded_decl</span>(<span class="ruby-identifier">i</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">cursors</span>
+  <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -1811,6 +1965,49 @@ c_Cursor_get_spelling(VALUE self)
   VALUE spelling = rb_str_new2( clang_getCString(str) );
   clang_disposeString(str);
   return spelling;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-storage_class" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#storage_class &rarr; Clangc::StorageClass.constants
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the storage class for a function or variable declaration.</p>
+
+<p>If the passed in <a href="Cursor.html">Cursor</a> is not a function or
+variable declaration, Clangc::StorageClass::SC_INVALID is returned else the
+storage class.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="storage_class-source">
+            <pre>VALUE
+c_Cursor_get_storage_class(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_Cursor_getStorageClass(c-&gt;data));  
 }</pre>
           </div>
           
