@@ -460,4 +460,11 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_iboutlet_collection_type
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_IBOUTLET, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_equal false, cursor.kind == Clangc::CursorKind::IB_OUTLET_ATTR, cursor.spelling
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
