@@ -378,10 +378,10 @@ class TestCursorUsage < MiniTest::Test
     end
   end
   def test_Cursor_is_anonymous
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ANON_DECLS, CLANG_HEADERS_PATH)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ANON_DECLS, ["-x", "c++"] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::UNION_DECL
-        assert_equal false, cursor.is_anonymous, cursor.spelling
+      if cursor.kind == Clangc::CursorKind::UNION_DECL && cursor.spelling != "X"
+        assert_equal true, cursor.is_anonymous, cursor.spelling
       end
       Clangc::ChildVisitResult::RECURSE
     end

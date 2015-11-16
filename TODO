@@ -8,8 +8,6 @@
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
-[ ] Check issue with clang_Cursor_isAnonymous http://stackoverflow.com/questions/33582339/libclang-clang-cursor-isanonymous-what-is-an-anonymous-declaration
-
 [ ] Add check when Clangc objects are passed as parameters:
 
   *    Add ruby object check in c_File_is_equal

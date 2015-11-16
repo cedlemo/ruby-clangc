@@ -30,7 +30,7 @@ module ClangcUtils
   # Objective-C source file
   SOURCE_FILE_OBJECTC = "#{File.expand_path(File.dirname(__FILE__))}/source14.m"
   # C with anonymous structure
-  SOURCE_FILE_ANON_DECLS = "#{File.expand_path(File.dirname(__FILE__))}/source15.c"
+  SOURCE_FILE_ANON_DECLS = "#{File.expand_path(File.dirname(__FILE__))}/source15.cpp"
   # C++ source with classes and a virtual class
   SOURCE_FILE_VIRT_BASE_CLASS = "#{File.expand_path(File.dirname(__FILE__))}/source16.cpp"
   # C++ source with function overloading 
