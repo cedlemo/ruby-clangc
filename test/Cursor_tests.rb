@@ -467,4 +467,11 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_display_name
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_equal cursor.spelling, cursor.display_name, cursor.display_name
+    end
+    Clangc::ChildVisitResult::RECURSE
+  end
 end
