@@ -146,4 +146,7 @@ c_Cursor_get_num_overloaded_decls(VALUE);
 
 VALUE
 c_Cursor_get_overloaded_decl(VALUE, VALUE);
+
+VALUE
+c_Cursor_get_display_name(VALUE);
 #endif //CURSOR_H

@@ -870,3 +870,23 @@ c_Cursor_get_overloaded_decl(VALUE self, VALUE index)
   o->parent = c->parent;
   return overl_decl;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#display_name => String
+*
+* Retrieve the display name for the entity referenced by this cursor.
+*
+* The display name contains extra information that helps identify the cursor,
+* such as the parameters of a function or template or the arguments of a 
+* class template specialization.
+*/
+VALUE
+c_Cursor_get_display_name(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorDisplayName(c->data);
+  VALUE display_name = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return display_name;
+}
