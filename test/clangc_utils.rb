@@ -1,45 +1,46 @@
+PATH = File.expand_path(File.dirname(__FILE__)) 
 module ClangcUtils
   # Good C test file
-  SOURCE_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.c"
+  SOURCE_FILE = "#{PATH}/source1.c"
    # Good C test file with gnu-binary-literal option warning
-  SOURCE_FILE_OPTION_WARNINGS = "#{File.expand_path(File.dirname(__FILE__))}/source_option_warnings.c"
+  SOURCE_FILE_OPTION_WARNINGS = "#{PATH}/source_option_warnings.c"
  # C source code with one error
-  SOURCE_FILE_ONE_ERROR = "#{File.expand_path(File.dirname(__FILE__))}/source2.c"
+  SOURCE_FILE_ONE_ERROR = "#{PATH}/source2.c"
   # C source code with two error
-  SOURCE_FILE_TWO_ERRORS = "#{File.expand_path(File.dirname(__FILE__))}/source3.c"
+  SOURCE_FILE_TWO_ERRORS = "#{PATH}/source3.c"
   # C source code with three error
-  SOURCE_FILE_THREE_ERRORS = "#{File.expand_path(File.dirname(__FILE__))}/source4.c"
+  SOURCE_FILE_THREE_ERRORS = "#{PATH}/source4.c"
   # C source file with pointer
-  SOURCE_FILE_POINTER = "#{File.expand_path(File.dirname(__FILE__))}/source5.c"
+  SOURCE_FILE_POINTER = "#{PATH}/source5.c"
   # C source file with qualified type
-  SOURCE_FILE_QUALIFIED = "#{File.expand_path(File.dirname(__FILE__))}/source6.c"
+  SOURCE_FILE_QUALIFIED = "#{PATH}/source6.c"
   # C source file with only one function
-  SOURCE_FILE_FUNCTION = "#{File.expand_path(File.dirname(__FILE__))}/source7.c"
+  SOURCE_FILE_FUNCTION = "#{PATH}/source7.c"
   # C source file with only one array 
-  SOURCE_FILE_ARRAY= "#{File.expand_path(File.dirname(__FILE__))}/source8.c"
+  SOURCE_FILE_ARRAY= "#{PATH}/source8.c"
   # C++ source file with one non POD and one POD
-  SOURCE_FILE_POD = "#{File.expand_path(File.dirname(__FILE__))}/source9.cpp"
+  SOURCE_FILE_POD = "#{PATH}/source9.cpp"
   # C source with macro
-  SOURCE_FILE_MACRO =  "#{File.expand_path(File.dirname(__FILE__))}/source10.c"
+  SOURCE_FILE_MACRO =  "#{PATH}/source10.c"
   # C with enum
-  SOURCE_FILE_ENUM = "#{File.expand_path(File.dirname(__FILE__))}/source11.c"
+  SOURCE_FILE_ENUM = "#{PATH}/source11.c"
   # C with struct and bitfield 
-  SOURCE_FILE_STRUCT_BITFIELD = "#{File.expand_path(File.dirname(__FILE__))}/source12.c"
+  SOURCE_FILE_STRUCT_BITFIELD = "#{PATH}/source12.c"
   # C++ source file with function template example
-  SOURCE_FILE_FUNCTION_TEMPLATE = "#{File.expand_path(File.dirname(__FILE__))}/source13.cpp"
+  SOURCE_FILE_FUNCTION_TEMPLATE = "#{PATH}/source13.cpp"
   # Objective-C source file
-  SOURCE_FILE_OBJECTC = "#{File.expand_path(File.dirname(__FILE__))}/source14.m"
+  SOURCE_FILE_OBJECTC = "#{PATH}/source14.m"
   # C with anonymous structure
-  SOURCE_FILE_ANON_DECLS = "#{File.expand_path(File.dirname(__FILE__))}/source15.cpp"
+  SOURCE_FILE_ANON_DECLS = "#{PATH}/source15.cpp"
   # C++ source with classes and a virtual class
-  SOURCE_FILE_VIRT_BASE_CLASS = "#{File.expand_path(File.dirname(__FILE__))}/source16.cpp"
+  SOURCE_FILE_VIRT_BASE_CLASS = "#{PATH}/source16.cpp"
   # C++ source with function overloading 
-  SOURCE_FILE_OVERL_FUNC = "#{File.expand_path(File.dirname(__FILE__))}/source17.cpp"
+  SOURCE_FILE_OVERL_FUNC = "#{PATH}/source17.cpp"
   # Objective-C source file with IBOutlet collection
-  SOURCE_FILE_IBOUTLET = "#{File.expand_path(File.dirname(__FILE__))}/source18.h"
-  SOURCE_FILE_WITH_INCLUDE_GUARD = "#{File.expand_path(File.dirname(__FILE__))}/include_guarded_header.h"
+  SOURCE_FILE_IBOUTLET = "#{PATH}/source18.m"
+  SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
-  BAD_FILE = "#{File.expand_path(File.dirname(__FILE__))}/qsdfqsdf.c"
-  AST_FILE = "#{File.expand_path(File.dirname(__FILE__))}/source1.ast"
+  BAD_FILE = "#{PATH}/qsdfqsdf.c"
+  AST_FILE = "#{PATH}/source1.ast"
   CLANG_HEADERS_PATH = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
 end
