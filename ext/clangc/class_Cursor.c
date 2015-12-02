@@ -910,3 +910,26 @@ c_Cursor_get_ib_outlet_collection_type(VALUE self)
   t->parent = self;
   return collection_type;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#usr => String
+*
+* Retrieve a Unified Symbol Resolution (USR) for the entity referenced
+* by the given cursor.
+*
+* A Unified Symbol Resolution (USR) is a string that identifies a particular
+* entity (function, class, variable, etc.) within a program. USRs can be
+* compared across translation units to determine, e.g., when references in
+* one translation refer to an entity defined in another translation unit.
+*/
+VALUE
+c_Cursor_get_usr(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorUSR(c->data);
+  VALUE usr = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return usr;
+}
