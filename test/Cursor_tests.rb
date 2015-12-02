@@ -467,7 +467,15 @@ class TestCursorUsage < MiniTest::Test
       assert_instance_of Clangc::Type, cursor.ib_outlet_collection_type
       Clangc::ChildVisitResult::RECURSE
     end
-    #TODO
+    # TODO
+  end
+  def test_Cursor_get_usr
+     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_instance_of String, cursor.usr
+      # TODO
+    end
+    Clangc::ChildVisitResult::RECURSE
   end
   def test_Cursor_get_display_name
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
