@@ -1121,4 +1121,19 @@ c_Cursor_get_receiver_type(VALUE self)
   t->parent = self;
   return receiver_type;
 }
-
+/**
+* call-seq:
+*   Clangc::Cursor#obj_c_decl_qualifiers => Fixnum 
+ 
+* \brief Given a cursor that represents an Objective-C method or parameter
+* declaration, return the associated Objective-C qualifiers for the return
+* type or the parameter respectively. The bits are formed from
+* Clangc::ObjCDeclQualifierKind constants.
+*/
+VALUE
+c_Cursor_get_obj_c_decl_qualifiers(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_Cursor_getObjCDeclQualifiers(c->data));
+}

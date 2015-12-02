@@ -176,4 +176,7 @@ c_Cursor_is_dynamic_call(VALUE);
 
 VALUE
 c_Cursor_get_receiver_type(VALUE);
+
+VALUE
+c_Cursor_get_obj_c_decl_qualifiers(VALUE);
 #endif //CURSOR_H
