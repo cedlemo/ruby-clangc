@@ -500,4 +500,12 @@ class TestCursorUsage < MiniTest::Test
     Clangc::ChildVisitResult::RECURSE
     # TODO
   end
+  def test_Cursor_is_definition
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert [true, false].include?(cursor.is_definition)
+    end
+    Clangc::ChildVisitResult::RECURSE
+    # TODO
+  end
 end
