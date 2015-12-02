@@ -531,4 +531,11 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_receiver_type
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+        assert_instance_of Clangc::Type, cursor.receiver_type
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
