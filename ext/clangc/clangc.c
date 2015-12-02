@@ -182,7 +182,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "num_arguments", RUBY_METHOD_FUNC(c_Cursor_get_num_arguments), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "argument", RUBY_METHOD_FUNC(c_Cursor_get_argument), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "num_template_arguments", RUBY_METHOD_FUNC(c_Cursor_get_num_template_arguments), 0);// in class_Cursor.c
-  rb_define_method(c_Cursor, "decl_objectC_type_encoding", RUBY_METHOD_FUNC(c_Cursor_get_decl_objectC_type_encoding), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "decl_obj_c_type_encoding", RUBY_METHOD_FUNC(c_Cursor_get_decl_obj_c_type_encoding), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "result_type", RUBY_METHOD_FUNC(c_Cursor_get_result_type), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "offset_of_field", RUBY_METHOD_FUNC(c_Cursor_get_offset_of_field), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_anonymous", RUBY_METHOD_FUNC(c_Cursor_is_anonymous), 0);// in class_Cursor.c

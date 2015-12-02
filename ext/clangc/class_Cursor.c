@@ -674,7 +674,7 @@ c_Cursor_get_num_template_arguments(VALUE self)
 * Returns the Objective-C type encoding for the specified declaration.
 */
 VALUE
-c_Cursor_get_decl_objectC_type_encoding(VALUE self)
+c_Cursor_get_decl_obj_c_type_encoding(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
