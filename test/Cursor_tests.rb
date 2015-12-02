@@ -519,8 +519,7 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_obj_c_selector_index
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-        assert_instance_of Number, cursor.obj_c_selector_index
-      end
+        assert_instance_of Fixnum, cursor.obj_c_selector_index
       Clangc::ChildVisitResult::RECURSE
     end
   end
