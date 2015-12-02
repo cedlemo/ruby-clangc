@@ -170,4 +170,7 @@ c_Cursor_get_canonical_cursor(VALUE);
 
 VALUE
 c_Cursor_get_obj_c_selector_index(VALUE);
+
+VALUE
+c_Cursor_is_dynamic_call(VALUE);
 #endif //CURSOR_H

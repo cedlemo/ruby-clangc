@@ -200,6 +200,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "is_definition", RUBY_METHOD_FUNC(c_Cursor_is_definition), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "canonical_cursor", RUBY_METHOD_FUNC(c_Cursor_get_canonical_cursor), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "obj_c_selector_index", RUBY_METHOD_FUNC(c_Cursor_get_obj_c_selector_index), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "is_dynamic_call", RUBY_METHOD_FUNC(c_Cursor_is_dynamic_call), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

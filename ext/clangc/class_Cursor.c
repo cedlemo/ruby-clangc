@@ -1078,3 +1078,27 @@ c_Cursor_get_obj_c_selector_index(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_Cursor_getObjCSelectorIndex(c->data));
 }
+/**
+* call-seq:
+*   Clangc::Cursor#is_dynamic_call => true/ false
+*
+* Given a cursor pointing to a C++ method call or an Objective-C
+* message, returns non-zero if the method/message is "dynamic", meaning:
+* 
+* For a C++ method: the call is virtual.
+* For an Objective-C message: the receiver is an object instance, not 'super'
+* or a specific class.
+* 
+* If the method/message is "static" or the cursor does not point to a
+* method/message, it will return zero.
+*/
+VALUE
+c_Cursor_is_dynamic_call(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isDynamicCall(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
