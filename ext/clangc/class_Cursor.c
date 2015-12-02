@@ -1199,7 +1199,6 @@ c_Cursor_get_comment_range(VALUE self)
 * Given a cursor that represents a declaration, return the associated
 * comment text, including comment markers.
 */
-CINDEX_LINKAGE CXString clang_Cursor_getRawCommentText(CXCursor C);
 VALUE
 c_Cursor_get_raw_comment_text(VALUE self)
 {
@@ -1211,3 +1210,21 @@ c_Cursor_get_raw_comment_text(VALUE self)
   return raw_comment;
 }
 
+/**
+* call-seq:
+*   Clangc::Cursor#brief_comment_text => String
+*
+* Given a cursor that represents a documentable entity (e.g.,
+* declaration), return the associated \\brief paragraph; otherwise return the
+* first paragraph.
+*/
+VALUE
+c_Cursor_get_brief_comment_text(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_Cursor_getBriefCommentText(c->data);
+  VALUE brief_comment = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return brief_comment;
+}

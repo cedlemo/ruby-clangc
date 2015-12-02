@@ -191,4 +191,7 @@ c_Cursor_get_comment_range(VALUE);
 
 VALUE
 c_Cursor_get_raw_comment_text(VALUE);
+
+VALUE
+c_Cursor_get_brief_comment_text(VALUE);
 #endif //CURSOR_H
