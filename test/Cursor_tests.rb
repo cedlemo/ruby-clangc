@@ -508,4 +508,12 @@ class TestCursorUsage < MiniTest::Test
     Clangc::ChildVisitResult::RECURSE
     # TODO
   end
+  def test_Cursor_get_canonical_cursor
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_instance_of Clangc::Cursor, cursor.canonical_cursor
+    end
+    Clangc::ChildVisitResult::RECURSE
+    # TODO
+  end
 end
