@@ -460,12 +460,14 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
-  def test_Cursor_get_iboutlet_collection_type
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_IBOUTLET, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
+  def test_Cursor_get_ib_outlet_collection_type
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_IBOUTLET, ['-x', 'objective-c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       assert_equal false, cursor.kind == Clangc::CursorKind::IB_OUTLET_ATTR, cursor.spelling
+      assert_instance_of Clangc::Type, cursor.ib_outlet_collection_type
       Clangc::ChildVisitResult::RECURSE
     end
+    #TODO
   end
   def test_Cursor_get_display_name
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
