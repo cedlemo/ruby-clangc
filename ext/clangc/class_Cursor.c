@@ -541,7 +541,7 @@ c_Cursor_get_enum_decl_integer_type(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#enum_const_decl_value => Number
+*   Clangc::Cursor#enum_const_decl_value => Fixnum
 *
 * Retrieve the integer value of an enum constant declaration as a signed
 * long long.
@@ -560,7 +560,7 @@ c_Cursor_get_enum_const_decl_value(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#enum_const_decl_unsigned_value => Number
+*   Clangc::Cursor#enum_const_decl_unsigned_value => Fixnum
 *
 * Retrieve the integer value of an enum constant declaration as an unsigned
 * long long.
@@ -579,7 +579,7 @@ c_Cursor_get_enum_const_decl_unsigned_value(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#field_decl_bit_width => Integer
+*   Clangc::Cursor#field_decl_bit_width => Fixnum
 *
 * Retrieve the bit width of a bit field declaration as an integer.
 *
@@ -595,7 +595,7 @@ c_Cursor_get_field_decl_bit_width(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#num_arguments => Integer
+*   Clangc::Cursor#num_arguments => Fixnum
 *
 * Retrieve the number of non-variadic arguments associated with a given
 * cursor.
@@ -642,7 +642,7 @@ c_Cursor_get_argument(VALUE self, VALUE index)
 
 /**
 * call-seq:
-*   Clangc::Cursor#num_template_arguments => Integer
+*   Clangc::Cursor#num_template_arguments => Fixnum
 *
 * Returns the number of template args of a function decl representing a
 * template specialization.
@@ -707,7 +707,7 @@ c_Cursor_get_result_type(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#offset_field => Integer
+*   Clangc::Cursor#offset_field => Fixnum
 *
 * Return the offset of the field represented by the Cursor.
 *
@@ -825,7 +825,7 @@ c_Cursor_get_storage_class(VALUE self)
 
 /**
 * call-seq:
-*   Clangc::Cursor#num_overloaded_decls => Integer >= 0
+*   Clangc::Cursor#num_overloaded_decls => Fixnum >= 0
 *
 * Determine the number of overloaded declarations referenced by a 
 * Clangc::CursorKind::OVERLOADED_DECL_REF cursor.
@@ -1056,4 +1056,25 @@ c_Cursor_get_canonical_cursor(VALUE self)
   cc->data = clang_getCanonicalCursor(c->data);
   cc->parent = c->parent;
   return canonical_cursor;
+}
+/**
+* call-seq:
+*   Clangc::Cursor#obj_c_selector_index => Fixnum
+*
+* If the cursor points to a selector identifier in an Objective-C
+* method or message expression, this returns the selector index.
+*
+* After getting a cursor with #clang_getCursor, this can be called to
+* determine if the location points to a selector identifier.
+*
+* It returns The selector index if the cursor is an Objective-C method or message
+* expression and the cursor is pointing to a selector identifier, or -1
+* otherwise.
+*/
+VALUE
+c_Cursor_get_obj_c_selector_index(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getObjCSelectorIndex(c->data));
 }
