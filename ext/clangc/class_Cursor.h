@@ -185,4 +185,7 @@ c_Cursor_is_obj_c_optional(VALUE);
 
 VALUE
 c_Cursor_is_variadic(VALUE);
+
+VALUE
+c_Cursor_get_comment_range(VALUE);
 #endif //CURSOR_H

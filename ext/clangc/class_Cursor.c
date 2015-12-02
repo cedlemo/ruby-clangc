@@ -1172,3 +1172,23 @@ c_Cursor_is_variadic(VALUE self)
   else
     return Qfalse;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#comment_range => Clangc::SourceRange
+*
+* Given a cursor that represents a declaration, return the associated
+* comment's source range.  The range may include multiple consecutive comments
+* with whitespace in between.
+*/
+VALUE
+c_Cursor_get_comment_range(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *s;
+  VALUE cmt_rge;
+  R_GET_CLASS_DATA("Clangc", "SourceRange", cmt_rge, SourceRange_t, s);
+  s->data = clang_Cursor_getCommentRange(c->data);
+  s->parent = self;
+  return cmt_rge;
+}
