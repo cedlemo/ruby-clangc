@@ -173,4 +173,7 @@ c_Cursor_get_obj_c_selector_index(VALUE);
 
 VALUE
 c_Cursor_is_dynamic_call(VALUE);
+
+VALUE
+c_Cursor_get_receiver_type(VALUE);
 #endif //CURSOR_H

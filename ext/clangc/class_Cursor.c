@@ -1102,3 +1102,23 @@ c_Cursor_is_dynamic_call(VALUE self)
   else
     return Qfalse;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#receiver_type => Clangc::Type
+*
+* Given a cursor pointing to an Objective-C message, returns the CXType
+* of the receiver.
+*/
+VALUE
+c_Cursor_get_receiver_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE receiver_type;
+  R_GET_CLASS_DATA("Clangc", "Type", receiver_type, Type_t, t);
+  t->data = clang_Cursor_getReceiverType(c->data);
+  t->parent = self;
+  return receiver_type;
+}
+
