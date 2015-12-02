@@ -548,4 +548,12 @@ class TestCursorUsage < MiniTest::Test
       # TODO
     end
   end
+  def test_Cursor_is_obj_c_optional
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      # TODO
+      assert [true, false].include?(cursor.is_obj_c_optional)
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
