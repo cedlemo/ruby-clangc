@@ -155,4 +155,7 @@ c_Cursor_get_usr(VALUE);
 
 VALUE
 c_Cursor_get_display_name(VALUE);
+
+VALUE
+c_Cursor_get_referenced(VALUE);
 #endif //CURSOR_H

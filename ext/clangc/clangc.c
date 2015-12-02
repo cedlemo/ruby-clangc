@@ -195,6 +195,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "ib_outlet_collection_type", RUBY_METHOD_FUNC(c_Cursor_get_ib_outlet_collection_type), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "usr", RUBY_METHOD_FUNC(c_Cursor_get_usr), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "display_name", RUBY_METHOD_FUNC(c_Cursor_get_display_name), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "referenced", RUBY_METHOD_FUNC(c_Cursor_get_referenced), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

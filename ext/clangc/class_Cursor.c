@@ -933,3 +933,31 @@ c_Cursor_get_usr(VALUE self)
   clang_disposeString(str);
   return usr;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#referenced => Clangc::Cursor
+*
+* For a cursor that is a reference, retrieve a cursor representing the
+* entity that it references.
+*
+* Reference cursors refer to other entities in the AST. For example, an
+* Objective-C superclass reference cursor refers to an Objective-C class.
+* This function produces the cursor for the Objective-C class from the
+* cursor for the superclass reference. If the input cursor is a declaration or
+* definition, it returns that declaration or definition unchanged.
+* Otherwise, returns the NULL cursor.
+*/
+VALUE
+c_Cursor_get_referenced(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *r;
+  VALUE referenced;
+  R_GET_CLASS_DATA("Clangc", "Cursor", referenced, Cursor_t, r);
+  r->data = clang_getCursorReferenced(c->data);
+  r->parent = c->parent;
+  return referenced;
+}
+
+
