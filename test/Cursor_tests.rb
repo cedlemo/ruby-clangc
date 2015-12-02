@@ -556,4 +556,12 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_is_variadic
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      # TODO
+      assert [true, false].include?(cursor.is_variadic)
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
