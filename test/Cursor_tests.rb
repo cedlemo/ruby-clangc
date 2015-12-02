@@ -582,16 +582,32 @@ class TestCursorUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMMENTS, ["-x","c"] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-      comment = %q{/**
- * \brief this is the brief part of the comment
- * and it's second line.
- *
- *  This is the secon paragrah
- *  \returns an int
- * */
-}
+        comment = "/**\n" +
+" * \\brief this is the brief part of the comment\n" +
+" * and it's second line.\n" +
+" *\n" +
+" *  This is the secon paragrah\n" +
+" *  \\returns an int\n" +
+" * */"
+        assert_equal comment, cursor.raw_comment_text
       end
     Clangc::ChildVisitResult::RECURSE
     end
   end
+#  def test_Cursor_get_brief_comment_text
+#    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMMENTS, ["-x","c"] + CLANG_HEADERS_PATH)
+#    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+#      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+#      comment = %q{/**
+# * \brief this is the brief part of the comment
+# * and it's second line.
+# *
+# *  This is the secon paragrah
+# *  \returns an int
+# * */
+#}
+#      end
+#    Clangc::ChildVisitResult::RECURSE
+#    end
+#  end
 end
