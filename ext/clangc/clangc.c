@@ -198,6 +198,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "referenced", RUBY_METHOD_FUNC(c_Cursor_get_referenced), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "definition", RUBY_METHOD_FUNC(c_Cursor_get_definition), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_definition", RUBY_METHOD_FUNC(c_Cursor_is_definition), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "canonical_cursor", RUBY_METHOD_FUNC(c_Cursor_get_canonical_cursor), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

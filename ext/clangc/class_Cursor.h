@@ -164,4 +164,7 @@ c_Cursor_get_definition(VALUE);
 
 VALUE
 c_Cursor_is_definition(VALUE);
+
+VALUE
+c_Cursor_get_canonical_cursor(VALUE);
 #endif //CURSOR_H

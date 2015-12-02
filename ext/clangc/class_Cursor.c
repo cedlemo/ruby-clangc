@@ -1019,3 +1019,41 @@ c_Cursor_is_definition(VALUE self)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#canonical_cursor => Clangc::Cursor
+*
+* Retrieve the canonical cursor corresponding to the given cursor.
+*
+* In the C family of languages, many kinds of entities can be declared several
+* times within a single translation unit. For example, a structure type can
+* be forward-declared (possibly multiple times) and later defined:
+*
+*   struct X;
+*   struct X;
+*   struct X {
+*     int member;
+*   };
+*
+* The declarations and the definition of \c X are represented by three 
+* different cursors, all of which are declarations of the same underlying 
+* entity. One of these cursor is considered the "canonical" cursor, which
+* is effectively the representative for the underlying entity. One can 
+* determine if two cursors are declarations of the same underlying entity by
+* comparing their canonical cursors.
+*
+* It returns The canonical cursor for the entity referred to by the given cursor.
+*/
+VALUE
+c_Cursor_get_canonical_cursor(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *cc;
+  VALUE canonical_cursor;
+  R_GET_CLASS_DATA("Clangc", "Cursor", canonical_cursor, Cursor_t, cc);
+  cc->data = clang_getCanonicalCursor(c->data);
+  cc->parent = c->parent;
+  return canonical_cursor;
+}
