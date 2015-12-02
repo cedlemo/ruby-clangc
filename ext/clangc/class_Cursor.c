@@ -960,4 +960,44 @@ c_Cursor_get_referenced(VALUE self)
   return referenced;
 }
 
-
+/**
+* call-seq:
+*   Clangc::Cursor#definition => Clangc::Cursor
+*
+* For a cursor that is either a reference to or a declaration
+* of some entity, retrieve a cursor that describes the definition of
+* that entity.
+*
+* Some entities can be declared multiple times within a translation
+* unit, but only one of those declarations can also be a
+* definition. For example, given:
+*
+*     int f(int, int);
+*     int g(int x, int y) { return f(x, y); }
+*     int f(int a, int b) { return a + b; }
+*     int f(int, int);
+*
+* there are three declarations of the function "f", but only the
+* second one is a definition. The clang_getCursorDefinition()
+* function will take any cursor pointing to a declaration of "f"
+* (the first or fourth lines of the example) or a cursor referenced
+* that uses "f" (the call to "f' inside "g") and will return a
+* declaration cursor pointing to the definition (the second "f"
+* declaration).
+*
+* If given a cursor for which there is no corresponding definition,
+* e.g., because there is no definition of that entity within this
+* translation unit, returns a NULL cursor.
+*/
+VALUE
+c_Cursor_get_definition(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *d;
+  VALUE definition;
+  R_GET_CLASS_DATA("Clangc", "Cursor", definition, Cursor_t, d);
+  d->data = clang_getCursorDefinition(c->data);
+  d->parent = c->parent;
+  return definition;
+}
