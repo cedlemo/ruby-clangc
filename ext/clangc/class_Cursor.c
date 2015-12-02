@@ -1156,3 +1156,19 @@ c_Cursor_is_obj_c_optional(VALUE self)
   else
     return Qfalse;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#is_variadic => true / false
+*
+* Returns non-zero if the given cursor is a variadic function or method.
+*/
+VALUE
+c_Cursor_is_variadic(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isVariadic(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}

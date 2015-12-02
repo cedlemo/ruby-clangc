@@ -182,4 +182,7 @@ c_Cursor_get_obj_c_decl_qualifiers(VALUE);
 
 VALUE
 c_Cursor_is_obj_c_optional(VALUE);
+
+VALUE
+c_Cursor_is_variadic(VALUE);
 #endif //CURSOR_H
