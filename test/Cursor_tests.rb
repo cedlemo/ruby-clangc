@@ -519,8 +519,9 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_obj_c_selector_index
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-        assert_instance_of Fixnum, cursor.obj_c_selector_index
+      assert_instance_of Fixnum, cursor.obj_c_selector_index
       Clangc::ChildVisitResult::RECURSE
+      # TODO
     end
   end
   def test_Cursor_is_dynamic_call
@@ -534,8 +535,17 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_receiver_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-        assert_instance_of Clangc::Type, cursor.receiver_type
+      assert_instance_of Clangc::Type, cursor.receiver_type
       Clangc::ChildVisitResult::RECURSE
+      # TODO
+    end
+  end
+  def test_Cursor_get_obj_c_decl_qualifiers
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      assert_instance_of Fixnum, cursor.obj_c_decl_qualifiers
+      Clangc::ChildVisitResult::RECURSE
+      # TODO
     end
   end
 end
