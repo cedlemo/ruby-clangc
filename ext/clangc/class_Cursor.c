@@ -1137,3 +1137,22 @@ c_Cursor_get_obj_c_decl_qualifiers(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_Cursor_getObjCDeclQualifiers(c->data));
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_obj_c_optional => true / false
+*
+* Given a cursor that represents an Objective-C method or property
+* declaration, return non-zero if the declaration was affected by "@optional".
+* Returns zero if the cursor is not such a declaration or it is "@required".
+*/
+VALUE
+c_Cursor_is_obj_c_optional(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isObjCOptional(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
