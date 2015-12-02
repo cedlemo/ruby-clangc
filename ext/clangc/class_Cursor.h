@@ -148,5 +148,8 @@ VALUE
 c_Cursor_get_overloaded_decl(VALUE, VALUE);
 
 VALUE
+c_Cursor_get_ib_outlet_collection_type(VALUE);
+
+VALUE
 c_Cursor_get_display_name(VALUE);
 #endif //CURSOR_H

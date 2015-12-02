@@ -890,3 +890,23 @@ c_Cursor_get_display_name(VALUE self)
   clang_disposeString(str);
   return display_name;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#ib_outlet_collection_type => Clangc::Type
+*
+* For cursors representing an iboutletcollection attribute,
+*  this function returns the collection element type.
+*/
+VALUE
+c_Cursor_get_ib_outlet_collection_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE collection_type;
+  R_GET_CLASS_DATA("Clangc", "Type", collection_type, Type_t, t);
+  t->data = clang_getIBOutletCollectionType(c->data);
+  t->parent = self;
+  return collection_type;
+}
