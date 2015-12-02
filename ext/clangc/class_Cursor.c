@@ -1192,3 +1192,22 @@ c_Cursor_get_comment_range(VALUE self)
   s->parent = self;
   return cmt_rge;
 }
+/**
+* call-seq:
+*   Clangc::Cursor#raw_comment_text => String
+*
+* Given a cursor that represents a declaration, return the associated
+* comment text, including comment markers.
+*/
+CINDEX_LINKAGE CXString clang_Cursor_getRawCommentText(CXCursor C);
+VALUE
+c_Cursor_get_raw_comment_text(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_Cursor_getRawCommentText(c->data);
+  VALUE raw_comment = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return raw_comment;
+}
+
