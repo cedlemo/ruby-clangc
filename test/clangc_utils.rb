@@ -38,6 +38,8 @@ module ClangcUtils
   SOURCE_FILE_OVERL_FUNC = "#{PATH}/source17.cpp"
   # Objective-C source file with IBOutlet collection
   SOURCE_FILE_IBOUTLET = "#{PATH}/source18.m"
+  # Header with C function and its comments
+  SOURCE_FILE_COMMENTS = "#{PATH}/source19.h"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"

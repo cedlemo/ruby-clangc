@@ -564,4 +564,18 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_comment_range
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMMENTS, ["-x","c"] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+        assert_instance_of Clangc::SourceRange, cursor.comment_range
+        start_location = cursor.comment_range.start
+        end_location = cursor.comment_range.end
+        assert_equal true, tu.file(SOURCE_FILE_COMMENTS).is_equal(start_location.spelling[0]), start_location.spelling[0].name || "toto"
+        assert_equal 1, start_location.spelling[1], start_location.spelling[1]
+        assert_equal 7, end_location.spelling[1], end_location.spelling[1]
+      end
+    Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
