@@ -1001,3 +1001,21 @@ c_Cursor_get_definition(VALUE self)
   d->parent = c->parent;
   return definition;
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#is_definition => true/false
+*
+* Determine whether the declaration pointed to by this cursor
+* is also a definition of that entity.
+*/
+VALUE
+c_Cursor_is_definition(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_isCursorDefinition(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}

@@ -162,4 +162,6 @@ c_Cursor_get_referenced(VALUE);
 VALUE
 c_Cursor_get_definition(VALUE);
 
+VALUE
+c_Cursor_is_definition(VALUE);
 #endif //CURSOR_H
