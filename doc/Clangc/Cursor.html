@@ -76,9 +76,17 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-canonical_cursor">#canonical_cursor</a>
+    
+    <li ><a href="#method-i-comment_range">#comment_range</a>
+    
     <li ><a href="#method-i-cxx_access_specifier">#cxx_access_specifier</a>
     
-    <li ><a href="#method-i-decl_objectC_type_encoding">#decl_objectC_type_encoding</a>
+    <li ><a href="#method-i-decl_obj_c_type_encoding">#decl_obj_c_type_encoding</a>
+    
+    <li ><a href="#method-i-definition">#definition</a>
+    
+    <li ><a href="#method-i-display_name">#display_name</a>
     
     <li ><a href="#method-i-enum_const_decl_unsigned_value">#enum_const_decl_unsigned_value</a>
     
@@ -92,6 +100,8 @@
     
     <li ><a href="#method-i-hash">#hash</a>
     
+    <li ><a href="#method-i-ib_outlet_collection_type">#ib_outlet_collection_type</a>
+    
     <li ><a href="#method-i-included_file">#included_file</a>
     
     <li ><a href="#method-i-is_anonymous">#is_anonymous</a>
@@ -102,6 +112,10 @@
     
     <li ><a href="#method-i-is_declaration">#is_declaration</a>
     
+    <li ><a href="#method-i-is_definition">#is_definition</a>
+    
+    <li ><a href="#method-i-is_dynamic_call">#is_dynamic_call</a>
+    
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
     <li ><a href="#method-i-is_expression">#is_expression</a>
@@ -110,6 +124,8 @@
     
     <li ><a href="#method-i-is_null">#is_null</a>
     
+    <li ><a href="#method-i-is_obj_c_optional">#is_obj_c_optional</a>
+    
     <li ><a href="#method-i-is_preprocessing">#is_preprocessing</a>
     
     <li ><a href="#method-i-is_reference">#is_reference</a>
@@ -117,6 +133,8 @@
     <li ><a href="#method-i-is_statement">#is_statement</a>
     
     <li ><a href="#method-i-is_translation_unit">#is_translation_unit</a>
+    
+    <li ><a href="#method-i-is_variadic">#is_variadic</a>
     
     <li ><a href="#method-i-is_virtual_base">#is_virtual_base</a>
     
@@ -136,11 +154,19 @@
     
     <li ><a href="#method-i-num_template_arguments">#num_template_arguments</a>
     
+    <li ><a href="#method-i-obj_c_decl_qualifiers">#obj_c_decl_qualifiers</a>
+    
+    <li ><a href="#method-i-obj_c_selector_index">#obj_c_selector_index</a>
+    
     <li ><a href="#method-i-offset_of_field">#offset_of_field</a>
     
     <li ><a href="#method-i-overloaded_decl">#overloaded_decl</a>
     
     <li ><a href="#method-i-overloaded_decls">#overloaded_decls</a>
+    
+    <li ><a href="#method-i-receiver_type">#receiver_type</a>
+    
+    <li ><a href="#method-i-referenced">#referenced</a>
     
     <li ><a href="#method-i-result_type">#result_type</a>
     
@@ -153,6 +179,8 @@
     <li ><a href="#method-i-type">#type</a>
     
     <li ><a href="#method-i-typedef_decl_underlying_type">#typedef_decl_underlying_type</a>
+    
+    <li ><a href="#method-i-usr">#usr</a>
     
   </ul>
 </div>
@@ -347,6 +375,117 @@ c_Cursor_get_availability(VALUE self)
       </div>
 
     
+      <div id="method-i-canonical_cursor" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#canonical_cursor &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the canonical cursor corresponding to the given cursor.</p>
+
+<p>In the C family of languages, many kinds of entities can be declared
+several times within a single translation unit. For example, a structure
+type can be forward-declared (possibly multiple times) and later defined:</p>
+
+<pre class="ruby"><span class="ruby-identifier">struct</span> <span class="ruby-constant">X</span>;
+<span class="ruby-identifier">struct</span> <span class="ruby-constant">X</span>;
+<span class="ruby-identifier">struct</span> <span class="ruby-constant">X</span> {
+  <span class="ruby-identifier">int</span> <span class="ruby-identifier">member</span>;
+};
+</pre>
+
+<p>The declarations and the definition of c X are represented by three 
+different cursors, all of which are declarations of the same underlying 
+entity. One of these cursor is considered the “canonical” cursor, which is
+effectively the representative for the underlying entity. One can 
+determine if two cursors are declarations of the same underlying entity by
+comparing their canonical cursors.</p>
+
+<p>It returns The canonical cursor for the entity referred to by the given
+cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="canonical_cursor-source">
+            <pre>VALUE
+c_Cursor_get_canonical_cursor(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *cc;
+  VALUE canonical_cursor;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, canonical_cursor, Cursor_t, cc);
+  cc-&gt;data = clang_getCanonicalCursor(c-&gt;data);
+  cc-&gt;parent = c-&gt;parent;
+  return canonical_cursor;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-comment_range" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#comment_range &rarr; Clangc::SourceRange
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that represents a declaration, return the associated
+comment&#39;s source range.  The range may include multiple consecutive
+comments with whitespace in between.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="comment_range-source">
+            <pre>VALUE
+c_Cursor_get_comment_range(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *s;
+  VALUE cmt_rge;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, cmt_rge, SourceRange_t, s);
+  s-&gt;data = clang_Cursor_getCommentRange(c-&gt;data);
+  s-&gt;parent = self;
+  return cmt_rge;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-cxx_access_specifier" class="method-detail ">
         
         
@@ -393,7 +532,7 @@ c_Cursor_get_cxx_access_specifier(VALUE self)
       </div>
 
     
-      <div id="method-i-decl_objectC_type_encoding" class="method-detail ">
+      <div id="method-i-decl_obj_c_type_encoding" class="method-detail ">
         
         
         <div class="method-heading">
@@ -414,9 +553,9 @@ c_Cursor_get_cxx_access_specifier(VALUE self)
           
 
           
-          <div class="method-source-code" id="decl_objectC_type_encoding-source">
+          <div class="method-source-code" id="decl_obj_c_type_encoding-source">
             <pre>VALUE
-c_Cursor_get_decl_objectC_type_encoding(VALUE self)
+c_Cursor_get_decl_obj_c_type_encoding(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
@@ -435,12 +574,123 @@ c_Cursor_get_decl_objectC_type_encoding(VALUE self)
       </div>
 
     
+      <div id="method-i-definition" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#definition &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>For a cursor that is either a reference to or a declaration of some entity,
+retrieve a cursor that describes the definition of that entity.</p>
+
+<p>Some entities can be declared multiple times within a translation unit, but
+only one of those declarations can also be a definition. For example,
+given:</p>
+
+<pre>int f(int, int);
+int g(int x, int y) { return f(x, y); }
+int f(int a, int b) { return a + b; }
+int f(int, int);</pre>
+
+<p>there are three declarations of the function “f”, but only the second one
+is a definition. The clang_getCursorDefinition() function will take any
+cursor pointing to a declaration of “f” (the first or fourth lines of the
+example) or a cursor referenced that uses “f” (the call to “f&#39; inside
+”g“) and will return a declaration cursor pointing to the definition (the
+second ”f“ declaration).</p>
+
+<p>If given a cursor for which there is no corresponding definition, e.g.,
+because there is no definition of that entity within this translation unit,
+returns a NULL cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="definition-source">
+            <pre>VALUE
+c_Cursor_get_definition(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *d;
+  VALUE definition;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, definition, Cursor_t, d);
+  d-&gt;data = clang_getCursorDefinition(c-&gt;data);
+  d-&gt;parent = c-&gt;parent;
+  return definition;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-display_name" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#display_name &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the display name for the entity referenced by this cursor.</p>
+
+<p>The display name contains extra information that helps identify the cursor,
+such as the parameters of a function or template or the arguments of a 
+class template specialization.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="display_name-source">
+            <pre>VALUE
+c_Cursor_get_display_name(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorDisplayName(c-&gt;data);
+  VALUE display_name = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return display_name;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-enum_const_decl_unsigned_value" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#enum_const_decl_unsigned_value &rarr; Number
+            Clangc::Cursor#enum_const_decl_unsigned_value &rarr; Fixnum
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -484,7 +734,7 @@ c_Cursor_get_enum_const_decl_unsigned_value(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#enum_const_decl_value &rarr; Number
+            Clangc::Cursor#enum_const_decl_value &rarr; Fixnum
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -627,7 +877,7 @@ c_Cursor_get_extent(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#field_decl_bit_width &rarr; Integer
+            Clangc::Cursor#field_decl_bit_width &rarr; Fixnum
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -692,6 +942,52 @@ c_Cursor_get_hash(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_hashCursor(c-&gt;data)); 
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ib_outlet_collection_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#ib_outlet_collection_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>For cursors representing an iboutletcollection attribute,</p>
+
+<pre>this function returns the collection element type.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="ib_outlet_collection_type-source">
+            <pre>VALUE
+c_Cursor_get_ib_outlet_collection_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE collection_type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, collection_type, Type_t, t);
+  t-&gt;data = clang_getIBOutletCollectionType(c-&gt;data);
+  t-&gt;parent = self;
+  return collection_type;
 }</pre>
           </div>
           
@@ -912,6 +1208,98 @@ c_Cursor_is_declaration(VALUE self)
       </div>
 
     
+      <div id="method-i-is_definition" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_definition &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine whether the declaration pointed to by this cursor is also a
+definition of that entity.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_definition-source">
+            <pre>VALUE
+c_Cursor_is_definition(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_isCursorDefinition(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_dynamic_call" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_dynamic_call &rarr; true/ false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor pointing to a C++ method call or an Objective-C message,
+returns non-zero if the method/message is “dynamic”, meaning:</p>
+
+<p>For a C++ method: the call is virtual. For an Objective-C message: the
+receiver is an object instance, not &#39;super&#39; or a specific class.</p>
+
+<p>If the method/message is “static” or the cursor does not point to a
+method/message, it will return zero.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_dynamic_call-source">
+            <pre>VALUE
+c_Cursor_is_dynamic_call(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isDynamicCall(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_equal" class="method-detail ">
         
         
@@ -1079,6 +1467,51 @@ c_Cursor_is_null(VALUE self)
       </div>
 
     
+      <div id="method-i-is_obj_c_optional" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_obj_c_optional &rarr; true / false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that represents an Objective-C method or property
+declaration, return non-zero if the declaration was affected by
+“@optional”. Returns zero if the cursor is not such a declaration or it is
+“@required”.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_obj_c_optional-source">
+            <pre>VALUE
+c_Cursor_is_obj_c_optional(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isObjCOptional(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-is_preprocessing" class="method-detail ">
         
         
@@ -1229,6 +1662,48 @@ c_Cursor_is_translation_unit(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return clang_isTranslationUnit(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_variadic" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#is_variadic &rarr; true / false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns non-zero if the given cursor is a variadic function or method.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_variadic-source">
+            <pre>VALUE
+c_Cursor_is_variadic(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_Cursor_isVariadic(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }</pre>
           </div>
           
@@ -1534,7 +2009,7 @@ c_Cursor_get_source_location(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#num_arguments &rarr; Integer
+            Clangc::Cursor#num_arguments &rarr; Fixnum
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -1577,7 +2052,7 @@ c_Cursor_get_num_arguments(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#num_overloaded_decls &rarr; Integer &gt;= 0
+            Clangc::Cursor#num_overloaded_decls &rarr; Fixnum &gt;= 0
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -1620,7 +2095,7 @@ c_Cursor_get_num_overloaded_decls(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#num_template_arguments &rarr; Integer
+            Clangc::Cursor#num_template_arguments &rarr; Fixnum
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -1668,12 +2143,101 @@ c_Cursor_get_num_template_arguments(VALUE self)
       </div>
 
     
+      <div id="method-i-obj_c_decl_qualifiers" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#obj_c_decl_qualifiers &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>brief Given a cursor that represents an Objective-C method or parameter
+declaration, return the associated Objective-C qualifiers for the return
+type or the parameter respectively. The bits are formed from
+Clangc::ObjCDeclQualifierKind constants.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="obj_c_decl_qualifiers-source">
+            <pre>VALUE
+c_Cursor_get_obj_c_decl_qualifiers(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_Cursor_getObjCDeclQualifiers(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-obj_c_selector_index" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#obj_c_selector_index &rarr; Fixnum
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>If the cursor points to a selector identifier in an Objective-C method or
+message expression, this returns the selector index.</p>
+
+<p>After getting a cursor with clang_getCursor, this can be called to
+determine if the location points to a selector identifier.</p>
+
+<p>It returns The selector index if the cursor is an Objective-C method or
+message expression and the cursor is pointing to a selector identifier, or
+-1 otherwise.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="obj_c_selector_index-source">
+            <pre>VALUE
+c_Cursor_get_obj_c_selector_index(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CINT_2_NUM(clang_Cursor_getObjCSelectorIndex(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-offset_of_field" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Cursor#offset_field &rarr; Integer
+            Clangc::Cursor#offset_field &rarr; Fixnum
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -1806,6 +2370,103 @@ is not an overloaded declaration, it returns an empty array.</p>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">cursors</span>
   <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-receiver_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#receiver_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor pointing to an Objective-C message, returns the CXType of
+the receiver.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="receiver_type-source">
+            <pre>VALUE
+c_Cursor_get_receiver_type(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Type_t *t;
+  VALUE receiver_type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, receiver_type, Type_t, t);
+  t-&gt;data = clang_Cursor_getReceiverType(c-&gt;data);
+  t-&gt;parent = self;
+  return receiver_type;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-referenced" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#referenced &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>For a cursor that is a reference, retrieve a cursor representing the entity
+that it references.</p>
+
+<p>Reference cursors refer to other entities in the AST. For example, an
+Objective-C superclass reference cursor refers to an Objective-C class.
+This function produces the cursor for the Objective-C class from the cursor
+for the superclass reference. If the input cursor is a declaration or
+definition, it returns that declaration or definition unchanged. Otherwise,
+returns the NULL cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="referenced-source">
+            <pre>VALUE
+c_Cursor_get_referenced(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *r;
+  VALUE referenced;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, referenced, Cursor_t, r);
+  r-&gt;data = clang_getCursorReferenced(c-&gt;data);
+  r-&gt;parent = c-&gt;parent;
+  return referenced;
+}</pre>
           </div>
           
         </div>
@@ -2099,6 +2760,54 @@ c_Cursor_get_typedef_decl_underlying_type(VALUE self)
   t-&gt;data = clang_getTypedefDeclUnderlyingType(c-&gt;data);
   t-&gt;parent = c-&gt;parent;
   return type;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-usr" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#usr &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a Unified Symbol Resolution (USR) for the entity referenced by the
+given cursor.</p>
+
+<p>A Unified Symbol Resolution (USR) is a string that identifies a particular
+entity (function, class, variable, etc.) within a program. USRs can be
+compared across translation units to determine, e.g., when references in
+one translation refer to an entity defined in another translation unit.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="usr-source">
+            <pre>VALUE
+c_Cursor_get_usr(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_getCursorUSR(c-&gt;data);
+  VALUE usr = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return usr;
 }</pre>
           </div>
           
