@@ -604,4 +604,13 @@ class TestCursorUsage < MiniTest::Test
     Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_mangling
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE))
+        assert_instance_of String, cursor.mangling
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
