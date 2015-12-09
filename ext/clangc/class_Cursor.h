@@ -194,4 +194,7 @@ c_Cursor_get_raw_comment_text(VALUE);
 
 VALUE
 c_Cursor_get_brief_comment_text(VALUE);
+
+VALUE
+c_Cursor_get_mangling(VALUE);
 #endif //CURSOR_H

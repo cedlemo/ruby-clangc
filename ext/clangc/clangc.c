@@ -208,6 +208,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "comment_range", RUBY_METHOD_FUNC(c_Cursor_get_comment_range), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "raw_comment_text", RUBY_METHOD_FUNC(c_Cursor_get_raw_comment_text), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "brief_comment_text", RUBY_METHOD_FUNC(c_Cursor_get_brief_comment_text), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "mangling", RUBY_METHOD_FUNC(c_Cursor_get_mangling), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

@@ -1228,3 +1228,18 @@ c_Cursor_get_brief_comment_text(VALUE self)
   clang_disposeString(str);
   return brief_comment;
 }
+/**
+ * call-seq:
+ *  Clangc::Cursor#mangling => String
+ * Retrieve the String representing the mangled name of the cursor.
+ */
+VALUE
+c_Cursor_get_mangling(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_Cursor_getMangling(c->data);
+  VALUE mangling = rb_str_new2(clang_getCString(str) );
+  clang_disposeString(str);
+  return mangling;
+}
