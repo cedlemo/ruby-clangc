@@ -27,6 +27,10 @@ typedef struct CursorSet_t {
 
 VALUE
 c_CursorSet_struct_alloc(VALUE);
+
 VALUE
 c_CursorSet_initialize(VALUE);
+
+VALUE
+c_CursorSet_contains(VALUE, VALUE);
 #endif //CURSORSET_H

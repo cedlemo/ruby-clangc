@@ -247,5 +247,5 @@ void Init_clangc(void) {
   VALUE c_CursorSet = rb_define_class_under(m_Clangc, "CursorSet", rb_cObject);
   rb_define_alloc_func(c_CursorSet, c_CursorSet_struct_alloc);
   rb_define_private_method(c_CursorSet, "initialize", RUBY_METHOD_FUNC(c_CursorSet_initialize), 0);// in class_CursorSet.c
-
+  rb_define_method(c_CursorSet, "contains", RUBY_METHOD_FUNC(c_CursorSet_contains), 1);// in class_CursorSet.c
 }

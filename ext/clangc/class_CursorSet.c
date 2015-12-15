@@ -19,6 +19,7 @@
 /*CursorSet ruby class*/
 #include "class_CursorSet.h"
 #include "macros.h"
+#include "class_Cursor.h"
 
 static void
 c_CursorSet_struct_free(CursorSet_t *s)
@@ -68,11 +69,26 @@ c_CursorSet_initialize(VALUE self) {
   return self;
 }
 
-/*VALUE
-generate_CursorSet_under(VALUE module, VALUE superclass)
-{
-  VALUE klass = rb_define_class_under(module, "CursorSet", superclass);
-  rb_define_alloc_func(klass, c_CursorSet_struct_alloc);
-  return klass;
-}
+
+/**
+* call-seq:
+*   Clangc::CursorSet#contains(Clangc::Cursor) => true / false
+*
+* Queries a CXCursorSet to see if it contains a specific CXCursor.
+*
+* Returns true if the set contains the specified cursor.
 */
+VALUE
+c_CursorSet_contains(VALUE self, VALUE cursor)
+{
+  CursorSet_t *cs;
+  Cursor_t *c;
+
+  Data_Get_Struct(self, CursorSet_t, cs);
+  Data_Get_Struct(cursor, Cursor_t, c);
+
+  if(clang_CXCursorSet_contains(cs->data, c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
