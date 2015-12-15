@@ -653,4 +653,17 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_template_cursor_kind
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      kind_found = false
+      Clangc::CursorKind.constants.each do |c|
+        if cursor.template_cursor_kind == Clangc::CursorKind.const_get(c)
+          kind_found = true
+        end
+      end
+      assert_equal true, kind_found
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
