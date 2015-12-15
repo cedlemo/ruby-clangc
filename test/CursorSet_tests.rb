@@ -22,4 +22,14 @@ end
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_CursorSet_insert
+    cursor_set = Clangc::CursorSet.new
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, parent|
+      assert_equal true, cursor_set.insert(cursor)
+      assert_equal true, cursor_set.contains(cursor)
+      assert_equal false, cursor_set.insert(cursor)
+
+      Clangc::ChildVisitResult::BREAK
+    end
+  end
 end
