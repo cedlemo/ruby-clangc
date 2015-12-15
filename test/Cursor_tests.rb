@@ -633,4 +633,14 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_cxx_method_is_virtual
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::CXX_METHOD
+        # TODO
+        assert [true, false].include?( cursor.cxx_method_is_virtual )
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
