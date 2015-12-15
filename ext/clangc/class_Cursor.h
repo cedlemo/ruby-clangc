@@ -212,4 +212,8 @@ c_Cursor_cxx_method_is_const(VALUE);
 
 VALUE
 c_Cursor_get_template_cursor_kind(VALUE);
+
+VALUE
+c_Cursor_get_specialized_cursor_template(VALUE);
+
 #endif //CURSOR_H

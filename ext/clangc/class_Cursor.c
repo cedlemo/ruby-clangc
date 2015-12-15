@@ -1341,3 +1341,47 @@ c_Cursor_get_template_cursor_kind(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getTemplateCursorKind(c->data)); 
 }
+
+/**
+* call-seq:
+*   Clangc::Cursor#specialized_cursor_template => Clangc::Cursor
+*
+* Given a cursor that may represent a specialization or instantiation
+* of a template, retrieve the cursor that represents the template that it
+* specializes or from which it was instantiated.
+*
+* This routine determines the template involved both for explicit 
+* specializations of templates and for implicit instantiations of the template,
+* both of which are referred to as "specializations". For a class template
+* specialization (e.g., \c std::vector<bool>), this routine will return 
+* either the primary template (\c std::vector) or, if the specialization was
+* instantiated from a class template partial specialization, the class template
+* partial specialization. For a class template partial specialization and a
+* function template specialization (including instantiations), this
+* this routine will return the specialized template.
+*
+* For members of a class template (e.g., member functions, member classes, or
+* static data members), returns the specialized or instantiated member. 
+* Although not strictly "templates" in the C++ language, members of class
+* templates have the same notions of specializations and instantiations that
+* templates do, so this routine treats them similarly.
+*
+* The cursor  may be a specialization of a template or a member
+* of a template.
+*
+* If the given cursor is a specialization or instantiation of a 
+* template or a member thereof, it returns the template or member that it specializes or
+* from which it was instantiated. Otherwise, returns a NULL cursor.
+*/
+VALUE
+c_Cursor_get_specialized_cursor_template(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *sct;
+  VALUE specialized_cursor_template;
+  R_GET_CLASS_DATA("Clangc", "Cursor", specialized_cursor_template, Cursor_t, sct);
+  sct->data = clang_getSpecializedCursorTemplate(c->data);
+  sct->parent = c->parent;
+  return specialized_cursor_template;
+}
