@@ -1261,12 +1261,13 @@ c_Cursor_cxx_method_is_pure_virtual(VALUE self)
   else
     return Qfalse;
 }
+
 /**
 * call-seq:
 *   Clangc::Cursor#cxx_method_is_statique => true /false
 *
 * Determine if a C++ member function or member function template is
-* pure virtual.
+* pure static.
 */
 VALUE
 c_Cursor_cxx_method_is_static(VALUE self)
@@ -1274,6 +1275,23 @@ c_Cursor_cxx_method_is_static(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   if(clang_CXXMethod_isStatic(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
+/**
+* call-seq:
+*   Clangc::Cursor#cxx_method_is_virtual => true /false
+*
+* Determine if a C++ member function or member function template is
+* virtual.
+*/
+VALUE
+c_Cursor_cxx_method_is_virtual(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isVirtual(c->data) != 0)
     return Qtrue;
   else
     return Qfalse;
