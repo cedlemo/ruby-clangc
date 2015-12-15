@@ -608,7 +608,27 @@ class TestCursorUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE))
+        # TODO
         assert_instance_of String, cursor.mangling
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_Cursor_cxx_method_is_pure_virtual
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::CXX_METHOD
+        assert [true, false].include?( cursor.cxx_method_is_pure_virtual )
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_Cursor_cxx_method_is_static
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::CXX_METHOD
+        # TODO
+        assert [true, false].include?( cursor.cxx_method_is_static )
       end
       Clangc::ChildVisitResult::RECURSE
     end
