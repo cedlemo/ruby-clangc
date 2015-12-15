@@ -1284,7 +1284,8 @@ c_Cursor_cxx_method_is_static(VALUE self)
 *   Clangc::Cursor#cxx_method_is_virtual => true /false
 *
 * Determine if a C++ member function or member function template is
-* virtual.
+* explicitly declared 'virtual' or if it overrides a virtual method from
+* one of the base classes.
 */
 VALUE
 c_Cursor_cxx_method_is_virtual(VALUE self)
