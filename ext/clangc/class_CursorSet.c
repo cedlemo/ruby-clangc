@@ -92,3 +92,26 @@ c_CursorSet_contains(VALUE self, VALUE cursor)
   else
     return Qfalse;
 }
+
+/**
+* call-seq:
+*   Clangc::CursorSet(Clangc::Cursor) => true/false
+*
+* Inserts a CXCursor into a CXCursorSet.
+*
+* Returns false if the CXCursor was already in the set, and true otherwise.
+*/
+VALUE
+c_CursorSet_insert(VALUE self, VALUE cursor)
+{
+  CursorSet_t *cs;
+  Cursor_t *c;
+
+  Data_Get_Struct(self, CursorSet_t, cs);
+  Data_Get_Struct(cursor, Cursor_t, c);
+
+  if(clang_CXCursorSet_insert(cs->data, c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}

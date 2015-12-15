@@ -33,4 +33,7 @@ c_CursorSet_initialize(VALUE);
 
 VALUE
 c_CursorSet_contains(VALUE, VALUE);
+
+VALUE
+c_CursorSet_insert(VALUE, VALUE);
 #endif //CURSORSET_H
