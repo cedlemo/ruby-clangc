@@ -76,11 +76,21 @@
     
     <li ><a href="#method-i-availability">#availability</a>
     
+    <li ><a href="#method-i-brief_comment_text">#brief_comment_text</a>
+    
     <li ><a href="#method-i-canonical_cursor">#canonical_cursor</a>
     
     <li ><a href="#method-i-comment_range">#comment_range</a>
     
     <li ><a href="#method-i-cxx_access_specifier">#cxx_access_specifier</a>
+    
+    <li ><a href="#method-i-cxx_method_is_const">#cxx_method_is_const</a>
+    
+    <li ><a href="#method-i-cxx_method_is_pure_virtual">#cxx_method_is_pure_virtual</a>
+    
+    <li ><a href="#method-i-cxx_method_is_static">#cxx_method_is_static</a>
+    
+    <li ><a href="#method-i-cxx_method_is_virtual">#cxx_method_is_virtual</a>
     
     <li ><a href="#method-i-decl_obj_c_type_encoding">#decl_obj_c_type_encoding</a>
     
@@ -148,6 +158,8 @@
     
     <li ><a href="#method-i-location">#location</a>
     
+    <li ><a href="#method-i-mangling">#mangling</a>
+    
     <li ><a href="#method-i-num_arguments">#num_arguments</a>
     
     <li ><a href="#method-i-num_overloaded_decls">#num_overloaded_decls</a>
@@ -164,6 +176,8 @@
     
     <li ><a href="#method-i-overloaded_decls">#overloaded_decls</a>
     
+    <li ><a href="#method-i-raw_comment_text">#raw_comment_text</a>
+    
     <li ><a href="#method-i-receiver_type">#receiver_type</a>
     
     <li ><a href="#method-i-referenced">#referenced</a>
@@ -172,9 +186,13 @@
     
     <li ><a href="#method-i-semantic_parent">#semantic_parent</a>
     
+    <li ><a href="#method-i-specialized_cursor_template">#specialized_cursor_template</a>
+    
     <li ><a href="#method-i-spelling">#spelling</a>
     
     <li ><a href="#method-i-storage_class">#storage_class</a>
+    
+    <li ><a href="#method-i-template_cursor_kind">#template_cursor_kind</a>
     
     <li ><a href="#method-i-type">#type</a>
     
@@ -375,6 +393,50 @@ c_Cursor_get_availability(VALUE self)
       </div>
 
     
+      <div id="method-i-brief_comment_text" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#brief_comment_text &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that represents a documentable entity (e.g., declaration),
+return the associated \brief paragraph; otherwise return the first
+paragraph.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="brief_comment_text-source">
+            <pre>VALUE
+c_Cursor_get_brief_comment_text(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_Cursor_getBriefCommentText(c-&gt;data);
+  VALUE brief_comment = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return brief_comment;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-canonical_cursor" class="method-detail ">
         
         
@@ -521,6 +583,177 @@ c_Cursor_get_cxx_access_specifier(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCXXAccessSpecifier(c-&gt;data));  
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cxx_method_is_const" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#cxx_method_is_const &rarr; true /false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine if a C++ member function or member function template is constant.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cxx_method_is_const-source">
+            <pre>VALUE
+c_Cursor_cxx_method_is_const(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isConst(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cxx_method_is_pure_virtual" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#cxx_method_is_pure_virtual &rarr; true /false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine if a C++ member function or member function template is pure
+virtual.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cxx_method_is_pure_virtual-source">
+            <pre>VALUE
+c_Cursor_cxx_method_is_pure_virtual(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isPureVirtual(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cxx_method_is_static" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#cxx_method_is_static &rarr; true /false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine if a C++ member function or member function template is static.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cxx_method_is_static-source">
+            <pre>VALUE
+c_Cursor_cxx_method_is_static(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isStatic(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cxx_method_is_virtual" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#cxx_method_is_virtual &rarr; true /false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine if a C++ member function or member function template is
+explicitly declared &#39;virtual&#39; or if it overrides a virtual method
+from one of the base classes.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cxx_method_is_virtual-source">
+            <pre>VALUE
+c_Cursor_cxx_method_is_virtual(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isVirtual(c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }</pre>
           </div>
           
@@ -1571,7 +1804,7 @@ c_Cursor_is_preprocessing(VALUE self)
           <p>Determine whether the given cursor kind represents a simple reference.</p>
 
 <p>Note that other kinds of cursors (such as expressions) can also refer to
-other cursors. Use Clangc::Curosr#cursor_referenced to determine whether a
+other cursors. Use Clangc::Cursor#cursor_referenced to determine whether a
 particular cursor refers to another entity.</p>
           
           
@@ -2004,6 +2237,55 @@ c_Cursor_get_source_location(VALUE self)
       </div>
 
     
+      <div id="method-i-mangling" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#mangling &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Retrieve the String representing the mangled name of the cursor.
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="mangling-source">
+            <pre>VALUE
+c_Cursor_get_mangling(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_Cursor_getMangling(c-&gt;data);
+  VALUE mangling = rb_str_new2(clang_getCString(str) );
+  clang_disposeString(str);
+  return mangling;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-num_arguments" class="method-detail ">
         
         
@@ -2380,6 +2662,49 @@ is not an overloaded declaration, it returns an empty array.</p>
       </div>
 
     
+      <div id="method-i-raw_comment_text" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#raw_comment_text &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that represents a declaration, return the associated comment
+text, including comment markers.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="raw_comment_text-source">
+            <pre>VALUE
+c_Cursor_get_raw_comment_text(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CXString str = clang_Cursor_getRawCommentText(c-&gt;data);
+  VALUE raw_comment = rb_str_new2( clang_getCString(str) );
+  clang_disposeString(str);
+  return raw_comment;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-receiver_type" class="method-detail ">
         
         
@@ -2595,6 +2920,76 @@ c_Cursor_get_semantic_parent(VALUE self)
       </div>
 
     
+      <div id="method-i-specialized_cursor_template" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#specialized_cursor_template &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that may represent a specialization or instantiation of a
+template, retrieve the cursor that represents the template that it
+specializes or from which it was instantiated.</p>
+
+<p>This routine determines the template involved both for explicit 
+specializations of templates and for implicit instantiations of the
+template, both of which are referred to as “specializations”. For a class
+template specialization (e.g., c std::vector&lt;bool&gt;), this routine
+will return  either the primary template (c std::vector) or, if the
+specialization was instantiated from a class template partial
+specialization, the class template partial specialization. For a class
+template partial specialization and a function template specialization
+(including instantiations), this this routine will return the specialized
+template.</p>
+
+<p>For members of a class template (e.g., member functions, member classes, or
+static data members), returns the specialized or instantiated member. 
+Although not strictly “templates” in the C++ language, members of class
+templates have the same notions of specializations and instantiations that
+templates do, so this routine treats them similarly.</p>
+
+<p>The cursor  may be a specialization of a template or a member of a
+template.</p>
+
+<p>If the given cursor is a specialization or instantiation of a  template or
+a member thereof, it returns the template or member that it specializes or
+from which it was instantiated. Otherwise, returns a NULL cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="specialized_cursor_template-source">
+            <pre>VALUE
+c_Cursor_get_specialized_cursor_template(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Cursor_t *sct;
+  VALUE specialized_cursor_template;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, specialized_cursor_template, Cursor_t, sct);
+  sct-&gt;data = clang_getSpecializedCursorTemplate(c-&gt;data);
+  sct-&gt;parent = c-&gt;parent;
+  return specialized_cursor_template;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-spelling" class="method-detail ">
         
         
@@ -2669,6 +3064,57 @@ c_Cursor_get_storage_class(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_Cursor_getStorageClass(c-&gt;data));  
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_cursor_kind" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_cursor_kind &rarr; Clangc::CursorKind.constants
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that represents a template, determine the cursor kind of the
+specializations would be generated by instantiating the template.</p>
+
+<p>This routine can be used to determine what flavor of function template,
+class template, or class template partial specialization is stored in the
+cursor. For example, it can describe whether a class template cursor is
+declared with “struct”, “class” or “union”.</p>
+
+<p>C The cursor to query should represent a template declaration.</p>
+
+<p>It returns the cursor kind of the specializations that would be generated
+by instantiating the template . If the cursor is not a template, it returns
+Clangc::CursorKind::NO_DECL_FOUND.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_cursor_kind-source">
+            <pre>VALUE
+c_Cursor_get_template_cursor_kind(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  return CUINT_2_NUM(clang_getTemplateCursorKind(c-&gt;data)); 
 }</pre>
           </div>
           
