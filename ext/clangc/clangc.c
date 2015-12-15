@@ -213,6 +213,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "cxx_method_is_static", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_static), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "cxx_method_is_virtual", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_virtual), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "cxx_method_is_const", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_const), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "template_cursor_kind", RUBY_METHOD_FUNC(c_Cursor_get_template_cursor_kind), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

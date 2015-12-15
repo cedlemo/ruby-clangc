@@ -209,4 +209,7 @@ c_Cursor_cxx_method_is_virtual(VALUE);
 
 VALUE
 c_Cursor_cxx_method_is_const(VALUE);
+
+VALUE
+c_Cursor_get_template_cursor_kind(VALUE);
 #endif //CURSOR_H
