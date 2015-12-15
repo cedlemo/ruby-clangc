@@ -38,5 +38,8 @@ require "./binder"
 #Cursor_class = Binder::Ruby_C_Class_Generator.new("Cursor", "CXCursor", true)
 #Cursor_class.generate_files
 
-Cursor_class = Binder::Ruby_C_Class_Generator.new("Type", "CXType", false)
+#Cursor_class = Binder::Ruby_C_Class_Generator.new("Type", "CXType", false)
+#Cursor_class.generate_files
+#
+Cursor_class = Binder::Ruby_C_Class_Generator.new("CursorSet", "CXCursorSet", true)
 Cursor_class.generate_files
