@@ -206,4 +206,7 @@ c_Cursor_cxx_method_is_static(VALUE);
 
 VALUE
 c_Cursor_cxx_method_is_virtual(VALUE);
+
+VALUE
+c_Cursor_cxx_method_is_const(VALUE);
 #endif //CURSOR_H
