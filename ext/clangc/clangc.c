@@ -28,6 +28,7 @@
 #include "class_SourceLocation.h"
 #include "class_Cursor.h"
 #include "class_Type.h"
+#include "class_CursorSet.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -239,4 +240,12 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "array_element_type", RUBY_METHOD_FUNC(c_Type_get_array_element_type), 0);// in class_Type.c
   rb_define_method(c_Type, "array_size", RUBY_METHOD_FUNC(c_Type_get_array_size), 0);// in class_Type.c
   rb_define_method(c_Type, "is_pod", RUBY_METHOD_FUNC(c_Type_is_pod), 0);// in class_Type.c
+  
+/**
+* \brief A fast container representing a set of CXCursors.
+*/
+  VALUE c_CursorSet = rb_define_class_under(m_Clangc, "CursorSet", rb_cObject);
+  rb_define_alloc_func(c_CursorSet, c_CursorSet_struct_alloc);
+  rb_define_private_method(c_CursorSet, "initialize", RUBY_METHOD_FUNC(c_CursorSet_initialize), 0);// in class_CursorSet.c
+
 }
