@@ -12,7 +12,7 @@ Clang version used are 3.5.0 to 3.8.0
 
 # Status:
 
-*    131/252 functions wrapped => 51.98412698412699%
+*    133/252 functions wrapped => 52.77777777777778%
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
@@ -21,6 +21,7 @@ Clang version used are 3.5.0 to 3.8.0
 *    CXSourceLocation
 *    CXCursor
 *    CXType
+*    CXCursorSet
 
 # Examples (see samples directory): 
 
