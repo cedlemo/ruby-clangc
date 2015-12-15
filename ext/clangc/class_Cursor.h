@@ -197,4 +197,10 @@ c_Cursor_get_brief_comment_text(VALUE);
 
 VALUE
 c_Cursor_get_mangling(VALUE);
+
+VALUE
+c_Cursor_cxx_method_is_pure_virtual(VALUE);
+
+VALUE
+c_Cursor_cxx_method_is_static(VALUE);
 #endif //CURSOR_H

@@ -1229,10 +1229,10 @@ c_Cursor_get_brief_comment_text(VALUE self)
   return brief_comment;
 }
 /**
- * call-seq:
- *  Clangc::Cursor#mangling => String
- * Retrieve the String representing the mangled name of the cursor.
- */
+* call-seq:
+*  Clangc::Cursor#mangling => String
+* Retrieve the String representing the mangled name of the cursor.
+*/
 VALUE
 c_Cursor_get_mangling(VALUE self)
 {
@@ -1242,4 +1242,39 @@ c_Cursor_get_mangling(VALUE self)
   VALUE mangling = rb_str_new2(clang_getCString(str) );
   clang_disposeString(str);
   return mangling;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#cxx_method_is_pure_virtual => true /false
+*
+* Determine if a C++ member function or member function template is
+* pure virtual.
+*/
+VALUE
+c_Cursor_cxx_method_is_pure_virtual(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isPureVirtual(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}
+/**
+* call-seq:
+*   Clangc::Cursor#cxx_method_is_statique => true /false
+*
+* Determine if a C++ member function or member function template is
+* pure virtual.
+*/
+VALUE
+c_Cursor_cxx_method_is_static(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  if(clang_CXXMethod_isStatic(c->data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }
