@@ -2,6 +2,8 @@
 
 ## Primary
 
+[ ] Be sure that GC doesn't collect translation unit when still needed
+
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] Continue / improve YARD usage
