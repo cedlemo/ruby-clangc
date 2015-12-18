@@ -216,4 +216,6 @@ c_Cursor_get_template_cursor_kind(VALUE);
 VALUE
 c_Cursor_get_specialized_cursor_template(VALUE);
 
+VALUE
+c_Cursor_get_completion_string(VALUE);
 #endif //CURSOR_H

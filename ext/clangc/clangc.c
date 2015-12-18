@@ -29,7 +29,7 @@
 #include "class_Cursor.h"
 #include "class_Type.h"
 #include "class_CursorSet.h"
-#include "class_Completion.h"
+#include "class_CompletionString.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -217,6 +217,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "cxx_method_is_const", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_const), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_cursor_kind", RUBY_METHOD_FUNC(c_Cursor_get_template_cursor_kind), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "specialized_cursor_template", RUBY_METHOD_FUNC(c_Cursor_get_specialized_cursor_template), 0);// in class_Cursor.c
+  rb_define_method(c_Cursor, "completion_string", RUBY_METHOD_FUNC(c_Cursor_get_completion_string), 0);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

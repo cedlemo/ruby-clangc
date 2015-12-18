@@ -21,7 +21,7 @@
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
 typedef struct CompletionString_t {
-  CompletionString data; 
+  CXCompletionString data; 
   VALUE parent;
 } CompletionString_t;
 

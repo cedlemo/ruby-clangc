@@ -21,6 +21,7 @@
 #include "class_SourceLocation.h"
 #include "class_SourceRange.h"
 #include "class_File.h"
+#include "class_CompletionString.h"
 #include "macros.h"
 
 static void
@@ -1384,4 +1385,30 @@ c_Cursor_get_specialized_cursor_template(VALUE self)
   sct->data = clang_getSpecializedCursorTemplate(c->data);
   sct->parent = c->parent;
   return specialized_cursor_template;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#completion_string => Clangc::CompletionString
+*
+* Retrieve a completion string for an arbitrary declaration or macro
+* definition cursor.
+*
+* It returns a non-context-sensitive completion string for declaration and macro
+* definition cursors, or nil for other kinds of cursors.
+*/
+VALUE
+c_Cursor_get_completion_string(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CompletionString_t *cs;
+  VALUE completion_string;
+  R_GET_CLASS_DATA("Clangc", "CompletionString", completion_string, CompletionString_t, cs);
+  cs->data = clang_getCursorCompletionString(c->data);
+  cs->parent = self;
+  if(cs->data == NULL)
+    return Qnil;
+  else
+    return completion_string;
 }
