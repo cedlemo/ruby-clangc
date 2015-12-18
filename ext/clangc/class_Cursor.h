@@ -218,4 +218,7 @@ c_Cursor_get_specialized_cursor_template(VALUE);
 
 VALUE
 c_Cursor_get_completion_string(VALUE);
+
+VALUE
+c_Cursor_get_translation_unit(VALUE);
 #endif //CURSOR_H

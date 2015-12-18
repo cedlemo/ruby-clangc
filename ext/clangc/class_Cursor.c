@@ -22,6 +22,7 @@
 #include "class_SourceRange.h"
 #include "class_File.h"
 #include "class_CompletionString.h"
+#include "class_TranslationUnit.h"
 #include "macros.h"
 
 static void
@@ -1411,4 +1412,22 @@ c_Cursor_get_completion_string(VALUE self)
     return Qnil;
   else
     return completion_string;
+}
+
+/**
+* call-seq:
+*   Clangc::Cursor#translation_unit => Clangc::TranslationUnit
+*
+* Returns the translation unit that a cursor originated from.
+*/
+VALUE
+c_Cursor_get_translation_unit(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  TranslationUnit_t *t;
+  VALUE translation_unit;
+  R_GET_CLASS_DATA("Clangc", "TranslationUnit", translation_unit, TranslationUnit_t, t);
+  t->data = clang_Cursor_getTranslationUnit(c->data);
+  return translation_unit;
 }
