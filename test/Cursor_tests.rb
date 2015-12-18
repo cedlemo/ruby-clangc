@@ -675,4 +675,16 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_completion_string
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE))
+        # TODO
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_instance_of Clangc::CompletionString, cursor.completion_string
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
