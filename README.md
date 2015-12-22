@@ -5,14 +5,19 @@ ruby bindings to the clang C interface
 This is free software shared under the GNU GPL 3.
 Clang version used are 3.5.0 to 3.8.0
 
-# Installation:
+## Installation:
 
     gem build
     gem install clangc-x.x.x.gem
 
-# Status:
+## Status:
 
-*    133/252 functions wrapped => 52.77777777777778%
+### functions wrapped:
+
+*    137/252 functions wrapped => 54.36507936507936%
+
+### classes wrapped:
+
 *    CXIndex
 *    CXTranslationUnit
 *    CXDiagnostic
@@ -23,7 +28,7 @@ Clang version used are 3.5.0 to 3.8.0
 *    CXType
 *    CXCursorSet
 
-# Examples (see samples directory): 
+## Examples (see samples directory): 
 
 ```ruby
 #!/usr/bin/env ruby

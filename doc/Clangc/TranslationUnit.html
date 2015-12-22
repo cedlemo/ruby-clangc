@@ -157,6 +157,7 @@ c_TranslationUnit_get_cursor(VALUE self)
   VALUE a_cursor;
   R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, a_cursor, Cursor_t, c);
   c-&gt;data = clang_getTranslationUnitCursor(t-&gt;data);
+  c-&gt;parent = self;
   return a_cursor;
 }</pre>
           </div>

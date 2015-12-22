@@ -82,6 +82,8 @@
     
     <li ><a href="#method-i-comment_range">#comment_range</a>
     
+    <li ><a href="#method-i-completion_string">#completion_string</a>
+    
     <li ><a href="#method-i-cxx_access_specifier">#cxx_access_specifier</a>
     
     <li ><a href="#method-i-cxx_method_is_const">#cxx_method_is_const</a>
@@ -537,6 +539,57 @@ c_Cursor_get_comment_range(VALUE self)
   s-&gt;data = clang_Cursor_getCommentRange(c-&gt;data);
   s-&gt;parent = self;
   return cmt_rge;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-completion_string" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#completion_string &rarr; Clangc::CompletionString
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a completion string for an arbitrary declaration or macro
+definition cursor.</p>
+
+<p>It returns a non-context-sensitive completion string for declaration and
+macro definition cursors, or nil for other kinds of cursors.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="completion_string-source">
+            <pre>VALUE
+c_Cursor_get_completion_string(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  CompletionString_t *cs;
+  VALUE completion_string;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;CompletionString&quot;, completion_string, CompletionString_t, cs);
+  cs-&gt;data = clang_getCursorCompletionString(c-&gt;data);
+  cs-&gt;parent = self;
+  if(cs-&gt;data == NULL)
+    return Qnil;
+  else
+    return completion_string;
 }</pre>
           </div>
           

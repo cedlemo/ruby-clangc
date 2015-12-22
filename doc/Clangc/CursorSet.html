@@ -72,6 +72,10 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-contains">#contains</a>
+    
+    <li ><a href="#method-i-insert">#insert</a>
+    
   </ul>
 </div>
 
@@ -138,6 +142,110 @@ c_CursorSet_initialize(VALUE self) {
   Data_Get_Struct(self, CursorSet_t, c);
   c-&gt;data = clang_createCXCursorSet();
   return self;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-contains" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CursorSet#contains(Clangc::Cursor) &rarr; true / false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Queries a CXCursorSet to see if it contains a specific CXCursor.</p>
+
+<p>Returns true if the set contains the specified cursor.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="contains-source">
+            <pre>VALUE
+c_CursorSet_contains(VALUE self, VALUE cursor)
+{
+  CursorSet_t *cs;
+  Cursor_t *c;
+
+  Data_Get_Struct(self, CursorSet_t, cs);
+  Data_Get_Struct(cursor, Cursor_t, c);
+
+  if(clang_CXCursorSet_contains(cs-&gt;data, c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-insert" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CursorSet(Clangc::Cursor) &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Inserts a CXCursor into a CXCursorSet.</p>
+
+<p>Returns false if the CXCursor was already in the set, and true otherwise.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="insert-source">
+            <pre>VALUE
+c_CursorSet_insert(VALUE self, VALUE cursor)
+{
+  CursorSet_t *cs;
+  Cursor_t *c;
+
+  Data_Get_Struct(self, CursorSet_t, cs);
+  Data_Get_Struct(cursor, Cursor_t, c);
+
+  if(clang_CXCursorSet_insert(cs-&gt;data, c-&gt;data) != 0)
+    return Qtrue;
+  else
+    return Qfalse;
 }</pre>
           </div>
           
