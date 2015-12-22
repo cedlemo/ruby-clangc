@@ -209,5 +209,6 @@ c_TranslationUnit_get_cursor(VALUE self)
   VALUE a_cursor;
   R_GET_CLASS_DATA("Clangc", "Cursor", a_cursor, Cursor_t, c);
   c->data = clang_getTranslationUnitCursor(t->data);
+  c->parent = self;
   return a_cursor;
 }

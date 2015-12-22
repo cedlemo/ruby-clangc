@@ -116,11 +116,10 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_translation_unit
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
-      assert_instance_of Clangc::TranslationUnit, cursor.translation_unit
-      assert_instance_of Clangc::TranslationUnit, parent.translation_unit
+      tu
+      assert_instance_of Clangc::TranslationUnit, tu 
     end
   end
-
   def test_Cursor_get_semantic_parent
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 

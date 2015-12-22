@@ -1415,19 +1415,6 @@ c_Cursor_get_completion_string(VALUE self)
 }
 
 /**
-* call-seq:
-*   Clangc::Cursor#translation_unit => Clangc::TranslationUnit
-*
-* Returns the translation unit that a cursor originated from.
+* clang_Cursor_getTranslationUnit won't be implemented
+* The memory managment would be too tricky
 */
-VALUE
-c_Cursor_get_translation_unit(VALUE self)
-{
-  Cursor_t *c;
-  Data_Get_Struct(self, Cursor_t, c);
-  TranslationUnit_t *t;
-  VALUE translation_unit;
-  R_GET_CLASS_DATA("Clangc", "TranslationUnit", translation_unit, TranslationUnit_t, t);
-  t->data = clang_Cursor_getTranslationUnit(c->data);
-  return translation_unit;
-}
