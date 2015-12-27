@@ -1418,3 +1418,32 @@ c_Cursor_get_completion_string(VALUE self)
 * clang_Cursor_getTranslationUnit won't be implemented
 * The memory managment would be too tricky
 */
+
+/**
+* call-seq:
+*   Clangc::Cursor#template_argument_kind(i) => Clangc::TemplateArgumentKind
+*
+* Retrieve the kind of the I'th template argument of the CXCursor C.
+*
+* If the argument CXCursor does not represent a Clangc::CursorKind::FUNCTION_DECL, an invalid
+* template argument kind is returned.
+*
+* For example, for the following declaration and specialization:
+*   template <typename T, int kInt, bool kBool>
+*   void foo() { ... }
+*
+*   template <>
+*   void foo<float, -7, true>();
+*
+* For I = 0, 1, and 2, Type, Integral, and Integral will be returned,
+* respectively.
+*/
+VALUE
+c_Cursor_get_template_argument_kind(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_index;
+  RNUM_2_UINT(index, c_index);
+  return CUINT_2_NUM(clang_Cursor_getTemplateArgumentKind(c->data, c_index));   
+}
