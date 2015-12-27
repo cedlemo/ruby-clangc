@@ -14,7 +14,7 @@ Clang version used are 3.5.0 to 3.8.0
 
 ### functions wrapped:
 
-*    137/252 functions wrapped => 54.36507936507936%
+*    138/252 functions wrapped => 54.761904761904766%
 
 ### classes wrapped:
 
