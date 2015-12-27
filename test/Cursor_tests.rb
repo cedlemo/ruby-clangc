@@ -709,4 +709,19 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_template_arguments_kinds
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+        cursor.template_arguments_kinds.each do |k|
+          found = false
+          Clangc::TemplateArgumentKind.constants.each do |c|
+            found = true if k == Clangc::TemplateArgumentKind.const_get(c)
+          end
+          assert found, cursor.spelling
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
