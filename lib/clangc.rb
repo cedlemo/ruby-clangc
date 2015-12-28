@@ -84,16 +84,16 @@ module Clangc
     end
   end
   class Cursor 
-  ## 
-  # :call-seq:
-  # Clangc::Cursor#arguments -> Array
-  #
-  # Return an array that contains all the 
-  # cursors for the arguments of the function that
-  # is related to the current cursor.
-  # If the current cursor is not a function, it returns
-  # an empty array.
-  def arguments
+    ## 
+    # :call-seq:
+    # Clangc::Cursor#arguments -> Array
+    #
+    # Return an array that contains all the 
+    # cursors for the arguments of the function that
+    # is related to the current cursor.
+    # If the current cursor is not a function, it returns
+    # an empty array.
+    def arguments
       num = num_arguments
       cursors = []
       return cursors if num == -1
@@ -103,16 +103,16 @@ module Clangc
       end
       cursors
     end
-  ## 
-  # :call-seq:
-  # Clangc::Cursor#overloaded_decls -> Array
-  #
-  # Return an array that contains all the 
-  # cursors for the overloaded declarations that
-  # are related to the current cursor.
-  # If the current cursor is not an overloaded declaration, it returns
-  # an empty array.
-  def overloaded_decls
+    ## 
+    # :call-seq:
+    # Clangc::Cursor#overloaded_decls -> Array
+    #
+    # Return an array that contains all the 
+    # cursors for the overloaded declarations that
+    # are related to the current cursor.
+    # If the current cursor is not an overloaded declaration, it returns
+    # an empty array.
+    def overloaded_decls
       num = num_overloaded_decls
       cursors = []
       return cursors if num == 0
@@ -122,16 +122,16 @@ module Clangc
       end
       cursors
     end
-  ## 
-  # :call-seq:
-  # Clangc::Cursor#template_arguments_kinds -> Array
-  #
-  # Return an array that contains all the 
-  # kinds for the arguments of the function template that
-  # is related to the current cursor.
-  # If the current cursor is not a function declaration, it returns
-  # an empty array.
-  def template_arguments_kinds
+    ## 
+    # :call-seq:
+    # Clangc::Cursor#template_arguments_kinds -> Array
+    #
+    # Return an array that contains all the 
+    # kinds for the arguments of the function template that
+    # is related to the current cursor.
+    # If the current cursor is not a function declaration, it returns
+    # an empty array.
+    def template_arguments_kinds
       num = num_template_arguments
       kinds = []
       return kinds if num == -1
@@ -140,6 +140,25 @@ module Clangc
         kinds << template_argument_kind(i)
       end
       kinds
+    end
+    ## 
+    # :call-seq:
+    # Clangc::Cursor#template_arguments_types -> Array
+    #
+    # Return an array that contains all the 
+    # types for the arguments of the function template that
+    # is related to the current cursor.
+    # If the current cursor is not a function declaration, it returns
+    # an empty array.
+    def template_arguments_types
+      num = num_template_arguments
+      types = []
+      return types if num == -1
+
+      for i in 0..(num - 1) do
+        types << template_argument_type(i)
+      end
+      types
     end
   end
 end
