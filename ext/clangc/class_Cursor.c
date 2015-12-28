@@ -1447,3 +1447,39 @@ c_Cursor_get_template_argument_kind(VALUE self, VALUE index)
   RNUM_2_UINT(index, c_index);
   return CUINT_2_NUM(clang_Cursor_getTemplateArgumentKind(c->data, c_index));   
 }
+
+/**
+ * call-seq:
+ *  Clangc::Cursor#template_argument_type => Clangc::Type
+ *
+ * Retrieve a Clangc::Type representing the type of a TemplateArgument of a
+ *  function decl representing a template specialization.
+ *
+ * If the Clangc::Cursor does not represent a Clangc::CursorKind::FUNCTION_DECL whose I'th
+ * template argument has a kind of CXTemplateArgKind_Integral, an invalid type
+ * is returned.
+ *
+ * For example, for the following declaration and specialization:
+ *   template <typename T, int kInt, bool kBool>
+ *   void foo() { ... }
+ *
+ *   template <>
+ *   void foo<float, -7, true>();
+ *
+ * If called with I = 0, "float", will be returned.
+ * Invalid types will be returned for I == 1 or 2.
+ */
+VALUE
+c_Cursor_get_template_argument_type(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_index;
+  RNUM_2_UINT(index, c_index);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  t->data = clang_Cursor_getTemplateArgumentType(c->data, c_index);
+  t->parent = self;
+  return type;
+}

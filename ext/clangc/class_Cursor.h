@@ -221,4 +221,7 @@ c_Cursor_get_completion_string(VALUE);
 
 VALUE
 c_Cursor_get_template_argument_kind(VALUE, VALUE);
+
+VALUE
+c_Cursor_get_template_argument_type(VALUE, VALUE);
 #endif //CURSOR_H
