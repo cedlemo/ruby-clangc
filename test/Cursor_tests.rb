@@ -733,4 +733,15 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_template_arguments_types
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          args = cursor.template_arguments_types
+          assert_equal "float" , args[0].spelling
+          assert_equal "", args[1].spelling, args[1].spelling
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
