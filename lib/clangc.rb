@@ -160,5 +160,24 @@ module Clangc
       end
       types
     end
+    ## 
+    # :call-seq:
+    # Clangc::Cursor#template_arguments_values -> Array
+    #
+    # Return an array that contains all the 
+    # values for the arguments of the function template that
+    # is related to the current cursor.
+    # If the current cursor is not a function declaration, it returns
+    # an empty array.
+    def template_arguments_values
+      num = num_template_arguments
+      values = []
+      return values if num == -1
+
+      for i in 0..(num - 1) do
+        values << template_argument_value(i)
+      end
+      values
+    end
   end
 end
