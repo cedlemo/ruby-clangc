@@ -220,6 +220,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "completion_string", RUBY_METHOD_FUNC(c_Cursor_get_completion_string), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_argument_kind", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_kind), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_argument_type", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_type), 1);// in class_Cursor.c
+  rb_define_method(c_Cursor, "template_argument_value", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_value), 1);// in class_Cursor.c
 
   /*
 * Type informations for Clangc::Cursor

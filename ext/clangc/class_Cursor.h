@@ -224,4 +224,7 @@ c_Cursor_get_template_argument_kind(VALUE, VALUE);
 
 VALUE
 c_Cursor_get_template_argument_type(VALUE, VALUE);
+
+VALUE
+c_Cursor_get_template_argument_value(VALUE, VALUE);
 #endif //CURSOR_H
