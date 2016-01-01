@@ -1513,3 +1513,35 @@ c_Cursor_get_template_argument_value(VALUE self, VALUE index)
   RNUM_2_UINT(index, c_index);
   return CLLONG_2_NUM(clang_Cursor_getTemplateArgumentValue(c->data, c_index));   
 }
+
+/**
+ * call-seq:
+ *  Clangc::Cursor#template_argument_unsigned_value => Integer
+ *
+ *  Retrieve the value of an Integral TemplateArgument (of a function
+ *  decl representing a template specialization) as an unsigned long long.
+ *
+ * It is undefined to call this function on a CXCursor that does not represent a
+ * FunctionDecl or whose I'th template argument is not an integral value.
+ *
+ * For example, for the following declaration and specialization:
+ *   template <typename T, int kInt, bool kBool>
+ *   void foo() { ... }
+ *
+ *   template <>
+ *   void foo<float, 2147483649, true>();
+ *
+ * If called with I = 1 or 2, 2147483649 or true will be returned, respectively.
+ * For I == 0, this function's behavior is undefined.
+ */
+VALUE
+c_Cursor_get_template_argument_unsigned_value(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_index;
+  RNUM_2_UINT(index, c_index);
+  return CULLONG_2_NUM(clang_Cursor_getTemplateArgumentUnsignedValue(c->data, c_index));   
+}
+
+

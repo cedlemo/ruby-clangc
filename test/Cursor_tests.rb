@@ -765,4 +765,25 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_template_argument_unsigned_value
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE_2, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal 2147483649, cursor.template_argument_unsigned_value(1)
+          assert_equal 1, cursor.template_argument_unsigned_value(2)
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_Cursor_get_template_arguments_unsigned_values
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE_2, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          values = cursor.template_arguments_unsigned_values
+          assert_equal 2147483649, values[1]
+          assert_equal 1, values[2]
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end

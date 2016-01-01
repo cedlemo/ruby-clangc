@@ -40,6 +40,8 @@ module ClangcUtils
   SOURCE_FILE_IBOUTLET = "#{PATH}/source18.m"
   # Header with C function and its comments
   SOURCE_FILE_COMMENTS = "#{PATH}/source19.h"
+  # second C++ source file with function template example
+  SOURCE_FILE_FUNCTION_TEMPLATE_2 = "#{PATH}/source20.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
