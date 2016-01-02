@@ -42,6 +42,8 @@ module ClangcUtils
   SOURCE_FILE_COMMENTS = "#{PATH}/source19.h"
   # second C++ source file with function template example
   SOURCE_FILE_FUNCTION_TEMPLATE_2 = "#{PATH}/source20.cpp"
+  # C++ source file with method override example
+  SOURCE_FILE_METHOD_OVERRIDE = "#{PATH}/source21.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"

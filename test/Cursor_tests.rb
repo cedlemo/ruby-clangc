@@ -802,4 +802,15 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_overridden_cursors
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_METHOD_OVERRIDE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.kind == Clangc::CursorKind::CXX_METHOD
+        # TODO check because it doesn't seem to find any overriden methods
+        assert_instance_of(Array, cursor.overridden_cursors)
+        assert_equal(0, cursor.overridden_cursors.size, cursor.overridden_cursors.size)
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
