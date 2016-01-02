@@ -786,4 +786,20 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_decl_obj_c_property_attributes
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
+    # TODO find a real source to test
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE_OBJECTC)) && cursor.kind == Clangc::CursorKind::OBJ_C_PROPERTY_DECL
+        found = false
+        Clangc::ObjCPropertyKind.constants.each do |c|
+          if cursor.obj_c_property_attributes == Clangc::ObjCPropertyKind.const_get(c)
+            found = true
+          end
+        end
+        assert(found)
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
