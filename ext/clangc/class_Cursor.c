@@ -1544,4 +1544,22 @@ c_Cursor_get_template_argument_unsigned_value(VALUE self, VALUE index)
   return CULLONG_2_NUM(clang_Cursor_getTemplateArgumentUnsignedValue(c->data, c_index));   
 }
 
-
+/**
+ * call-seq:
+ *  Clangc::Cursor#obj_c_property_attributes(reserved) => Integer
+ *
+ * Given a cursor that represents a property declaration, return the
+ * associated property attributes. The bits are formed from
+ *  Clangc::ObjCPropertyAttrKind constants.
+ *
+ * reserved Reserved for future use, pass 0.
+ */
+VALUE
+c_Cursor_get_obj_c_property_attributes(VALUE self, VALUE reserved)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_reserved;
+  RNUM_2_UINT(reserved, c_reserved);
+  return CUINT_2_NUM(clang_Cursor_getObjCPropertyAttributes(c->data, c_reserved));   
+}
