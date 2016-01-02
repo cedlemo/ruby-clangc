@@ -23,6 +23,7 @@
 #include "class_File.h"
 #include "class_CompletionString.h"
 #include "class_TranslationUnit.h"
+#include "class_OverriddenCursor.h"
 #include "macros.h"
 
 static void
@@ -1562,4 +1563,68 @@ c_Cursor_get_obj_c_property_attributes(VALUE self, VALUE reserved)
   unsigned c_reserved;
   RNUM_2_UINT(reserved, c_reserved);
   return CUINT_2_NUM(clang_Cursor_getObjCPropertyAttributes(c->data, c_reserved));   
+}
+
+/**
+ * call-seq:
+ *  Clangc::Cursor#overriden_cursors => Array
+ *
+ * Determine the set of methods that are overridden by the given
+ * method.
+ *
+ * In both Objective-C and C++, a method (aka virtual member function,
+ * in C++) can override a virtual method in a base class. For
+ * Objective-C, a method is said to override any method in the class's
+ * base class, its protocols, or its categories' protocols, that has the same
+ * selector and is of the same kind (class or instance).
+ * If no such method exists, the search continues to the class's superclass,
+ * its protocols, and its categories, and so on. A method from an Objective-C
+ * implementation is considered to override the same methods as its
+ * corresponding method in the interface.
+ *
+ * For C++, a virtual member function overrides any virtual member
+ * function with the same signature that occurs in its base
+ * classes. With multiple inheritance, a virtual member function can
+ * override several virtual member functions coming from different
+ * base classes.
+ *
+ * In all cases, this function determines the immediate overridden
+ * method, rather than all of the overridden methods. For example, if
+ * a method is originally declared in a class A, then overridden in B
+ * (which in inherits from A) and also in C (which inherited from B),
+ * then the only overridden method returned from this function when
+ * invoked on C's method will be B's method. The client may then
+ * invoke this function again, given the previously-found overridden
+ * methods, to map out the complete method-override set.
+ *
+ * It returns an Array of Clangc::Cursors or an empty Array.
+ */
+VALUE
+c_Cursor_get_overridden_cursors(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  
+  CXCursor **overridden;
+  unsigned num_overridden;
+  clang_getOverriddenCursors(c->data, overridden, &num_overridden);
+
+  VALUE ret = rb_ary_new();
+  if(overridden == NULL)
+    return ret;
+
+  unsigned i;
+  for(i = 0; i < num_overridden; i++)
+  {
+    CXCursor *ptr;
+    ptr = *(overridden + i);
+    VALUE overridden_cursor;
+    OverriddenCursor_t *oc;
+    R_GET_CLASS_DATA("Clangc", "OverriddenCursor", overridden_cursor, OverriddenCursor_t, oc);
+    oc->data = *ptr;
+    oc->ptr = ptr;
+    rb_ary_push(ret, overridden_cursor);
+  }
+
+  return ret;
 }

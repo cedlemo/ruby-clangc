@@ -30,6 +30,7 @@
 #include "class_Type.h"
 #include "class_CursorSet.h"
 #include "class_CompletionString.h"
+#include "class_OverriddenCursor.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -223,7 +224,17 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "template_argument_value", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_value), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_argument_unsigned_value", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_unsigned_value), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "obj_c_property_attributes", RUBY_METHOD_FUNC(c_Cursor_get_obj_c_property_attributes), 1);// in class_Cursor.c
+  rb_define_method(c_Cursor, "overridden_cursors", RUBY_METHOD_FUNC(c_Cursor_get_overridden_cursors), 0);// in class_Cursor.c
 
+/*
+ * Overriden Cursor is a subclass of cursor created because they need to be freed
+ * unlike the basics Clangc::Cursor
+ * */
+
+  VALUE c_OverriddenCursor = rb_define_class_under(m_Clangc, "OverriddenCursor", c_Cursor);
+  rb_define_alloc_func(c_OverriddenCursor, c_OverriddenCursor_struct_alloc);
+
+  
   /*
 * Type informations for Clangc::Cursor
 */
