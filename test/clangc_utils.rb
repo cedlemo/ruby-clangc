@@ -44,6 +44,8 @@ module ClangcUtils
   SOURCE_FILE_FUNCTION_TEMPLATE_2 = "#{PATH}/source20.cpp"
   # C++ source file with method override example
   SOURCE_FILE_METHOD_OVERRIDE = "#{PATH}/source21.cpp"
+  # Source file with module import
+  SOURCE_FILE_MODULE_IMPORT = "#{PATH}/source22.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
