@@ -31,6 +31,7 @@
 #include "class_CursorSet.h"
 #include "class_CompletionString.h"
 #include "class_OverriddenCursor.h"
+#include "class_Module.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -152,7 +153,6 @@ void Init_clangc(void) {
 * source code into the AST.
 */
 
-
   VALUE c_Cursor = rb_define_class_under(m_Clangc, "Cursor", rb_cObject);
   rb_define_alloc_func(c_Cursor, c_Cursor_struct_alloc);
   rb_define_method(c_Cursor, "is_null", RUBY_METHOD_FUNC(c_Cursor_is_null), 0);// in class_Cursor.c
@@ -235,7 +235,7 @@ void Init_clangc(void) {
   rb_define_alloc_func(c_OverriddenCursor, c_OverriddenCursor_struct_alloc);
 
   
-  /*
+/*
 * Type informations for Clangc::Cursor
 */
 
@@ -284,4 +284,9 @@ void Init_clangc(void) {
   VALUE c_CompletionString = rb_define_class_under(m_Clangc, "CompletionString", rb_cObject);
   rb_define_alloc_func(c_CompletionString, c_CompletionString_struct_alloc);
 
+/**
+* CXModule class and method
+*/
+  VALUE c_Module = rb_define_class_under(m_Clangc, "Module", rb_cObject);
+  rb_define_alloc_func(c_Module, c_Module_struct_alloc);
 }
