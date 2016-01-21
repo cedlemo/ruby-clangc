@@ -24,6 +24,7 @@
 #include "class_CompletionString.h"
 #include "class_TranslationUnit.h"
 #include "class_OverriddenCursor.h"
+#include "class_Module.h"
 #include "macros.h"
 
 static void
@@ -1627,4 +1628,23 @@ c_Cursor_get_overridden_cursors(VALUE self)
   }
 
   return ret;
+}
+
+/**
+ * call-seq:
+ *   Clangc::Cursor#module => Clangc::Module
+ *
+ * Given a Clangc::CursorKind::MODULE_IMPORT_DECL cursor, return the associated module.
+ */
+VALUE
+c_Cursor_get_module(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Module_t *m;
+  VALUE module;
+  R_GET_CLASS_DATA("Clangc", "Module", module, Module_t, m);
+  m->data = clang_Cursor_getModule(c->data);
+  m->parent = self;
+  return module;
 }

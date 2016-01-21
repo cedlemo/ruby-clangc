@@ -236,4 +236,7 @@ c_Cursor_get_obj_c_property_attributes(VALUE, VALUE);
 
 VALUE
 c_Cursor_get_overridden_cursors(VALUE);
+
+VALUE
+c_Cursor_get_module(VALUE);
 #endif //CURSOR_H
