@@ -27,4 +27,7 @@ typedef struct Module_t {
 
 VALUE
 c_Module_struct_alloc(VALUE);
+
+VALUE
+c_Module_get_ast_file(VALUE);
 #endif //MODULE_H

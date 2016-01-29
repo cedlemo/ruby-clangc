@@ -18,6 +18,7 @@
 */
 /*Module ruby class*/
 #include "class_Module.h"
+#include "class_File.h"
 #include "macros.h"
 
 static void
@@ -39,8 +40,9 @@ c_Module_mark(void *s)
     rb_gc_mark(t->parent);
   }
 }
+
 VALUE
-c_Module_struct_alloc( VALUE klass)
+c_Module_struct_alloc(VALUE klass)
 {
   
   Module_t * ptr;
@@ -49,4 +51,25 @@ c_Module_struct_alloc( VALUE klass)
   ptr->parent = Qnil;
 
   return Data_Wrap_Struct(klass, NULL, c_Module_struct_free, (void *) ptr);
+}
+
+/**
+ * call-seq:
+ *  Clangc::Module#ast_file => CLangc::File or nil
+ *
+ * Get the module file where the provided module object came from.
+ */
+VALUE
+c_Module_get_ast_file(VALUE self)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  VALUE ast_file;
+  File_t *f;
+  R_GET_CLASS_DATA("Clangc", "File", ast_file, File_t, f);
+  f->data = clang_Module_getASTFile(m->data);
+  if (f->data)
+    return ast_file;
+  else
+    return Qnil;
 }

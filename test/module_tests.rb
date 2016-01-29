@@ -19,5 +19,7 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
-
+  def test_module_get_ast_file
+    # TODO
+  end
 end
