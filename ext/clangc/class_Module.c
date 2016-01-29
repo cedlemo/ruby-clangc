@@ -73,3 +73,22 @@ c_Module_get_ast_file(VALUE self)
   else
     return Qnil;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Module#parent => Clangc::Module
+ *
+ * the parent of a sub-module or NULL if the given module is top-level,
+ * e.g. for 'std.vector' it will return the 'std' module.
+ */
+VALUE
+c_Module_get_parent(VALUE self)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  VALUE parent;
+  Module_t *p;
+  R_GET_CLASS_DATA("Clangc", "Module", parent, Module_t, p);
+  p->data = clang_Module_getParent(m->data);
+  return parent;
+}

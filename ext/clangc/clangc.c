@@ -291,4 +291,5 @@ void Init_clangc(void) {
   VALUE c_Module = rb_define_class_under(m_Clangc, "Module", rb_cObject);
   rb_define_alloc_func(c_Module, c_Module_struct_alloc);
   rb_define_method(c_Module, "ast_file", RUBY_METHOD_FUNC(c_Module_get_ast_file), 0);// in class_Module.c
+  rb_define_method(c_Module, "parent", RUBY_METHOD_FUNC(c_Module_get_parent), 0);// in class_Module.c
 }
