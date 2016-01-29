@@ -12,14 +12,17 @@ class TestCursorUsage < MiniTest::Test
       #tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT, ["-x", "c++", "-fmodules", "-fcxxmodules"] + CLANG_HEADERS_PATH)
     tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT,
                                                          ["-x", "c++", "-fmodules", "-fcxxmodules", "-fmodules-cache-path", "#{PATH}/cache"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::MODULE_IMPORT_DECL
-        @module = cursor.module
-      end
-      Clangc::ChildVisitResult::RECURSE
-    end
+#    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+#      if cursor.kind == Clangc::CursorKind::MODULE_IMPORT_DECL
+#        @module = cursor.module
+#      end
+#      Clangc::ChildVisitResult::RECURSE
+#    end
   end
   def test_module_get_ast_file
+    # TODO
+  end
+  def test_module_get_parent
     # TODO
   end
 end
