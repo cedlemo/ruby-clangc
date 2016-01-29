@@ -25,4 +25,10 @@ class TestCursorUsage < MiniTest::Test
   def test_module_get_parent
     # TODO
   end
+  def test_module_get_name
+    # TODO
+  end
+  def test_module_get_full_name
+    # TODO
+  end
 end

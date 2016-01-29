@@ -33,4 +33,10 @@ c_Module_get_ast_file(VALUE);
 
 VALUE
 c_Module_get_parent(VALUE);
+
+VALUE
+c_Module_get_name(VALUE);
+
+VALUE
+c_Module_get_full_name(VALUE);
 #endif //MODULE_H

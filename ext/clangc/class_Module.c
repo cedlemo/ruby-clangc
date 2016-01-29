@@ -92,3 +92,38 @@ c_Module_get_parent(VALUE self)
   p->data = clang_Module_getParent(m->data);
   return parent;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Module#name => String
+ *
+ * Get the name of the module, e.g. for the 'std.vector' sub-module it
+ * will return "vector".
+ */
+VALUE
+c_Module_get_name(VALUE self)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  CXString str = clang_Module_getName(m->data);
+  VALUE name = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+  return name;
+}
+
+/**
+ * call-seq:
+ *  Clangc::Module#full_name => String
+ *
+ * Returns the full name of the module, e.g. "std.vector".
+ */
+VALUE
+c_Module_get_full_name(VALUE self)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  CXString str = clang_Module_getFullName(m->data);
+  VALUE full_name = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+  return full_name;
+}
