@@ -1,0 +1,4 @@
+module test {
+  requires cplusplus
+  header "test.h"
+}

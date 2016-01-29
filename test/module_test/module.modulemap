@@ -1,3 +1,4 @@
 module bof {
-	header "bof.hpp"
+	requires cplusplus
+  header "bof.hpp"
 }

@@ -815,8 +815,8 @@ class TestCursorUsage < MiniTest::Test
   end
   def test_Cursor_get_module
     cindex = Clangc::Index.new(false, false)
-    tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT, ["-x", "c++", "-fmodules"] + CLANG_HEADERS_PATH)
-    #tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT, ["-x", "c++", "-std", "c++11", "-fmodules-cache-path", "#{PATH}/cache", "-fmodules"] + CLANG_HEADERS_PATH)
+    #tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT, ["-x", "c++", "-fmodules", "-fcxxmodules"] + CLANG_HEADERS_PATH)
+    tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT, ["-x", "c++", "-fmodules", "-fcxxmodules", "-fmodules-cache-path", "#{PATH}/cache"] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.kind == Clangc::CursorKind::MODULE_IMPORT_DECL
         assert(Clangc::Module != cursor.module.class, cursor.spelling)

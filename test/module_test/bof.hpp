@@ -1,3 +1,2 @@
 #pragma once
-
 void foo();
