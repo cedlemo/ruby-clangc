@@ -131,4 +131,7 @@ class TestTranslationUnitUsage < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     assert_instance_of Clangc::Cursor, tu.cursor
   end
+  def test_TU_get_module
+    # TODO
+  end
 end

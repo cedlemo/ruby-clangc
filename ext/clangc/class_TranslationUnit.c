@@ -1,6 +1,6 @@
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
- * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
+ * Copyright (C) 2015-2016  cedlemo <cedlemo@gmx.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "class_Diagnostic.h"
 #include "class_File.h"
 #include "class_Cursor.h"
+#include "class_Module.h"
 #include "macros.h"
 
 static void
@@ -211,4 +212,31 @@ c_TranslationUnit_get_cursor(VALUE self)
   c->data = clang_getTranslationUnitCursor(t->data);
   c->parent = self;
   return a_cursor;
+}
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#module(Clangc::File) => Clangc::Module
+ *
+ * Given a Clangc::File header file, return the module that contains it, if one
+ * exists.
+ */
+VALUE
+c_TranslationUnit_get_module(VALUE self, VALUE file)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  File_t *f;
+  Data_Get_Struct(file, File_t, f);
+
+  Module_t *m;
+  VALUE module;
+  R_GET_CLASS_DATA("Clangc", "Module", module, Module_t, m);
+  m->data = clang_getModuleForFile(t->data, f->data);
+  m->parent = self;
+  
+  if (m->data)
+    return module;
+  else
+    return Qnil;
 }

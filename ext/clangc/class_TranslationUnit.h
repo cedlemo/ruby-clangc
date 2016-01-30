@@ -1,6 +1,6 @@
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
- * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
+ * Copyright (C) 2015-2016  cedlemo <cedlemo@gmx.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,4 +47,7 @@ c_TranslationUnit_get_file(VALUE, VALUE);
 
 VALUE
 c_TranslationUnit_get_cursor(VALUE);
+
+VALUE
+c_TranslationUnit_get_module(VALUE, VALUE);
 #endif //TRANSLATIONUNIT_H
