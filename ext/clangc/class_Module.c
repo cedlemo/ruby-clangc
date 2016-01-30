@@ -1,7 +1,6 @@
-
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
- * Copyright (C) 2015  cedlemo <cedlemo@gmx.com>
+ * Copyright (C) 2015-2016  cedlemo <cedlemo@gmx.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +18,7 @@
 /*Module ruby class*/
 #include "class_Module.h"
 #include "class_File.h"
+#include "class_TranslationUnit.h"
 #include "macros.h"
 
 static void
@@ -143,4 +143,48 @@ c_Module_is_system(VALUE self)
     return Qfalse;
   else
     return Qtrue;
+}
+
+/**
+ * call-seq:
+ *  Clangc::Module#num_top_level_headers(Clangc::TranslationUnit) => Integer
+ *
+ * The number of top level headers associated with this module.
+ */
+VALUE
+c_Module_get_num_top_level_headers(VALUE self, VALUE translation_unit)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  TranslationUnit_t *t;
+  Data_Get_Struct(translation_unit, TranslationUnit_t, t);
+
+  return CUINT_2_NUM(clang_Module_getNumTopLevelHeaders(t->data, m->data));
+}
+
+/**
+ * call-seq:
+ *  Clangc::Module#top_level_header(Clangc::TranslationUnit, Integer) => Clangc::File
+ *
+ * Index top level header index (zero-based).
+ *
+ * Returns the specified top level header associated with the module.
+ */
+VALUE
+c_Module_get_top_level_header(VALUE self, VALUE translation_unit, VALUE index)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  TranslationUnit_t *t;
+  Data_Get_Struct(translation_unit, TranslationUnit_t, t);
+  uint c_index; 
+  RNUM_2_UINT(index, c_index);
+  VALUE header;
+  File_t *f;
+  R_GET_CLASS_DATA("Clangc", "File", header, File_t, f);
+  f->data = clang_Module_getTopLevelHeader(t->data, m->data, c_index);
+  if (f->data)
+    return header;
+  else
+    return Qnil;
 }

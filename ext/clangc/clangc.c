@@ -295,4 +295,6 @@ void Init_clangc(void) {
   rb_define_method(c_Module, "name", RUBY_METHOD_FUNC(c_Module_get_name), 0);// in class_Module.c
   rb_define_method(c_Module, "full_name", RUBY_METHOD_FUNC(c_Module_get_full_name), 0);// in class_Module.c
   rb_define_method(c_Module, "is_system", RUBY_METHOD_FUNC(c_Module_is_system), 0);// in class_Module.c
+  rb_define_method(c_Module, "num_top_level_headers", RUBY_METHOD_FUNC(c_Module_get_num_top_level_headers), 1);// in class_Module.c
+  rb_define_method(c_Module, "top_level_header", RUBY_METHOD_FUNC(c_Module_get_top_level_header), 2);// in class_Module.c
 }

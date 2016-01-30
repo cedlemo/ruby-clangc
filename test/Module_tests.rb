@@ -34,4 +34,10 @@ class TestCursorUsage < MiniTest::Test
   def test_module_is_system
     # TODO
   end
+  def test_module_get_num_top_level_headers
+    # TODO
+  end
+  def test_module_get_top_level_header
+    # TODO
+  end
 end
