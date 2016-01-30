@@ -199,4 +199,25 @@ module Clangc
       values
     end
   end
+  class Module
+    ## 
+    # :call-seq:
+    # Clangc::Module#top_level_headers(Clangc::TranslationUnit) -> Array
+    #
+    # Return an array that contains all the 
+    # Clangc::File corresponding to the related
+    # toplevel headers.
+    # If the current cursor is not a module, it returns
+    # an empty array.
+    def top_level_headers(tu)
+      num = num_top_level_headers(tu)
+      headers = []
+      return headers if num < 1
+
+      for i in 0..(num - 1) do
+        headers << top_level_header(tu, i)
+      end
+      headers
+    end
+  end
 end
