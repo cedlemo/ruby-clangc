@@ -3,7 +3,7 @@
 ruby bindings to the clang C interface
 
 This is free software shared under the GNU GPL 3.
-Clang version used are 3.5.0 to 3.8.0
+Clang version used is 3.7.1. and this have been tested only on ArchLinux.
 
 ## Installation:
 
@@ -14,7 +14,7 @@ Clang version used are 3.5.0 to 3.8.0
 
 ### functions wrapped:
 
-*    138/252 functions wrapped => 54.761904761904766%
+*    153/252 functions wrapped => 60.71428571428571%
 
 ### classes wrapped:
 
@@ -27,6 +27,7 @@ Clang version used are 3.5.0 to 3.8.0
 *    CXCursor
 *    CXType
 *    CXCursorSet
+*    CXModule
 
 ## Examples (see samples directory): 
 

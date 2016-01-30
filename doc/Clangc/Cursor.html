@@ -162,6 +162,8 @@
     
     <li ><a href="#method-i-mangling">#mangling</a>
     
+    <li ><a href="#method-i-module">#module</a>
+    
     <li ><a href="#method-i-num_arguments">#num_arguments</a>
     
     <li ><a href="#method-i-num_overloaded_decls">#num_overloaded_decls</a>
@@ -170,6 +172,8 @@
     
     <li ><a href="#method-i-obj_c_decl_qualifiers">#obj_c_decl_qualifiers</a>
     
+    <li ><a href="#method-i-obj_c_property_attributes">#obj_c_property_attributes</a>
+    
     <li ><a href="#method-i-obj_c_selector_index">#obj_c_selector_index</a>
     
     <li ><a href="#method-i-offset_of_field">#offset_of_field</a>
@@ -177,6 +181,8 @@
     <li ><a href="#method-i-overloaded_decl">#overloaded_decl</a>
     
     <li ><a href="#method-i-overloaded_decls">#overloaded_decls</a>
+    
+    <li ><a href="#method-i-overridden_cursors">#overridden_cursors</a>
     
     <li ><a href="#method-i-raw_comment_text">#raw_comment_text</a>
     
@@ -196,7 +202,19 @@
     
     <li ><a href="#method-i-template_argument_kind">#template_argument_kind</a>
     
+    <li ><a href="#method-i-template_argument_type">#template_argument_type</a>
+    
+    <li ><a href="#method-i-template_argument_unsigned_value">#template_argument_unsigned_value</a>
+    
+    <li ><a href="#method-i-template_argument_value">#template_argument_value</a>
+    
     <li ><a href="#method-i-template_arguments_kinds">#template_arguments_kinds</a>
+    
+    <li ><a href="#method-i-template_arguments_types">#template_arguments_types</a>
+    
+    <li ><a href="#method-i-template_arguments_unsigned_values">#template_arguments_unsigned_values</a>
+    
+    <li ><a href="#method-i-template_arguments_values">#template_arguments_values</a>
     
     <li ><a href="#method-i-template_cursor_kind">#template_cursor_kind</a>
     
@@ -337,15 +355,15 @@ not a function, it returns an empty array.</p>
           <div class="method-source-code" id="arguments-source">
             <pre><span class="ruby-comment"># File lib/clangc.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">arguments</span>
-    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_arguments</span>
-    <span class="ruby-identifier">cursors</span> = []
-    <span class="ruby-keyword">return</span> <span class="ruby-identifier">cursors</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_arguments</span>
+  <span class="ruby-identifier">cursors</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">cursors</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
 
-    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">cursors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">argument</span>(<span class="ruby-identifier">i</span>)
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">cursors</span>
-  <span class="ruby-keyword">end</span></pre>
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">cursors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">argument</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">cursors</span>
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -2343,6 +2361,51 @@ c_Cursor_get_mangling(VALUE self)
       </div>
 
     
+      <div id="method-i-module" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#module &rarr; Clangc::Module
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a Clangc::CursorKind::MODULE_IMPORT_DECL cursor, return the
+associated module.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="module-source">
+            <pre>VALUE
+c_Cursor_get_module(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  Module_t *m;
+  VALUE module;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Module&quot;, module, Module_t, m);
+  m-&gt;data = clang_Cursor_getModule(c-&gt;data);
+  m-&gt;parent = self;
+  return module;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-num_arguments" class="method-detail ">
         
         
@@ -2513,6 +2576,52 @@ c_Cursor_get_obj_c_decl_qualifiers(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_Cursor_getObjCDeclQualifiers(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-obj_c_property_attributes" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#obj_c_property_attributes(reserved) &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that represents a property declaration, return the
+associated property attributes. The bits are formed from</p>
+
+<pre>Clangc::ObjCPropertyAttrKind constants.</pre>
+
+<p>reserved Reserved for future use, pass 0.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="obj_c_property_attributes-source">
+            <pre>VALUE
+c_Cursor_get_obj_c_property_attributes(VALUE self, VALUE reserved)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_reserved;
+  RNUM_2_UINT(reserved, c_reserved);
+  return CUINT_2_NUM(clang_Cursor_getObjCPropertyAttributes(c-&gt;data, c_reserved));   
 }</pre>
           </div>
           
@@ -2700,15 +2809,101 @@ is not an overloaded declaration, it returns an empty array.</p>
           <div class="method-source-code" id="overloaded_decls-source">
             <pre><span class="ruby-comment"># File lib/clangc.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">overloaded_decls</span>
-    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_overloaded_decls</span>
-    <span class="ruby-identifier">cursors</span> = []
-    <span class="ruby-keyword">return</span> <span class="ruby-identifier">cursors</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_overloaded_decls</span>
+  <span class="ruby-identifier">cursors</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">cursors</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
 
-    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">cursors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">overloaded_decl</span>(<span class="ruby-identifier">i</span>)
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">cursors</span>
-  <span class="ruby-keyword">end</span></pre>
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">cursors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">overloaded_decl</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">cursors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-overridden_cursors" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#overriden_cursors &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the set of methods that are overridden by the given method.</p>
+
+<p>In both Objective-C and C++, a method (aka virtual member function, in C++)
+can override a virtual method in a base class. For Objective-C, a method is
+said to override any method in the class&#39;s base class, its protocols,
+or its categories&#39; protocols, that has the same selector and is of the
+same kind (class or instance). If no such method exists, the search
+continues to the class&#39;s superclass, its protocols, and its categories,
+and so on. A method from an Objective-C implementation is considered to
+override the same methods as its corresponding method in the interface.</p>
+
+<p>For C++, a virtual member function overrides any virtual member function
+with the same signature that occurs in its base classes. With multiple
+inheritance, a virtual member function can override several virtual member
+functions coming from different base classes.</p>
+
+<p>In all cases, this function determines the immediate overridden method,
+rather than all of the overridden methods. For example, if a method is
+originally declared in a class A, then overridden in B (which in inherits
+from A) and also in C (which inherited from B), then the only overridden
+method returned from this function when invoked on C&#39;s method will be
+B&#39;s method. The client may then invoke this function again, given the
+previously-found overridden methods, to map out the complete
+method-override set.</p>
+
+<p>It returns an Array of Clangc::Cursors or an empty Array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="overridden_cursors-source">
+            <pre>VALUE
+c_Cursor_get_overridden_cursors(VALUE self)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  
+  CXCursor **overridden;
+  unsigned num_overridden;
+  clang_getOverriddenCursors(c-&gt;data, overridden, &amp;num_overridden);
+
+  VALUE ret = rb_ary_new();
+  if(overridden == NULL)
+    return ret;
+
+  unsigned i;
+  for(i = 0; i &lt; num_overridden; i++)
+  {
+    CXCursor *ptr;
+    ptr = *(overridden + i);
+    VALUE overridden_cursor;
+    OverriddenCursor_t *oc;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;OverriddenCursor&quot;, overridden_cursor, OverriddenCursor_t, oc);
+    oc-&gt;data = *ptr;
+    oc-&gt;ptr = ptr;
+    rb_ary_push(ret, overridden_cursor);
+  }
+
+  return ret;
+}</pre>
           </div>
           
         </div>
@@ -3188,6 +3383,184 @@ c_Cursor_get_template_argument_kind(VALUE self, VALUE index)
       </div>
 
     
+      <div id="method-i-template_argument_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_argument_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a <a href="Type.html">Clangc::Type</a> representing the type of a
+TemplateArgument of a</p>
+
+<pre>function decl representing a template specialization.</pre>
+
+<p>If the <a href="Cursor.html">Clangc::Cursor</a> does not represent a
+Clangc::CursorKind::FUNCTION_DECL whose I&#39;th template argument has a
+kind of CXTemplateArgKind_Integral, an invalid type is returned.</p>
+
+<p>For example, for the following declaration and specialization:</p>
+
+<pre>template &lt;typename T, int kInt, bool kBool&gt;
+void foo() { ... }
+
+template &lt;&gt;
+void foo&lt;float, -7, true&gt;();</pre>
+
+<p>If called with I = 0, “float”, will be returned. Invalid types will be
+returned for I == 1 or 2.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_argument_type-source">
+            <pre>VALUE
+c_Cursor_get_template_argument_type(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_index;
+  RNUM_2_UINT(index, c_index);
+  Type_t *t;
+  VALUE type;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  t-&gt;data = clang_Cursor_getTemplateArgumentType(c-&gt;data, c_index);
+  t-&gt;parent = self;
+  return type;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_argument_unsigned_value" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_argument_unsigned_value &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <pre>Retrieve the value of an Integral TemplateArgument (of a function
+decl representing a template specialization) as an unsigned long long.</pre>
+
+<p>It is undefined to call this function on a CXCursor that does not represent
+a FunctionDecl or whose I&#39;th template argument is not an integral
+value.</p>
+
+<p>For example, for the following declaration and specialization:</p>
+
+<pre>template &lt;typename T, int kInt, bool kBool&gt;
+void foo() { ... }
+
+template &lt;&gt;
+void foo&lt;float, 2147483649, true&gt;();</pre>
+
+<p>If called with I = 1 or 2, 2147483649 or true will be returned,
+respectively. For I == 0, this function&#39;s behavior is undefined.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_argument_unsigned_value-source">
+            <pre>VALUE
+c_Cursor_get_template_argument_unsigned_value(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_index;
+  RNUM_2_UINT(index, c_index);
+  return CULLONG_2_NUM(clang_Cursor_getTemplateArgumentUnsignedValue(c-&gt;data, c_index));   
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_argument_value" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_argument_value &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <pre>Retrieve the value of an Integral TemplateArgument (of a function
+decl representing a template specialization) as a signed long long.</pre>
+
+<p>It is undefined to call this function on a CXCursor that does not represent
+a FunctionDecl or whose I&#39;th template argument is not an integral
+value.</p>
+
+<p>For example, for the following declaration and specialization:</p>
+
+<pre>template &lt;typename T, int kInt, bool kBool&gt;
+void foo() { ... }
+
+template &lt;&gt;
+void foo&lt;float, -7, true&gt;();</pre>
+
+<p>If called with I = 1 or 2, -7 or true will be returned, respectively. For I
+== 0, this function&#39;s behavior is undefined.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_argument_value-source">
+            <pre>VALUE
+c_Cursor_get_template_argument_value(VALUE self, VALUE index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  unsigned c_index;
+  RNUM_2_UINT(index, c_index);
+  return CLLONG_2_NUM(clang_Cursor_getTemplateArgumentValue(c-&gt;data, c_index));   
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-template_arguments_kinds" class="method-detail ">
         
         
@@ -3214,15 +3587,150 @@ cursor is not a function declaration, it returns an empty array.</p>
           <div class="method-source-code" id="template_arguments_kinds-source">
             <pre><span class="ruby-comment"># File lib/clangc.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">template_arguments_kinds</span>
-    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_template_arguments</span>
-    <span class="ruby-identifier">kinds</span> = []
-    <span class="ruby-keyword">return</span> <span class="ruby-identifier">kinds</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_template_arguments</span>
+  <span class="ruby-identifier">kinds</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">kinds</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
 
-    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">kinds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">template_argument_kind</span>(<span class="ruby-identifier">i</span>)
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">kinds</span>
-  <span class="ruby-keyword">end</span></pre>
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">kinds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">template_argument_kind</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">kinds</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_arguments_types" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_arguments_types &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  types for the arguments of the
+function template that is related to the current cursor. If the current
+cursor is not a function declaration, it returns an empty array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_arguments_types-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">template_arguments_types</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_template_arguments</span>
+  <span class="ruby-identifier">types</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">types</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">template_argument_type</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">types</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_arguments_unsigned_values" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_arguments_unsigned_values &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  values for the arguments of the
+function template that is related to the current cursor. If the current
+cursor is not a function declaration, it returns an empty array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_arguments_unsigned_values-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">template_arguments_unsigned_values</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_template_arguments</span>
+  <span class="ruby-identifier">values</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">values</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">values</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">template_argument_unsigned_value</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">values</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_arguments_values" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#template_arguments_values &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  values for the arguments of the
+function template that is related to the current cursor. If the current
+cursor is not a function declaration, it returns an empty array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_arguments_values-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">template_arguments_values</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_template_arguments</span>
+  <span class="ruby-identifier">values</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">values</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">values</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">template_argument_value</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">values</span>
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -3431,7 +3939,7 @@ c_Cursor_get_usr(VALUE self)
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

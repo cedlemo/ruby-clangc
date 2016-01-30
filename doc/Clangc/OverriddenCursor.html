@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Clangc::CompletionString - RDoc Documentation</title>
+<title>class Clangc::OverriddenCursor - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -58,7 +58,7 @@
   <h3>Parent</h3>
 
   
-  <p class="link">Object
+  <p class="link"><a href="Cursor.html">Clangc::Cursor</a>
   
 </div>
 
@@ -68,24 +68,16 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Clangc::CompletionString">
-  <h1 id="class-Clangc::CompletionString" class="class">
-    class Clangc::CompletionString
+<main role="main" aria-labelledby="class-Clangc::OverriddenCursor">
+  <h1 id="class-Clangc::OverriddenCursor" class="class">
+    class Clangc::OverriddenCursor
   </h1>
 
   <section class="description">
     
-<p>brief A semantic string that describes a code-completion result.</p>
-
-<p>A semantic string that describes the formatting of a code-completion result
-as a single “template” of text that should be inserted into the source
-buffer when a particular code-completion result is selected. Each semantic
-string is made up of some number of “chunks”, each of which contains some
-text along with a description of what that text means, e.g., the name of
-the entity being referenced, whether the text chunk is part of the
-template, or whether it is a “placeholder” that the user should replace
-with actual code,of a specific kind. See c CXCompletionChunkKind for a
-description of the different kinds of chunks.</p>
+<p>Overriden <a href="Cursor.html">Cursor</a> is a subclass of cursor created
+because they need to be freed unlike the basics <a
+href="Cursor.html">Clangc::Cursor</a></p>
 
   </section>
 

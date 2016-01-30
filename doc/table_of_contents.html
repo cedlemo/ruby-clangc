@@ -58,6 +58,12 @@
     <a href="Clangc/Index.html">Clangc::Index</a>
   </li>
   <li class="class">
+    <a href="Clangc/Module.html">Clangc::Module</a>
+  </li>
+  <li class="class">
+    <a href="Clangc/OverriddenCursor.html">Clangc::OverriddenCursor</a>
+  </li>
+  <li class="class">
     <a href="Clangc/SourceLocation.html">Clangc::SourceLocation</a>
   </li>
   <li class="class">
@@ -163,6 +169,11 @@
     <a href="Clangc/Type.html#method-i-array_size">#array_size</a>
     &mdash;
     <span class="container">Clangc::Type</span>
+
+  <li class="method">
+    <a href="Clangc/Module.html#method-i-ast_file">#ast_file</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
 
   <li class="method">
     <a href="Clangc/Cursor.html#method-i-availability">#availability</a>
@@ -355,6 +366,11 @@
     <span class="container">Clangc::Diagnostic</span>
 
   <li class="method">
+    <a href="Clangc/Module.html#method-i-full_name">#full_name</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
+
+  <li class="method">
     <a href="Clangc/Index.html#method-i-global_options">#global_options</a>
     &mdash;
     <span class="container">Clangc::Index</span>
@@ -510,6 +526,11 @@
     <span class="container">Clangc::Cursor</span>
 
   <li class="method">
+    <a href="Clangc/Module.html#method-i-is_system">#is_system</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
+
+  <li class="method">
     <a href="Clangc/Cursor.html#method-i-is_translation_unit">#is_translation_unit</a>
     &mdash;
     <span class="container">Clangc::Cursor</span>
@@ -565,6 +586,16 @@
     <span class="container">Clangc::Cursor</span>
 
   <li class="method">
+    <a href="Clangc/TranslationUnit.html#method-i-module">#module</a>
+    &mdash;
+    <span class="container">Clangc::TranslationUnit</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-module">#module</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
     <a href="Clangc/File.html#method-i-mtime">#mtime</a>
     &mdash;
     <span class="container">Clangc::File</span>
@@ -573,6 +604,11 @@
     <a href="Clangc/File.html#method-i-name">#name</a>
     &mdash;
     <span class="container">Clangc::File</span>
+
+  <li class="method">
+    <a href="Clangc/Module.html#method-i-name">#name</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
 
   <li class="method">
     <a href="Clangc/Type.html#method-i-num_arg_types">#num_arg_types</a>
@@ -610,7 +646,17 @@
     <span class="container">Clangc::Cursor</span>
 
   <li class="method">
+    <a href="Clangc/Module.html#method-i-num_top_level_headers">#num_top_level_headers</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
+
+  <li class="method">
     <a href="Clangc/Cursor.html#method-i-obj_c_decl_qualifiers">#obj_c_decl_qualifiers</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-obj_c_property_attributes">#obj_c_property_attributes</a>
     &mdash;
     <span class="container">Clangc::Cursor</span>
 
@@ -638,6 +684,16 @@
     <a href="Clangc/Cursor.html#method-i-overloaded_decls">#overloaded_decls</a>
     &mdash;
     <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-overridden_cursors">#overridden_cursors</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Module.html#method-i-parent">#parent</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
 
   <li class="method">
     <a href="Clangc/Index.html#method-i-parse_translation_unit">#parse_translation_unit</a>
@@ -750,7 +806,37 @@
     <span class="container">Clangc::Cursor</span>
 
   <li class="method">
+    <a href="Clangc/Cursor.html#method-i-template_argument_type">#template_argument_type</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-template_argument_unsigned_value">#template_argument_unsigned_value</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-template_argument_value">#template_argument_value</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
     <a href="Clangc/Cursor.html#method-i-template_arguments_kinds">#template_arguments_kinds</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-template_arguments_types">#template_arguments_types</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-template_arguments_unsigned_values">#template_arguments_unsigned_values</a>
+    &mdash;
+    <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Cursor.html#method-i-template_arguments_values">#template_arguments_values</a>
     &mdash;
     <span class="container">Clangc::Cursor</span>
 
@@ -758,6 +844,16 @@
     <a href="Clangc/Cursor.html#method-i-template_cursor_kind">#template_cursor_kind</a>
     &mdash;
     <span class="container">Clangc::Cursor</span>
+
+  <li class="method">
+    <a href="Clangc/Module.html#method-i-top_level_header">#top_level_header</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
+
+  <li class="method">
+    <a href="Clangc/Module.html#method-i-top_level_headers">#top_level_headers</a>
+    &mdash;
+    <span class="container">Clangc::Module</span>
 
   <li class="method">
     <a href="Clangc/Cursor.html#method-i-type">#type</a>
@@ -779,7 +875,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
