@@ -31,4 +31,7 @@ class TestCursorUsage < MiniTest::Test
   def test_module_get_full_name
     # TODO
   end
+  def test_module_is_system
+    # TODO
+  end
 end

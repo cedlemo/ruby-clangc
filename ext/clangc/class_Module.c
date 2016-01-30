@@ -127,3 +127,20 @@ c_Module_get_full_name(VALUE self)
   clang_disposeString(str);
   return full_name;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Module#is_system => true/false
+ *
+ * Returns non-zero if the module is a system one.
+ */
+VALUE
+c_Module_is_system(VALUE self)
+{
+  Module_t *m;
+  Data_Get_Struct(self, Module_t, m);
+  if (clang_Module_isSystem(m->data) == 0)
+    return Qfalse;
+  else
+    return Qtrue;
+}

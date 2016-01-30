@@ -39,4 +39,7 @@ c_Module_get_name(VALUE);
 
 VALUE
 c_Module_get_full_name(VALUE);
+
+VALUE
+c_Module_is_system(VALUE);
 #endif //MODULE_H
