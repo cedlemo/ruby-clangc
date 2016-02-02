@@ -33,10 +33,7 @@
 VALUE
 m_clangc_get_version(VALUE self)
 {
-  CXString str = clang_getClangVersion();
-  VALUE version = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return version;
+  return CXSTR_2_RVAL(clang_getClangVersion());
 }
 
 /**
