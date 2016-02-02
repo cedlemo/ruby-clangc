@@ -59,10 +59,7 @@ c_SourceLocation_is_in_system_header(VALUE self)
 {
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  if(clang_Location_isInSystemHeader(s->data) > 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Location_isInSystemHeader(s->data));
 }
 
 /**
@@ -77,10 +74,7 @@ c_SourceLocation_is_from_main_file(VALUE self)
 {
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  if(clang_Location_isFromMainFile(s->data) > 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Location_isFromMainFile(s->data));
 }
 
 /**
@@ -102,10 +96,7 @@ c_SourceLocation_is_equal(VALUE self, VALUE source_location)
   Data_Get_Struct(self, SourceLocation_t, s);
   Data_Get_Struct(source_location, SourceLocation_t, sl);
   
-  if(clang_equalLocations(s->data, sl->data) > 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_equalLocations(s->data, sl->data));
 }
 
 /**
