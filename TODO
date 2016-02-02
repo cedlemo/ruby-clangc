@@ -23,22 +23,20 @@
 [ ] See if the check in class_File.c clangc_File_get_name is the best solution
 
 [ ] Improve the macros:
-  *    INT_2_BOOLEAN
   *    create a _SELF macros
-  *    CXSTRING_2_RVAL
   *    RCLANG_2_CCLANG
   *    CCLANG_2_RCLANG
   *    Use Uppercase name to define for function
   
-[ ] Clean style
-  *    Make all variables declarations at start
-  *    Use space after for and if
-  *    Use for spaces for indentation
-
 ## Secondary:
 
 [ ] when errors in file, Clangc::SourceRange.end return NULL file and position
     informations equal to 0. Check Clangc::SourceRange.end for other objects
     than Clangc::Diagnostic
+
+[ ] Clean style
+  *    Make all variables declarations at start
+  *    Use space after for and if
+  *    Use for spaces for indentation
 
 [ ] Finish test case (see TODO in tests/ directory)
