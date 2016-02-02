@@ -61,10 +61,7 @@ c_SourceRange_is_null(VALUE self)
 {
   SourceRange_t *s;
   Data_Get_Struct(self, SourceRange_t, s);
-  if(clang_Range_isNull(s->data) == 0)
-    return Qfalse;
-  else
-    return Qtrue;
+  return NOT_0_2_RVAL(clang_Range_isNull(s->data));
 }
 
 /**
@@ -81,10 +78,7 @@ c_SourceRange_is_equal(VALUE self, VALUE other_source_range)
   SourceRange_t * sr2;
   Data_Get_Struct(self, SourceRange_t, sr1);
   Data_Get_Struct(other_source_range, SourceRange_t, sr2);
-  if(clang_equalRanges(sr1->data, sr2->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_equalRanges(sr1->data, sr2->data));
 }
 
 /**
