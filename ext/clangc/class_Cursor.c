@@ -68,10 +68,7 @@ c_Cursor_is_null(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isNull(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isNull(c->data));
 }
 
 /**
@@ -89,10 +86,7 @@ c_Cursor_is_equal(VALUE self, VALUE cursor1)
   Data_Get_Struct(self, Cursor_t, c);
   Data_Get_Struct(cursor1, Cursor_t, c1);
 
-  if(clang_equalCursors(c->data, c1->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_equalCursors(c->data, c1->data));
 }
 
 /**
@@ -413,7 +407,7 @@ c_Cursor_is_declaration(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isDeclaration(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isDeclaration(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -432,7 +426,7 @@ c_Cursor_is_reference(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isReference(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isReference(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -446,7 +440,7 @@ c_Cursor_is_expression(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isExpression(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isExpression(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -460,7 +454,7 @@ c_Cursor_is_statement(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isStatement(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isStatement(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -474,7 +468,7 @@ c_Cursor_is_attribute(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isAttribute(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isAttribute(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -489,7 +483,7 @@ c_Cursor_is_invalid(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isInvalid(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isInvalid(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -504,7 +498,7 @@ c_Cursor_is_translation_unit(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isTranslationUnit(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isTranslationUnit(clang_getCursorKind(c->data)));
 }
 
 /**
@@ -519,7 +513,7 @@ c_Cursor_is_preprocessing(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isPreprocessing(clang_getCursorKind(c->data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isPreprocessing(clang_getCursorKind(c->data)));
 }
 /**
 * call-seq:
@@ -745,11 +739,7 @@ c_Cursor_is_anonymous(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  
-  if(clang_Cursor_isAnonymous(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isAnonymous(c->data));
 }
 
 /**
@@ -764,11 +754,7 @@ c_Cursor_is_bit_field(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-
-  if(clang_Cursor_isBitField(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isBitField(c->data));
 }
 
 /**
@@ -784,10 +770,7 @@ c_Cursor_is_virtual_base(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
 
-  if(clang_isVirtualBase(c->data) == 1)
-    return Qtrue;
-  else
-    return Qfalse;
+  return EQ_1_2_RVAL(clang_isVirtualBase(c->data));
 }
 
 /**
@@ -1018,10 +1001,7 @@ c_Cursor_is_definition(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_isCursorDefinition(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_isCursorDefinition(c->data));
 }
 
 /**
@@ -1101,10 +1081,7 @@ c_Cursor_is_dynamic_call(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isDynamicCall(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isDynamicCall(c->data));
 }
 /**
 * call-seq:
@@ -1155,10 +1132,7 @@ c_Cursor_is_obj_c_optional(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isObjCOptional(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isObjCOptional(c->data));
 }
 /**
 * call-seq:
@@ -1171,10 +1145,7 @@ c_Cursor_is_variadic(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isVariadic(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isVariadic(c->data));
 }
 /**
 * call-seq:
@@ -1260,10 +1231,7 @@ c_Cursor_cxx_method_is_pure_virtual(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isPureVirtual(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isPureVirtual(c->data));
 }
 
 /**
@@ -1278,10 +1246,7 @@ c_Cursor_cxx_method_is_static(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isStatic(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isStatic(c->data));
 }
 /**
 * call-seq:
@@ -1296,10 +1261,7 @@ c_Cursor_cxx_method_is_virtual(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isVirtual(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isVirtual(c->data));
 }
 
 /**
@@ -1314,10 +1276,7 @@ c_Cursor_cxx_method_is_const(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isConst(c->data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isConst(c->data));
 }
 
 /**
