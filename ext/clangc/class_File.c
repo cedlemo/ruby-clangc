@@ -118,7 +118,7 @@ c_File_is_multiple_include_guarded(VALUE self)
   TranslationUnit_t * t;
   Data_Get_Struct(f->parent, TranslationUnit_t, t);
   unsigned int ret = clang_isFileMultipleIncludeGuarded(t->data, f->data);
-  return ret == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(ret);
 }
 
 /**
@@ -139,5 +139,5 @@ c_File_is_equal(VALUE self, VALUE file)
   File_t * f2;
   Data_Get_Struct(self, File_t, f1);
   Data_Get_Struct(file, File_t, f2);
-  return clang_File_isEqual(f1->data, f2->data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_File_isEqual(f1->data, f2->data));
 }
