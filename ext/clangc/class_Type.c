@@ -95,7 +95,7 @@ c_Type_is_equal(VALUE self, VALUE type)
   Type_t *t2;
   Data_Get_Struct(self, Type_t, t1);
   Data_Get_Struct(type, Type_t, t2);
-  return clang_equalTypes(t1->data, t2->data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_equalTypes(t1->data, t2->data));
 }
 
 /**
@@ -154,7 +154,7 @@ c_Type_is_const_qualified(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isConstQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isConstQualifiedType(t->data));
 }
 
 /**
@@ -170,7 +170,7 @@ c_Type_is_volatile_qualified(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isVolatileQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isVolatileQualifiedType(t->data));
 }
 
 /**
@@ -186,7 +186,7 @@ c_Type_is_restrict_qualified(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isRestrictQualifiedType(t->data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isRestrictQualifiedType(t->data));
 }
 
 /**
@@ -366,5 +366,5 @@ c_Type_is_pod(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isPODType(t->data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isPODType(t->data));
 }
