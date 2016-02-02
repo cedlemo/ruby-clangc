@@ -73,10 +73,7 @@ c_Type_get_spelling(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  CXString str = clang_getTypeSpelling(t->data);
-  VALUE spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getTypeSpelling(t->data));
 }
 
 /**
