@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <ruby/ruby.h>
+#include "clang-c/Index.h"
 
 #define clean_errno() (errno == 0 ? "None" : strerror(errno))
 #define SENTINEL(M, ...) printf("[SENTINEL] (%s:%s:%d: errno: %s) " M "\n",__FILE__, __FUNCTION__, __LINE__, clean_errno(), ##__VA_ARGS__)
@@ -84,10 +86,18 @@ VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
 /************************/
 /*C values to Ruby value*/
 /************************/
+static inline VALUE cxstring_2_rval(CXString str)
+{
+  VALUE r_string = rb_str_new2(clang_getCString(str));
+  clang_disposeString(str);
+  return r_string;
+}
 #define CUINT_2_NUM(c_val) UINT2NUM(c_val)
 #define CINT_2_NUM(c_val) INT2NUM(c_val)
 #define CLLONG_2_NUM(c_val) LL2NUM(c_val)
 #define CULLONG_2_NUM(c_val) ULL2NUM(c_val)
 #define NOT_0_2_RVAL(c_val) ((c_val == 0) ? Qfalse : Qtrue)
 #define EQ_1_2_RVAL(c_val) ((c_val == 1) ? Qtrue : Qfalse)
+#define CXSTR_2_RVAL(str) (cxstring_2_rval(str))
+
 #endif //MACROS_H
