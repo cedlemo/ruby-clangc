@@ -139,10 +139,7 @@ c_Module_is_system(VALUE self)
 {
   Module_t *m;
   Data_Get_Struct(self, Module_t, m);
-  if (clang_Module_isSystem(m->data) == 0)
-    return Qfalse;
-  else
-    return Qtrue;
+  return NOT_0_2_RVAL(clang_Module_isSystem(m->data));
 }
 
 /**
