@@ -217,10 +217,7 @@ m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
   unsigned ret_with_break = clang_visitChildren(c->data,
                                                 visitor,
                                                 (CXClientData) callback);
-  if (ret_with_break > 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(ret_with_break);
 }
 
 /**
@@ -263,8 +260,5 @@ m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
   unsigned ret_with_break = clang_visitChildren(c->data,
                                                 visitor,
                                                 (CXClientData) callback);
-  if (ret_with_break > 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(ret_with_break);
 }
