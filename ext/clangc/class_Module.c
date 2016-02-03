@@ -119,7 +119,7 @@ c_Module_get_full_name(VALUE self)
 {
   Module_t *m;
   Data_Get_Struct(self, Module_t, m);
-  return CXSSTR_2_RVAL(clang_Module_getFullName(m->data));
+  return CXSTR_2_RVAL(clang_Module_getFullName(m->data));
 }
 
 /**
