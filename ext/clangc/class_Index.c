@@ -85,8 +85,7 @@ VALUE
 c_Index_set_global_options(VALUE self, VALUE options) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  uint c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
   clang_CXIndex_setGlobalOptions(i->data,c_options);
   return Qnil;
 }
@@ -101,7 +100,6 @@ VALUE
 c_Index_get_global_options(VALUE self) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-
   return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i->data));
 }
 /*
@@ -260,8 +258,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   else
     c_source_file = NULL;
   
-  uint c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
 
   RARRAY_OF_STRINGS_2_C(args);
   Index_t *i;
@@ -330,8 +327,7 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   else
     c_source_file = NULL;
   
-  uint c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
 
   RARRAY_OF_STRINGS_2_C(args);
   Index_t *i;
@@ -340,7 +336,7 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   TranslationUnit_t *c_tu;
   R_GET_CLASS_DATA("Clangc", "TranslationUnit", tu, TranslationUnit_t, c_tu);
 
-  uint er = clang_parseTranslationUnit2(i->data,
+  unsigned int er = clang_parseTranslationUnit2(i->data,
                                         c_source_file,
                                         c_args, len, 
                                         0, 0, c_options, // TODO manage unsaved files
