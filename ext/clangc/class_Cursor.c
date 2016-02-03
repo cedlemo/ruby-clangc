@@ -624,8 +624,7 @@ c_Cursor_get_argument(VALUE self, VALUE index)
   int max = clang_Cursor_getNumArguments(c->data);
   if(max < 0)
     max = 0;
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   CHECK_IN_RANGE(c_index, 0, max);
   Cursor_t *a;
   VALUE arg;
@@ -842,8 +841,7 @@ c_Cursor_get_overloaded_decl(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   Cursor_t *o;
   VALUE overl_decl;
   R_GET_CLASS_DATA("Clangc", "Cursor", overl_decl, Cursor_t, o);
@@ -1383,8 +1381,7 @@ c_Cursor_get_template_argument_kind(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   return CUINT_2_NUM(clang_Cursor_getTemplateArgumentKind(c->data, c_index));   
 }
 
@@ -1414,8 +1411,7 @@ c_Cursor_get_template_argument_type(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   Type_t *t;
   VALUE type;
   R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
@@ -1449,8 +1445,7 @@ c_Cursor_get_template_argument_value(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   return CLLONG_2_NUM(clang_Cursor_getTemplateArgumentValue(c->data, c_index));   
 }
 
@@ -1479,8 +1474,7 @@ c_Cursor_get_template_argument_unsigned_value(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   return CULLONG_2_NUM(clang_Cursor_getTemplateArgumentUnsignedValue(c->data, c_index));   
 }
 
@@ -1499,8 +1493,7 @@ c_Cursor_get_obj_c_property_attributes(VALUE self, VALUE reserved)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_reserved;
-  RNUM_2_UINT(reserved, c_reserved);
+  unsigned c_reserved = NUM2UINT(reserved);
   return CUINT_2_NUM(clang_Cursor_getObjCPropertyAttributes(c->data, c_reserved));   
 }
 
