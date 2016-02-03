@@ -80,10 +80,7 @@ c_Diagnostic_get_spelling(VALUE self)
 {
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
-  CXString str = clang_getDiagnosticSpelling(d->data);
-  VALUE spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getDiagnosticSpelling(d->data));
 }
 
 /**
@@ -122,10 +119,7 @@ c_Diagnostic_get_category_name(VALUE self)
 // TODO deprecated write if macro based on clang vervion
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
-  CXString str = clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data));
-  VALUE name = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return name;
+  return CXSTR_2_RVAL(clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data)));
 }
 
 /**
@@ -140,10 +134,7 @@ c_Diagnostic_get_category_text(VALUE self)
 {
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
-  CXString str = clang_getDiagnosticCategoryText(d->data);
-  VALUE text = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return text;
+  return CXSTR_2_RVAL(clang_getDiagnosticCategoryText(d->data));
 }
 
 /**
@@ -201,12 +192,7 @@ c_Diagnostic_format(VALUE self, VALUE options)
   Data_Get_Struct(self, Diagnostic_t, d);
   unsigned int c_options;
   RNUM_2_UINT(options, c_options);
-  
-  CXString str = clang_formatDiagnostic(d->data, c_options);
-  VALUE format = rb_str_new2(clang_getCString(str));
-  clang_disposeString(str);
-
-  return format;
+  return CXSTR_2_RVAL(clang_formatDiagnostic(d->data, c_options));
 }
 
 /**
@@ -230,12 +216,9 @@ c_Diagnostic_get_option(VALUE self)
   CXString str2;
   str1 = clang_getDiagnosticOption(d->data, &str2);
   VALUE ret = rb_ary_new();
-  rb_ary_push(ret, rb_str_new2(clang_getCString(str1)));
-  rb_ary_push(ret, rb_str_new2(clang_getCString(str2)));
+  rb_ary_push(ret, CXSTR_2_RVAL(str1));
+  rb_ary_push(ret, CXSTR_2_RVAL(str2));
   
-  clang_disposeString(str1);
-  clang_disposeString(str2);
-
   return ret;
 }
 
