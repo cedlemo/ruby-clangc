@@ -104,10 +104,7 @@ c_TranslationUnit_get_spelling(VALUE self)
   VALUE spelling = Qnil;
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
-  CXString str = clang_getTranslationUnitSpelling(t->data);
-  spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getTranslationUnitSpelling(t->data));
 }
 
 /**
