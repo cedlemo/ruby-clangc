@@ -264,8 +264,7 @@ c_Type_get_arg_type(VALUE self, VALUE index)
   */
   if(max < 0)
     max = 0; 
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   CHECK_IN_RANGE(c_index, 0, max);
   Type_t *a;
   VALUE arg;
