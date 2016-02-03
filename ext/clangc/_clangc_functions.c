@@ -161,8 +161,7 @@ static enum CXChildVisitResult visitor(CXCursor cursor,
   VALUE r_ret = rb_funcall(callback, rb_intern("call"), 2, r_cursor, r_parent);
   if(TYPE(r_ret) == T_FIXNUM)
   {
-    unsigned ret;
-    RNUM_2_UINT(r_ret, ret);
+    unsigned ret = NUM2UINT(r_ret);
     if(ret == CXChildVisit_Break ||
        ret == CXChildVisit_Continue ||
        ret == CXChildVisit_Recurse)
