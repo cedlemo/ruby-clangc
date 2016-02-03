@@ -190,8 +190,7 @@ c_Diagnostic_format(VALUE self, VALUE options)
 {
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
   return CXSTR_2_RVAL(clang_formatDiagnostic(d->data, c_options));
 }
 
@@ -242,8 +241,7 @@ c_Diagnostic_get_source_range(VALUE self, VALUE index)
 {
   Diagnostic_t *d;
   Data_Get_Struct(self, Diagnostic_t, d);  
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   VALUE a_source_range;
   SourceRange_t *s;
   R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
