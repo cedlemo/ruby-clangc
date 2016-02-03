@@ -105,10 +105,7 @@ c_Module_get_name(VALUE self)
 {
   Module_t *m;
   Data_Get_Struct(self, Module_t, m);
-  CXString str = clang_Module_getName(m->data);
-  VALUE name = rb_str_new2(clang_getCString(str));
-  clang_disposeString(str);
-  return name;
+  return CXSTR_2_RVAL(clang_Module_getName(m->data));
 }
 
 /**
@@ -122,10 +119,7 @@ c_Module_get_full_name(VALUE self)
 {
   Module_t *m;
   Data_Get_Struct(self, Module_t, m);
-  CXString str = clang_Module_getFullName(m->data);
-  VALUE full_name = rb_str_new2(clang_getCString(str));
-  clang_disposeString(str);
-  return full_name;
+  return CXSSTR_2_RVAL(clang_Module_getFullName(m->data));
 }
 
 /**
