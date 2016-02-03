@@ -348,10 +348,7 @@ c_Cursor_get_spelling(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getCursorSpelling(c->data);
-  VALUE spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getCursorSpelling(c->data));
 }
 
 /**
@@ -676,10 +673,7 @@ c_Cursor_get_decl_obj_c_type_encoding(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getDeclObjCTypeEncoding(c->data);
-  VALUE type_encoding = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return type_encoding;
+  return CXSTR_2_RVAL(clang_getDeclObjCTypeEncoding(c->data));
 }
 
 /**
@@ -872,10 +866,7 @@ c_Cursor_get_display_name(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getCursorDisplayName(c->data);
-  VALUE display_name = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return display_name;
+  return CXSTR_2_RVAL(clang_getCursorDisplayName(c->data));
 }
 
 /**
@@ -915,10 +906,7 @@ c_Cursor_get_usr(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getCursorUSR(c->data);
-  VALUE usr = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return usr;
+  return CXSTR_2_RVAL(clang_getCursorUSR(c->data));
 }
 /**
 * call-seq:
@@ -1179,10 +1167,7 @@ c_Cursor_get_raw_comment_text(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_Cursor_getRawCommentText(c->data);
-  VALUE raw_comment = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return raw_comment;
+  return CXSTR_2_RVAL(clang_Cursor_getRawCommentText(c->data));
 }
 
 /**
@@ -1198,10 +1183,7 @@ c_Cursor_get_brief_comment_text(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_Cursor_getBriefCommentText(c->data);
-  VALUE brief_comment = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return brief_comment;
+  return CXSTR_2_RVAL(clang_Cursor_getBriefCommentText(c->data));
 }
 /**
 * call-seq:
@@ -1213,10 +1195,7 @@ c_Cursor_get_mangling(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_Cursor_getMangling(c->data);
-  VALUE mangling = rb_str_new2(clang_getCString(str) );
-  clang_disposeString(str);
-  return mangling;
+  return CXSTR_2_RVAL(clang_Cursor_getMangling(c->data));
 }
 
 /**
