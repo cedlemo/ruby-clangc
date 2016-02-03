@@ -203,7 +203,7 @@ c_Index_create_TU2(VALUE self, VALUE ast_file) {
   char *c_ast_file;
 //  if(TYPE(source_file == T_STRING))
   c_ast_file = StringValueCStr(ast_file);
-  uint er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
+  unsigned int er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
 
   c_tu->parent = self;
 
