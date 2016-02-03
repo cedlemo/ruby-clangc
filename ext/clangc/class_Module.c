@@ -168,8 +168,7 @@ c_Module_get_top_level_header(VALUE self, VALUE translation_unit, VALUE index)
   Data_Get_Struct(self, Module_t, m);
   TranslationUnit_t *t;
   Data_Get_Struct(translation_unit, TranslationUnit_t, t);
-  uint c_index; 
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   VALUE header;
   File_t *f;
   R_GET_CLASS_DATA("Clangc", "File", header, File_t, f);
