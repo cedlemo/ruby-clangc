@@ -145,8 +145,7 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   unsigned int max = clang_getNumDiagnostics(t->data);
-  unsigned  int c_num;
-  RNUM_2_UINT(num, c_num);
+  unsigned int c_num = NUM2UINT(num);
   CHECK_IN_RANGE(c_num, 0, max);
   VALUE diagnostic;
   Diagnostic_t *d;
