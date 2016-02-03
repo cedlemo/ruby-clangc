@@ -44,8 +44,12 @@ if(len > 0)\
   }\
 }
 //ruby boolean value to C int
-#define RBOOL_2_INT(arg, c_arg)\
-c_arg = (arg == Qtrue) ? 1 : 0;
+static inline int rbool_2_int(VALUE rval)
+{
+  return (int) ((rval == Qtrue)? 1 : 0);
+}
+#define RBOOL_2_INT(a) rbool_2_int(a)
+
 //ruby number to uint
 #define RNUM_2_UINT(rval, cval)\
 if (TYPE(rval) == T_FIXNUM || TYPE(rval) == T_BIGNUM)\

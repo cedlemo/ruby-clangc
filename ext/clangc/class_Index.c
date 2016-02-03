@@ -69,10 +69,8 @@ VALUE
 c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  uint e,d;
-  RBOOL_2_INT(excl_decls_from_PCH, e);
-  RBOOL_2_INT(display_diagnostics, d);  
-  i->data = clang_createIndex( e, d);
+  i->data = clang_createIndex(RBOOL_2_INT(excl_decls_from_PCH),
+                              RBOOL_2_INT(display_diagnostics));
   return self;
 }
 /*
