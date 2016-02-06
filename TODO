@@ -23,11 +23,11 @@
 [ ] See if the check in class_File.c clangc_File_get_name is the best solution
 
 [ ] Improve the macros:
-  *    rewrite NUM_2_CUINT (must return the val)
   *    create a _SELF macros
   *    RCLANG_2_CCLANG
   *    CCLANG_2_RCLANG
   *    Use Uppercase name to define for function
+
 ## Secondary:
 
 [ ] when errors in file, Clangc::SourceRange.end return NULL file and position

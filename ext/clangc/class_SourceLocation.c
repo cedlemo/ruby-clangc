@@ -111,16 +111,16 @@ c_SourceLocation_is_equal(VALUE self, VALUE source_location)
 *
 * The returned array contains four values:
 *
-* array[0] file if not nil, will be set to the file to which the given
+* array[0] will be set to the file to which the given
 * source location points.(Clangc::File)
 *
-* array[1] if not nil, will be set to the line to which the given
+* array[1] will be set to the line to which the given
 * source location points.
 *
-* array[2] if not nil, will be set to the column to which the given
+* array[2] will be set to the column to which the given
 * source location points.
 *
-* array[3] if not nil, will be set to the offset into the
+* array[3] will be set to the offset into the
 * buffer to which the given source location points. (the position
 * in the file)
 */
@@ -129,10 +129,10 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf; //= malloc(sizeof(CXFile));
-  unsigned int line;
-  unsigned int column;
-  unsigned int offset;
+  CXFile cxf;
+  unsigned int line = 0;
+  unsigned int column = 0;
+  unsigned int offset = 0;
   clang_getSpellingLocation(s->data, &cxf, &line, &column, &offset);
   if(&cxf)
   {
@@ -146,20 +146,9 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
   else
     rb_ary_push(ret, Qnil);
 
-  if(&line)
-    rb_ary_push(ret, CUINT_2_NUM(line));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&column)
-    rb_ary_push(ret, CUINT_2_NUM(column));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&offset)
-    rb_ary_push(ret, CUINT_2_NUM(offset));
-  else
-    rb_ary_push(ret, Qnil);
+  rb_ary_push(ret, CUINT_2_NUM(line));
+  rb_ary_push(ret, CUINT_2_NUM(column));
+  rb_ary_push(ret, CUINT_2_NUM(offset));
     
   return ret;
 }
@@ -175,16 +164,16 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
 *
 * The returned array contains four values:
 *
-* array[0] file if not nil, will be set to the file to which the given
+* array[0] will be set to the file to which the given
 * source location points.(Clangc::File)
 *
-* array[1] if not nil, will be set to the line to which the given
+* array[1] will be set to the line to which the given
 * source location points.
 *
-* array[2] if not nil, will be set to the column to which the given
+* array[2] will be set to the column to which the given
 * source location points.
 *
-* array[3] if not nil, will be set to the offset into the
+* array[3] will be set to the offset into the
 * buffer to which the given source location points. (the position
 * in the file)
 */
@@ -193,7 +182,7 @@ VALUE c_SourceLocation_get_file_location(VALUE self)
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf; //= malloc(sizeof(CXFile));
+  CXFile cxf;
   unsigned int line;
   unsigned int column;
   unsigned int offset;
@@ -210,20 +199,9 @@ VALUE c_SourceLocation_get_file_location(VALUE self)
   else
     rb_ary_push(ret, Qnil);
 
-  if(&line)
-    rb_ary_push(ret, CUINT_2_NUM(line));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&column)
-    rb_ary_push(ret, CUINT_2_NUM(column));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&offset)
-    rb_ary_push(ret, CUINT_2_NUM(offset));
-  else
-    rb_ary_push(ret, Qnil);
+  rb_ary_push(ret, CUINT_2_NUM(line));
+  rb_ary_push(ret, CUINT_2_NUM(column));
+  rb_ary_push(ret, CUINT_2_NUM(offset));
     
   return ret;
 }
