@@ -50,25 +50,13 @@ static inline int rbool_2_int(VALUE rval)
 }
 #define RBOOL_2_INT(a) rbool_2_int(a)
 
-//ruby number to uint
-#define RNUM_2_UINT(rval, cval)\
-if (TYPE(rval) == T_FIXNUM || TYPE(rval) == T_BIGNUM)\
-  cval=NUM2UINT(rval);\
-else\
-  rb_raise(rb_eTypeError, "invalid type for input");
-//ruby number to int
-#define RNUM_2_INT(rval, cval)\
-if (TYPE(rval) == T_FIXNUM || TYPE(rval) == T_BIGNUM)\
-  cval=NUM2INT(rval);\
-else\
-  rb_raise(rb_eTypeError, "invalid type for input");
-
-//Ruby string to C char *
-#define RSTRING_2_CHAR(rval, cval)\
-if (TYPE(rval) == T_STRING)\
-  cval = StringValueCStr(rval);\
-else\
-  rb_raise(rb_eTypeError, "invalid type for input");
+//Ruby string to C char 
+static inline char * rstring_2_char(VALUE rval)
+{
+  VALUE rb_string = StringValue(rval);
+  return StringValueCStr(rval);
+}
+#define RSTRING_2_CHAR(rval) rstring_2_char(rval)
 
 /****************/
 /*Classes Macros*/
