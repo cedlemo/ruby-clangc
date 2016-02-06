@@ -825,4 +825,11 @@ class TestCursorUsage < MiniTest::Test
     end
     # TODO
   end
+  def test_Cursor_get_spelling_name_range
+  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      assert_instance_of Clangc::SourceRange, cursor.spelling_name_range(0, 0)
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
