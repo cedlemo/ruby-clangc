@@ -171,8 +171,7 @@ c_TranslationUnit_get_file(VALUE self, VALUE file_name)
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   CXFile cxfile;
-  char * c_file_name;
-  RSTRING_2_CHAR(file_name, c_file_name);
+  char * c_file_name = RSTRING_2_CHAR(file_name);
   cxfile = clang_getFile(t->data, c_file_name); 
  
   if(cxfile)
