@@ -228,7 +228,7 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "obj_c_property_attributes", RUBY_METHOD_FUNC(c_Cursor_get_obj_c_property_attributes), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "overridden_cursors", RUBY_METHOD_FUNC(c_Cursor_get_overridden_cursors), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "module", RUBY_METHOD_FUNC(c_Cursor_get_module), 0);// in class_Cursor.c
-
+  rb_define_method(c_Cursor, "spelling_name_range", RUBY_METHOD_FUNC(c_Cursor_get_spelling_name_range), 2);// in class_Cursor.c
 /*
  * Overriden Cursor is a subclass of cursor created because they need to be freed
  * unlike the basics Clangc::Cursor

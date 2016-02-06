@@ -239,4 +239,7 @@ c_Cursor_get_overridden_cursors(VALUE);
 
 VALUE
 c_Cursor_get_module(VALUE);
+
+VALUE
+c_Cursor_get_spelling_name_range(VALUE, VALUE, VALUE);
 #endif //CURSOR_H

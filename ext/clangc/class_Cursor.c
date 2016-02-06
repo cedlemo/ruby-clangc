@@ -1579,3 +1579,32 @@ c_Cursor_get_module(VALUE self)
   m->parent = self;
   return module;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Cursor#spelling_name_range(Integer, Integer) => Clangc::SourceRange
+ *
+ * Retrieve a range for a piece that forms the cursors spelling name.
+ * Most of the times there is only one range for the complete spelling but for
+ * Objective-C methods and Objective-C message expressions, there are multiple
+ * pieces for each selector identifier.
+ * 
+ * First parameter is the index of the spelling name piece. If this is greater
+ * than the actual number of pieces, it will return a NULL (invalid) range.
+ *  
+ * The second parameter is for options and are Reserved.
+ */
+VALUE
+c_Cursor_get_spelling_name_range(VALUE self, VALUE index, VALUE options)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *sr;
+  VALUE source_range;
+  R_GET_CLASS_DATA("Clangc", "SourceRange", source_range, SourceRange_t, sr);
+  sr->data = clang_Cursor_getSpellingNameRange(c->data,
+                                               NUM2UINT(index),
+                                               NUM2UINT(options));
+  sr->parent = c->parent;
+  return source_range;
+}
