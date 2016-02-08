@@ -222,6 +222,7 @@ c_TranslationUnit_get_module(VALUE self, VALUE file)
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   File_t *f;
+  CHECK_ARG_TYPE(file, File);
   Data_Get_Struct(file, File_t, f);
 
   Module_t *m;
