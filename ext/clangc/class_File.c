@@ -73,7 +73,7 @@ c_File_get_name(VALUE self)
   File_t * f;
   VALUE name = Qnil;
   Data_Get_Struct(self, File_t, f);
-  if(f->data)
+  if (f->data != NULL)
   {
     name = CXSTR_2_RVAL(clang_getFileName(f->data));
   }
