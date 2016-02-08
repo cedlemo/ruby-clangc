@@ -16,8 +16,6 @@
   *    Add ruby object check in c_SourceRange_is_equal
   *    Add ruby object check in c_SourceLocation_is_equal
   *    Add ruby object check in c_Type_is_equal
-  *    Add ruby object check in c_CursorSet_contains
-  *    Add ruby object check in c_CursorSet_insert
 
 [ ] See if the check in class_File.c clangc_File_get_name is the best solution
 

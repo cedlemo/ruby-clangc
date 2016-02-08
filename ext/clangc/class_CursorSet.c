@@ -85,6 +85,7 @@ c_CursorSet_contains(VALUE self, VALUE cursor)
   Cursor_t *c;
 
   Data_Get_Struct(self, CursorSet_t, cs);
+  CHECK_ARG_TYPE(cursor, Cursor);
   Data_Get_Struct(cursor, Cursor_t, c);
 
   return NOT_0_2_RVAL(clang_CXCursorSet_contains(cs->data, c->data));
@@ -105,6 +106,7 @@ c_CursorSet_insert(VALUE self, VALUE cursor)
   Cursor_t *c;
 
   Data_Get_Struct(self, CursorSet_t, cs);
+  CHECK_ARG_TYPE(cursor, Cursor);
   Data_Get_Struct(cursor, Cursor_t, c);
 
   return NOT_0_2_RVAL(clang_CXCursorSet_insert(cs->data, c->data));
