@@ -113,7 +113,7 @@ c_Type_get_canonical_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *c;
   VALUE canonical;
-  R_GET_CLASS_DATA("Clangc", "Type", canonical, Type_t, c);
+  R_GET_CLASS_DATA1("Clangc", Type, canonical, c);
   c->data = clang_getCanonicalType(t->data);
   c->parent = t->parent;
   return canonical;
@@ -132,7 +132,7 @@ c_Type_get_pointee_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *p;
   VALUE pointee;
-  R_GET_CLASS_DATA("Clangc", "Type", pointee, Type_t, p);
+  R_GET_CLASS_DATA1("Clangc", Type, pointee, p);
   p->data = clang_getPointeeType(t->data);
   p->parent = t->parent;
   return pointee;
@@ -202,7 +202,7 @@ c_Type_get_result_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *r;
   VALUE result;
-  R_GET_CLASS_DATA("Clangc", "Type", result, Type_t, r);
+  R_GET_CLASS_DATA1("Clangc", Type, result, r);
   r->data = clang_getResultType(t->data);
   r->parent = t->parent;
   return result;
@@ -268,7 +268,7 @@ c_Type_get_arg_type(VALUE self, VALUE index)
   CHECK_IN_RANGE(c_index, 0, max);
   Type_t *a;
   VALUE arg;
-  R_GET_CLASS_DATA("Clangc", "Type", arg, Type_t, a);
+  R_GET_CLASS_DATA1("Clangc", Type, arg, a);
   a->data = clang_getArgType(t->data, c_index);
   a->parent = t->parent;
   return arg;
@@ -290,7 +290,7 @@ c_Type_get_element_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *e;
   VALUE element;
-  R_GET_CLASS_DATA("Clangc", "Type", element, Type_t, e);
+  R_GET_CLASS_DATA1("Clangc", Type, element, e);
   e->data = clang_getElementType(t->data);
   e->parent = t->parent;
   return element;
@@ -328,7 +328,7 @@ c_Type_get_array_element_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *e;
   VALUE element;
-  R_GET_CLASS_DATA("Clangc", "Type", element, Type_t, e);
+  R_GET_CLASS_DATA1("Clangc", Type, element, e);
   e->data = clang_getArrayElementType(t->data);
   e->parent = t->parent;
   return element;
