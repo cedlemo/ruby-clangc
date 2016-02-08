@@ -61,6 +61,23 @@ static inline char * rstring_2_char(VALUE rval)
 /****************/
 /*Classes Macros*/
 /****************/
+//Check argument
+static inline void check_arg_type(VALUE arg, char *class_name)
+{
+  Check_Type(arg, T_DATA);
+  VALUE mModule = rb_const_get(rb_cObject, rb_intern("Clangc"));
+  VALUE cKlass =  rb_const_get(mModule, rb_intern(class_name));
+  char *message;
+  int len = asprintf(&message, "Clangc::%s Object was expected",class_name); 
+  if (cKlass != rb_funcall(arg, rb_intern("class"), 0))
+  {
+    rb_raise(rb_eTypeError, message);
+    free(message);
+  }
+}
+
+#define CHECK_ARG_TYPE(arg, classname) check_arg_type(arg, #classname)
+
 //Create a new instance without args and get its data
 #define R_GET_CLASS_DATA(module_name, class_name, instance, data_ptr)\
 VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
