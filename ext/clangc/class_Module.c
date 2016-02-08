@@ -66,7 +66,7 @@ c_Module_get_ast_file(VALUE self)
   Data_Get_Struct(self, Module_t, m);
   VALUE ast_file;
   File_t *f;
-  R_GET_CLASS_DATA("Clangc", "File", ast_file, File_t, f);
+  R_GET_CLASS_DATA1("Clangc", File, ast_file, f);
   f->data = clang_Module_getASTFile(m->data);
   if (f->data)
     return ast_file;
@@ -88,7 +88,7 @@ c_Module_get_parent(VALUE self)
   Data_Get_Struct(self, Module_t, m);
   VALUE parent;
   Module_t *p;
-  R_GET_CLASS_DATA("Clangc", "Module", parent, Module_t, p);
+  R_GET_CLASS_DATA1("Clangc", Module, parent, p);
   p->data = clang_Module_getParent(m->data);
   return parent;
 }
@@ -171,7 +171,7 @@ c_Module_get_top_level_header(VALUE self, VALUE translation_unit, VALUE index)
   unsigned int c_index = NUM2UINT(index);
   VALUE header;
   File_t *f;
-  R_GET_CLASS_DATA("Clangc", "File", header, File_t, f);
+  R_GET_CLASS_DATA1("Clangc", File, header, f);
   f->data = clang_Module_getTopLevelHeader(t->data, m->data, c_index);
   if (f->data)
     return header;
