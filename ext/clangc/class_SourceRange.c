@@ -72,12 +72,13 @@ c_SourceRange_is_null(VALUE self)
 * Returns true if the ranges are the same, false if they differ.
 */
 VALUE
-c_SourceRange_is_equal(VALUE self, VALUE other_source_range)
+c_SourceRange_is_equal(VALUE self, VALUE source_range)
 {
   SourceRange_t * sr1;
   SourceRange_t * sr2;
   Data_Get_Struct(self, SourceRange_t, sr1);
-  Data_Get_Struct(other_source_range, SourceRange_t, sr2);
+  CHECK_ARG_TYPE(source_range, SourceRange);
+  Data_Get_Struct(source_range, SourceRange_t, sr2);
   return NOT_0_2_RVAL(clang_equalRanges(sr1->data, sr2->data));
 }
 
