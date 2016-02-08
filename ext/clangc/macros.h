@@ -76,6 +76,17 @@ VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
   instance = rb_class_new_instance(args_len, args, cKlass);\
   Data_Get_Struct(instance, data_type, data_ptr);
 
+/* For later.
+#define NEW_CLASS_INSTANCE(class_name)\
+static inline VALUE new_##class_name##_inst(class_name##_t *data)\
+{\
+  VALUE instance;\
+  R_GET_CLASS_DATA("clangc", class_name, instance, data);\
+  return instance;\
+}
+NEW_CLASS_INSTANCE(TranslationUnit)
+#undef NEW_CLASS_INSTANCE*/
+
 /************************/
 /*C values to Ruby value*/
 /************************/
