@@ -149,7 +149,7 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
   CHECK_IN_RANGE(c_num, 0, max);
   VALUE diagnostic;
   Diagnostic_t *d;
-  R_GET_CLASS_DATA("Clangc", "Diagnostic", diagnostic, Diagnostic_t, d); 
+  R_GET_CLASS_DATA1("Clangc", Diagnostic, diagnostic, d); 
   d->data = clang_getDiagnostic(t->data, c_num);
   d->parent = self;
   return diagnostic;
@@ -178,7 +178,7 @@ c_TranslationUnit_get_file(VALUE self, VALUE file_name)
   {  
     VALUE file;
     File_t *f;
-    R_GET_CLASS_DATA("Clangc", "File", file, File_t, f);
+    R_GET_CLASS_DATA1("Clangc", File, file, f);
     f->data = cxfile;
     f->parent = self;
     return file;
@@ -203,7 +203,7 @@ c_TranslationUnit_get_cursor(VALUE self)
   Data_Get_Struct(self, TranslationUnit_t, t);
   Cursor_t *c;
   VALUE a_cursor;
-  R_GET_CLASS_DATA("Clangc", "Cursor", a_cursor, Cursor_t, c);
+  R_GET_CLASS_DATA1("Clangc", Cursor, a_cursor, c);
   c->data = clang_getTranslationUnitCursor(t->data);
   c->parent = self;
   return a_cursor;
@@ -226,7 +226,7 @@ c_TranslationUnit_get_module(VALUE self, VALUE file)
 
   Module_t *m;
   VALUE module;
-  R_GET_CLASS_DATA("Clangc", "Module", module, Module_t, m);
+  R_GET_CLASS_DATA1("Clangc", Module, module, m);
   m->data = clang_getModuleForFile(t->data, f->data);
   m->parent = self;
   
