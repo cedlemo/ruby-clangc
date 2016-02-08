@@ -148,6 +148,7 @@ c_Module_get_num_top_level_headers(VALUE self, VALUE translation_unit)
   Module_t *m;
   Data_Get_Struct(self, Module_t, m);
   TranslationUnit_t *t;
+  CHECK_ARG_TYPE(translation_unit, TranslationUnit);
   Data_Get_Struct(translation_unit, TranslationUnit_t, t);
 
   return CUINT_2_NUM(clang_Module_getNumTopLevelHeaders(t->data, m->data));
@@ -167,6 +168,7 @@ c_Module_get_top_level_header(VALUE self, VALUE translation_unit, VALUE index)
   Module_t *m;
   Data_Get_Struct(self, Module_t, m);
   TranslationUnit_t *t;
+  CHECK_ARG_TYPE(translation_unit, TranslationUnit);
   Data_Get_Struct(translation_unit, TranslationUnit_t, t);
   unsigned int c_index = NUM2UINT(index);
   VALUE header;
