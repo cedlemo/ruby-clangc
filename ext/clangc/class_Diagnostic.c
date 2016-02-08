@@ -244,7 +244,7 @@ c_Diagnostic_get_source_range(VALUE self, VALUE index)
   unsigned int c_index = NUM2UINT(index);
   VALUE a_source_range;
   SourceRange_t *s;
-  R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
+  R_GET_CLASS_DATA1("Clangc", SourceRange, a_source_range, s);
   s->data = clang_getDiagnosticRange(d->data, c_index);
   s->parent = self;
   return a_source_range;
@@ -267,7 +267,7 @@ c_Diagnostic_get_source_location(VALUE self)
   Data_Get_Struct(self, Diagnostic_t, d);  
   VALUE a_source_location;
   SourceLocation_t *sl;
-  R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, sl);
+  R_GET_CLASS_DATA1("Clangc", SourceLocation, a_source_location, sl);
   sl->data = clang_getDiagnosticLocation(d->data);
   sl->parent = self;
   return a_source_location;  
