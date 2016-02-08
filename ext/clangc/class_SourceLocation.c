@@ -138,7 +138,7 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
   {
     VALUE file;
     File_t *f;
-    R_GET_CLASS_DATA("Clangc", "File", file, File_t, f);
+    R_GET_CLASS_DATA1("Clangc", File, file, f);
     f->data = cxf;
     f->parent = self;
     rb_ary_push(ret, file);
@@ -191,7 +191,7 @@ VALUE c_SourceLocation_get_file_location(VALUE self)
   {
     VALUE file;
     File_t *f;
-    R_GET_CLASS_DATA("Clangc", "File", file, File_t, f);
+    R_GET_CLASS_DATA1("Clangc", File, file, f);
     f->data = cxf;
     f->parent = self;
     rb_ary_push(ret, file);
