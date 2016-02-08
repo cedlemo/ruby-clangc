@@ -183,7 +183,7 @@ c_Cursor_get_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, type, t);
   t->data = clang_getCursorType(c->data);
   t->parent = self;
   return type;
@@ -230,7 +230,7 @@ c_Cursor_get_semantic_parent(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *s;
   VALUE sem_par;
-  R_GET_CLASS_DATA("Clangc", "Cursor", sem_par, Cursor_t, s);
+  R_GET_CLASS_DATA1("Clangc", Cursor, sem_par, s);
   s->data = clang_getCursorSemanticParent(c->data);
   s->parent = c->parent;
   return sem_par;
@@ -278,7 +278,7 @@ c_Cursor_get_lexical_parent(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *l;
   VALUE lex_par;
-  R_GET_CLASS_DATA("Clangc", "Cursor", lex_par, Cursor_t, l);
+  R_GET_CLASS_DATA1("Clangc", Cursor, lex_par, l);
   l->data = clang_getCursorLexicalParent(c->data);
   l->parent = c->parent;
   return lex_par;
@@ -304,7 +304,7 @@ c_Cursor_get_source_location(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   SourceLocation_t *s;
   VALUE src_loc;
-  R_GET_CLASS_DATA("Clangc", "SourceLocation", src_loc, SourceLocation_t, s);
+  R_GET_CLASS_DATA1("Clangc", SourceLocation, src_loc, s);
   s->data = clang_getCursorLocation(c->data);
   s->parent = self;
   return src_loc;
@@ -331,7 +331,7 @@ c_Cursor_get_extent(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   SourceRange_t *s;
   VALUE src_rge;
-  R_GET_CLASS_DATA("Clangc", "SourceRange", src_rge, SourceRange_t, s);
+  R_GET_CLASS_DATA1("Clangc", SourceRange, src_rge, s);
   s->data = clang_getCursorExtent(c->data);
   s->parent = self;
   return src_rge;
@@ -367,7 +367,7 @@ c_Cursor_get_typedef_decl_underlying_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, type, t);
   t->data = clang_getTypedefDeclUnderlyingType(c->data);
   t->parent = c->parent;
   return type;
@@ -387,7 +387,7 @@ c_Cursor_get_included_file(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   VALUE included;
   File_t *f;
-  R_GET_CLASS_DATA("Clangc", "File", included, File_t, f);
+  R_GET_CLASS_DATA1("Clangc", File, included, f);
   f->data = clang_getIncludedFile(c->data);
   f->parent = c->parent;
   return included;
@@ -528,7 +528,7 @@ c_Cursor_get_enum_decl_integer_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, type, t);
   t->data = clang_getEnumDeclIntegerType(c->data);
   t->parent = c->parent;
   return type;
@@ -628,7 +628,7 @@ c_Cursor_get_argument(VALUE self, VALUE index)
   CHECK_IN_RANGE(c_index, 0, max);
   Cursor_t *a;
   VALUE arg;
-  R_GET_CLASS_DATA("Clangc", "Cursor", arg, Cursor_t, a);
+  R_GET_CLASS_DATA1("Clangc", Cursor, arg, a);
   a->data = clang_Cursor_getArgument(c->data, c_index);
   a->parent = c->parent;
   return arg;
@@ -690,7 +690,7 @@ c_Cursor_get_result_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE result_type;
-  R_GET_CLASS_DATA("Clangc", "Type", result_type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, result_type, t);
   t->data = clang_getCursorResultType(c->data);
   t->parent = self;
   return result_type;
@@ -844,7 +844,7 @@ c_Cursor_get_overloaded_decl(VALUE self, VALUE index)
   unsigned int c_index = NUM2UINT(index);
   Cursor_t *o;
   VALUE overl_decl;
-  R_GET_CLASS_DATA("Clangc", "Cursor", overl_decl, Cursor_t, o);
+  R_GET_CLASS_DATA1("Clangc", Cursor, overl_decl, o);
   o->data = clang_getOverloadedDecl(c->data, c_index);
   o->parent = c->parent;
   return overl_decl;
@@ -881,7 +881,7 @@ c_Cursor_get_ib_outlet_collection_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE collection_type;
-  R_GET_CLASS_DATA("Clangc", "Type", collection_type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, collection_type, t);
   t->data = clang_getIBOutletCollectionType(c->data);
   t->parent = self;
   return collection_type;
@@ -927,7 +927,7 @@ c_Cursor_get_referenced(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *r;
   VALUE referenced;
-  R_GET_CLASS_DATA("Clangc", "Cursor", referenced, Cursor_t, r);
+  R_GET_CLASS_DATA1("Clangc", Cursor, referenced, r);
   r->data = clang_getCursorReferenced(c->data);
   r->parent = c->parent;
   return referenced;
@@ -969,7 +969,7 @@ c_Cursor_get_definition(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *d;
   VALUE definition;
-  R_GET_CLASS_DATA("Clangc", "Cursor", definition, Cursor_t, d);
+  R_GET_CLASS_DATA1("Clangc", Cursor, definition, d);
   d->data = clang_getCursorDefinition(c->data);
   d->parent = c->parent;
   return definition;
@@ -1022,7 +1022,7 @@ c_Cursor_get_canonical_cursor(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *cc;
   VALUE canonical_cursor;
-  R_GET_CLASS_DATA("Clangc", "Cursor", canonical_cursor, Cursor_t, cc);
+  R_GET_CLASS_DATA1("Clangc", Cursor, canonical_cursor, cc);
   cc->data = clang_getCanonicalCursor(c->data);
   cc->parent = c->parent;
   return canonical_cursor;
@@ -1083,7 +1083,7 @@ c_Cursor_get_receiver_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE receiver_type;
-  R_GET_CLASS_DATA("Clangc", "Type", receiver_type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, receiver_type, t);
   t->data = clang_Cursor_getReceiverType(c->data);
   t->parent = self;
   return receiver_type;
@@ -1148,7 +1148,7 @@ c_Cursor_get_comment_range(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   SourceRange_t *s;
   VALUE cmt_rge;
-  R_GET_CLASS_DATA("Clangc", "SourceRange", cmt_rge, SourceRange_t, s);
+  R_GET_CLASS_DATA1("Clangc", SourceRange, cmt_rge, s);
   s->data = clang_Cursor_getCommentRange(c->data);
   s->parent = self;
   return cmt_rge;
@@ -1320,7 +1320,7 @@ c_Cursor_get_specialized_cursor_template(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *sct;
   VALUE specialized_cursor_template;
-  R_GET_CLASS_DATA("Clangc", "Cursor", specialized_cursor_template, Cursor_t, sct);
+  R_GET_CLASS_DATA1("Clangc", Cursor, specialized_cursor_template, sct);
   sct->data = clang_getSpecializedCursorTemplate(c->data);
   sct->parent = c->parent;
   return specialized_cursor_template;
@@ -1343,7 +1343,7 @@ c_Cursor_get_completion_string(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   CompletionString_t *cs;
   VALUE completion_string;
-  R_GET_CLASS_DATA("Clangc", "CompletionString", completion_string, CompletionString_t, cs);
+  R_GET_CLASS_DATA1("Clangc", CompletionString, completion_string, cs);
   cs->data = clang_getCursorCompletionString(c->data);
   cs->parent = self;
   if(cs->data == NULL)
@@ -1414,7 +1414,7 @@ c_Cursor_get_template_argument_type(VALUE self, VALUE index)
   unsigned c_index = NUM2UINT(index);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA("Clangc", "Type", type, Type_t, t);
+  R_GET_CLASS_DATA1("Clangc", Type, type, t);
   t->data = clang_Cursor_getTemplateArgumentType(c->data, c_index);
   t->parent = self;
   return type;
@@ -1552,7 +1552,7 @@ c_Cursor_get_overridden_cursors(VALUE self)
     ptr = *(overridden + i);
     VALUE overridden_cursor;
     OverriddenCursor_t *oc;
-    R_GET_CLASS_DATA("Clangc", "OverriddenCursor", overridden_cursor, OverriddenCursor_t, oc);
+    R_GET_CLASS_DATA1("Clangc", OverriddenCursor, overridden_cursor, oc);
     oc->data = *ptr;
     oc->ptr = ptr;
     rb_ary_push(ret, overridden_cursor);
@@ -1574,7 +1574,7 @@ c_Cursor_get_module(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Module_t *m;
   VALUE module;
-  R_GET_CLASS_DATA("Clangc", "Module", module, Module_t, m);
+  R_GET_CLASS_DATA1("Clangc", Module, module, m);
   m->data = clang_Cursor_getModule(c->data);
   m->parent = self;
   return module;
@@ -1601,7 +1601,7 @@ c_Cursor_get_spelling_name_range(VALUE self, VALUE index, VALUE options)
   Data_Get_Struct(self, Cursor_t, c);
   SourceRange_t *sr;
   VALUE source_range;
-  R_GET_CLASS_DATA("Clangc", "SourceRange", source_range, SourceRange_t, sr);
+  R_GET_CLASS_DATA1("Clangc", SourceRange, source_range, sr);
   sr->data = clang_Cursor_getSpellingNameRange(c->data,
                                                NUM2UINT(index),
                                                NUM2UINT(options));
