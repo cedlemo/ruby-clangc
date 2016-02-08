@@ -15,7 +15,6 @@
   *    Add ruby object check in c_File_is_equal
   *    Add ruby object check in c_SourceRange_is_equal
   *    Add ruby object check in c_SourceLocation_is_equal
-  *    Add ruby object check in c_Cursor_is_equal
   *    Add ruby object check in c_Type_is_equal
   *    Add ruby object check in c_CursorSet_contains
   *    Add ruby object check in c_CursorSet_insert

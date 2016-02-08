@@ -84,6 +84,7 @@ c_Cursor_is_equal(VALUE self, VALUE cursor1)
   Cursor_t *c1;
 
   Data_Get_Struct(self, Cursor_t, c);
+  CHECK_ARG_TYPE(cursor1, Cursor); 
   Data_Get_Struct(cursor1, Cursor_t, c1);
 
   return NOT_0_2_RVAL(clang_equalCursors(c->data, c1->data));
