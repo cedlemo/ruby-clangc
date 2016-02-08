@@ -91,6 +91,7 @@ c_Type_is_equal(VALUE self, VALUE type)
   Type_t *t1;
   Type_t *t2;
   Data_Get_Struct(self, Type_t, t1);
+  CHECK_ARG_TYPE(type, Type);
   Data_Get_Struct(type, Type_t, t2);
   return NOT_0_2_RVAL(clang_equalTypes(t1->data, t2->data));
 }
