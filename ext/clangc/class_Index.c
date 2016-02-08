@@ -142,7 +142,7 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA1("Clangc", TranslationUnit, tu, c_tu);
+  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
   c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
                                                           c_source_file,
                                                           len, c_args, 0, 0); // TODO manage unsaved files
@@ -167,7 +167,7 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA1("Clangc", TranslationUnit, tu, c_tu);
+  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
   char *c_ast_file = NULL;
   c_ast_file = RSTRING_2_CHAR(ast_file);
   c_tu->data = clang_createTranslationUnit( i->data, c_ast_file);
@@ -195,7 +195,7 @@ c_Index_create_TU2(VALUE self, VALUE ast_file)
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA1("Clangc", TranslationUnit, tu, c_tu);
+  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
   char *c_ast_file = NULL;
   c_ast_file = RSTRING_2_CHAR(ast_file);
   unsigned int er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
@@ -258,7 +258,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA1("Clangc", TranslationUnit, tu, c_tu);
+  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
 
   c_tu->data = clang_parseTranslationUnit( i->data,
                                                           c_source_file,
@@ -324,7 +324,7 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA1("Clangc", TranslationUnit, tu, c_tu);
+  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
 
   unsigned int er = clang_parseTranslationUnit2(i->data,
                                         c_source_file,

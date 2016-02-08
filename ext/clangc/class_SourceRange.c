@@ -96,7 +96,7 @@ c_SourceRange_get_start(VALUE self)
   VALUE a_source_location;
   Data_Get_Struct(self, SourceRange_t, sr);
 
-  R_GET_CLASS_DATA1("Clangc", SourceLocation, a_source_location, sl);
+  R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
   sl->data = clang_getRangeStart(sr->data);
   return a_source_location;
 }
@@ -116,7 +116,7 @@ c_SourceRange_get_end(VALUE self)
   VALUE a_source_location;
   Data_Get_Struct(self, SourceRange_t, sr);
 
-  R_GET_CLASS_DATA1("Clangc", SourceLocation, a_source_location, sl);
+  R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
   sl->data = clang_getRangeEnd(sr->data);
   return a_source_location;
 }
