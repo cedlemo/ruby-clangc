@@ -94,6 +94,7 @@ c_SourceLocation_is_equal(VALUE self, VALUE source_location)
   SourceLocation_t *s;
   SourceLocation_t *sl;
   Data_Get_Struct(self, SourceLocation_t, s);
+  CHECK_ARG_TYPE(source_location, SourceLocation);
   Data_Get_Struct(source_location, SourceLocation_t, sl);
   
   return NOT_0_2_RVAL(clang_equalLocations(s->data, sl->data));
