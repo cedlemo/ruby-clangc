@@ -101,7 +101,7 @@ m_clangc_get_null_source_range(VALUE self)
 {
   SourceRange_t *s;
   VALUE a_source_range;
-  R_GET_CLASS_DATA("Clangc", "SourceRange", a_source_range, SourceRange_t, s);
+  R_GET_CLASS_DATA1("Clangc", SourceRange, a_source_range, s);
   s->data = clang_getNullRange();
   return a_source_range;
 }
@@ -118,7 +118,7 @@ m_clangc_get_null_source_location(VALUE self)
 {
   SourceLocation_t *s;
   VALUE a_source_location;
-  R_GET_CLASS_DATA("Clangc", "SourceLocation", a_source_location, SourceLocation_t, s);
+  R_GET_CLASS_DATA1("Clangc", SourceLocation, a_source_location, s);
   s->data = clang_getNullLocation();
   return a_source_location;
 }
@@ -135,7 +135,7 @@ m_clangc_get_null_cursor(VALUE self)
 {
   Cursor_t *c;
   VALUE a_cursor;
-  R_GET_CLASS_DATA("Clangc", "Cursor", a_cursor, Cursor_t, c);
+  R_GET_CLASS_DATA1("Clangc", Cursor, a_cursor, c);
   c->data = clang_getNullCursor();
   return a_cursor;
 }
