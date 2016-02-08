@@ -62,11 +62,18 @@ static inline char * rstring_2_char(VALUE rval)
 /*Classes Macros*/
 /****************/
 //Create a new instance without args and get its data
-#define R_GET_CLASS_DATA(module_name, class_name, instance, data_type, data_ptr)\
+#define R_GET_CLASS_DATA1(module_name, class_name, instance, data_type, data_ptr)\
 VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
   VALUE cKlass = rb_const_get(mModule, rb_intern(class_name));\
   instance = rb_class_new_instance(0, NULL, cKlass);\
   Data_Get_Struct(instance, data_type, data_ptr);
+
+#define R_GET_CLASS_DATA1(module_name, class_name, instance, data_ptr)\
+VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
+  VALUE cKlass = rb_const_get(mModule, rb_intern(#class_name));\
+  instance = rb_class_new_instance(0, NULL, cKlass);\
+  Data_Get_Struct(instance, class_name ##_t, data_ptr);
+
 //Create a new instance with args and get its data
 #define R_GET_CLASS_WITH_ARGS_DATA(module_name, class_name, instance, args, data_type, data_ptr)\
 VALUE mModule = rb_const_get(rb_cObject, rb_intern(module_name));\
