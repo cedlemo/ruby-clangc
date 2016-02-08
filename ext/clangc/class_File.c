@@ -132,10 +132,10 @@ c_File_is_multiple_include_guarded(VALUE self)
 VALUE
 c_File_is_equal(VALUE self, VALUE file)
 {
-// TODO add ruby object check here
   File_t * f1;
   File_t * f2;
   Data_Get_Struct(self, File_t, f1);
+  CHECK_ARG_TYPE(file, File);
   Data_Get_Struct(file, File_t, f2);
   return NOT_0_2_RVAL(clang_File_isEqual(f1->data, f2->data));
 }
