@@ -20,6 +20,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
     cd ruby_clang__test
     wget https://raw.githubusercontent.com/cedlemo/ruby-clangc/master/Vagrantfile
     vagrant up
+    vagrant provision
 
 ### Vagrant file content:
 
@@ -47,7 +48,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 
 ### functions wrapped:
 
-*    153/252 functions wrapped => 60.71428571428571%
+*    154/252 functions wrapped => 61.111111111111114%
 
 ### classes wrapped:
 
@@ -145,4 +146,3 @@ tu.diagnostics.each do |diagnostic|
                                 Clangc::DiagnosticDisplayOptions::DISPLAY_CATEGORY_NAME)}"
 end
 ```
-
