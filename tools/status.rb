@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 require "rtruckboris"
 require "term/ansicolor"
-require "./toolbox.rb"
+PATH = File.expand_path(File.dirname(__FILE__))
+require "#{PATH}/toolbox.rb"
 
 def colorize(color, string)
   if color.is_a?(String)
@@ -104,7 +105,6 @@ def print_global_informations(functions, managed_functions)
 end
 
 # Get clang functions that are wrapped in the C bindings
-PATH = File.expand_path(File.dirname(__FILE__))
 SRC_FILES = Dir.glob("#{PATH}/../ext/clangc/*.[c|h]")
 MANAGED_FUNCTIONS = []
 SRC_FILES.each do |file|
