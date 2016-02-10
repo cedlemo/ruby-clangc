@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require "rtruckboris"
 require "term/ansicolor"
+require "./toolbox.rb"
 
 def colorize(color, string)
   if color.is_a?(String)
@@ -33,15 +34,15 @@ def is_object_method(f, object_name)
   end
   false
 end
-def display_infos(object_name, generators, methods, wrapped_methods = [])
+def display_infos(object_name, generators, methods, wrapped_methods = [], versions)
   puts "#{colorize(:bold,object_name)} related functions"
   puts "\t#{colorize(:underscore,"Generators")}"
   generators.each do |g|
     gname = g.name
     if wrapped_methods.include?(gname)
-      puts "\t\t#{colorize(:black,gname)}"
+      puts "\t\t#{colorize(:black,gname)} - #{versions[gname].inspect}"
     else
-      puts "\t\t#{gname}"
+      puts "\t\t#{gname} - #{versions[gname].inspect}"
     end
   end
   # Sort on arguments number
@@ -55,30 +56,28 @@ def display_infos(object_name, generators, methods, wrapped_methods = [])
     end
     mname = m.name
     if wrapped_methods.include?(mname)
-      puts "\t\t#{m.parameters_num} __ #{colorize(:black,mname)}"
+      puts "\t\t#{m.parameters_num} __ #{colorize(:black,mname)} - #{versions[mname].inspect}"
     else
-      puts "\t\t#{m.parameters_num} __ #{mname}"
+      puts "\t\t#{m.parameters_num} __ #{mname} - #{versions[mname].inspect}"
     end
     output_types << m.return_type.name unless output_types.include?(m.return_type.name)
   end
-#  puts "ouput_types:\n #{output_types.join(" ")}"
-#  puts "input_types:\n #{input_types.join(" ")}"
 end
-def sumup_module_functions(functions, wrapped_methods = [])
+def sumup_module_functions(functions, wrapped_methods = [], versions)
   puts "#{colorize(:bold,"Module")} functions"
   functions.each do |f|
     if f.parameters.size == 0
       fname = f.name  
       if wrapped_methods.include?(fname)
-        puts "\t\t#{colorize(:black,fname)}"
+        puts "\t\t#{colorize(:black,fname)} - #{versions[fname].inspect}"
       else
-        puts "\t\t#{fname}"
+        puts "\t\t#{fname} - #{versions[fname].inspect}"
       end
     end
   end
   
 end
-def sumup_objects(functions, objects, wrapped_methods = [])
+def sumup_objects(functions, objects, wrapped_methods = [], versions)
   objects.each do |obj|
     obj_generators = []
     obj_methods = []
@@ -87,13 +86,26 @@ def sumup_objects(functions, objects, wrapped_methods = [])
       obj_methods << f if is_object_method(f, obj)
 
     end
-    display_infos(obj, obj_generators, obj_methods, wrapped_methods)
+    display_infos(obj, obj_generators, obj_methods, wrapped_methods, versions)
   end
 end
 
-# Get clang functions in the C code written
-CURRENT_PATH = File.expand_path(File.dirname(__FILE__))
-SRC_FILES = Dir.glob("#{CURRENT_PATH}/../ext/clangc/*.[c|h]")
+def print_global_informations(functions, managed_functions)
+  count = 0
+  functions.each do |f|
+    count += 1 if managed_functions.include?(f.name)
+  end
+
+  color = Term::ANSIColor
+  print color.green, count.to_s, color.clear, "/", color.black, 
+        functions.size, color.clear, " functions wrapped => ", 
+        color.yellow, (count/(functions.size*1.00)) * 100, 
+        color.clear, "%\n\n"
+end
+
+# Get clang functions that are wrapped in the C bindings
+PATH = File.expand_path(File.dirname(__FILE__))
+SRC_FILES = Dir.glob("#{PATH}/../ext/clangc/*.[c|h]")
 MANAGED_FUNCTIONS = []
 SRC_FILES.each do |file|
   f = File.open(file, 'r')
@@ -107,17 +119,42 @@ end
 
 MANAGED_FUNCTIONS.uniq!
 
-# Get a list of all Clang functions
+# Get Clang versions with function name:
+  clang_versions = {}
+  clang_versions[:v34] = Toolbox::SourceParser.new("#{PATH}/clang-3.4/Index.h")
+  clang_versions[:v35] = Toolbox::SourceParser.new("#{PATH}/clang-3.5/Index.h")
+  clang_versions[:v36] = Toolbox::SourceParser.new("#{PATH}/clang-3.6/Index.h")
+  clang_versions[:v37] = Toolbox::SourceParser.new("#{PATH}/clang-3.7/Index.h")
+
+  OUT = STDOUT.dup
+  ERR = STDERR.dup
+  clang_versions.each do |k,v|
+    $stdout.reopen("parse_#{k}.log", "w")
+    $stderr.reopen("parse_#{k}.err", "w")
+    v.parse(true)
+    $stdout.flush
+    $stderr.flush
+  end
+  $stdout = OUT
+  $stderr = ERR
+
+  versions = {}
+
+  clang_versions.each do |k,v|
+    fns = v.functions
+    fns.each do |f|
+      if versions[f.name] && !versions[f.name].include?(k)
+        versions[f.name] << k
+      else
+        versions[f.name] = [k]
+      end
+    end
+  end
+
+# Get a list of all Clang functions of system headers
 clang_c = "/usr/include/clang-c/Index.h"
-header_paths = []
-gcc_lib_base='/usr/lib/gcc/' << `llvm-config --host-target`.chomp << "/*"
-gcc_lib = Dir.glob(gcc_lib_base ).sort.last + "/include"
-header_paths << gcc_lib
-header_paths << "/usr/include"
-header_paths << "/usr/include/clang-c"
 
-parser = Rtruckboris::HeaderParser.new(clang_c, header_paths)
-
+parser = Toolbox::SourceParser.new(clang_c)
 unless parser.parse(true)
   puts "Can't parse"
   exit
@@ -125,23 +162,21 @@ end
 
 functions = parser.functions
 
-count = 0
-functions.each do |f|
-    count += 1 if MANAGED_FUNCTIONS.include?(f.name)
-end
 
-# print global informations
-color = Term::ANSIColor
-print color.green, count.to_s, color.clear, "/", color.black, functions.size,
-      color.clear, " functions wrapped => ", color.yellow, 
-      (count/(functions.size*1.00)) * 100, color.clear, "%\n\n"
-
+print_global_informations(functions, MANAGED_FUNCTIONS)
 # print specific informations
-sumup_module_functions(functions, MANAGED_FUNCTIONS)
-sumup_objects(functions, ["CXIndex", "CXTranslationUnit", "CXDiagnostic", "CXFile","CXSourceRange", "CXSourceLocation", "CXCursor", "CXType", "CXCompletionString", "CXCursorSet", "CXModule"], MANAGED_FUNCTIONS)
+sumup_module_functions(functions, MANAGED_FUNCTIONS, versions)
+sumup_objects(functions, ["CXIndex",
+                          "CXTranslationUnit",
+                          "CXDiagnostic",
+                          "CXFile",
+                          "CXSourceRange",
+                          "CXSourceLocation",
+                          "CXCursor",
+                          "CXType",
+                          "CXCompletionString",
+                          "CXCursorSet",
+                          "CXModule"],
+                          MANAGED_FUNCTIONS, versions)
 
-
-print "\n", color.green, count.to_s, color.clear, "/", color.black, functions.size,
-      color.clear, " functions wrapped => ", color.yellow, 
-      (count/(functions.size*1.00)) * 100, color.clear, "%\n\n"
-
+print_global_informations(functions, MANAGED_FUNCTIONS)

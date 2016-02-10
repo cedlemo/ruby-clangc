@@ -20,6 +20,22 @@ end
   $stdout = OUT
   $stderr = ERR
 
+functions = {}
+
 clang_versions.each do |k,v|
-  puts "#{k} -> #{v.functions.size.to_s}"
+  fns = v.functions
+  fns.each do |f|
+    if functions[f.name] && !functions[f.name].include?(k)
+      functions[f.name] << k
+    else
+      functions[f.name] = [k]
+    end
+  end
 end
+
+functions.each do |k,v|
+  puts "#{k} #{v.inspect}"
+end
+
+puts functions.size
+
