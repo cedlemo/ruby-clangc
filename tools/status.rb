@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "rtruckboris"
+#require "rtruckboris"
 require "term/ansicolor"
 PATH = File.expand_path(File.dirname(__FILE__))
 require "#{PATH}/toolbox.rb"
@@ -118,7 +118,6 @@ SRC_FILES.each do |file|
 end
 
 MANAGED_FUNCTIONS.uniq!
-
 # Get Clang versions with function name:
   clang_versions = {}
   clang_versions[:v34] = Toolbox::SourceParser.new("#{PATH}/clang-3.4/Index.h")
@@ -159,7 +158,6 @@ unless parser.parse(true)
   puts "Can't parse"
   exit
 end
-
 functions = parser.functions
 
 
