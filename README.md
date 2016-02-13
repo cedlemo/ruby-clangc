@@ -9,20 +9,22 @@ Clang version used is 3.7.1. and this have been tested only on ArchLinux.
 
 ### On your system.
 This is not recommended, no work on compatibility on other distributions or OS have been done.
-<!-- language: bash -->
 
+```bash
     gem build clanc.gemspec
     gem install clangc-x.x.x.gem
+```
 
 ### In a Virtual Machine (Virtual Box) with Vagrant
-<!-- language: bash -->
 
+```bash
     vagrant box add archlinux-x86_64 http://cloud.terry.im/vagrant/archlinux-x86_64.box
     mkdir ruby_clang_test
     cd ruby_clang__test
     wget https://raw.githubusercontent.com/cedlemo/ruby-clangc/master/Vagrantfile
     vagrant up
     vagrant provision
+```
 
 ## Status:
 
@@ -137,7 +139,7 @@ cl34.parse do |tu, cursor, parent|
 end
 ```
 
-2.    C simple parsing
+### C simple parsing
 
 ```ruby
 #!/usr/bin/env ruby
@@ -188,7 +190,7 @@ Clangc.visit_children(cursor: cursor) do |cursor, parent|
 end
 ```
 
-3.    Deal with Clangc diagnostic formats
+### Deal with Clangc diagnostic formats
 
 ```ruby
 #!/usr/bin/env ruby
