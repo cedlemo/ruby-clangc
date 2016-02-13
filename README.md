@@ -137,7 +137,9 @@ This is not recommended, no work on compatibility on other distributions or OS h
       Clangc::ChildVisitResult::RECURSE
     end
 
+
 2.    C simple parsing
+
 <!-- language: ruby -->
 
     #!/usr/bin/env ruby
@@ -187,7 +189,9 @@ This is not recommended, no work on compatibility on other distributions or OS h
       Clangc::ChildVisitResult::RECURSE
     end
 
+
 3.    Deal with Clangc diagnostic formats
+
 <!-- language: ruby -->
 
     #!/usr/bin/env ruby
