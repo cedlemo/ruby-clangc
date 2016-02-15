@@ -1609,3 +1609,42 @@ c_Cursor_get_spelling_name_range(VALUE self, VALUE index, VALUE options)
   sr->parent = c->parent;
   return source_range;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Cursor#reference_name_range(Clangc::NameFlags, piece_index) => Clangc::SourceRange or Clangc::Cursor (null)
+ *
+ * Given a cursor that references something else, return the source range
+ * covering that reference.
+ *
+ * For a cursor pointing to a member reference, a declaration reference, or
+ * an operator call.
+ *
+ * First parameter is a Clangc::NameFlags. A bitset with three independent flags: 
+ * CXNameRange_WantQualifier, CXNameRange_WantTemplateArgs, and
+ * CXNameRange_WantSinglePiece.
+ *
+ * piece_index For contiguous names or when passing the flag 
+ * CXNameRange_WantSinglePiece, only one piece with index 0 is 
+ * available. When the CXNameRange_WantSinglePiece flag is not passed for a
+ * non-contiguous names, this index can be used to retrieve the individual
+ * pieces of the name. See also CXNameRange_WantSinglePiece.
+ *
+ * It returns the piece of the name pointed to by the given cursor. If there is no
+ * name, or if the PieceIndex is out-of-range, a null-cursor will be returned.
+ */
+VALUE
+c_Cursor_get_reference_name_range(VALUE self, VALUE name_flags, VALUE piece_index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *sr;
+  VALUE source_range;
+  R_GET_CLASS_DATA("Clangc", SourceRange, source_range, sr);
+  
+  sr->data = clang_getCursorReferenceNameRange(c->data,
+                                               NUM2UINT(name_flags), 
+                                               NUM2UINT(piece_index));
+  sr->parent = c->parent;
+  return source_range;
+}

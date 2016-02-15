@@ -242,4 +242,7 @@ c_Cursor_get_module(VALUE);
 
 VALUE
 c_Cursor_get_spelling_name_range(VALUE, VALUE, VALUE);
+
+VALUE
+c_Cursor_get_reference_name_range(VALUE, VALUE, VALUE);
 #endif //CURSOR_H
