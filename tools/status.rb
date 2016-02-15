@@ -173,8 +173,9 @@ sumup_objects(functions, ["CXIndex",
                           "CXCursor",
                           "CXType",
                           "CXCompletionString",
-                          "CXCursorSet",
-                          "CXModule"],
+# Done                          "CXCursorSet",
+# Done                          "CXModule"
+                          ],
                           MANAGED_FUNCTIONS, versions)
 
 print_global_informations(functions, MANAGED_FUNCTIONS)
