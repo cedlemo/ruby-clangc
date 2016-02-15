@@ -14,3 +14,4 @@ The libclang data are mapped to the following:
 [CXCursor]            Clangc::Cursor
 [CXType]              Clangc::Type
 [CXCursorSet]         Clangc::CursorSet
+[CXModule]            Clangc::Module
