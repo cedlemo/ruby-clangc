@@ -832,4 +832,22 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Cursor_get_reference_name_range
+# TODO
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_METHOD_OVERRIDE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+#      #if cursor.location.spelling[0].name == SOURCE_FILE
+        case cursor.kind
+        when Clangc::CursorKind::MEMBER_REF
+          source_range = cursor.reference_name_range(Clangc::NameRefFlags::WANT_QUALIFIER, 0)
+          assert_instance_of(Clangc::SourceRange, source_range, cursor.spelling)
+#          source_location = source_range.start
+#          file, line, column = source_location.spelling
+#          assert_equal([0, 0], [line, column], "#{file.name} #{line} #{column} #{cursor.spelling} #{cursor.location.spelling[0].name} #{cursor.location.spelling[1]}")
+#
+        end
+#      #end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
