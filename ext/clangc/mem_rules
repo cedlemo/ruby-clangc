@@ -1,1 +1,27 @@
-Type -> parent = Cursor
+Entities        free        Parents                 
+Index              y        None
+
+TranslationUnit    y        Nil (when from Index) ??? really
+
+Cursor                      TranslationUnit
+
+Diagnostic         y        TranslationUnit
+
+SourceRange                 Cursor
+                            Diagnostic
+
+SourceLocation              Cursor
+                            Diagnostic
+                            nil (when from SourceRange)
+
+Type                        Cursor
+
+File                        TranslationUnit (when from Cursor)
+                            SourceLocation (when from SourceLocation)
+                            TranslationUnit (when from TranslationUnit)
+                            nil (when from Module)
+Module                      TranslationUnit (when form TranslationUnit)
+
+CursorSet         y
+
+OverridenCursor   y         Nil (when from  Cursor)

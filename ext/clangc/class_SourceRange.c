@@ -99,6 +99,7 @@ c_SourceRange_get_start(VALUE self)
 
   R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
   sl->data = clang_getRangeStart(sr->data);
+  sl->parent = self;
   return a_source_location;
 }
 
@@ -119,5 +120,6 @@ c_SourceRange_get_end(VALUE self)
 
   R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
   sl->data = clang_getRangeEnd(sr->data);
+  sl->parent = self;
   return a_source_location;
 }
