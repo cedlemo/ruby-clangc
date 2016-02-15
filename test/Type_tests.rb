@@ -186,7 +186,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_num_elements
-  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
         assert_equal Clangc::TypeKind::CONSTANT_ARRAY, cursor.type.kind, cursor.location.spelling.inspect
@@ -209,7 +209,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_array_size
-  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ARRAY, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.type.kind != Clangc::TypeKind::INVALID && cursor.type.kind != Clangc::TypeKind::INT
         assert_equal Clangc::TypeKind::CONSTANT_ARRAY, cursor.type.kind, cursor.location.spelling.inspect
@@ -219,7 +219,7 @@ class TestTypeUsage < MiniTest::Test
     end
   end
   def test_Type_is_pod
-  tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_POD, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_POD, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE_POD # ensure this is not include file
         if cursor.type.kind == Clangc::TypeKind::INT
@@ -230,5 +230,15 @@ class TestTypeUsage < MiniTest::Test
       end
       Clangc::ChildVisitResult::RECURSE
     end
+  end
+  def test_Type_type_declaration
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+        type = cursor.type
+        decl = type.type_declaration
+        assert_instance_of(Clangc::Cursor, decl)
+    # TODO use real test case
+    end
+    Clangc::ChildVisitResult::RECURSE
   end
 end
