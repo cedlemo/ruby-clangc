@@ -238,7 +238,21 @@ class TestTypeUsage < MiniTest::Test
         decl = type.type_declaration
         assert_instance_of(Clangc::Cursor, decl)
     # TODO use real test case
-    end
     Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_Type_is_function_type_variadic
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VARIADIC_FN, ["-x", "c++"] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == SOURCE_FILE_VARIADIC_FN
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          type = cursor.type
+          if type.is_function_type_variadic
+            assert_equal("simple_printf", cursor.spelling)
+          end
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
   end
 end
