@@ -66,4 +66,21 @@ class TestClangcMethods < MiniTest::Test
     end
     Clangc.visit_children(cursor: cursor, visitor: myproc)
   end
+  def test_SourceLocation_file_location_start_end
+    cindex = Clangc::Index.new(false, false)
+    tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == SOURCE_FILE  
+        if cursor.kind == Clangc::CursorKind::STRUCT_DECL 
+          initial_range = cursor.extent
+          assert_instance_of(Clangc::SourceLocation, initial_range.start)
+          assert_instance_of(Clangc::SourceLocation, initial_range.end)
+          recomputed_range = Clangc.range(initial_range.start, initial_range.end)
+          assert(initial_range.is_equal(recomputed_range))
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+
 end
