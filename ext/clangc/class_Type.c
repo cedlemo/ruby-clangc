@@ -394,3 +394,17 @@ c_Type_get_type_declaration(VALUE self)
   d->parent = c->parent;
   return declaration;
 }
+
+/**
+* call-seq:
+*   Clangc::Type#is_function_type_variadic => true/false
+*
+* Return true if the Clangc::Type is a variadic function type, and false otherwise.
+*/
+VALUE
+c_Type_is_function_type_variadic(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return NOT_0_2_RVAL(clang_isFunctionTypeVariadic(t->data));
+}
