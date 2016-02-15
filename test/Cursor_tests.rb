@@ -564,10 +564,15 @@ class TestCursorUsage < MiniTest::Test
     end
   end
   def test_Cursor_is_variadic
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VARIADIC_FN, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      # TODO
       assert [true, false].include?(cursor.is_variadic)
+      found = nil
+      if cursor.location.spelling[0].name == SOURCE_FILE_VARIADIC_FN 
+        if cursor.is_variadic
+          assert_equal("simple_printf", cursor.spelling)
+        end
+      end
       Clangc::ChildVisitResult::RECURSE
     end
   end
