@@ -258,3 +258,36 @@ m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
                                                 (CXClientData) callback);
   return NOT_0_2_RVAL(ret_with_break);
 }
+
+/**
+* call-seq:
+*   Clangc.range(Clangc::SourceLocation, Clangc::SourceLocation) => Clangc::SourceRange
+*
+* Retrieve a source range given the beginning and ending source
+* locations.
+*/
+VALUE
+m_clangc_get_range(VALUE self, VALUE begin, VALUE end)
+{
+  CHECK_ARG_TYPE(begin, SourceLocation);
+  CHECK_ARG_TYPE(end, SourceLocation);
+  
+  SourceLocation_t *b;
+  SourceLocation_t *e;
+  Data_Get_Struct(begin, SourceLocation_t, b);
+  Data_Get_Struct(end, SourceLocation_t, e);
+  // TODO Should I add a check to see if they come from the same 
+  // file / TU
+  VALUE range;
+  SourceRange_t *s;
+  R_GET_CLASS_DATA("Clangc", SourceRange, range, s);
+
+  s->data =  clang_getRange(b->data, e->data);
+  
+  // We use the parent of the first parameter (no real reason)
+  SourceRange_t *p;
+  Data_Get_Struct(b->parent, SourceRange_t, p);
+  s->parent = p->parent;
+
+  return range;
+}

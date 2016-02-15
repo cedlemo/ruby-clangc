@@ -45,4 +45,7 @@ m_clangc_visit_children_with_proc(VALUE, VALUE, VALUE);
 
 VALUE
 m_clangc_visit_children_with_block(VALUE, VALUE);
+
+VALUE
+m_clangc_get_range(VALUE, VALUE, VALUE);
 #endif

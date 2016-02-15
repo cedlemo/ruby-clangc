@@ -45,6 +45,7 @@ void Init_clangc(void) {
   rb_define_module_function(m_Clangc, "null_cursor", RUBY_METHOD_FUNC(m_clangc_get_null_cursor), 0);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "visit_children_with_proc", RUBY_METHOD_FUNC(m_clangc_visit_children_with_proc), 2);// in _clangc_functions.c
   rb_define_module_function(m_Clangc, "visit_children_with_block", RUBY_METHOD_FUNC(m_clangc_visit_children_with_block), 1);// in _clangc_functions.c
+  rb_define_module_function(m_Clangc, "range", RUBY_METHOD_FUNC(m_clangc_get_range), 2);// in _clangc_functions.c
 
   init_clang_enums_to_constants(m_Clangc);
   init_clang_errors_enums_to_constants(m_Clangc);
