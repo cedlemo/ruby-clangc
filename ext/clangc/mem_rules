@@ -12,7 +12,7 @@ SourceRange                 Cursor
 
 SourceLocation              Cursor
                             Diagnostic
-                            nil (when from SourceRange)
+                            SourceRange (when from SourceRange)
 
 Type                        Cursor
 
