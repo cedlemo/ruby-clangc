@@ -12,10 +12,6 @@
 
 ## Secondary:
 
-[ ] when errors in file, Clangc::SourceRange.end return NULL file and position
-    informations equal to 0. Check Clangc::SourceRange.end for other objects
-    than Clangc::Diagnostic
-
 [ ] Clean style
   *    Make all variables declarations at start
   *    Use space after for and if
