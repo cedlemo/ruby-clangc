@@ -46,6 +46,10 @@ module ClangcUtils
   SOURCE_FILE_METHOD_OVERRIDE = "#{PATH}/source21.cpp"
   # Source file with module import
   SOURCE_FILE_MODULE_IMPORT = "#{PATH}/source22.cpp"
+  # Source file with variadic function
+  SOURCE_FILE_VARIADIC_FN = "#{PATH}/source23.cpp"
+  # Source file with variadic type 
+  SOURCE_FILE_VARIADIC_TYPE = "#{PATH}/source24.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
