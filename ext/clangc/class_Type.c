@@ -17,6 +17,7 @@
 */
 /*Type ruby class*/
 #include "class_Type.h"
+#include "class_Cursor.h"
 #include "macros.h"
 
 static void
@@ -364,4 +365,32 @@ c_Type_is_pod(VALUE self)
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
   return NOT_0_2_RVAL(clang_isPODType(t->data));
+}
+
+/**
+* call-seq:
+*  Clangc::Type#type_declaration => Clangc::Cursor
+*
+* Return the cursor for the declaration of the given type.
+*/
+VALUE
+c_Type_get_type_declaration(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Cursor_t *d;
+  VALUE declaration;
+  R_GET_CLASS_DATA("Clangc", Cursor, declaration, d);
+  
+  /* Here we get the parent of the parent of self 
+   * As self is a Clangc::Type, its parent is a Clangc::Cursor
+   * and its parent is a TranslationUnit.
+   * TL/DR The parent of the returned cursor is a TranslationUnit
+   * */
+  Cursor_t *c;
+  Data_Get_Struct(t->parent, Cursor_t, c);
+
+  d->data = clang_getTypeDeclaration(t->data);
+  d->parent = c->parent;
+  return declaration;
 }

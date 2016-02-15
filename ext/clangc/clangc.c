@@ -263,7 +263,8 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "array_element_type", RUBY_METHOD_FUNC(c_Type_get_array_element_type), 0);// in class_Type.c
   rb_define_method(c_Type, "array_size", RUBY_METHOD_FUNC(c_Type_get_array_size), 0);// in class_Type.c
   rb_define_method(c_Type, "is_pod", RUBY_METHOD_FUNC(c_Type_is_pod), 0);// in class_Type.c
-  
+  rb_define_method(c_Type, "type_declaration", RUBY_METHOD_FUNC(c_Type_get_type_declaration), 0);// in class_Type.c
+ 
 /**
 * \brief A fast container representing a set of CXCursors.
 */

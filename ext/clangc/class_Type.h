@@ -77,4 +77,7 @@ c_Type_get_array_size(VALUE);
 
 VALUE
 c_Type_is_pod(VALUE);
+
+VALUE
+c_Type_get_type_declaration(VALUE);
 #endif //TYPE_H
