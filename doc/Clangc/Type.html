@@ -88,6 +88,8 @@
     
     <li ><a href="#method-i-is_equal">#is_equal</a>
     
+    <li ><a href="#method-i-is_function_type_variadic">#is_function_type_variadic</a>
+    
     <li ><a href="#method-i-is_pod">#is_pod</a>
     
     <li ><a href="#method-i-is_restrict_qualified">#is_restrict_qualified</a>
@@ -105,6 +107,8 @@
     <li ><a href="#method-i-result_type">#result_type</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
+    
+    <li ><a href="#method-i-type_declaration">#type_declaration</a>
     
   </ul>
 </div>
@@ -182,12 +186,11 @@ c_Type_get_arg_type(VALUE self, VALUE index)
   */
   if(max &lt; 0)
     max = 0; 
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   CHECK_IN_RANGE(c_index, 0, max);
   Type_t *a;
   VALUE arg;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, arg, Type_t, a);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, arg, a);
   a-&gt;data = clang_getArgType(t-&gt;data, c_index);
   a-&gt;parent = t-&gt;parent;
   return arg;
@@ -278,7 +281,7 @@ c_Type_get_array_element_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *e;
   VALUE element;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, element, Type_t, e);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, element, e);
   e-&gt;data = clang_getArrayElementType(t-&gt;data);
   e-&gt;parent = t-&gt;parent;
   return element;
@@ -411,7 +414,7 @@ c_Type_get_canonical_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *c;
   VALUE canonical;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, canonical, Type_t, c);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, canonical, c);
   c-&gt;data = clang_getCanonicalType(t-&gt;data);
   c-&gt;parent = t-&gt;parent;
   return canonical;
@@ -458,7 +461,7 @@ c_Type_get_element_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *e;
   VALUE element;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, element, Type_t, e);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, element, e);
   e-&gt;data = clang_getElementType(t-&gt;data);
   e-&gt;parent = t-&gt;parent;
   return element;
@@ -502,7 +505,7 @@ c_Type_is_const_qualified(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isConstQualifiedType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isConstQualifiedType(t-&gt;data));
 }</pre>
           </div>
           
@@ -546,8 +549,49 @@ c_Type_is_equal(VALUE self, VALUE type)
   Type_t *t1;
   Type_t *t2;
   Data_Get_Struct(self, Type_t, t1);
+  CHECK_ARG_TYPE(type, Type);
   Data_Get_Struct(type, Type_t, t2);
-  return clang_equalTypes(t1-&gt;data, t2-&gt;data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_equalTypes(t1-&gt;data, t2-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_function_type_variadic" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#is_function_type_variadic &rarr; true/false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return true if the <a href="Type.html">Clangc::Type</a> is a variadic
+function type, and false otherwise.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_function_type_variadic-source">
+            <pre>VALUE
+c_Type_is_function_type_variadic(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return NOT_0_2_RVAL(clang_isFunctionTypeVariadic(t-&gt;data));
 }</pre>
           </div>
           
@@ -587,7 +631,7 @@ c_Type_is_pod(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isPODType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isPODType(t-&gt;data));
 }</pre>
           </div>
           
@@ -628,7 +672,7 @@ c_Type_is_restrict_qualified(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isRestrictQualifiedType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isRestrictQualifiedType(t-&gt;data));
 }</pre>
           </div>
           
@@ -669,7 +713,7 @@ c_Type_is_volatile_qualified(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  return clang_isVolatileQualifiedType(t-&gt;data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isVolatileQualifiedType(t-&gt;data));
 }</pre>
           </div>
           
@@ -833,7 +877,7 @@ c_Type_get_pointee_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *p;
   VALUE pointee;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, pointee, Type_t, p);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, pointee, p);
   p-&gt;data = clang_getPointeeType(t-&gt;data);
   p-&gt;parent = t-&gt;parent;
   return pointee;
@@ -881,7 +925,7 @@ c_Type_get_result_type(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   Type_t *r;
   VALUE result;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, result, Type_t, r);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, result, r);
   r-&gt;data = clang_getResultType(t-&gt;data);
   r-&gt;parent = t-&gt;parent;
   return result;
@@ -926,10 +970,60 @@ c_Type_get_spelling(VALUE self)
 {
   Type_t *t;
   Data_Get_Struct(self, Type_t, t);
-  CXString str = clang_getTypeSpelling(t-&gt;data);
-  VALUE spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getTypeSpelling(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-type_declaration" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#type_declaration &rarr; Clangc::Cursor
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the cursor for the declaration of the given type.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="type_declaration-source">
+            <pre>VALUE
+c_Type_get_type_declaration(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  Cursor_t *d;
+  VALUE declaration;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, declaration, d);
+  
+  /* Here we get the parent of the parent of self 
+   * As self is a Clangc::Type, its parent is a Clangc::Cursor
+   * and its parent is a TranslationUnit.
+   * TL/DR The parent of the returned cursor is a TranslationUnit
+   * */
+  Cursor_t *c;
+  Data_Get_Struct(t-&gt;parent, Cursor_t, c);
+
+  d-&gt;data = clang_getTypeDeclaration(t-&gt;data);
+  d-&gt;parent = c-&gt;parent;
+  return declaration;
 }</pre>
           </div>
           

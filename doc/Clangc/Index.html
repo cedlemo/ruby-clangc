@@ -169,10 +169,8 @@ user to display them.</p>
 c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  uint e,d;
-  RBOOL_2_INT(excl_decls_from_PCH, e);
-  RBOOL_2_INT(display_diagnostics, d);  
-  i-&gt;data = clang_createIndex( e, d);
+  i-&gt;data = clang_createIndex(RBOOL_2_INT(excl_decls_from_PCH),
+                              RBOOL_2_INT(display_diagnostics));
   return self;
 }</pre>
           </div>
@@ -222,10 +220,9 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
-  char *c_ast_file;
-//  if(TYPE(source_file == T_STRING))
-  c_ast_file = StringValueCStr(ast_file);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+  char *c_ast_file = NULL;
+  c_ast_file = RSTRING_2_CHAR(ast_file);
   c_tu-&gt;data = clang_createTranslationUnit( i-&gt;data, c_ast_file);
 
   c_tu-&gt;parent = self;
@@ -271,16 +268,16 @@ with the option -emit-ast</p>
           
           <div class="method-source-code" id="create_translation_unit2-source">
             <pre>VALUE
-c_Index_create_TU2(VALUE self, VALUE ast_file) {
+c_Index_create_TU2(VALUE self, VALUE ast_file)
+{
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
-  char *c_ast_file;
-//  if(TYPE(source_file == T_STRING))
-  c_ast_file = StringValueCStr(ast_file);
-  uint er = clang_createTranslationUnit2( i-&gt;data, c_ast_file, &amp;(c_tu-&gt;data));
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+  char *c_ast_file = NULL;
+  c_ast_file = RSTRING_2_CHAR(ast_file);
+  unsigned int er = clang_createTranslationUnit2( i-&gt;data, c_ast_file, &amp;(c_tu-&gt;data));
 
   c_tu-&gt;parent = self;
 
@@ -358,18 +355,14 @@ this function  returns.</p>
           <div class="method-source-code" id="create_translation_unit_from_source_file-source">
             <pre>VALUE
 c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
-  char *c_source_file;
-  if(TYPE(source_file == T_STRING))
-    c_source_file = StringValueCStr(source_file);
-  else
-    c_source_file = NULL;
-
+  char *c_source_file = NULL;
+  c_source_file = RSTRING_2_CHAR(source_file);
   RARRAY_OF_STRINGS_2_C(args);
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
   c_tu-&gt;data = clang_createTranslationUnitFromSourceFile( i-&gt;data,
                                                           c_source_file,
                                                           len, c_args, 0, 0); // TODO manage unsaved files
@@ -417,7 +410,6 @@ A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.</p>
 c_Index_get_global_options(VALUE self) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-
   return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i-&gt;data));
 }</pre>
           </div>
@@ -462,8 +454,7 @@ instance.</p>
 c_Index_set_global_options(VALUE self, VALUE options) {
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
-  uint c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
   clang_CXIndex_setGlobalOptions(i-&gt;data,c_options);
   return Qnil;
 }</pre>
@@ -546,22 +537,19 @@ function returns.</p>
           
           <div class="method-source-code" id="parse_translation_unit-source">
             <pre>VALUE
-c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options) {
-  char *c_source_file;
-  if(TYPE(source_file == T_STRING))
-    c_source_file = StringValueCStr(source_file);
-  else
-    c_source_file = NULL;
+c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
+{
+  char *c_source_file = NULL;
+  c_source_file = RSTRING_2_CHAR(source_file);
   
-  uint c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
 
   RARRAY_OF_STRINGS_2_C(args);
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
 
   c_tu-&gt;data = clang_parseTranslationUnit( i-&gt;data,
                                                           c_source_file,
@@ -657,23 +645,19 @@ function returns.</p>
           <div class="method-source-code" id="parse_translation_unit2-source">
             <pre>VALUE
 c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
-  char *c_source_file;
-  if(TYPE(source_file == T_STRING))
-    c_source_file = StringValueCStr(source_file);
-  else
-    c_source_file = NULL;
+  char *c_source_file = NULL;
+  c_source_file = RSTRING_2_CHAR(source_file);
   
-  uint c_options;
-  RNUM_2_UINT(options, c_options);
+  unsigned int c_options = NUM2UINT(options);
 
   RARRAY_OF_STRINGS_2_C(args);
   Index_t *i;
   Data_Get_Struct(self, Index_t, i);
   VALUE tu;
   TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;TranslationUnit&quot;, tu, TranslationUnit_t, c_tu);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
 
-  uint er = clang_parseTranslationUnit2(i-&gt;data,
+  unsigned int er = clang_parseTranslationUnit2(i-&gt;data,
                                         c_source_file,
                                         c_args, len, 
                                         0, 0, c_options, // TODO manage unsaved files

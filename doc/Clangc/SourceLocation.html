@@ -144,17 +144,17 @@ location was originally spelled in the source file.</p>
 
 <p>The returned array contains four values:</p>
 
-<p><a href="0">array</a> file if not nil, will be set to the file to which the
-given source location points.(Clangc::File)</p>
+<p><a href="0">array</a> will be set to the file to which the given source
+location points.(Clangc::File)</p>
 
-<p><a href="1">array</a> if not nil, will be set to the line to which the
-given source location points.</p>
+<p><a href="1">array</a> will be set to the line to which the given source
+location points.</p>
 
-<p><a href="2">array</a> if not nil, will be set to the column to which the
-given source location points.</p>
+<p><a href="2">array</a> will be set to the column to which the given source
+location points.</p>
 
-<p><a href="3">array</a> if not nil, will be set to the offset into the buffer
-to which the given source location points. (the position in the file)</p>
+<p><a href="3">array</a> will be set to the offset into the buffer to which
+the given source location points. (the position in the file)</p>
           
           
 
@@ -165,7 +165,7 @@ to which the given source location points. (the position in the file)</p>
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf; //= malloc(sizeof(CXFile));
+  CXFile cxf;
   unsigned int line;
   unsigned int column;
   unsigned int offset;
@@ -174,7 +174,7 @@ to which the given source location points. (the position in the file)</p>
   {
     VALUE file;
     File_t *f;
-    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxf;
     f-&gt;parent = self;
     rb_ary_push(ret, file);
@@ -182,20 +182,9 @@ to which the given source location points. (the position in the file)</p>
   else
     rb_ary_push(ret, Qnil);
 
-  if(&amp;line)
-    rb_ary_push(ret, CUINT_2_NUM(line));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&amp;column)
-    rb_ary_push(ret, CUINT_2_NUM(column));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&amp;offset)
-    rb_ary_push(ret, CUINT_2_NUM(offset));
-  else
-    rb_ary_push(ret, Qnil);
+  rb_ary_push(ret, CUINT_2_NUM(line));
+  rb_ary_push(ret, CUINT_2_NUM(column));
+  rb_ary_push(ret, CUINT_2_NUM(offset));
     
   return ret;
 }</pre>
@@ -241,12 +230,10 @@ c_SourceLocation_is_equal(VALUE self, VALUE source_location)
   SourceLocation_t *s;
   SourceLocation_t *sl;
   Data_Get_Struct(self, SourceLocation_t, s);
+  CHECK_ARG_TYPE(source_location, SourceLocation);
   Data_Get_Struct(source_location, SourceLocation_t, sl);
   
-  if(clang_equalLocations(s-&gt;data, sl-&gt;data) &gt; 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_equalLocations(s-&gt;data, sl-&gt;data));
 }</pre>
           </div>
           
@@ -286,10 +273,7 @@ c_SourceLocation_is_from_main_file(VALUE self)
 {
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  if(clang_Location_isFromMainFile(s-&gt;data) &gt; 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Location_isFromMainFile(s-&gt;data));
 }</pre>
           </div>
           
@@ -328,10 +312,7 @@ c_SourceLocation_is_in_system_header(VALUE self)
 {
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  if(clang_Location_isInSystemHeader(s-&gt;data) &gt; 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Location_isInSystemHeader(s-&gt;data));
 }</pre>
           </div>
           
@@ -367,17 +348,17 @@ location was originally spelled in the source file.</p>
 
 <p>The returned array contains four values:</p>
 
-<p><a href="0">array</a> file if not nil, will be set to the file to which the
-given source location points.(Clangc::File)</p>
+<p><a href="0">array</a> will be set to the file to which the given source
+location points.(Clangc::File)</p>
 
-<p><a href="1">array</a> if not nil, will be set to the line to which the
-given source location points.</p>
+<p><a href="1">array</a> will be set to the line to which the given source
+location points.</p>
 
-<p><a href="2">array</a> if not nil, will be set to the column to which the
-given source location points.</p>
+<p><a href="2">array</a> will be set to the column to which the given source
+location points.</p>
 
-<p><a href="3">array</a> if not nil, will be set to the offset into the buffer
-to which the given source location points. (the position in the file)</p>
+<p><a href="3">array</a> will be set to the offset into the buffer to which
+the given source location points. (the position in the file)</p>
           
           
 
@@ -388,16 +369,16 @@ to which the given source location points. (the position in the file)</p>
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf; //= malloc(sizeof(CXFile));
-  unsigned int line;
-  unsigned int column;
-  unsigned int offset;
+  CXFile cxf;
+  unsigned int line = 0;
+  unsigned int column = 0;
+  unsigned int offset = 0;
   clang_getSpellingLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
   if(&amp;cxf)
   {
     VALUE file;
     File_t *f;
-    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxf;
     f-&gt;parent = self;
     rb_ary_push(ret, file);
@@ -405,20 +386,9 @@ to which the given source location points. (the position in the file)</p>
   else
     rb_ary_push(ret, Qnil);
 
-  if(&amp;line)
-    rb_ary_push(ret, CUINT_2_NUM(line));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&amp;column)
-    rb_ary_push(ret, CUINT_2_NUM(column));
-  else
-    rb_ary_push(ret, Qnil);
-
-  if(&amp;offset)
-    rb_ary_push(ret, CUINT_2_NUM(offset));
-  else
-    rb_ary_push(ret, Qnil);
+  rb_ary_push(ret, CUINT_2_NUM(line));
+  rb_ary_push(ret, CUINT_2_NUM(column));
+  rb_ary_push(ret, CUINT_2_NUM(offset));
     
   return ret;
 }</pre>

@@ -188,6 +188,8 @@
     
     <li ><a href="#method-i-receiver_type">#receiver_type</a>
     
+    <li ><a href="#method-i-reference_name_range">#reference_name_range</a>
+    
     <li ><a href="#method-i-referenced">#referenced</a>
     
     <li ><a href="#method-i-result_type">#result_type</a>
@@ -197,6 +199,8 @@
     <li ><a href="#method-i-specialized_cursor_template">#specialized_cursor_template</a>
     
     <li ><a href="#method-i-spelling">#spelling</a>
+    
+    <li ><a href="#method-i-spelling_name_range">#spelling_name_range</a>
     
     <li ><a href="#method-i-storage_class">#storage_class</a>
     
@@ -309,12 +313,11 @@ c_Cursor_get_argument(VALUE self, VALUE index)
   int max = clang_Cursor_getNumArguments(c-&gt;data);
   if(max &lt; 0)
     max = 0;
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   CHECK_IN_RANGE(c_index, 0, max);
   Cursor_t *a;
   VALUE arg;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, arg, Cursor_t, a);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, arg, a);
   a-&gt;data = clang_Cursor_getArgument(c-&gt;data, c_index);
   a-&gt;parent = c-&gt;parent;
   return arg;
@@ -446,10 +449,7 @@ c_Cursor_get_brief_comment_text(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_Cursor_getBriefCommentText(c-&gt;data);
-  VALUE brief_comment = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return brief_comment;
+  return CXSTR_2_RVAL(clang_Cursor_getBriefCommentText(c-&gt;data));
 }</pre>
           </div>
           
@@ -511,7 +511,7 @@ c_Cursor_get_canonical_cursor(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *cc;
   VALUE canonical_cursor;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, canonical_cursor, Cursor_t, cc);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, canonical_cursor, cc);
   cc-&gt;data = clang_getCanonicalCursor(c-&gt;data);
   cc-&gt;parent = c-&gt;parent;
   return canonical_cursor;
@@ -557,7 +557,7 @@ c_Cursor_get_comment_range(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   SourceRange_t *s;
   VALUE cmt_rge;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, cmt_rge, SourceRange_t, s);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, cmt_rge, s);
   s-&gt;data = clang_Cursor_getCommentRange(c-&gt;data);
   s-&gt;parent = self;
   return cmt_rge;
@@ -605,7 +605,7 @@ c_Cursor_get_completion_string(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   CompletionString_t *cs;
   VALUE completion_string;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;CompletionString&quot;, completion_string, CompletionString_t, cs);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionString, completion_string, cs);
   cs-&gt;data = clang_getCursorCompletionString(c-&gt;data);
   cs-&gt;parent = self;
   if(cs-&gt;data == NULL)
@@ -696,10 +696,7 @@ c_Cursor_cxx_method_is_const(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isConst(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isConst(c-&gt;data));
 }</pre>
           </div>
           
@@ -739,10 +736,7 @@ c_Cursor_cxx_method_is_pure_virtual(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isPureVirtual(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isPureVirtual(c-&gt;data));
 }</pre>
           </div>
           
@@ -781,10 +775,7 @@ c_Cursor_cxx_method_is_static(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isStatic(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isStatic(c-&gt;data));
 }</pre>
           </div>
           
@@ -825,10 +816,7 @@ c_Cursor_cxx_method_is_virtual(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_CXXMethod_isVirtual(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_CXXMethod_isVirtual(c-&gt;data));
 }</pre>
           </div>
           
@@ -867,10 +855,7 @@ c_Cursor_get_decl_obj_c_type_encoding(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getDeclObjCTypeEncoding(c-&gt;data);
-  VALUE type_encoding = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return type_encoding;
+  return CXSTR_2_RVAL(clang_getDeclObjCTypeEncoding(c-&gt;data));
 }</pre>
           </div>
           
@@ -932,7 +917,7 @@ c_Cursor_get_definition(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *d;
   VALUE definition;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, definition, Cursor_t, d);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, definition, d);
   d-&gt;data = clang_getCursorDefinition(c-&gt;data);
   d-&gt;parent = c-&gt;parent;
   return definition;
@@ -978,10 +963,7 @@ c_Cursor_get_display_name(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getCursorDisplayName(c-&gt;data);
-  VALUE display_name = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return display_name;
+  return CXSTR_2_RVAL(clang_getCursorDisplayName(c-&gt;data));
 }</pre>
           </div>
           
@@ -1113,7 +1095,7 @@ c_Cursor_get_enum_decl_integer_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, type, t);
   t-&gt;data = clang_getEnumDeclIntegerType(c-&gt;data);
   t-&gt;parent = c-&gt;parent;
   return type;
@@ -1165,7 +1147,7 @@ c_Cursor_get_extent(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   SourceRange_t *s;
   VALUE src_rge;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, src_rge, SourceRange_t, s);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, src_rge, s);
   s-&gt;data = clang_getCursorExtent(c-&gt;data);
   s-&gt;parent = self;
   return src_rge;
@@ -1292,7 +1274,7 @@ c_Cursor_get_ib_outlet_collection_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE collection_type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, collection_type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, collection_type, t);
   t-&gt;data = clang_getIBOutletCollectionType(c-&gt;data);
   t-&gt;parent = self;
   return collection_type;
@@ -1336,7 +1318,7 @@ c_Cursor_get_included_file(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   VALUE included;
   File_t *f;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, included, File_t, f);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, File, included, f);
   f-&gt;data = clang_getIncludedFile(c-&gt;data);
   f-&gt;parent = c-&gt;parent;
   return included;
@@ -1379,11 +1361,7 @@ c_Cursor_is_anonymous(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  
-  if(clang_Cursor_isAnonymous(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isAnonymous(c-&gt;data));
 }</pre>
           </div>
           
@@ -1422,7 +1400,7 @@ c_Cursor_is_attribute(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isAttribute(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isAttribute(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1461,11 +1439,7 @@ c_Cursor_is_bit_field(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-
-  if(clang_Cursor_isBitField(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isBitField(c-&gt;data));
 }</pre>
           </div>
           
@@ -1504,7 +1478,7 @@ c_Cursor_is_declaration(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isDeclaration(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isDeclaration(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1544,10 +1518,7 @@ c_Cursor_is_definition(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_isCursorDefinition(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_isCursorDefinition(c-&gt;data));
 }</pre>
           </div>
           
@@ -1593,10 +1564,7 @@ c_Cursor_is_dynamic_call(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isDynamicCall(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isDynamicCall(c-&gt;data));
 }</pre>
           </div>
           
@@ -1637,12 +1605,10 @@ c_Cursor_is_equal(VALUE self, VALUE cursor1)
   Cursor_t *c1;
 
   Data_Get_Struct(self, Cursor_t, c);
+  CHECK_ARG_TYPE(cursor1, Cursor); 
   Data_Get_Struct(cursor1, Cursor_t, c1);
 
-  if(clang_equalCursors(c-&gt;data, c1-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_equalCursors(c-&gt;data, c1-&gt;data));
 }</pre>
           </div>
           
@@ -1681,7 +1647,7 @@ c_Cursor_is_expression(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isExpression(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isExpression(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1720,7 +1686,7 @@ c_Cursor_is_invalid(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isInvalid(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isInvalid(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1760,10 +1726,7 @@ c_Cursor_is_null(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isNull(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isNull(c-&gt;data));
 }</pre>
           </div>
           
@@ -1805,10 +1768,7 @@ c_Cursor_is_obj_c_optional(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isObjCOptional(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isObjCOptional(c-&gt;data));
 }</pre>
           </div>
           
@@ -1848,7 +1808,7 @@ c_Cursor_is_preprocessing(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isPreprocessing(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isPreprocessing(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1891,7 +1851,7 @@ c_Cursor_is_reference(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isReference(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isReference(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1930,7 +1890,7 @@ c_Cursor_is_statement(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isStatement(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isStatement(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -1969,7 +1929,7 @@ c_Cursor_is_translation_unit(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  return clang_isTranslationUnit(clang_getCursorKind(c-&gt;data)) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_isTranslationUnit(clang_getCursorKind(c-&gt;data)));
 }</pre>
           </div>
           
@@ -2008,10 +1968,7 @@ c_Cursor_is_variadic(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  if(clang_Cursor_isVariadic(c-&gt;data) != 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(clang_Cursor_isVariadic(c-&gt;data));
 }</pre>
           </div>
           
@@ -2052,10 +2009,7 @@ c_Cursor_is_virtual_base(VALUE self)
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
 
-  if(clang_isVirtualBase(c-&gt;data) == 1)
-    return Qtrue;
-  else
-    return Qfalse;
+  return EQ_1_2_RVAL(clang_isVirtualBase(c-&gt;data));
 }</pre>
           </div>
           
@@ -2206,7 +2160,7 @@ c_Cursor_get_lexical_parent(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *l;
   VALUE lex_par;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, lex_par, Cursor_t, l);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, lex_par, l);
   l-&gt;data = clang_getCursorLexicalParent(c-&gt;data);
   l-&gt;parent = c-&gt;parent;
   return lex_par;
@@ -2297,7 +2251,7 @@ c_Cursor_get_source_location(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   SourceLocation_t *s;
   VALUE src_loc;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, src_loc, SourceLocation_t, s);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, src_loc, s);
   s-&gt;data = clang_getCursorLocation(c-&gt;data);
   s-&gt;parent = self;
   return src_loc;
@@ -2346,10 +2300,7 @@ c_Cursor_get_mangling(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_Cursor_getMangling(c-&gt;data);
-  VALUE mangling = rb_str_new2(clang_getCString(str) );
-  clang_disposeString(str);
-  return mangling;
+  return CXSTR_2_RVAL(clang_Cursor_getMangling(c-&gt;data));
 }</pre>
           </div>
           
@@ -2391,7 +2342,7 @@ c_Cursor_get_module(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Module_t *m;
   VALUE module;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Module&quot;, module, Module_t, m);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Module, module, m);
   m-&gt;data = clang_Cursor_getModule(c-&gt;data);
   m-&gt;parent = self;
   return module;
@@ -2619,8 +2570,7 @@ c_Cursor_get_obj_c_property_attributes(VALUE self, VALUE reserved)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_reserved;
-  RNUM_2_UINT(reserved, c_reserved);
+  unsigned c_reserved = NUM2UINT(reserved);
   return CUINT_2_NUM(clang_Cursor_getObjCPropertyAttributes(c-&gt;data, c_reserved));   
 }</pre>
           </div>
@@ -2764,11 +2714,10 @@ c_Cursor_get_overloaded_decl(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned int c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned int c_index = NUM2UINT(index);
   Cursor_t *o;
   VALUE overl_decl;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, overl_decl, Cursor_t, o);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, overl_decl, o);
   o-&gt;data = clang_getOverloadedDecl(c-&gt;data, c_index);
   o-&gt;parent = c-&gt;parent;
   return overl_decl;
@@ -2896,7 +2845,7 @@ c_Cursor_get_overridden_cursors(VALUE self)
     ptr = *(overridden + i);
     VALUE overridden_cursor;
     OverriddenCursor_t *oc;
-    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;OverriddenCursor&quot;, overridden_cursor, OverriddenCursor_t, oc);
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, OverriddenCursor, overridden_cursor, oc);
     oc-&gt;data = *ptr;
     oc-&gt;ptr = ptr;
     rb_ary_push(ret, overridden_cursor);
@@ -2942,10 +2891,7 @@ c_Cursor_get_raw_comment_text(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_Cursor_getRawCommentText(c-&gt;data);
-  VALUE raw_comment = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return raw_comment;
+  return CXSTR_2_RVAL(clang_Cursor_getRawCommentText(c-&gt;data));
 }</pre>
           </div>
           
@@ -2987,10 +2933,75 @@ c_Cursor_get_receiver_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE receiver_type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, receiver_type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, receiver_type, t);
   t-&gt;data = clang_Cursor_getReceiverType(c-&gt;data);
   t-&gt;parent = self;
   return receiver_type;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-reference_name_range" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#reference_name_range(Clangc::NameFlags, piece_index) &rarr; Clangc::SourceRange or Clangc::Cursor (null)
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Given a cursor that references something else, return the source range
+covering that reference.</p>
+
+<p>For a cursor pointing to a member reference, a declaration reference, or an
+operator call.</p>
+
+<p>First parameter is a Clangc::NameFlags. A bitset with three independent
+flags:  CXNameRange_WantQualifier, CXNameRange_WantTemplateArgs, and
+CXNameRange_WantSinglePiece.</p>
+
+<p>piece_index For contiguous names or when passing the flag 
+CXNameRange_WantSinglePiece, only one piece with index 0 is  available.
+When the CXNameRange_WantSinglePiece flag is not passed for a
+non-contiguous names, this index can be used to retrieve the individual
+pieces of the name. See also CXNameRange_WantSinglePiece.</p>
+
+<p>It returns the piece of the name pointed to by the given cursor. If there
+is no name, or if the PieceIndex is out-of-range, a null-cursor will be
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="reference_name_range-source">
+            <pre>VALUE
+c_Cursor_get_reference_name_range(VALUE self, VALUE name_flags, VALUE piece_index)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *sr;
+  VALUE source_range;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, source_range, sr);
+  
+  sr-&gt;data = clang_getCursorReferenceNameRange(c-&gt;data,
+                                               NUM2UINT(name_flags), 
+                                               NUM2UINT(piece_index));
+  sr-&gt;parent = c-&gt;parent;
+  return source_range;
 }</pre>
           </div>
           
@@ -3039,7 +3050,7 @@ c_Cursor_get_referenced(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *r;
   VALUE referenced;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, referenced, Cursor_t, r);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, referenced, r);
   r-&gt;data = clang_getCursorReferenced(c-&gt;data);
   r-&gt;parent = c-&gt;parent;
   return referenced;
@@ -3085,7 +3096,7 @@ c_Cursor_get_result_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE result_type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, result_type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, result_type, t);
   t-&gt;data = clang_getCursorResultType(c-&gt;data);
   t-&gt;parent = self;
   return result_type;
@@ -3157,7 +3168,7 @@ c_Cursor_get_semantic_parent(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *s;
   VALUE sem_par;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, sem_par, Cursor_t, s);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, sem_par, s);
   s-&gt;data = clang_getCursorSemanticParent(c-&gt;data);
   s-&gt;parent = c-&gt;parent;
   return sem_par;
@@ -3227,7 +3238,7 @@ c_Cursor_get_specialized_cursor_template(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Cursor_t *sct;
   VALUE specialized_cursor_template;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, specialized_cursor_template, Cursor_t, sct);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, specialized_cursor_template, sct);
   sct-&gt;data = clang_getSpecializedCursorTemplate(c-&gt;data);
   sct-&gt;parent = c-&gt;parent;
   return specialized_cursor_template;
@@ -3269,10 +3280,61 @@ c_Cursor_get_spelling(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getCursorSpelling(c-&gt;data);
-  VALUE spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getCursorSpelling(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-spelling_name_range" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Cursor#spelling_name_range(Integer, Integer) &rarr; Clangc::SourceRange
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a range for a piece that forms the cursors spelling name. Most of
+the times there is only one range for the complete spelling but for
+Objective-C methods and Objective-C message expressions, there are multiple
+pieces for each selector identifier.</p>
+
+<p>First parameter is the index of the spelling name piece. If this is greater
+than the actual number of pieces, it will return a NULL (invalid) range.</p>
+
+<p>The second parameter is for options and are Reserved.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="spelling_name_range-source">
+            <pre>VALUE
+c_Cursor_get_spelling_name_range(VALUE self, VALUE index, VALUE options)
+{
+  Cursor_t *c;
+  Data_Get_Struct(self, Cursor_t, c);
+  SourceRange_t *sr;
+  VALUE source_range;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, source_range, sr);
+  sr-&gt;data = clang_Cursor_getSpellingNameRange(c-&gt;data,
+                                               NUM2UINT(index),
+                                               NUM2UINT(options));
+  sr-&gt;parent = c-&gt;parent;
+  return source_range;
 }</pre>
           </div>
           
@@ -3369,8 +3431,7 @@ c_Cursor_get_template_argument_kind(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   return CUINT_2_NUM(clang_Cursor_getTemplateArgumentKind(c-&gt;data, c_index));   
 }</pre>
           </div>
@@ -3428,11 +3489,10 @@ c_Cursor_get_template_argument_type(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, type, t);
   t-&gt;data = clang_Cursor_getTemplateArgumentType(c-&gt;data, c_index);
   t-&gt;parent = self;
   return type;
@@ -3490,8 +3550,7 @@ c_Cursor_get_template_argument_unsigned_value(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   return CULLONG_2_NUM(clang_Cursor_getTemplateArgumentUnsignedValue(c-&gt;data, c_index));   
 }</pre>
           </div>
@@ -3547,8 +3606,7 @@ c_Cursor_get_template_argument_value(VALUE self, VALUE index)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  unsigned c_index;
-  RNUM_2_UINT(index, c_index);
+  unsigned c_index = NUM2UINT(index);
   return CLLONG_2_NUM(clang_Cursor_getTemplateArgumentValue(c-&gt;data, c_index));   
 }</pre>
           </div>
@@ -3821,7 +3879,7 @@ c_Cursor_get_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, type, t);
   t-&gt;data = clang_getCursorType(c-&gt;data);
   t-&gt;parent = self;
   return type;
@@ -3868,7 +3926,7 @@ c_Cursor_get_typedef_decl_underlying_type(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   Type_t *t;
   VALUE type;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Type&quot;, type, Type_t, t);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, type, t);
   t-&gt;data = clang_getTypedefDeclUnderlyingType(c-&gt;data);
   t-&gt;parent = c-&gt;parent;
   return type;
@@ -3916,10 +3974,7 @@ c_Cursor_get_usr(VALUE self)
 {
   Cursor_t *c;
   Data_Get_Struct(self, Cursor_t, c);
-  CXString str = clang_getCursorUSR(c-&gt;data);
-  VALUE usr = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return usr;
+  return CXSTR_2_RVAL(clang_getCursorUSR(c-&gt;data));
 }</pre>
           </div>
           

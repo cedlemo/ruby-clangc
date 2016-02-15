@@ -157,7 +157,7 @@ c_TranslationUnit_get_cursor(VALUE self)
   Data_Get_Struct(self, TranslationUnit_t, t);
   Cursor_t *c;
   VALUE a_cursor;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, a_cursor, Cursor_t, c);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, a_cursor, c);
   c-&gt;data = clang_getTranslationUnitCursor(t-&gt;data);
   c-&gt;parent = self;
   return a_cursor;
@@ -295,12 +295,11 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   unsigned int max = clang_getNumDiagnostics(t-&gt;data);
-  unsigned  int c_num;
-  RNUM_2_UINT(num, c_num);
+  unsigned int c_num = NUM2UINT(num);
   CHECK_IN_RANGE(c_num, 0, max);
   VALUE diagnostic;
   Diagnostic_t *d;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Diagnostic&quot;, diagnostic, Diagnostic_t, d); 
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Diagnostic, diagnostic, d); 
   d-&gt;data = clang_getDiagnostic(t-&gt;data, c_num);
   d-&gt;parent = self;
   return diagnostic;
@@ -431,15 +430,14 @@ c_TranslationUnit_get_file(VALUE self, VALUE file_name)
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   CXFile cxfile;
-  char * c_file_name;
-  RSTRING_2_CHAR(file_name, c_file_name);
+  char * c_file_name = RSTRING_2_CHAR(file_name);
   cxfile = clang_getFile(t-&gt;data, c_file_name); 
  
   if(cxfile)
   {  
     VALUE file;
     File_t *f;
-    R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;File&quot;, file, File_t, f);
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxfile;
     f-&gt;parent = self;
     return file;
@@ -486,11 +484,12 @@ c_TranslationUnit_get_module(VALUE self, VALUE file)
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
   File_t *f;
+  CHECK_ARG_TYPE(file, File);
   Data_Get_Struct(file, File_t, f);
 
   Module_t *m;
   VALUE module;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Module&quot;, module, Module_t, m);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Module, module, m);
   m-&gt;data = clang_getModuleForFile(t-&gt;data, f-&gt;data);
   m-&gt;parent = self;
   
@@ -537,10 +536,7 @@ c_TranslationUnit_get_spelling(VALUE self)
   VALUE spelling = Qnil;
   TranslationUnit_t *t;
   Data_Get_Struct(self, TranslationUnit_t, t);
-  CXString str = clang_getTranslationUnitSpelling(t-&gt;data);
-  spelling = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return spelling;
+  return CXSTR_2_RVAL(clang_getTranslationUnitSpelling(t-&gt;data));
 }</pre>
           </div>
           

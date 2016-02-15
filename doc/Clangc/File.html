@@ -141,12 +141,12 @@ can hold the same File_t data.</p>
             <pre>VALUE
 c_File_is_equal(VALUE self, VALUE file)
 {
-// TODO add ruby object check here
   File_t * f1;
   File_t * f2;
   Data_Get_Struct(self, File_t, f1);
+  CHECK_ARG_TYPE(file, File);
   Data_Get_Struct(file, File_t, f2);
-  return clang_File_isEqual(f1-&gt;data, f2-&gt;data) == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(clang_File_isEqual(f1-&gt;data, f2-&gt;data));
 }</pre>
           </div>
           
@@ -190,7 +190,7 @@ c_File_is_multiple_include_guarded(VALUE self)
   TranslationUnit_t * t;
   Data_Get_Struct(f-&gt;parent, TranslationUnit_t, t);
   unsigned int ret = clang_isFileMultipleIncludeGuarded(t-&gt;data, f-&gt;data);
-  return ret == 0 ? Qfalse : Qtrue;
+  return NOT_0_2_RVAL(ret);
 }</pre>
           </div>
           
@@ -260,7 +260,7 @@ c_File_get_mtime(VALUE self)
         <div class="method-description">
           
           <p>Retrieve the complete file and path name of the given file. Returns Qnil if
-the CXFile pointer is NULL (his can happen)</p>
+the CXFile pointer is NULL (this can happen)</p>
           
           
 
@@ -272,11 +272,9 @@ c_File_get_name(VALUE self)
   File_t * f;
   VALUE name = Qnil;
   Data_Get_Struct(self, File_t, f);
-  if(f-&gt;data)
+  if (f-&gt;data != NULL)
   {
-    CXString str = clang_getFileName(f-&gt;data);
-    name = rb_str_new2(clang_getCString(str));
-    clang_disposeString(str);
+    name = CXSTR_2_RVAL(clang_getFileName(f-&gt;data));
   }
   else
     name = Qnil;

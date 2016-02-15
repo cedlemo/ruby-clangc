@@ -75,6 +75,8 @@
     
     <li ><a href="#method-c-null_source_range">::null_source_range</a>
     
+    <li ><a href="#method-c-range">::range</a>
+    
     <li ><a href="#method-c-version">::version</a>
     
     <li ><a href="#method-c-visit_children">::visit_children</a>
@@ -271,7 +273,7 @@ m_clangc_get_null_cursor(VALUE self)
 {
   Cursor_t *c;
   VALUE a_cursor;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;Cursor&quot;, a_cursor, Cursor_t, c);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, a_cursor, c);
   c-&gt;data = clang_getNullCursor();
   return a_cursor;
 }</pre>
@@ -312,7 +314,7 @@ m_clangc_get_null_source_location(VALUE self)
 {
   SourceLocation_t *s;
   VALUE a_source_location;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceLocation&quot;, a_source_location, SourceLocation_t, s);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, s);
   s-&gt;data = clang_getNullLocation();
   return a_source_location;
 }</pre>
@@ -353,9 +355,66 @@ m_clangc_get_null_source_range(VALUE self)
 {
   SourceRange_t *s;
   VALUE a_source_range;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, &quot;SourceRange&quot;, a_source_range, SourceRange_t, s);
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, a_source_range, s);
   s-&gt;data = clang_getNullRange();
   return a_source_range;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-range" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            range(Clangc::SourceLocation, Clangc::SourceLocation) &rarr; Clangc::SourceRange
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a source range given the beginning and ending source locations.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="range-source">
+            <pre>VALUE
+m_clangc_get_range(VALUE self, VALUE begin, VALUE end)
+{
+  CHECK_ARG_TYPE(begin, SourceLocation);
+  CHECK_ARG_TYPE(end, SourceLocation);
+  
+  SourceLocation_t *b;
+  SourceLocation_t *e;
+  Data_Get_Struct(begin, SourceLocation_t, b);
+  Data_Get_Struct(end, SourceLocation_t, e);
+  // TODO Should I add a check to see if they come from the same 
+  // file / TU
+  VALUE range;
+  SourceRange_t *s;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, range, s);
+
+  s-&gt;data =  clang_getRange(b-&gt;data, e-&gt;data);
+  
+  // We use the parent of the first parameter (no real reason)
+  SourceRange_t *p;
+  Data_Get_Struct(b-&gt;parent, SourceRange_t, p);
+  s-&gt;parent = p-&gt;parent;
+
+  return range;
 }</pre>
           </div>
           
@@ -393,10 +452,7 @@ to be parsed (the format is not guaranteed to be stable).</p>
             <pre>VALUE
 m_clangc_get_version(VALUE self)
 {
-  CXString str = clang_getClangVersion();
-  VALUE version = rb_str_new2( clang_getCString(str) );
-  clang_disposeString(str);
-  return version;
+  return CXSTR_2_RVAL(clang_getClangVersion());
 }</pre>
           </div>
           
@@ -525,10 +581,7 @@ m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
   unsigned ret_with_break = clang_visitChildren(c-&gt;data,
                                                 visitor,
                                                 (CXClientData) callback);
-  if (ret_with_break &gt; 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(ret_with_break);
 }</pre>
           </div>
           
@@ -595,10 +648,7 @@ m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
   unsigned ret_with_break = clang_visitChildren(c-&gt;data,
                                                 visitor,
                                                 (CXClientData) callback);
-  if (ret_with_break &gt; 0)
-    return Qtrue;
-  else
-    return Qfalse;
+  return NOT_0_2_RVAL(ret_with_break);
 }</pre>
           </div>
           
