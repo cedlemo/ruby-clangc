@@ -4,13 +4,13 @@
 
 [ ] Finish Implement Clangc::Cursor methods
 
-[ ] Continue / improve YARD usage
-
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
 [ ] start implement backward compatibility (3.4, 3.5, 3.6)
 
 ## Secondary:
+
+[ ] Continue / improve YARD usage
 
 [ ] Clean style
   *    Make all variables declarations at start
