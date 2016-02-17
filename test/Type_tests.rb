@@ -3,6 +3,7 @@ require "minitest/autorun"
 require "clangc"
 require "fileutils"
 require "#{File.expand_path(File.dirname(__FILE__))}/clangc_utils.rb"
+require "fiddle"
 
 class TestTypeUsage < MiniTest::Test
   include ClangcUtils
@@ -261,9 +262,23 @@ class TestTypeUsage < MiniTest::Test
       if cursor.location.spelling[0].name == SOURCE_FILE_ALIGN_OF
         case cursor.spelling
         when "toto" 
-          assert_equal(1, cursor.type.align_of, cursor.type.align_of)
+          assert_equal(Fiddle::ALIGN_CHAR, cursor.type.align_of, cursor.type.align_of)
         when "a"
-          assert_equal(8, cursor.type.align_of, cursor.type.align_of)
+          assert_equal(Fiddle::ALIGN_INTPTR_T, cursor.type.align_of, cursor.type.align_of)
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_Type_size_of
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ALIGN_OF, ["-x", "c++", "--std", "c++11"] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == SOURCE_FILE_ALIGN_OF
+        case cursor.spelling
+        when "toto" 
+          assert_equal(Fiddle::SIZEOF_CHAR, cursor.type.size_of, cursor.type.size_of)
+        when "a"
+          assert_equal(Fiddle::SIZEOF_INTPTR_T, cursor.type.size_of, cursor.type.size_of)
         end
       end
       Clangc::ChildVisitResult::RECURSE
