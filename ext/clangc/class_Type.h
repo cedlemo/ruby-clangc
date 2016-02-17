@@ -83,4 +83,7 @@ c_Type_get_type_declaration(VALUE);
 
 VALUE
 c_Type_is_function_type_variadic(VALUE);
+
+VALUE
+c_Type_get_align_of(VALUE);
 #endif //TYPE_H

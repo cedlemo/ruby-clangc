@@ -408,3 +408,26 @@ c_Type_is_function_type_variadic(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return NOT_0_2_RVAL(clang_isFunctionTypeVariadic(t->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::Type#align_of => Number
+ *
+ * Return the alignment of a type in bytes as per C++[expr.alignof]
+ *   standard.
+ *
+ * If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is returned.
+ * If the type declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE
+ *   is returned.
+ * If the type declaration is a dependent type, Clangc::TypeLayoutError::DEPENDENT is
+ *   returned.
+ * If the type declaration is not a constant size type,
+ *   Clangc::TypeLayoutError::NOT_CONSTANT_SIZE is returned.
+ */
+VALUE
+c_Type_get_align_of(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_Type_getAlignOf(t->data));
+}
