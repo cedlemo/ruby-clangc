@@ -284,4 +284,15 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Type_get_class_type
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_MEMBER_PTR, ["-x", "c++", "--std", "c++11"] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      #if cursor.location.spelling[0].name == SOURCE_FILE_MEMBER_PTR
+        class_type = cursor.type.class_type
+        assert_equal(Clangc::TypeKind::INVALID, class_type.kind, cursor.spelling)
+      #end
+      # TODO
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
