@@ -431,3 +431,23 @@ c_Type_get_align_of(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CLLONG_2_NUM(clang_Type_getAlignOf(t->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::Type#size_of => Number
+ *
+ * Return the size of a type in bytes as per C++[expr.sizeof] standard.
+ *
+ * If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is returned.
+ * If the type declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE
+ *   is returned.
+ * If the type declaration is a dependent type, Clangc::TypeLayoutError::DEPENDENT is
+ *   returned.
+ */
+VALUE
+c_Type_get_size_of(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_Type_getSizeOf(t->data));
+}

@@ -267,6 +267,7 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "type_declaration", RUBY_METHOD_FUNC(c_Type_get_type_declaration), 0);// in class_Type.c
   rb_define_method(c_Type, "is_function_type_variadic", RUBY_METHOD_FUNC(c_Type_is_function_type_variadic), 0);// in class_Type.c
   rb_define_method(c_Type, "align_of", RUBY_METHOD_FUNC(c_Type_get_align_of), 0);// in class_Type.c
+  rb_define_method(c_Type, "size_of", RUBY_METHOD_FUNC(c_Type_get_size_of), 0);// in class_Type.c
  
 /**
 * \brief A fast container representing a set of CXCursors.
