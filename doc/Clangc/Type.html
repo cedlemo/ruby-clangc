@@ -70,6 +70,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-align_of">#align_of</a>
+    
     <li ><a href="#method-i-arg_type">#arg_type</a>
     
     <li ><a href="#method-i-arg_types">#arg_types</a>
@@ -81,6 +83,8 @@
     <li ><a href="#method-i-calling_conv">#calling_conv</a>
     
     <li ><a href="#method-i-canonical_type">#canonical_type</a>
+    
+    <li ><a href="#method-i-class_type">#class_type</a>
     
     <li ><a href="#method-i-element_type">#element_type</a>
     
@@ -102,11 +106,21 @@
     
     <li ><a href="#method-i-num_elements">#num_elements</a>
     
+    <li ><a href="#method-i-num_template_arguments">#num_template_arguments</a>
+    
+    <li ><a href="#method-i-offset_of">#offset_of</a>
+    
     <li ><a href="#method-i-pointee_type">#pointee_type</a>
     
     <li ><a href="#method-i-result_type">#result_type</a>
     
+    <li ><a href="#method-i-size_of">#size_of</a>
+    
     <li ><a href="#method-i-spelling">#spelling</a>
+    
+    <li ><a href="#method-i-template_argument_as_type">#template_argument_as_type</a>
+    
+    <li ><a href="#method-i-template_arguments_as_type">#template_arguments_as_type</a>
     
     <li ><a href="#method-i-type_declaration">#type_declaration</a>
     
@@ -145,6 +159,63 @@ href="Cursor.html">Clangc::Cursor</a></p>
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-align_of" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#align_of &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the alignment of a type in bytes as per <a
+href="expr.alignof">C++</a></p>
+
+<pre>standard.</pre>
+
+<p>If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is
+returned. If the type declaration is an incomplete type,
+Clangc::TypeLayoutError::INCOMPLETE</p>
+
+<pre>is returned.</pre>
+
+<p>If the type declaration is a dependent type,
+Clangc::TypeLayoutError::DEPENDENT is</p>
+
+<pre>returned.</pre>
+
+<p>If the type declaration is not a constant size type,</p>
+
+<pre>Clangc::TypeLayoutError::NOT_CONSTANT_SIZE is returned.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="align_of-source">
+            <pre>VALUE
+c_Type_get_align_of(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_Type_getAlignOf(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-arg_type" class="method-detail ">
@@ -231,15 +302,15 @@ function, it returns an empty array.</p>
           <div class="method-source-code" id="arg_types-source">
             <pre><span class="ruby-comment"># File lib/clangc.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">arg_types</span>
-    <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_arg_types</span>
-    <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_arg_types</span>
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
 
-    <span class="ruby-identifier">types</span> = []
-    <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg_type</span>(<span class="ruby-identifier">i</span>)
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">types</span>
-  <span class="ruby-keyword">end</span></pre>
+  <span class="ruby-identifier">types</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg_type</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">types</span>
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -418,6 +489,52 @@ c_Type_get_canonical_type(VALUE self)
   c-&gt;data = clang_getCanonicalType(t-&gt;data);
   c-&gt;parent = t-&gt;parent;
   return canonical;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-class_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#class_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the class type of an member pointer type.</p>
+
+<p>If a non-member-pointer type is passed in, an invalid type is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="class_type-source">
+            <pre>VALUE
+c_Type_get_class_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  VALUE class_type;
+  Type_t *ct;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, class_type, ct);
+  ct-&gt;data = clang_Type_getClassType(t-&gt;data);
+  ct-&gt;parent = t-&gt;parent;
+  return class_type;
 }</pre>
           </div>
           
@@ -848,6 +965,104 @@ c_Type_get_num_elements(VALUE self)
       </div>
 
     
+      <div id="method-i-num_template_arguments" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#num_template_arguments &rarr; Integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the number of template arguments for given class template
+specialization, or -1 if type c T is not a class template specialization.</p>
+
+<p>Variadic argument packs count as only one argument, and can not be
+inspected further.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_template_arguments-source">
+            <pre>VALUE
+c_Type_get_num_template_arguments(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CINT_2_NUM(clang_Type_getNumTemplateArguments(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-offset_of" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#offset_of(String) &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <pre>Return the offset of a field named S in a record of type T in bits
+ as it would be returned by __offsetof__ as per C++11[18.2p4]</pre>
+
+<p>If the cursor is not a record field, Clangc::TypeLayoutError::INVALID is
+returned. If the field&#39;s type declaration is an incomplete type,
+Clangc::TypeLayoutError::INCOMPLETE</p>
+
+<pre>is returned.</pre>
+
+<p>If the field&#39;s type declaration is a dependent type,
+Clangc::TypeLayoutError::DEPENDENT is</p>
+
+<pre>returned.</pre>
+
+<p>If the field&#39;s name S is not found,
+Clanc::TypeLayoutError::INVALID_FIELD_NAME is returned</p>
+          
+          
+
+          
+          <div class="method-source-code" id="offset_of-source">
+            <pre>VALUE
+c_Type_get_offset_of(VALUE self, VALUE field)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_Type_getOffsetOf(t-&gt;data,
+                                             RSTRING_2_CHAR(field)));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-pointee_type" class="method-detail ">
         
         
@@ -940,6 +1155,57 @@ c_Type_get_result_type(VALUE self)
       </div>
 
     
+      <div id="method-i-size_of" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#size_of &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the size of a type in bytes as per <a href="expr.sizeof">C++</a>
+standard.</p>
+
+<p>If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is
+returned. If the type declaration is an incomplete type,
+Clangc::TypeLayoutError::INCOMPLETE</p>
+
+<pre>is returned.</pre>
+
+<p>If the type declaration is a dependent type,
+Clangc::TypeLayoutError::DEPENDENT is</p>
+
+<pre>returned.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="size_of-source">
+            <pre>VALUE
+c_Type_get_size_of(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_Type_getSizeOf(t-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-spelling" class="method-detail ">
         
         
@@ -972,6 +1238,100 @@ c_Type_get_spelling(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CXSTR_2_RVAL(clang_getTypeSpelling(t-&gt;data));
 }</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_argument_as_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#template_argument_as_type &rarr; Clangc::Type
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the type template argument of a template class specialization at
+given index.</p>
+
+<p>This function only returns template type arguments and does not handle
+template template arguments or variadic packs.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_argument_as_type-source">
+            <pre>VALUE
+c_Type_get_template_argument_as_type(VALUE self, VALUE index)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  VALUE template_argument;
+  Type_t *ta;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, Type, template_argument, ta);
+  ta-&gt;data = clang_Type_getTemplateArgumentAsType(t-&gt;data, NUM2UINT(index));
+  ta-&gt;parent = t-&gt;parent;
+  return template_argument;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-template_arguments_as_type" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#template_arguments_as_type &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  types for the arguments of the
+current Class <a href="Type.html">Type</a> template that is related to the
+current cursor. If the <a href="Cursor.html">Cursor</a> is not a Class
+Declaration, it returns an empty array.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="template_arguments_as_type-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">template_arguments_as_type</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_template_arguments</span>
+  <span class="ruby-identifier">types</span> = []
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">types</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">types</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">template_argument_as_type</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">types</span>
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
