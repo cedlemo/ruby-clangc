@@ -50,6 +50,8 @@ module ClangcUtils
   SOURCE_FILE_VARIADIC_FN = "#{PATH}/source23.cpp"
   # Source file with variadic type 
   SOURCE_FILE_VARIADIC_TYPE = "#{PATH}/source24.cpp"
+  # Source file alignof 
+  SOURCE_FILE_ALIGN_OF = "#{PATH}/source25.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
