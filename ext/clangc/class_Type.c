@@ -514,4 +514,25 @@ c_Type_get_num_template_arguments(VALUE self)
   return CINT_2_NUM(clang_Type_getNumTemplateArguments(t->data));
 }
 
-
+/**
+ * call-seq:
+ *  Clangc::Type#template_argument_as_type => Clangc::Type
+ *
+ * Returns the type template argument of a template class specialization
+ * at given index.
+ *
+ * This function only returns template type arguments and does not handle
+ * template template arguments or variadic packs.
+ */
+VALUE
+c_Type_get_template_argument_as_type(VALUE self, VALUE index)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  VALUE template_argument;
+  Type_t *ta;
+  R_GET_CLASS_DATA("Clangc", Type, template_argument, ta);
+  ta->data = clang_Type_getTemplateArgumentAsType(t->data, NUM2UINT(index));
+  ta->parent = t->parent;
+  return template_argument;
+}
