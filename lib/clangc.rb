@@ -63,22 +63,41 @@ module Clangc
     end
   end
   class Type
-  ## 
-  # :call-seq:
-  # Clangc::Type#arg_types -> Array
-  #
-  # Return an array that contains all the 
-  # types for the argument of the function that
-  # is related to the current type.
-  # If the current type is not a function, it returns
-  # an empty array.
-  def arg_types
+    ## 
+    # :call-seq:
+    # Clangc::Type#arg_types -> Array
+    #
+    # Return an array that contains all the 
+    # types for the argument of the function that
+    # is related to the current type.
+    # If the current type is not a function, it returns
+    # an empty array.
+    def arg_types
       num = num_arg_types
       return [] if num == -1
 
       types = []
       for i in 0..(num - 1) do
         types << arg_type(i)
+      end
+      types
+    end
+      ## 
+    # :call-seq:
+    # Clangc::Type#template_arguments_as_type -> Array
+    #
+    # Return an array that contains all the 
+    # types for the arguments of the current Class Type template that
+    # is related to the current cursor.
+    # If the Cursor is not a Class Declaration, it returns
+    # an empty array.
+    def template_arguments_as_type
+      num = num_template_arguments
+      types = []
+      return types if num == -1
+
+      for i in 0..(num - 1) do
+        types << template_argument_as_type(i)
       end
       types
     end
