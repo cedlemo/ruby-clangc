@@ -460,7 +460,6 @@ c_Type_get_size_of(VALUE self)
  *
  * If a non-member-pointer type is passed in, an invalid type is returned.
  */
-CINDEX_LINKAGE CXType clang_Type_getClassType(CXType T);
 VALUE
 c_Type_get_class_type(VALUE self)
 {
@@ -472,4 +471,27 @@ c_Type_get_class_type(VALUE self)
   ct->data = clang_Type_getClassType(t->data);
   ct->parent = t->parent;
   return class_type;
+}
+
+/**
+ * call-seq:
+ *  Clangc::Type#offset_of(String) => Number
+ *
+ *  Return the offset of a field named S in a record of type T in bits
+ *   as it would be returned by __offsetof__ as per C++11[18.2p4]
+ *
+ * If the cursor is not a record field, Clangc::TypeLayoutError::INVALID is returned.
+ * If the field's type declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE
+ *   is returned.
+ * If the field's type declaration is a dependent type, Clangc::TypeLayoutError::DEPENDENT is
+ *   returned.
+ * If the field's name S is not found, Clanc::TypeLayoutError::INVALID_FIELD_NAME is returned
+ */
+VALUE
+c_Type_get_offset_of(VALUE self, VALUE field)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CLLONG_2_NUM(clang_Type_getOffsetOf(t->data,
+                                             RSTRING_2_CHAR(field)));
 }

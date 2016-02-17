@@ -92,4 +92,7 @@ c_Type_get_size_of(VALUE);
 
 VALUE
 c_Type_get_class_type(VALUE);
+
+VALUE
+c_Type_get_offset_of(VALUE, VALUE);
 #endif //TYPE_H
