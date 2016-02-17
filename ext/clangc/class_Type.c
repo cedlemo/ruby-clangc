@@ -495,3 +495,23 @@ c_Type_get_offset_of(VALUE self, VALUE field)
   return CLLONG_2_NUM(clang_Type_getOffsetOf(t->data,
                                              RSTRING_2_CHAR(field)));
 }
+
+/**
+ * call-seq:
+ *  Clangc::Type#num_template_arguments => Integer
+ *
+ * Returns the number of template arguments for given class template
+ * specialization, or -1 if type \c T is not a class template specialization.
+ *
+ * Variadic argument packs count as only one argument, and can not be inspected
+ * further.
+ */
+VALUE
+c_Type_get_num_template_arguments(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return CINT_2_NUM(clang_Type_getNumTemplateArguments(t->data));
+}
+
+

@@ -95,4 +95,7 @@ c_Type_get_class_type(VALUE);
 
 VALUE
 c_Type_get_offset_of(VALUE, VALUE);
+
+VALUE
+c_Type_get_num_template_arguments(VALUE);
 #endif //TYPE_H

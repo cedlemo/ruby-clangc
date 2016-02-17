@@ -270,6 +270,7 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "size_of", RUBY_METHOD_FUNC(c_Type_get_size_of), 0);// in class_Type.c
   rb_define_method(c_Type, "class_type", RUBY_METHOD_FUNC(c_Type_get_class_type), 0);// in class_Type.c
   rb_define_method(c_Type, "offset_of", RUBY_METHOD_FUNC(c_Type_get_offset_of), 1);// in class_Type.c
+  rb_define_method(c_Type, "num_template_arguments", RUBY_METHOD_FUNC(c_Type_get_num_template_arguments), 0);// in class_Type.c
  
 /**
 * \brief A fast container representing a set of CXCursors.
