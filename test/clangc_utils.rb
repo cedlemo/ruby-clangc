@@ -53,7 +53,9 @@ module ClangcUtils
   # Source file alignof sizeof 
   SOURCE_FILE_ALIGN_OF = "#{PATH}/source25.cpp"
   # Source file member pointer 
-  SOURCE_FILE_MEMBER_PTR = "#{PATH}/source25.cpp"
+  SOURCE_FILE_MEMBER_PTR = "#{PATH}/source26.cpp"
+  # Source file type offset 
+  SOURCE_FILE_TYPE_OFFSET_OF = "#{PATH}/source27.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
