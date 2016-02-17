@@ -255,4 +255,18 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Type_align_of
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ALIGN_OF, ["-x", "c++", "--std", "c++11"] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == SOURCE_FILE_ALIGN_OF
+        case cursor.spelling
+        when "toto" 
+          assert_equal(1, cursor.type.align_of, cursor.type.align_of)
+        when "a"
+          assert_equal(8, cursor.type.align_of, cursor.type.align_of)
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end

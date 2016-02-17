@@ -1,0 +1,2 @@
+char toto;
+int *a;
