@@ -309,4 +309,18 @@ class TestTypeUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_Type_get_num_template_arguments
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_CLASS_TEMPLATE_SPECIALISATION, ["-x", "c++", "--std", "c++11"] + CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
+      if cursor.location.spelling[0].name == SOURCE_FILE_CLASS_TEMPLATE_SPECIALISATION
+        type = cursor.type
+        if cursor.kind == Clangc::CursorKind::CLASS_DECL  
+          assert_equal 1, type.num_template_arguments, type.num_template_arguments
+        else
+          assert_equal -1, type.num_template_arguments, type.num_template_arguments
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
