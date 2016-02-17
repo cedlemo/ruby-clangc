@@ -89,4 +89,7 @@ c_Type_get_align_of(VALUE);
 
 VALUE
 c_Type_get_size_of(VALUE);
+
+VALUE
+c_Type_get_class_type(VALUE);
 #endif //TYPE_H

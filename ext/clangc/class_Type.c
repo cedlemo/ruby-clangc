@@ -451,3 +451,25 @@ c_Type_get_size_of(VALUE self)
   Data_Get_Struct(self, Type_t, t);
   return CLLONG_2_NUM(clang_Type_getSizeOf(t->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::Type#class_type => Clangc::Type
+ *
+ * Return the class type of an member pointer type.
+ *
+ * If a non-member-pointer type is passed in, an invalid type is returned.
+ */
+CINDEX_LINKAGE CXType clang_Type_getClassType(CXType T);
+VALUE
+c_Type_get_class_type(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  VALUE class_type;
+  Type_t *ct;
+  R_GET_CLASS_DATA("Clangc", Type, class_type, ct);
+  ct->data = clang_Type_getClassType(t->data);
+  ct->parent = t->parent;
+  return class_type;
+}
