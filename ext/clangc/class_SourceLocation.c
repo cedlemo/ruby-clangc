@@ -130,12 +130,12 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf;
+  CXFile cxf = NULL;
   unsigned int line = 0;
   unsigned int column = 0;
   unsigned int offset = 0;
   clang_getSpellingLocation(s->data, &cxf, &line, &column, &offset);
-  if(&cxf)
+  if(cxf)
   {
     VALUE file;
     File_t *f;
@@ -183,12 +183,12 @@ VALUE c_SourceLocation_get_file_location(VALUE self)
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf;
+  CXFile cxf = NULL;
   unsigned int line;
   unsigned int column;
   unsigned int offset;
   clang_getFileLocation(s->data, &cxf, &line, &column, &offset);
-  if(&cxf)
+  if(cxf)
   {
     VALUE file;
     File_t *f;
@@ -199,7 +199,7 @@ VALUE c_SourceLocation_get_file_location(VALUE self)
   }
   else
     rb_ary_push(ret, Qnil);
-
+  
   rb_ary_push(ret, CUINT_2_NUM(line));
   rb_ary_push(ret, CUINT_2_NUM(column));
   rb_ary_push(ret, CUINT_2_NUM(offset));
