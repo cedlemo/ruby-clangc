@@ -114,8 +114,10 @@ c_Cursor_get_num_arguments(VALUE);
 VALUE
 c_Cursor_get_argument(VALUE, VALUE);
 
+#if (CINDEX_VERSION_MINOR >= 29)
 VALUE
 c_Cursor_get_num_template_arguments(VALUE);
+#endif
 
 VALUE
 c_Cursor_get_decl_obj_c_type_encoding(VALUE);
@@ -138,8 +140,10 @@ c_Cursor_is_virtual_base(VALUE);
 VALUE
 c_Cursor_get_cxx_access_specifier(VALUE);
 
+#if (CINDEX_VERSION_MINOR >= 29)
 VALUE
 c_Cursor_get_storage_class(VALUE);
+#endif
 
 VALUE
 c_Cursor_get_num_overloaded_decls(VALUE);
@@ -195,8 +199,10 @@ c_Cursor_get_raw_comment_text(VALUE);
 VALUE
 c_Cursor_get_brief_comment_text(VALUE);
 
+#if (CINDEX_VERSION_MINOR >= 29)
 VALUE
 c_Cursor_get_mangling(VALUE);
+#endif
 
 VALUE
 c_Cursor_cxx_method_is_pure_virtual(VALUE);
@@ -219,6 +225,7 @@ c_Cursor_get_specialized_cursor_template(VALUE);
 VALUE
 c_Cursor_get_completion_string(VALUE);
 
+#if (CINDEX_VERSION_MINOR >= 29)
 VALUE
 c_Cursor_get_template_argument_kind(VALUE, VALUE);
 
@@ -230,6 +237,7 @@ c_Cursor_get_template_argument_value(VALUE, VALUE);
 
 VALUE
 c_Cursor_get_template_argument_unsigned_value(VALUE, VALUE);
+#endif
 
 VALUE
 c_Cursor_get_obj_c_property_attributes(VALUE, VALUE);

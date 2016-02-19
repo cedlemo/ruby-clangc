@@ -37,6 +37,8 @@ c_File_get_mtime(VALUE);
 VALUE
 c_File_is_multiple_include_guarded(VALUE);
 
+#if (CINDEX_VERSION_MINOR >= 29)
 VALUE
 c_File_is_equal(VALUE, VALUE);
+#endif
 #endif //FILE_H

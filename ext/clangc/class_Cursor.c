@@ -635,6 +635,7 @@ c_Cursor_get_argument(VALUE self, VALUE index)
   return arg;
 }
 
+#if (CINDEX_VERSION_MINOR >= 29)
 /**
 * call-seq:
 *   Clangc::Cursor#num_template_arguments => Fixnum
@@ -662,6 +663,8 @@ c_Cursor_get_num_template_arguments(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CINT_2_NUM(clang_Cursor_getNumTemplateArguments(c->data));  
 }
+#endif
+
 /**
 * call-seq:
 *   Clangc::Cursor#decl_objectC_type_encoding => string
@@ -787,6 +790,8 @@ c_Cursor_get_cxx_access_specifier(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_getCXXAccessSpecifier(c->data));  
 }
+
+#if (CINDEX_VERSION_MINOR >= 29)
 /**
 * call-seq:
 *   Clangc::Cursor#storage_class => Clangc::StorageClass.constants
@@ -803,7 +808,7 @@ c_Cursor_get_storage_class(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CUINT_2_NUM(clang_Cursor_getStorageClass(c->data));  
 }
-
+#endif
 /**
 * call-seq:
 *   Clangc::Cursor#num_overloaded_decls => Fixnum >= 0
@@ -1184,6 +1189,8 @@ c_Cursor_get_brief_comment_text(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CXSTR_2_RVAL(clang_Cursor_getBriefCommentText(c->data));
 }
+
+#if (CINDEX_VERSION_MINOR >= 29)
 /**
 * call-seq:
 *  Clangc::Cursor#mangling => String
@@ -1196,6 +1203,7 @@ c_Cursor_get_mangling(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return CXSTR_2_RVAL(clang_Cursor_getMangling(c->data));
 }
+#endif
 
 /**
 * call-seq:
@@ -1358,6 +1366,7 @@ c_Cursor_get_completion_string(VALUE self)
 * The memory managment would be too tricky
 */
 
+#if (CINDEX_VERSION_MINOR >= 29)
 /**
 * call-seq:
 *   Clangc::Cursor#template_argument_kind(i) => Clangc::TemplateArgumentKind
@@ -1478,7 +1487,7 @@ c_Cursor_get_template_argument_unsigned_value(VALUE self, VALUE index)
   unsigned c_index = NUM2UINT(index);
   return CULLONG_2_NUM(clang_Cursor_getTemplateArgumentUnsignedValue(c->data, c_index));   
 }
-
+#endif
 /**
  * call-seq:
  *  Clangc::Cursor#obj_c_property_attributes(reserved) => Integer

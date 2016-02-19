@@ -105,8 +105,9 @@ void Init_clangc(void) {
   rb_define_method(c_File, "name", RUBY_METHOD_FUNC(c_File_get_name),0);// in class_File.c
   rb_define_method(c_File, "mtime", RUBY_METHOD_FUNC(c_File_get_mtime),0);// in class_File.c
   rb_define_method(c_File, "is_multiple_include_guarded", RUBY_METHOD_FUNC(c_File_is_multiple_include_guarded),0);// in class_File.c
-  rb_define_method(c_File, "is_equal", RUBY_METHOD_FUNC(c_File_is_equal), 1);// in class_File.c
-
+#if (CINDEX_VERSION_MINOR >= 29)
+    rb_define_method(c_File, "is_equal", RUBY_METHOD_FUNC(c_File_is_equal), 1);// in class_File.c
+#endif
 /*
 * Identifies a half-open character range in the source code.
 *
@@ -187,7 +188,9 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "field_decl_bit_width", RUBY_METHOD_FUNC(c_Cursor_get_field_decl_bit_width), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "num_arguments", RUBY_METHOD_FUNC(c_Cursor_get_num_arguments), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "argument", RUBY_METHOD_FUNC(c_Cursor_get_argument), 1);// in class_Cursor.c
+#if (CINDEX_VERSION_MINOR >= 29)
   rb_define_method(c_Cursor, "num_template_arguments", RUBY_METHOD_FUNC(c_Cursor_get_num_template_arguments), 0);// in class_Cursor.c
+#endif
   rb_define_method(c_Cursor, "decl_obj_c_type_encoding", RUBY_METHOD_FUNC(c_Cursor_get_decl_obj_c_type_encoding), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "result_type", RUBY_METHOD_FUNC(c_Cursor_get_result_type), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "offset_of_field", RUBY_METHOD_FUNC(c_Cursor_get_offset_of_field), 0);// in class_Cursor.c
@@ -195,7 +198,9 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "is_bit_field", RUBY_METHOD_FUNC(c_Cursor_is_bit_field), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_virtual_base", RUBY_METHOD_FUNC(c_Cursor_is_virtual_base), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "cxx_access_specifier", RUBY_METHOD_FUNC(c_Cursor_get_cxx_access_specifier), 0);// in class_Cursor.c
+#if (CINDEX_VERSION_MINOR >= 29)
   rb_define_method(c_Cursor, "storage_class", RUBY_METHOD_FUNC(c_Cursor_get_storage_class), 0);// in class_Cursor.c
+#endif
   rb_define_method(c_Cursor, "num_overloaded_decls", RUBY_METHOD_FUNC(c_Cursor_get_num_overloaded_decls), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "overloaded_decl", RUBY_METHOD_FUNC(c_Cursor_get_overloaded_decl), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "ib_outlet_collection_type", RUBY_METHOD_FUNC(c_Cursor_get_ib_outlet_collection_type), 0);// in class_Cursor.c
@@ -214,7 +219,9 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "comment_range", RUBY_METHOD_FUNC(c_Cursor_get_comment_range), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "raw_comment_text", RUBY_METHOD_FUNC(c_Cursor_get_raw_comment_text), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "brief_comment_text", RUBY_METHOD_FUNC(c_Cursor_get_brief_comment_text), 0);// in class_Cursor.c
+#if (CINDEX_VERSION_MINOR >= 29)
   rb_define_method(c_Cursor, "mangling", RUBY_METHOD_FUNC(c_Cursor_get_mangling), 0);// in class_Cursor.c
+#endif
   rb_define_method(c_Cursor, "cxx_method_is_pure_virtual", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_pure_virtual), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "cxx_method_is_static", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_static), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "cxx_method_is_virtual", RUBY_METHOD_FUNC(c_Cursor_cxx_method_is_virtual), 0);// in class_Cursor.c
@@ -222,10 +229,12 @@ void Init_clangc(void) {
   rb_define_method(c_Cursor, "template_cursor_kind", RUBY_METHOD_FUNC(c_Cursor_get_template_cursor_kind), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "specialized_cursor_template", RUBY_METHOD_FUNC(c_Cursor_get_specialized_cursor_template), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "completion_string", RUBY_METHOD_FUNC(c_Cursor_get_completion_string), 0);// in class_Cursor.c
+#if (CINDEX_VERSION_MINOR >= 29)
   rb_define_method(c_Cursor, "template_argument_kind", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_kind), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_argument_type", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_type), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_argument_value", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_value), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "template_argument_unsigned_value", RUBY_METHOD_FUNC(c_Cursor_get_template_argument_unsigned_value), 1);// in class_Cursor.c
+#endif
   rb_define_method(c_Cursor, "obj_c_property_attributes", RUBY_METHOD_FUNC(c_Cursor_get_obj_c_property_attributes), 1);// in class_Cursor.c
   rb_define_method(c_Cursor, "overridden_cursors", RUBY_METHOD_FUNC(c_Cursor_get_overridden_cursors), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "module", RUBY_METHOD_FUNC(c_Cursor_get_module), 0);// in class_Cursor.c

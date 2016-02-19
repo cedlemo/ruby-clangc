@@ -119,6 +119,7 @@ c_File_is_multiple_include_guarded(VALUE self)
   return NOT_0_2_RVAL(ret);
 }
 
+#if (CINDEX_VERSION_MINOR >= 29)
 /**
 * call-seq:
 *   clangc::File#is_equal(file) => true or false
@@ -139,3 +140,4 @@ c_File_is_equal(VALUE self, VALUE file)
   Data_Get_Struct(file, File_t, f2);
   return NOT_0_2_RVAL(clang_File_isEqual(f1->data, f2->data));
 }
+#endif
