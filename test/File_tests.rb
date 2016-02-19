@@ -31,10 +31,12 @@ class TestFile < MiniTest::Test
     file = tu.file(SOURCE_FILE_WITH_INCLUDE_GUARD)
     assert_equal true, file.is_multiple_include_guarded
   end
-  def test_File_equal_true
-    file = @tu.file(SOURCE_FILE)
-    another_file_object = @tu.file(SOURCE_FILE)
-    assert_equal false, file == another_file_object
-    assert_equal true, file.is_equal(another_file_object)
+  if Clangc.version =~ /clang version 3.(6|7)/
+    def test_File_equal_true
+      file = @tu.file(SOURCE_FILE)
+      another_file_object = @tu.file(SOURCE_FILE)
+      assert_equal false, file == another_file_object
+      assert_equal true, file.is_equal(another_file_object)
+    end
   end
 end

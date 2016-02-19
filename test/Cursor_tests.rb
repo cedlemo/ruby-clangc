@@ -340,19 +340,21 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
-  def test_Cursor_get_num_template_arguments
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-        assert_equal 3, cursor.num_template_arguments, cursor.spelling
+if Clangc.version =~ /clang version 3.(6|7)/
+    def test_Cursor_get_num_template_arguments
+      tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal 3, cursor.num_template_arguments, cursor.spelling
+        end
+        Clangc::ChildVisitResult::RECURSE
       end
-      Clangc::ChildVisitResult::RECURSE
     end
-  end
+end
   def test_Cursor_get_decl_obj_c_type_encoding
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE_OBJECTC)) &&
+      if cursor.location.spelling[0].name == SOURCE_FILE_OBJECTC &&
          cursor.spelling == "tata"
         assert_equal "i", cursor.decl_obj_c_type_encoding, cursor.spelling
       end
@@ -371,6 +373,7 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_offset_of_field
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent| 
@@ -384,6 +387,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_is_anonymous
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_ANON_DECLS, ["-x", "c++"] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -393,6 +398,7 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
   def test_Cursor_is_bit_field
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_STRUCT_BITFIELD, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -426,6 +432,7 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_storage_class
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -436,6 +443,7 @@ class TestCursorUsage < MiniTest::Test
       end
     end
   end
+end
   def test_Cursor_get_num_overloaded_decls
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OVERL_FUNC, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -583,7 +591,7 @@ class TestCursorUsage < MiniTest::Test
         assert_instance_of Clangc::SourceRange, cursor.comment_range
         start_location = cursor.comment_range.start
         end_location = cursor.comment_range.end
-        assert_equal true, tu.file(SOURCE_FILE_COMMENTS).is_equal(start_location.spelling[0]), start_location.spelling[0].name || "toto"
+        assert_equal cursor.location.spelling[0].name, start_location.spelling[0].name, start_location.spelling[0].name
         assert_equal 1, start_location.spelling[1], start_location.spelling[1]
         assert_equal 7, end_location.spelling[1], end_location.spelling[1]
       end
@@ -616,16 +624,18 @@ class TestCursorUsage < MiniTest::Test
     Clangc::ChildVisitResult::RECURSE
     end
   end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_mangling
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE))
+      if cursor.location.spelling[0].name == SOURCE_FILE
         # TODO
         assert_instance_of String, cursor.mangling
       end
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
   def test_Cursor_cxx_method_is_pure_virtual
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_VIRT_BASE_CLASS, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -690,7 +700,7 @@ class TestCursorUsage < MiniTest::Test
   def test_Cursor_get_completion_string
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE))
+      if cursor.location.spelling[0].name == SOURCE_FILE
         # TODO
         if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
           assert_instance_of Clangc::CompletionString, cursor.completion_string
@@ -699,6 +709,7 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_argument_kind
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -714,6 +725,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_arguments_kinds
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -729,6 +742,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_argument_type
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -738,6 +753,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_arguments_types
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -749,6 +766,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_argument_value
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -759,6 +778,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_arguments_values
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -770,6 +791,8 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
+if Clangc.version =~ /clang version 3.(6|7)/
   def test_Cursor_get_template_argument_unsigned_value
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_FUNCTION_TEMPLATE_2, ['-x', 'c++'] + CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
@@ -791,11 +814,12 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+end
   def test_Cursor_get_decl_obj_c_property_attributes
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_OBJECTC, ['-x', 'objective-c'] + CLANG_HEADERS_PATH)
     # TODO find a real source to test
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      if cursor.location.spelling[0].is_equal(tu.file(SOURCE_FILE_OBJECTC)) && cursor.kind == Clangc::CursorKind::OBJ_C_PROPERTY_DECL
+      if cursor.location.spelling[0].name == SOURCE_FILE_OBJECTC && cursor.kind == Clangc::CursorKind::OBJ_C_PROPERTY_DECL
         found = false
         Clangc::ObjCPropertyKind.constants.each do |c|
           if cursor.obj_c_property_attributes == Clangc::ObjCPropertyKind.const_get(c)

@@ -42,7 +42,7 @@ class TestSourceLocation < MiniTest::Test
     source_location = diagnostics[1].source_ranges.last.start
     spelling = source_location.spelling
     # file
-    assert_equal true, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(spelling[0])
+    assert_equal SOURCE_FILE_TWO_ERRORS, spelling[0].name
     # line
     assert_equal 14, spelling[1]
     # column
@@ -56,13 +56,13 @@ class TestSourceLocation < MiniTest::Test
     source_location = diagnostics[1].source_ranges.last.end
     spelling = source_location.spelling
     # file
-    assert_equal false, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(spelling[0])
+    assert_equal SOURCE_FILE_TWO_ERRORS, spelling[0].name
     # line
-    assert_equal 0, spelling[1]
+    assert_equal 14, spelling[1]
     # column
-    assert_equal 0, spelling[2]
+    assert_equal 2, spelling[2]
     #offset
-    assert_equal 0, spelling[3]
+    assert_equal 180, spelling[3]
   end
   def test_SourceLocation_file_location
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_TWO_ERRORS, CLANG_HEADERS_PATH)
@@ -70,7 +70,7 @@ class TestSourceLocation < MiniTest::Test
     source_location = diagnostics[1].source_ranges.last.start
     file_location = source_location.file_location
     # file
-    assert_equal true, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(file_location[0])
+    assert_equal SOURCE_FILE_TWO_ERRORS, file_location[0].name
     # line
     assert_equal 14, file_location[1]
     # column
@@ -84,13 +84,13 @@ class TestSourceLocation < MiniTest::Test
     source_location = diagnostics[1].source_ranges.last.end
     file_location = source_location.file_location
     # file
-    assert_equal false, tu.file(SOURCE_FILE_TWO_ERRORS).is_equal(file_location[0])
+    assert_equal SOURCE_FILE_TWO_ERRORS, file_location[0].name
     # line
-    assert_equal 0, file_location[1]
+    assert_equal 14, file_location[1]
     # column
-    assert_equal 0, file_location[2]
+    assert_equal 2, file_location[2]
     #offset
-    assert_equal 0, file_location[3]
+    assert_equal 180, file_location[3]
   end
   def test_SourceLocation_file_location_start_end
   tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
