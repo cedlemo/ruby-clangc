@@ -193,8 +193,10 @@ void Init_clangc(void) {
 #endif
   rb_define_method(c_Cursor, "decl_obj_c_type_encoding", RUBY_METHOD_FUNC(c_Cursor_get_decl_obj_c_type_encoding), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "result_type", RUBY_METHOD_FUNC(c_Cursor_get_result_type), 0);// in class_Cursor.c
+#if (CINDEX_VERSION_MINOR >= 30)
   rb_define_method(c_Cursor, "offset_of_field", RUBY_METHOD_FUNC(c_Cursor_get_offset_of_field), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_anonymous", RUBY_METHOD_FUNC(c_Cursor_is_anonymous), 0);// in class_Cursor.c
+#endif
   rb_define_method(c_Cursor, "is_bit_field", RUBY_METHOD_FUNC(c_Cursor_is_bit_field), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "is_virtual_base", RUBY_METHOD_FUNC(c_Cursor_is_virtual_base), 0);// in class_Cursor.c
   rb_define_method(c_Cursor, "cxx_access_specifier", RUBY_METHOD_FUNC(c_Cursor_get_cxx_access_specifier), 0);// in class_Cursor.c

@@ -125,11 +125,13 @@ c_Cursor_get_decl_obj_c_type_encoding(VALUE);
 VALUE
 c_Cursor_get_result_type(VALUE);
 
+#if (CINDEX_VERSION_MINOR >= 30)
 VALUE
 c_Cursor_get_offset_of_field(VALUE);
 
 VALUE
 c_Cursor_is_anonymous(VALUE);
+#endif
 
 VALUE
 c_Cursor_is_bit_field(VALUE);

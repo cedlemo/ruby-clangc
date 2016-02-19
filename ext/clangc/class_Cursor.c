@@ -700,6 +700,7 @@ c_Cursor_get_result_type(VALUE self)
   return result_type;
 }
 
+#if (CINDEX_VERSION_MINOR >= 30)
 /**
 * call-seq:
 *   Clangc::Cursor#offset_field => Fixnum
@@ -738,6 +739,7 @@ c_Cursor_is_anonymous(VALUE self)
   Data_Get_Struct(self, Cursor_t, c);
   return NOT_0_2_RVAL(clang_Cursor_isAnonymous(c->data));
 }
+#endif
 
 /**
 * call-seq:
