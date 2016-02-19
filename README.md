@@ -3,7 +3,7 @@
 ruby bindings to the clang C interface
 
 This is free software shared under the GNU GPL 3.
-Those bindings are works with Clang v3.5 to v3.7.1 on ArchLinux.
+Those bindings work with Clang v3.5 to v3.7.1 on ArchLinux.
 
 ## Installation:
 
