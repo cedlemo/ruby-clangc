@@ -536,3 +536,20 @@ c_Type_get_template_argument_as_type(VALUE self, VALUE index)
   ta->parent = t->parent;
   return template_argument;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Type#cxx_ref_qualifier => Clangc::RefQualifiers
+ *
+ * Retrieve the ref-qualifier kind of a function or method.
+ *
+ * The ref-qualifier is returned for C++ functions or methods. For other types
+ * or non-C++ declarations, CXRefQualifier_None is returned.
+ */
+VALUE
+c_Type_get_cxx_ref_qualifier(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return INT2NUM(clang_Type_getCXXRefQualifier(t->data));
+}

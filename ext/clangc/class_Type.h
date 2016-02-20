@@ -101,4 +101,7 @@ c_Type_get_num_template_arguments(VALUE);
 
 VALUE
 c_Type_get_template_argument_as_type(VALUE, VALUE);
+
+VALUE
+c_Type_get_cxx_ref_qualifier(VALUE);
 #endif //TYPE_H

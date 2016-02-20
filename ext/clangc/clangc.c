@@ -283,6 +283,7 @@ void Init_clangc(void) {
   rb_define_method(c_Type, "offset_of", RUBY_METHOD_FUNC(c_Type_get_offset_of), 1);// in class_Type.c
   rb_define_method(c_Type, "num_template_arguments", RUBY_METHOD_FUNC(c_Type_get_num_template_arguments), 0);// in class_Type.c
   rb_define_method(c_Type, "template_argument_as_type", RUBY_METHOD_FUNC(c_Type_get_template_argument_as_type), 1);// in class_Type.c
+  rb_define_method(c_Type, "cxx_ref_qualifier", RUBY_METHOD_FUNC(c_Type_get_cxx_ref_qualifier), 0);// in class_Type.c
  
 /**
 * \brief A fast container representing a set of CXCursors.
