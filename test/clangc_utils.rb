@@ -58,6 +58,8 @@ module ClangcUtils
   SOURCE_FILE_TYPE_OFFSET_OF = "#{PATH}/source27.cpp"
   # Source file class template specialisation 
   SOURCE_FILE_CLASS_TEMPLATE_SPECIALISATION = "#{PATH}/source28.cpp"
+  # Source file cxx ref qualifier 
+  SOURCE_FILE_CXX_REF_QUALIFIER = "#{PATH}/source29.cpp"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
