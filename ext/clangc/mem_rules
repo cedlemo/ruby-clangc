@@ -25,3 +25,5 @@ Module                      TranslationUnit (when form TranslationUnit)
 CursorSet         y
 
 OverridenCursor   y         Nil (when from  Cursor)
+
+CompletionString            Cursor
