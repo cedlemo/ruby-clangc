@@ -217,4 +217,19 @@ class TestCompletionString < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_CompletionString_brief_comment
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling 
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+            assert_equal "", completion_string.brief_comment, "#{code} #{line} #{completion_string.completion_annotation(0)}"
+        end
+      # TODO find real example
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
