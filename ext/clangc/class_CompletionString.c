@@ -187,3 +187,19 @@ c_CompletionString_get_completion_annotation(VALUE self, VALUE index)
   return CXSTR_2_RVAL(clang_getCompletionAnnotation(c->data,
                                                     NUM2UINT(index)));
 }
+
+/**
+ * Call-seq:
+ *  Clangc::CompletionString#brief_comment => String
+ *
+ * Retrieve the brief documentation comment attached to the declaration
+ * that corresponds to the given completion string.
+ */
+VALUE
+c_CompletionString_get_brief_comment(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CXSTR_2_RVAL(clang_getCompletionBriefComment(c->data));
+}
