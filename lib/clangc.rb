@@ -242,51 +242,51 @@ module Clangc
   class CompletionString
     ## 
     # :call-seq:
-    # Clangc::CompletionString#completion_chunk_kinds -> Array
+    # Clangc::CompletionString#chunk_kinds -> Array
     #
     # Return an array that contains all the 
     # kinds of the chunk completions for a
     # completion string.
-    def completion_chunk_kinds
-      num = num_completion_chunks
+    def chunk_kinds
+      num = num_chunks
       return [] if num == -1
 
       kinds = []
       for i in 0..(num - 1) do
-        kinds << completion_chunk_kind(i)
+        kinds << chunk_kind(i)
       end
       kinds
     end
     ## 
     # :call-seq:
-    # Clangc::CompletionString#completion_chunk_texts -> Array
+    # Clangc::CompletionString#chunk_texts -> Array
     #
     # Return an array that contains all the 
     # texts of the chunk completions for a
     # completion string.
-    def completion_chunk_texts
-      num = num_completion_chunks
+    def chunk_texts
+      num = num_chunks
       return [] if num == -1
 
       texts = []
       for i in 0..(num - 1) do
-        texts << completion_chunk_text(i)
+        texts << chunk_text(i)
       end
       texts
     end
     ## 
     # :call-seq:
-    # Clangc::CompletionString#completion_num_annotations -> Array
+    # Clangc::CompletionString#num_annotations -> Array
     #
     # Return an array that contains all the 
     # annotations for a completion string.
-    def completion_annotations
-      num = completion_num_annotations
+    def annotations
+      num = num_annotations
       return [] if num == -1
 
       annotations = []
       for i in 0..(num - 1) do
-        annotations << completion_annotation(i)
+        annotations << annotation(i)
       end
       annotations
     end

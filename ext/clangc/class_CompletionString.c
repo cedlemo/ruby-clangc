@@ -93,12 +93,12 @@ c_CompletionString_get_priority(VALUE self)
 
 /**
  * call-seq:
- *  Clangc::CompletionString#num_completion_chunks => Number
+ *  Clangc::CompletionString#num_chunks => Number
  *
  * Retrieve the number of chunks in the given code-completion string.
  */
 VALUE
-c_CompletionString_get_num_completion_chunks(VALUE self)
+c_CompletionString_get_num_chunks(VALUE self)
 {
   CompletionString_t *c;
   Data_Get_Struct(self, CompletionString_t, c);
@@ -108,7 +108,7 @@ c_CompletionString_get_num_completion_chunks(VALUE self)
 
 /**
  * call-seq:
- *  Clangc::CompletionString#completion_chunk_kind(Number) => Clangc::CompletionChunkKind
+ *  Clangc::CompletionString#chunk_kind(Number) => Clangc::CompletionChunkKind
  *
  * Determine the kind of a particular chunk within a completion string.
  *
@@ -117,7 +117,7 @@ c_CompletionString_get_num_completion_chunks(VALUE self)
  * It returns the kind of the chunk at the index chunk_number (a Clangc::CompletionChunkKind constant).
  */
 VALUE
-c_CompletionString_get_completion_chunk_kind(VALUE self, VALUE index)
+c_CompletionString_get_chunk_kind(VALUE self, VALUE index)
 {
   CompletionString_t *c;
   Data_Get_Struct(self, CompletionString_t, c);
@@ -128,7 +128,7 @@ c_CompletionString_get_completion_chunk_kind(VALUE self, VALUE index)
 
 /**
  * call-seq
- *  Clangc::CompletionString#completion_chunk_text(Number) => String
+ *  Clangc::CompletionString#chunk_text(Number) => String
  *
  * Retrieve the text associated with a particular chunk within a
  * completion string.
@@ -138,7 +138,7 @@ c_CompletionString_get_completion_chunk_kind(VALUE self, VALUE index)
  * Returns the text associated with the chunk at index chunk_number.
  */
 VALUE
-c_CompletionString_get_completion_chunk_text(VALUE self, VALUE index)
+c_CompletionString_get_chunk_text(VALUE self, VALUE index)
 {
   CompletionString_t *c;
   Data_Get_Struct(self, CompletionString_t, c);
@@ -149,7 +149,7 @@ c_CompletionString_get_completion_chunk_text(VALUE self, VALUE index)
 
 /**
  * call-seq:
- *  Clangc::CompletionString#completion_num_annotations => Number
+ *  Clangc::CompletionString#num_annotations => Number
  *
  * Retrieve the number of annotations associated with the given
  * completion string.
@@ -158,7 +158,7 @@ c_CompletionString_get_completion_chunk_text(VALUE self, VALUE index)
  * string.
  */
 VALUE
-c_CompletionString_get_completion_num_annotations(VALUE self)
+c_CompletionString_get_num_annotations(VALUE self)
 {
   CompletionString_t *c;
   Data_Get_Struct(self, CompletionString_t, c);
@@ -168,7 +168,7 @@ c_CompletionString_get_completion_num_annotations(VALUE self)
 
 /**
  * call-seq:
- *  Clangc::CompletionString(Number) => String
+ *  Clangc::CompletionString#annotation(Number)  => String
  *
  * Retrieve the annotation associated with the given completion string.
  *
@@ -179,7 +179,7 @@ c_CompletionString_get_completion_num_annotations(VALUE self)
  * annotation_number, or a NULL string if that annotation is not available.
  */
 VALUE
-c_CompletionString_get_completion_annotation(VALUE self, VALUE index)
+c_CompletionString_get_annotation(VALUE self, VALUE index)
 {
   CompletionString_t *c;
   Data_Get_Struct(self, CompletionString_t, c);

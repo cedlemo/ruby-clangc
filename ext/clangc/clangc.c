@@ -311,11 +311,11 @@ void Init_clangc(void) {
   rb_define_alloc_func(c_CompletionString, c_CompletionString_struct_alloc);
   rb_define_method(c_CompletionString, "availability", RUBY_METHOD_FUNC(c_CompletionString_get_availability), 0);// in class_CompletionString.c
   rb_define_method(c_CompletionString, "priority", RUBY_METHOD_FUNC(c_CompletionString_get_priority), 0);// in class_CompletionString.c
-  rb_define_method(c_CompletionString, "num_completion_chunks", RUBY_METHOD_FUNC(c_CompletionString_get_num_completion_chunks), 0);// in class_CompletionString.c
-  rb_define_method(c_CompletionString, "completion_chunk_kind", RUBY_METHOD_FUNC(c_CompletionString_get_completion_chunk_kind), 1);// in class_CompletionString.c
-  rb_define_method(c_CompletionString, "completion_chunk_text", RUBY_METHOD_FUNC(c_CompletionString_get_completion_chunk_text), 1);// in class_CompletionString.c
-  rb_define_method(c_CompletionString, "completion_num_annotations", RUBY_METHOD_FUNC(c_CompletionString_get_completion_num_annotations), 0);// in class_CompletionString.c
-  rb_define_method(c_CompletionString, "completion_annotation", RUBY_METHOD_FUNC(c_CompletionString_get_completion_annotation), 1);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "num_chunks", RUBY_METHOD_FUNC(c_CompletionString_get_num_chunks), 0);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "chunk_kind", RUBY_METHOD_FUNC(c_CompletionString_get_chunk_kind), 1);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "chunk_text", RUBY_METHOD_FUNC(c_CompletionString_get_chunk_text), 1);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "num_annotations", RUBY_METHOD_FUNC(c_CompletionString_get_num_annotations), 0);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "annotation", RUBY_METHOD_FUNC(c_CompletionString_get_annotation), 1);// in class_CompletionString.c
   rb_define_method(c_CompletionString, "brief_comment", RUBY_METHOD_FUNC(c_CompletionString_get_brief_comment), 0);// in class_CompletionString.c
 
 /**

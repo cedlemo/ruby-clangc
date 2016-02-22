@@ -35,19 +35,19 @@ VALUE
 c_CompletionString_get_priority(VALUE);
 
 VALUE
-c_CompletionString_get_num_completion_chunks(VALUE);
+c_CompletionString_get_num_chunks(VALUE);
 
 VALUE
-c_CompletionString_get_completion_chunk_kind(VALUE, VALUE);
+c_CompletionString_get_chunk_kind(VALUE, VALUE);
 
 VALUE
-c_CompletionString_get_completion_chunk_text(VALUE, VALUE);
+c_CompletionString_get_chunk_text(VALUE, VALUE);
 
 VALUE
-c_CompletionString_get_completion_num_annotations(VALUE);
+c_CompletionString_get_num_annotations(VALUE);
 
 VALUE
-c_CompletionString_get_completion_annotation(VALUE, VALUE);
+c_CompletionString_get_annotation(VALUE, VALUE);
 
 VALUE
 c_CompletionString_get_brief_comment(VALUE);
