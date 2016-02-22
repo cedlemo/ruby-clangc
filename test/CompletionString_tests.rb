@@ -67,7 +67,7 @@ class TestCompletionString < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
-  def test_CompletionString_chunk_completion_kind
+  def test_CompletionString_completion_chunk_kind
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
@@ -112,6 +112,31 @@ class TestCompletionString < MiniTest::Test
             assert_equal(Clangc::CompletionChunkKind::TYPED_TEXT, 
                          kinds[1],
                          "#{code} #{line} #{kinds[1]}")
+          end
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_CompletionString_completion_chunk_text
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+          if line == 1
+            assert_equal("data", 
+                         completion_string.completion_chunk_text(0),
+                         "#{code} #{line} #{completion_string.completion_chunk_text(0)}")
+            elsif line == 2
+            assert_equal("int", 
+                         completion_string.completion_chunk_text(0),
+                         "#{code} #{line} #{completion_string.completion_chunk_text(0)}")
+            assert_equal("a", 
+                         completion_string.completion_chunk_text(1),
+                         "#{code} #{line} #{completion_string.completion_chunk_text(1)}")
           end
         end
       end
