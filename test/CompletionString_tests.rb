@@ -59,7 +59,7 @@ class TestCompletionString < MiniTest::Test
         if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
           if line == 1
             assert_equal 1, completion_string.num_completion_chunks, "#{code} #{line} #{completion_string.num_completion_chunks}"
-          else
+          elsif line == 2
             assert_equal 2, completion_string.num_completion_chunks, "#{code} #{line} #{completion_string.num_completion_chunks}"
           end
         end
@@ -164,6 +164,20 @@ class TestCompletionString < MiniTest::Test
                          texts[1],
                          "#{code} #{line} #{texts[1]}")
           end
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_CompletionString_completion_num_annotations
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling 
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+            assert_equal 0, completion_string.completion_num_annotations, "#{code} #{line} #{completion_string.completion_num_annotations}"
         end
       end
       Clangc::ChildVisitResult::RECURSE
