@@ -60,6 +60,8 @@ module ClangcUtils
   SOURCE_FILE_CLASS_TEMPLATE_SPECIALISATION = "#{PATH}/source28.cpp"
   # Source file cxx ref qualifier 
   SOURCE_FILE_CXX_REF_QUALIFIER = "#{PATH}/source29.cpp"
+  # Source code for code completion
+  SOURCE_FILE_COMPLETION_STRING = "#{PATH}/source30.c"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"

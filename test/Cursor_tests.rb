@@ -701,7 +701,7 @@ end
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE
-        # TODO
+        # Not a specific test see CompletionString_tests.rb for that
         if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
           assert_instance_of Clangc::CompletionString, cursor.completion_string
         end
