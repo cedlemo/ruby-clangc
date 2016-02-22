@@ -24,12 +24,46 @@ class TestCompletionString < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
-  def test_CompletionString_from_cursor
+  def test_CompletionString_availability
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
         unless (cursor.location.spelling[1] == 7 && cursor.spelling == "struct data")
         assert_equal Clangc::AvailabilityKind::AVAILABLE, cursor.completion_string.availability, "#{cursor.spelling} #{cursor.location.spelling[1]} #{cursor.completion_string.availability}"
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_CompletionString_priority
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling 
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+            assert_equal 50, completion_string.priority, "#{code} #{line} #{completion_string.priority}"
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_CompletionString_num_completion_chunks
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling 
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+          if line == 1
+            assert_equal 1, completion_string.num_completion_chunks, "#{code} #{line} #{completion_string.num_completion_chunks}"
+          elsif line == 2
+            assert_equal 2, completion_string.num_completion_chunks, "#{code} #{line} #{completion_string.num_completion_chunks}"
+          else
+            assert_equal 2, completion_string.num_completion_chunks, "#{code} #{line} #{completion_string.num_completion_chunks}"
+          end
         end
       end
       Clangc::ChildVisitResult::RECURSE
