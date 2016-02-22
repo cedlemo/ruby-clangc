@@ -105,3 +105,23 @@ c_CompletionString_get_num_completion_chunks(VALUE self)
 
   return CUINT_2_NUM(clang_getNumCompletionChunks(c->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::CompletionString#completion_chunk_kind(Number) => Clangc::CompletionChunkKind
+ *
+ * Determine the kind of a particular chunk within a completion string.
+ *
+ * chunk_number the 0-based index of the chunk in the completion string.
+ *
+ * It returns the kind of the chunk at the index chunk_number (a Clangc::CompletionChunkKind constant).
+ */
+VALUE
+c_CompletionString_get_completion_chunk_kind(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionChunkKind(c->data,
+                                                  NUM2UINT(index)));
+}

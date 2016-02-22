@@ -36,4 +36,7 @@ c_CompletionString_get_priority(VALUE);
 
 VALUE
 c_CompletionString_get_num_completion_chunks(VALUE);
+
+VALUE
+c_CompletionString_get_completion_chunk_kind(VALUE, VALUE);
 #endif //COMPLETIONSTRING_H
