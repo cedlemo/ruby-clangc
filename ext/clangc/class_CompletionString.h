@@ -30,4 +30,10 @@ c_CompletionString_struct_alloc(VALUE);
 
 VALUE
 c_CompletionString_get_availability(VALUE);
+
+VALUE
+c_CompletionString_get_priority(VALUE);
+
+VALUE
+c_CompletionString_get_num_completion_chunks(VALUE);
 #endif //COMPLETIONSTRING_H

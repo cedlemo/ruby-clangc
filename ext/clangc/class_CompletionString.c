@@ -68,3 +68,40 @@ c_CompletionString_get_availability(VALUE self)
 
   return CUINT_2_NUM(clang_getCompletionAvailability(c->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::CompletionString#priority => Number
+ *
+ * Determine the priority of this code completion.
+ *
+ * The priority of a code completion indicates how likely it is that this 
+ * particular completion is the completion that the user will select. The
+ * priority is selected by various internal heuristics.
+ *
+ * Rreturns The priority of this completion string. Smaller values indicate
+ * higher-priority (more likely) completions.
+ */
+VALUE
+c_CompletionString_get_priority(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionPriority(c->data));
+}
+
+/**
+ * call-seq:
+ *  Clangc::CompletionString#num_completion_chunks => Number
+ *
+ * Retrieve the number of chunks in the given code-completion string.
+ */
+VALUE
+c_CompletionString_get_num_completion_chunks(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getNumCompletionChunks(c->data));
+}
