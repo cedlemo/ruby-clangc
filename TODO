@@ -6,6 +6,9 @@
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
+[ ] Try to implement enum with ruby class instead of module and allow the usage of symbol instead of ruby
+    Constants which is more Rubyish (see ruby-gnome2 project)
+
 ## Secondary:
 
 [ ] Continue / improve YARD usage
