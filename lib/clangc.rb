@@ -274,5 +274,21 @@ module Clangc
       end
       texts
     end
+    ## 
+    # :call-seq:
+    # Clangc::CompletionString#completion_num_annotations -> Array
+    #
+    # Return an array that contains all the 
+    # annotations for a completion string.
+    def completion_annotations
+      num = completion_num_annotations
+      return [] if num == -1
+
+      annotations = []
+      for i in 0..(num - 1) do
+        annotations << completion_annotation(i)
+      end
+      annotations
+    end
   end
 end
