@@ -165,3 +165,25 @@ c_CompletionString_get_completion_num_annotations(VALUE self)
 
   return CUINT_2_NUM(clang_getCompletionNumAnnotations(c->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::CompletionString(Number) => String
+ *
+ * Retrieve the annotation associated with the given completion string.
+ *
+ * annotation_number the 0-based index of the annotation of the
+ * completion string.
+ *
+ * Returns annotation string associated with the completion at index
+ * annotation_number, or a NULL string if that annotation is not available.
+ */
+VALUE
+c_CompletionString_get_completion_annotation(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CXSTR_2_RVAL(clang_getCompletionAnnotation(c->data,
+                                                    NUM2UINT(index)));
+}
