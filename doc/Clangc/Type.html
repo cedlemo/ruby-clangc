@@ -86,6 +86,8 @@
     
     <li ><a href="#method-i-class_type">#class_type</a>
     
+    <li ><a href="#method-i-cxx_ref_qualifier">#cxx_ref_qualifier</a>
+    
     <li ><a href="#method-i-element_type">#element_type</a>
     
     <li ><a href="#method-i-is_const_qualified">#is_const_qualified</a>
@@ -535,6 +537,48 @@ c_Type_get_class_type(VALUE self)
   ct-&gt;data = clang_Type_getClassType(t-&gt;data);
   ct-&gt;parent = t-&gt;parent;
   return class_type;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cxx_ref_qualifier" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Type#cxx_ref_qualifier &rarr; Clangc::RefQualifiers
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the ref-qualifier kind of a function or method.</p>
+
+<p>The ref-qualifier is returned for C++ functions or methods. For other types
+or non-C++ declarations, CXRefQualifier_None is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cxx_ref_qualifier-source">
+            <pre>VALUE
+c_Type_get_cxx_ref_qualifier(VALUE self)
+{
+  Type_t *t;
+  Data_Get_Struct(self, Type_t, t);
+  return INT2NUM(clang_Type_getCXXRefQualifier(t-&gt;data));
 }</pre>
           </div>
           

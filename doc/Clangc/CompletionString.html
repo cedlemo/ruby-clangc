@@ -64,7 +64,37 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-annotation">#annotation</a>
+    
+    <li ><a href="#method-i-annotations">#annotations</a>
+    
+    <li ><a href="#method-i-availability">#availability</a>
+    
+    <li ><a href="#method-i-brief_comment">#brief_comment</a>
+    
+    <li ><a href="#method-i-chunk_kind">#chunk_kind</a>
+    
+    <li ><a href="#method-i-chunk_kinds">#chunk_kinds</a>
+    
+    <li ><a href="#method-i-chunk_text">#chunk_text</a>
+    
+    <li ><a href="#method-i-chunk_texts">#chunk_texts</a>
+    
+    <li ><a href="#method-i-num_annotations">#num_annotations</a>
+    
+    <li ><a href="#method-i-num_chunks">#num_chunks</a>
+    
+    <li ><a href="#method-i-priority">#priority</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -102,6 +132,504 @@ description of the different kinds of chunks.</p>
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-annotation" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#annotation(Number)  &rarr; String
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the annotation associated with the given completion string.</p>
+
+<p>annotation_number the 0-based index of the annotation of the completion
+string.</p>
+
+<p>Returns annotation string associated with the completion at index
+annotation_number, or a NULL string if that annotation is not available.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="annotation-source">
+            <pre>VALUE
+c_CompletionString_get_annotation(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CXSTR_2_RVAL(clang_getCompletionAnnotation(c-&gt;data,
+                                                    NUM2UINT(index)));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-annotations" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#num_annotations &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  annotations for a completion string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="annotations-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 283</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">annotations</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_annotations</span>
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-identifier">annotations</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">annotations</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">annotation</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">annotations</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-availability" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">availability</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="CompletionString.html#method-i-availability">#availability</a>
+=&gt; Clangc::AvailabilityKind</p>
+
+<p>Determine the availability of the entity that this code-completion string
+refers to.</p>
+
+<p>The availability of the completion string which is one of the 
+Clangc::AvailabilityKind constants.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="availability-source">
+            <pre>VALUE
+c_CompletionString_get_availability(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionAvailability(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-brief_comment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">brief_comment</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Call-seq:</p>
+
+<pre class="ruby"><span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">CompletionString</span><span class="ruby-comment">#brief_comment =&gt; String</span>
+</pre>
+
+<p>Retrieve the brief documentation comment attached to the declaration that
+corresponds to the given completion string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="brief_comment-source">
+            <pre>VALUE
+c_CompletionString_get_brief_comment(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CXSTR_2_RVAL(clang_getCompletionBriefComment(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-chunk_kind" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#chunk_kind(Number) &rarr; Clangc::CompletionChunkKind
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the kind of a particular chunk within a completion string.</p>
+
+<p>chunk_number the 0-based index of the chunk in the completion string.</p>
+
+<p>It returns the kind of the chunk at the index chunk_number (a
+Clangc::CompletionChunkKind constant).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="chunk_kind-source">
+            <pre>VALUE
+c_CompletionString_get_chunk_kind(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionChunkKind(c-&gt;data,
+                                                  NUM2UINT(index)));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-chunk_kinds" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#chunk_kinds &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  kinds of the chunk completions for a
+completion string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="chunk_kinds-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 250</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">chunk_kinds</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_chunks</span>
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-identifier">kinds</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">kinds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chunk_kind</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">kinds</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-chunk_text" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">chunk_text</span><span
+            class="method-args">(p1)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>call-seq</p>
+
+<pre class="ruby"><span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">CompletionString</span><span class="ruby-comment">#chunk_text(Number) =&gt; String</span>
+</pre>
+
+<p>Retrieve the text associated with a particular chunk within a completion
+string.</p>
+
+<p>chunk_number the 0-based index of the chunk in the completion string.</p>
+
+<p>Returns the text associated with the chunk at index chunk_number.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="chunk_text-source">
+            <pre>VALUE
+c_CompletionString_get_chunk_text(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CXSTR_2_RVAL(clang_getCompletionChunkText(c-&gt;data,
+                                                  NUM2UINT(index)));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-chunk_texts" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#chunk_texts &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  texts of the chunk completions for a
+completion string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="chunk_texts-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 267</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">chunk_texts</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_chunks</span>
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-identifier">texts</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">texts</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chunk_text</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">texts</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-num_annotations" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#num_annotations &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the number of annotations associated with the given completion
+string.</p>
+
+<p>Returns the number of annotations associated with the given completion
+string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_annotations-source">
+            <pre>VALUE
+c_CompletionString_get_num_annotations(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionNumAnnotations(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-num_chunks" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#num_chunks &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the number of chunks in the given code-completion string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="num_chunks-source">
+            <pre>VALUE
+c_CompletionString_get_num_chunks(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getNumCompletionChunks(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-priority" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#priority &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determine the priority of this code completion.</p>
+
+<p>The priority of a code completion indicates how likely it is that this 
+particular completion is the completion that the user will select. The
+priority is selected by various internal heuristics.</p>
+
+<p>Rreturns The priority of this completion string. Smaller values indicate
+higher-priority (more likely) completions.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="priority-source">
+            <pre>VALUE
+c_CompletionString_get_priority(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionPriority(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 

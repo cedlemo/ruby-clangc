@@ -15,3 +15,4 @@ The libclang data are mapped to the following:
 [CXType]              Clangc::Type
 [CXCursorSet]         Clangc::CursorSet
 [CXModule]            Clangc::Module
+[CXCompletionString]  Clangc::CompletionString

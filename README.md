@@ -30,7 +30,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 
 ### functions wrapped:
 
-*    164/252 functions wrapped => 65.07936507936508%
+*    173/252 functions wrapped => 68.65079365079364%
 
 ### classes wrapped:
 
@@ -44,6 +44,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 *    CXType
 *    CXCursorSet
 *    CXModule
+*    CXCompletionString
 
 ## Examples (see samples directory): 
 

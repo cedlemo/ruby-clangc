@@ -165,23 +165,23 @@ the given source location points. (the position in the file)</p>
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf;
+  CXFile cxf = NULL;
   unsigned int line;
   unsigned int column;
   unsigned int offset;
   clang_getFileLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
-  if(&amp;cxf)
-  {
+//  if(&amp;cxf)
+//  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxf;
     f-&gt;parent = self;
     rb_ary_push(ret, file);
-  }
-  else
-    rb_ary_push(ret, Qnil);
-
+//  }
+//  else
+//    rb_ary_push(ret, Qnil);
+  
   rb_ary_push(ret, CUINT_2_NUM(line));
   rb_ary_push(ret, CUINT_2_NUM(column));
   rb_ary_push(ret, CUINT_2_NUM(offset));
@@ -369,22 +369,22 @@ the given source location points. (the position in the file)</p>
   VALUE ret = rb_ary_new();
   SourceLocation_t *s;
   Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf;
+  CXFile cxf = NULL;
   unsigned int line = 0;
   unsigned int column = 0;
   unsigned int offset = 0;
   clang_getSpellingLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
-  if(&amp;cxf)
-  {
+//  if(&amp;cxf)
+//  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxf;
     f-&gt;parent = self;
     rb_ary_push(ret, file);
-  }
-  else
-    rb_ary_push(ret, Qnil);
+//  }
+//  else
+//    rb_ary_push(ret, Qnil);
 
   rb_ary_push(ret, CUINT_2_NUM(line));
   rb_ary_push(ret, CUINT_2_NUM(column));
