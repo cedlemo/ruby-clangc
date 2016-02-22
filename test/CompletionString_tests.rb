@@ -179,6 +179,40 @@ class TestCompletionString < MiniTest::Test
         if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
             assert_equal 0, completion_string.completion_num_annotations, "#{code} #{line} #{completion_string.completion_num_annotations}"
         end
+      # TODO find real example
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+  def test_CompletionString_completion_annotation
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling 
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+          if completion_string.completion_num_annotations > 0  
+            assert_equal "", completion_string.completion_annotation(0), "#{code} #{line} #{completion_string.completion_annotation(0)}"
+          end
+        end
+      # TODO find real example
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
+
+  def test_CompletionString_completion_annotations
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling 
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+            assert_equal 0, completion_string.completion_num_annotations, "#{code} #{line} #{completion_string.completion_annotations.size}"
+        end
+      # TODO find real example
       end
       Clangc::ChildVisitResult::RECURSE
     end
