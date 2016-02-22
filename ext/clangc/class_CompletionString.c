@@ -51,3 +51,20 @@ c_CompletionString_struct_alloc( VALUE klass)
   return Data_Wrap_Struct(klass, NULL, c_CompletionString_struct_free, (void *) ptr);
 }
 
+/**
+ * Clangc::CompletionString#availability => Clangc::AvailabilityKind
+ *
+ * Determine the availability of the entity that this code-completion
+ * string refers to.
+ *
+ * The availability of the completion string which is one of the 
+ * Clangc::AvailabilityKind constants.
+ */
+VALUE
+c_CompletionString_get_availability(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionAvailability(c->data));
+}

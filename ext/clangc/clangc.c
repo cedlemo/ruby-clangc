@@ -309,6 +309,7 @@ void Init_clangc(void) {
 */
   VALUE c_CompletionString = rb_define_class_under(m_Clangc, "CompletionString", rb_cObject);
   rb_define_alloc_func(c_CompletionString, c_CompletionString_struct_alloc);
+  rb_define_method(c_CompletionString, "availability", RUBY_METHOD_FUNC(c_CompletionString_get_availability), 0);// in class_CompletionString.c
 
 /**
 * CXModule class and method

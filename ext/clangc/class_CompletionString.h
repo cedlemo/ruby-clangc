@@ -27,4 +27,7 @@ typedef struct CompletionString_t {
 
 VALUE
 c_CompletionString_struct_alloc(VALUE);
+
+VALUE
+c_CompletionString_get_availability(VALUE);
 #endif //COMPLETIONSTRING_H
