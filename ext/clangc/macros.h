@@ -109,7 +109,8 @@ NEW_CLASS_INSTANCE(TranslationUnit)
 /************************/
 static inline VALUE cxstring_2_rval(CXString str)
 {
-  VALUE r_string = rb_str_new2(clang_getCString(str));
+  const char * c_string = (clang_getCString(str) != NULL)? clang_getCString(str) : "";
+  VALUE r_string = rb_str_new2(c_string);
   clang_disposeString(str);
   return r_string;
 }
