@@ -42,4 +42,7 @@ c_CompletionString_get_completion_chunk_kind(VALUE, VALUE);
 
 VALUE
 c_CompletionString_get_completion_chunk_text(VALUE, VALUE);
+
+VALUE
+c_CompletionString_get_completion_num_annotations(VALUE);
 #endif //COMPLETIONSTRING_H

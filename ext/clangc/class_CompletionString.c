@@ -146,3 +146,22 @@ c_CompletionString_get_completion_chunk_text(VALUE self, VALUE index)
   return CXSTR_2_RVAL(clang_getCompletionChunkText(c->data,
                                                   NUM2UINT(index)));
 }
+
+/**
+ * call-seq:
+ *  Clangc::CompletionString#completion_num_annotations => Number
+ *
+ * Retrieve the number of annotations associated with the given
+ * completion string.
+ *
+ * Returns the number of annotations associated with the given completion
+ * string.
+ */
+VALUE
+c_CompletionString_get_completion_num_annotations(VALUE self)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CUINT_2_NUM(clang_getCompletionNumAnnotations(c->data));
+}
