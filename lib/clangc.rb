@@ -239,4 +239,23 @@ module Clangc
       headers
     end
   end
+  class CompletionString
+    ## 
+    # :call-seq:
+    # Clangc::CompletionString#completion_chunk_kinds -> Array
+    #
+    # Return an array that contains all the 
+    # kinds of the chunk completions for a
+    # completion string.
+    def completion_chunk_kinds
+      num = num_completion_chunks
+      return [] if num == -1
+
+      kinds = []
+      for i in 0..(num - 1) do
+        kinds << completion_chunk_kind(i)
+      end
+      kinds
+    end
+  end
 end

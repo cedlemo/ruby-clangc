@@ -92,4 +92,30 @@ class TestCompletionString < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
+  def test_CompletionString_completion_chunk_kinds
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+      if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
+        completion_string = cursor.completion_string
+        code = cursor.spelling
+        _file, line, _column = cursor.location.spelling
+        if completion_string && completion_string.availability == Clangc::AvailabilityKind::AVAILABLE
+          kinds = completion_string.completion_chunk_kinds
+          if line == 1
+            assert_equal(Clangc::CompletionChunkKind::TYPED_TEXT, 
+                         kinds[0],
+                         "#{code} #{line} #{kinds[0]}")
+            elsif line == 2
+            assert_equal(Clangc::CompletionChunkKind::RESULT_TYPE, 
+                         kinds[0],
+                         "#{code} #{line} #{kinds[0]}")
+            assert_equal(Clangc::CompletionChunkKind::TYPED_TEXT, 
+                         kinds[1],
+                         "#{code} #{line} #{kinds[1]}")
+          end
+        end
+      end
+      Clangc::ChildVisitResult::RECURSE
+    end
+  end
 end
