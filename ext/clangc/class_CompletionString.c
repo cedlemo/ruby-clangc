@@ -125,3 +125,24 @@ c_CompletionString_get_completion_chunk_kind(VALUE self, VALUE index)
   return CUINT_2_NUM(clang_getCompletionChunkKind(c->data,
                                                   NUM2UINT(index)));
 }
+
+/**
+ * call-seq
+ *  Clangc::CompletionString#completion_chunk_text(Number) => String
+ *
+ * Retrieve the text associated with a particular chunk within a
+ * completion string.
+ *
+ * chunk_number the 0-based index of the chunk in the completion string.
+ *
+ * Returns the text associated with the chunk at index chunk_number.
+ */
+VALUE
+c_CompletionString_get_completion_chunk_text(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  return CXSTR_2_RVAL(clang_getCompletionChunkText(c->data,
+                                                  NUM2UINT(index)));
+}

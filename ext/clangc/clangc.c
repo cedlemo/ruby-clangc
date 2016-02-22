@@ -313,6 +313,7 @@ void Init_clangc(void) {
   rb_define_method(c_CompletionString, "priority", RUBY_METHOD_FUNC(c_CompletionString_get_priority), 0);// in class_CompletionString.c
   rb_define_method(c_CompletionString, "num_completion_chunks", RUBY_METHOD_FUNC(c_CompletionString_get_num_completion_chunks), 0);// in class_CompletionString.c
   rb_define_method(c_CompletionString, "completion_chunk_kind", RUBY_METHOD_FUNC(c_CompletionString_get_completion_chunk_kind), 1);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "completion_chunk_text", RUBY_METHOD_FUNC(c_CompletionString_get_completion_chunk_text), 1);// in class_CompletionString.c
 
 /**
 * CXModule class and method
