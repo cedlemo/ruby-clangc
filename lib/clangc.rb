@@ -257,5 +257,22 @@ module Clangc
       end
       kinds
     end
+    ## 
+    # :call-seq:
+    # Clangc::CompletionString#completion_chunk_texts -> Array
+    #
+    # Return an array that contains all the 
+    # texts of the chunk completions for a
+    # completion string.
+    def completion_chunk_texts
+      num = num_completion_chunks
+      return [] if num == -1
+
+      texts = []
+      for i in 0..(num - 1) do
+        texts << completion_chunk_text(i)
+      end
+      texts
+    end
   end
 end
