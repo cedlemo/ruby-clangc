@@ -30,7 +30,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 
 ### functions wrapped:
 
-*    178/252 functions wrapped => 70.63492063492063%
+*    179/252 functions wrapped => 71.03174603174604%
 
 ### classes wrapped:
 
