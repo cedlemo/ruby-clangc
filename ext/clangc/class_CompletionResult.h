@@ -27,4 +27,7 @@ typedef struct CompletionResult_t {
 
 VALUE
 c_CompletionResult_struct_alloc(VALUE);
+
+VALUE
+c_CompletionResult_get_cursor_kind(VALUE);
 #endif //COMPLETIONRESULT_H

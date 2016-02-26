@@ -51,3 +51,26 @@ c_CompletionResult_struct_alloc( VALUE klass)
 
   return Data_Wrap_Struct(klass, NULL, c_CompletionResult_struct_free, (void *) ptr);
 }
+
+/*
+ * call-seq:
+ *  Clangc::CompletionResult#cursor_kind => Clangc::CursorKind
+ *
+ * \brief The kind of entity that this completion refers to.
+ *
+ * The cursor kind will be a macro, keyword, or a declaration (one of the
+ * *Decl cursor kinds), describing the entity that the completion is
+ * referring to.
+ *
+ * In the future, we would like to provide a full cursor, to allow
+ * the client to extract additional information from declaration.
+ *  Get
+ * */
+VALUE
+c_CompletionResult_get_cursor_kind(VALUE self)
+{
+  CompletionResult_t *c;
+  Data_Get_Struct(self, CompletionResult_t, c);
+  
+  return CUINT_2_NUM(c->data->CursorKind);
+}
