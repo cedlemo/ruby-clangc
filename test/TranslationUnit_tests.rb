@@ -134,4 +134,16 @@ class TestTranslationUnitUsage < MiniTest::Test
   def test_TU_get_module
     # TODO
   end
+  def test_TU_code_complete_at
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    line = 3 
+    column = 4
+    options = Clangc.default_code_complete_options
+    complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
+                                           line,
+                                           column,
+                                           options)
+    assert_instance_of(Clangc::CodeCompleteResults,
+                       complete_results)
+  end
 end
