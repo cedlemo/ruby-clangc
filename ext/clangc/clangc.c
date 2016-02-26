@@ -32,6 +32,7 @@
 #include "class_CompletionString.h"
 #include "class_OverriddenCursor.h"
 #include "class_Module.h"
+#include "class_CodeCompleteResults.h"
 
 void Init_clangc(void) {
   VALUE m_Clangc = rb_define_module("Clangc");
@@ -330,4 +331,11 @@ void Init_clangc(void) {
   rb_define_method(c_Module, "is_system", RUBY_METHOD_FUNC(c_Module_is_system), 0);// in class_Module.c
   rb_define_method(c_Module, "num_top_level_headers", RUBY_METHOD_FUNC(c_Module_get_num_top_level_headers), 1);// in class_Module.c
   rb_define_method(c_Module, "top_level_header", RUBY_METHOD_FUNC(c_Module_get_top_level_header), 2);// in class_Module.c
+
+/**
+* CXCodeCompleteResults class and method
+*/
+  VALUE c_CodeCompleteResults = rb_define_class_under(m_Clangc, "CodeCompleteResults", rb_cObject);
+  rb_define_alloc_func(c_CodeCompleteResults, c_CodeCompleteResults_struct_alloc);
+
 }
