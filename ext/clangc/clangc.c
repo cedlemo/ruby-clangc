@@ -338,5 +338,5 @@ void Init_clangc(void) {
 */
   VALUE c_CodeCompleteResults = rb_define_class_under(m_Clangc, "CodeCompleteResults", rb_cObject);
   rb_define_alloc_func(c_CodeCompleteResults, c_CodeCompleteResults_struct_alloc);
-  //rb_define_method(c_CodeCompleteResults, "code_complete_at", RUBY_METHOD_FUNC(c_CodeCompleteResults_code_complete_at), 4);// in class_CodeCompleteResults.c
+  rb_define_method(c_CodeCompleteResults, "num_results", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_num_results), 0);// in class_CodeCompleteResults.c
 }

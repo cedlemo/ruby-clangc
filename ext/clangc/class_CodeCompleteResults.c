@@ -40,7 +40,7 @@ c_CodeCompleteResults_mark(void *s)
   }
 }
 
-  VALUE
+VALUE
 c_CodeCompleteResults_struct_alloc( VALUE klass)
 {
   
@@ -50,4 +50,21 @@ c_CodeCompleteResults_struct_alloc( VALUE klass)
   ptr->parent = Qnil;
 
   return Data_Wrap_Struct(klass, NULL, c_CodeCompleteResults_struct_free, (void *) ptr);
+}
+
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#num_results => Number
+ *
+ * Retrieve the number of Clangc::CompletionResult 
+ *
+ * Not based on libclang function
+ */
+VALUE
+c_CodeCompleteResults_get_num_results(VALUE self)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+  return CUINT_2_NUM(c->data->NumResults);
 }

@@ -26,4 +26,7 @@ typedef struct CodeCompleteResults_t {
 
 VALUE
 c_CodeCompleteResults_struct_alloc(VALUE);
+
+VALUE
+c_CodeCompleteResults_get_num_results(VALUE);
 #endif //CODECOMPLETERESULTS_H
