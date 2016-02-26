@@ -344,6 +344,7 @@ void Init_clangc(void) {
   rb_define_method(c_CodeCompleteResults, "container_usr", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_container_usr), 0);// in class_CodeCompleteResults.c
   rb_define_method(c_CodeCompleteResults, "num_diagnostics", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_num_diagnostics), 0);// in class_CodeCompleteResults.c
   rb_define_method(c_CodeCompleteResults, "diagnostic", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_diagnostic), 1);// in class_CodeCompleteResults.c
+  rb_define_method(c_CodeCompleteResults, "sort_results", RUBY_METHOD_FUNC(c_CodeCompleteResults_sort_results), 0);// in class_CodeCompleteResults.c
 
 /**
 * CXCompletionResult class and method

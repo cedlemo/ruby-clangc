@@ -137,9 +137,6 @@ c_CodeCompleteResults_get_num_diagnostics(VALUE self)
  *
  * Retrieve a diagnostic associated with the given code completion.
  */
-CINDEX_LINKAGE
-CXDiagnostic clang_codeCompleteGetDiagnostic(CXCodeCompleteResults *Results,
-unsigned Index);
 VALUE
 c_CodeCompleteResults_get_diagnostic(VALUE self, VALUE index)
 {
@@ -156,3 +153,19 @@ c_CodeCompleteResults_get_diagnostic(VALUE self, VALUE index)
   return diagnostic;
 }
 
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#sort_results => nil
+ *
+ * Sort the code-completion results in case-insensitive alphabetical 
+ * order.
+ */
+VALUE
+c_CodeCompleteResults_sort_results(VALUE self)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+  
+  clang_sortCodeCompletionResults(c->data->Results, c->data->NumResults);
+  return Qnil;
+}
