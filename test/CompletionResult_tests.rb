@@ -74,6 +74,18 @@ class TestCompletionResult < MiniTest::Test
     # TODO
     assert_instance_of(Clangc::Diagnostic, complete_results.diagnostic(0))
     assert_equal("redefinition of 'ptr' with a different type: 'int' vs 'struct data *'", complete_results.diagnostic(0).spelling)
-
+  end
+  def test_CompletionResult_get_diagnostics
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    line = 12 
+    column = 5 
+    options = Clangc.default_code_complete_options
+    complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
+                                           line,
+                                           column,
+                                           options)
+    # TODO
+    assert_equal(8, complete_results.diagnostics.size)
+    assert_equal("redefinition of 'ptr' with a different type: 'int' vs 'struct data *'", complete_results.diagnostics[0].spelling)
   end
 end

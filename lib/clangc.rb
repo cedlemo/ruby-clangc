@@ -291,7 +291,6 @@ module Clangc
       annotations
     end
   end
-  
   class CodeCompleteResults
     ##
     # :call-seq:
@@ -307,6 +306,21 @@ module Clangc
         res << result(i)
       end
       res
+    end
+    ##
+    # :call-seq:
+    #   Clangc::CodeCompleteResults#diagnostics => Array
+    #
+    # Returns an Array of Clangc::Diagnostics
+    def diagnostics
+      num = num_diagnostics
+      return [] if num < 0
+
+      diags = []
+      for i in 0..(num - 1) do
+        diags << diagnostic(i)
+      end
+      diags
     end
   end
 end
