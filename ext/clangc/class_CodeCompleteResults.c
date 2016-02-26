@@ -17,6 +17,7 @@
 */
 /*CodeCompleteResults ruby class*/
 #include "class_CodeCompleteResults.h"
+#include "class_CompletionResult.h"
 #include "macros.h"
 
 static void
@@ -68,3 +69,32 @@ c_CodeCompleteResults_get_num_results(VALUE self)
 
   return CUINT_2_NUM(c->data->NumResults);
 }
+
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#results(index) => Clangc::CompletionResult
+ *
+ * Retrieve Clangc::CompletionResult instance a index
+ *
+ * Return nil if  index < 0 or index >= num results
+ * Not based on libclang function
+ */
+VALUE
+c_CodeCompleteResults_get_result(VALUE self, VALUE index)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+  unsigned i =  NUM2UINT(index);
+  
+  if (i < 0 || i > c->data->NumResults)
+    return Qnil;
+  
+  VALUE result;
+  CompletionResult_t *cr;
+  R_GET_CLASS_DATA("Clangc", CompletionResult, result, cr);
+  cr->data = &(c->data->Results[i]);
+  cr->parent = self;
+
+  return result;
+}
+

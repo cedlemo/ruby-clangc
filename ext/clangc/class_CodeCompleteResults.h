@@ -29,4 +29,7 @@ c_CodeCompleteResults_struct_alloc(VALUE);
 
 VALUE
 c_CodeCompleteResults_get_num_results(VALUE);
+
+VALUE
+c_CodeCompleteResults_get_result(VALUE, VALUE);
 #endif //CODECOMPLETERESULTS_H
