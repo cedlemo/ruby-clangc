@@ -20,4 +20,8 @@
 
 [ ] Finish test case (see TODO in tests/ directory)
 
-[ ] Try to clean code status (or not)
+[ ] Optimize :
+  *   When a method returns a Clangc Object
+    test the returned value before creating
+    a Clangc object
+      
