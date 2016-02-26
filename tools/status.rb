@@ -21,7 +21,7 @@ def is_object_generator(f, object_name)
       end
     end
     false
-  elsif f.return_type.name.match(/^#{object_name}$/)
+  elsif f.return_type.name.match(/^#{object_name}(\s+\*)*$/)
     return true
   else 
     false
@@ -29,7 +29,7 @@ def is_object_generator(f, object_name)
 end
 def is_object_method(f, object_name)
   f.parameters.each do |p|
-    if p.type.name.match(/^#{object_name}$/)
+    if p.type.name.match(/^#{object_name}(\s+\*)*$/)
       return true
     end
   end
@@ -173,6 +173,7 @@ sumup_objects(functions, ["CXIndex",
                           "CXCursor",
                           "CXType",
                           "CXCompletionString",
+                          "CXCodeCompleteResults"
 # Done                          "CXCursorSet",
 # Done                          "CXModule"
                           ],
