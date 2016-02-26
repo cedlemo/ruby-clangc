@@ -50,4 +50,7 @@ c_TranslationUnit_get_cursor(VALUE);
 
 VALUE
 c_TranslationUnit_get_module(VALUE, VALUE);
+
+VALUE
+c_TranslationUnit_code_complete_at(VALUE, VALUE, VALUE, VALUE, VALUE);
 #endif //TRANSLATIONUNIT_H
