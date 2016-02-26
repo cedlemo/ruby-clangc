@@ -276,7 +276,7 @@ module Clangc
     end
     ## 
     # :call-seq:
-    # Clangc::CompletionString#num_annotations -> Array
+    #   Clangc::CompletionString#num_annotations -> Array
     #
     # Return an array that contains all the 
     # annotations for a completion string.
@@ -289,6 +289,24 @@ module Clangc
         annotations << annotation(i)
       end
       annotations
+    end
+  end
+  
+  class CodeCompleteResults
+    ##
+    # :call-seq:
+    #   Clangc::CodeCompleteResults#results => Array
+    #
+    # Returns an Array of Clangc::CompletionResult
+    def results
+      num = num_results
+      return [] if num < 0
+
+      res = []
+      for i in 0..(num - 1) do
+        res << result(i)
+      end
+      res
     end
   end
 end
