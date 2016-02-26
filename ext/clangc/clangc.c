@@ -341,12 +341,15 @@ void Init_clangc(void) {
   rb_define_alloc_func(c_CodeCompleteResults, c_CodeCompleteResults_struct_alloc);
   rb_define_method(c_CodeCompleteResults, "num_results", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_num_results), 0);// in class_CodeCompleteResults.c
   rb_define_method(c_CodeCompleteResults, "result", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_result), 1);// in class_CodeCompleteResults.c
+  rb_define_method(c_CodeCompleteResults, "container_usr", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_container_usr), 0);// in class_CodeCompleteResults.c
+  rb_define_method(c_CodeCompleteResults, "num_diagnostics", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_num_diagnostics), 0);// in class_CodeCompleteResults.c
+  rb_define_method(c_CodeCompleteResults, "diagnostic", RUBY_METHOD_FUNC(c_CodeCompleteResults_get_diagnostic), 1);// in class_CodeCompleteResults.c
 
 /**
 * CXCompletionResult class and method
 */
   VALUE c_CompletionResult = rb_define_class_under(m_Clangc, "CompletionResult", rb_cObject);
   rb_define_alloc_func(c_CompletionResult, c_CompletionResult_struct_alloc);
-  rb_define_method(c_CompletionResult, "cursor_kind", RUBY_METHOD_FUNC(c_CompletionResult_get_cursor_kind), 0);// in class_CodeCompleteResults.c
-  rb_define_method(c_CompletionResult, "completion_string", RUBY_METHOD_FUNC(c_CompletionResult_get_completion_string), 0);// in class_CodeCompleteResults.c
+  rb_define_method(c_CompletionResult, "cursor_kind", RUBY_METHOD_FUNC(c_CompletionResult_get_cursor_kind), 0);// in class_CompletionResult.c
+  rb_define_method(c_CompletionResult, "completion_string", RUBY_METHOD_FUNC(c_CompletionResult_get_completion_string), 0);// in class_CompletionResult.c
 }

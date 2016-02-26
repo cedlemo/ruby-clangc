@@ -32,4 +32,13 @@ c_CodeCompleteResults_get_num_results(VALUE);
 
 VALUE
 c_CodeCompleteResults_get_result(VALUE, VALUE);
+
+VALUE
+c_CodeCompleteResults_get_container_usr(VALUE);
+
+VALUE
+c_CodeCompleteResults_get_num_diagnostics(VALUE);
+
+VALUE
+c_CodeCompleteResults_get_diagnostic(VALUE, VALUE);
 #endif //CODECOMPLETERESULTS_H

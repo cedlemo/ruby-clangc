@@ -18,6 +18,7 @@
 /*CodeCompleteResults ruby class*/
 #include "class_CodeCompleteResults.h"
 #include "class_CompletionResult.h"
+#include "class_Diagnostic.h"
 #include "macros.h"
 
 static void
@@ -96,5 +97,62 @@ c_CodeCompleteResults_get_result(VALUE self, VALUE index)
   cr->parent = self;
 
   return result;
+}
+
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#container_usr => String
+ *
+ * Returns the USR for the container for the current code completion
+ * context. If there is not a container for the current context, this
+ * function will return the empty string.
+ */
+VALUE
+c_CodeCompleteResults_get_container_usr(VALUE self)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+  
+  return CXSTR_2_RVAL(clang_codeCompleteGetContainerUSR(c->data));
+}
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#num_diagnostics => Number
+ *
+ * Determine the number of diagnostics produced prior to the
+ * location where code completion was performed.
+ */
+VALUE
+c_CodeCompleteResults_get_num_diagnostics(VALUE self)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+  
+  return CUINT_2_NUM(clang_codeCompleteGetNumDiagnostics(c->data));
+}
+
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#diagnostic(index) => Clangc::Diagnostic
+ *
+ * Retrieve a diagnostic associated with the given code completion.
+ */
+CINDEX_LINKAGE
+CXDiagnostic clang_codeCompleteGetDiagnostic(CXCodeCompleteResults *Results,
+unsigned Index);
+VALUE
+c_CodeCompleteResults_get_diagnostic(VALUE self, VALUE index)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+  
+  VALUE diagnostic;
+  Diagnostic_t *d;
+  R_GET_CLASS_DATA("Clangc", Diagnostic, diagnostic, d);
+
+  d->data = clang_codeCompleteGetDiagnostic(c->data, NUM2UINT(index));
+  d->parent = c->parent;
+
+  return diagnostic;
 }
 
