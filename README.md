@@ -45,6 +45,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 *    CXCursorSet
 *    CXModule
 *    CXCompletionString
+*    CXCodeCompleteResults
 
 ## Examples (see samples directory): 
 

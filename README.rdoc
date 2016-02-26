@@ -5,14 +5,15 @@ http://clang.llvm.org/
 
 The libclang data are mapped to the following:
 
-[CXIndex]             Clangc::Index
-[CXTranslationUnit]   Clangc::TranslationUnit
-[CXDiagnostic]        Clangc::Diagnostic
-[CXFile]              Clangc::File
-[CXSourceRange]       Clangc::SourceRange
-[CXSourceLocation]    Clangc::SourceLocation
-[CXCursor]            Clangc::Cursor
-[CXType]              Clangc::Type
-[CXCursorSet]         Clangc::CursorSet
-[CXModule]            Clangc::Module
-[CXCompletionString]  Clangc::CompletionString
+[CXIndex]                 Clangc::Index
+[CXTranslationUnit]       Clangc::TranslationUnit
+[CXDiagnostic]            Clangc::Diagnostic
+[CXFile]                  Clangc::File
+[CXSourceRange]           Clangc::SourceRange
+[CXSourceLocation]        Clangc::SourceLocation
+[CXCursor]                Clangc::Cursor
+[CXType]                  Clangc::Type
+[CXCursorSet]             Clangc::CursorSet
+[CXModule]                Clangc::Module
+[CXCompletionString]      Clangc::CompletionString
+[CXCodeCompleteResults]   Clangc::CodeCompleteResults
