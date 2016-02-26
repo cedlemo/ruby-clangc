@@ -17,3 +17,4 @@ The libclang data are mapped to the following:
 [CXModule]                Clangc::Module
 [CXCompletionString]      Clangc::CompletionString
 [CXCodeCompleteResults]   Clangc::CodeCompleteResults
+[CXCompletionResult]      Clangc::CompletionResult

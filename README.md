@@ -46,6 +46,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 *    CXModule
 *    CXCompletionString
 *    CXCodeCompleteResults
+*    CXCompletionResult
 
 ## Examples (see samples directory): 
 

@@ -29,3 +29,5 @@ OverridenCursor     y           Nil (when from  Cursor)
 CompletionString                Cursor
 
 CodeCompleteResults y           TranslationUnit
+
+CompletionResults               CodeCompleteResults
