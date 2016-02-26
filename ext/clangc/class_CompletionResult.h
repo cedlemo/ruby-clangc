@@ -30,4 +30,7 @@ c_CompletionResult_struct_alloc(VALUE);
 
 VALUE
 c_CompletionResult_get_cursor_kind(VALUE);
+
+VALUE
+c_CompletionResult_get_completion_string(VALUE);
 #endif //COMPLETIONRESULT_H

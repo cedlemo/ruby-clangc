@@ -18,6 +18,7 @@
 */
 /*CompletionResult ruby class*/
 #include "class_CompletionResult.h"
+#include "class_CompletionString.h"
 #include "macros.h"
 
 static void
@@ -73,4 +74,27 @@ c_CompletionResult_get_cursor_kind(VALUE self)
   Data_Get_Struct(self, CompletionResult_t, c);
   
   return CUINT_2_NUM(c->data->CursorKind);
+}
+
+/*
+ * call-seq:
+ *  Clangc::CompletionResult#completion_string => Clangc::CompetionString
+ *
+ * The code-completion string that describes how to insert this
+ * code-completion result into the editing buffer.
+ * */
+VALUE
+c_CompletionResult_get_completion_string(VALUE self)
+{
+  CompletionResult_t *c;
+  Data_Get_Struct(self, CompletionResult_t, c);
+
+  CompletionString_t *cs;
+  VALUE completion_string;
+  R_GET_CLASS_DATA("Clangc", CompletionString, completion_string, cs);
+
+  cs->data = c->data->CompletionString;
+  cs->parent = self;
+  
+  return completion_string;
 }

@@ -348,4 +348,5 @@ void Init_clangc(void) {
   VALUE c_CompletionResult = rb_define_class_under(m_Clangc, "CompletionResult", rb_cObject);
   rb_define_alloc_func(c_CompletionResult, c_CompletionResult_struct_alloc);
   rb_define_method(c_CompletionResult, "cursor_kind", RUBY_METHOD_FUNC(c_CompletionResult_get_cursor_kind), 0);// in class_CodeCompleteResults.c
+  rb_define_method(c_CompletionResult, "completion_string", RUBY_METHOD_FUNC(c_CompletionResult_get_completion_string), 0);// in class_CodeCompleteResults.c
 }
