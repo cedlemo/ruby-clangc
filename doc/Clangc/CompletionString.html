@@ -78,6 +78,8 @@
     
     <li ><a href="#method-i-brief_comment">#brief_comment</a>
     
+    <li ><a href="#method-i-chunk_completion_string">#chunk_completion_string</a>
+    
     <li ><a href="#method-i-chunk_kind">#chunk_kind</a>
     
     <li ><a href="#method-i-chunk_kinds">#chunk_kinds</a>
@@ -304,6 +306,50 @@ c_CompletionString_get_brief_comment(VALUE self)
   Data_Get_Struct(self, CompletionString_t, c);
 
   return CXSTR_2_RVAL(clang_getCompletionBriefComment(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-chunk_completion_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">chunk_completion_string</span><span
+            class="method-args">(p1)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="chunk_completion_string-source">
+            <pre>VALUE
+c_CompletionString_get_chunk_completion_string(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  VALUE completion_string;
+  CompletionString_t *cs;
+  R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionString, completion_string, cs);
+  cs-&gt;data = clang_getCompletionChunkCompletionString(c-&gt;data,
+                                                      NUM2UINT(index));
+  cs-&gt;parent = c-&gt;parent;
+
+  return completion_string;
 }</pre>
           </div>
           

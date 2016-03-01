@@ -1,6 +1,7 @@
 # TODO
 
 ## Primary
+[ ] Do Clangc::CompletionString#chunk_completion_strings method
 
 [ ] Finish Implement Clangc::Cursor methods
 
