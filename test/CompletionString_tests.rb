@@ -16,9 +16,9 @@ class TestCompletionString < MiniTest::Test
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
         if cursor.location.spelling[1] == 7 && cursor.spelling == "struct data"
-        assert_equal false, Clangc::CompletionString == cursor.completion_string.class, "#{cursor.spelling} #{cursor.location.spelling[1]}"
-        else
-        assert_equal true, Clangc::CompletionString == cursor.completion_string.class, "#{cursor.spelling} #{cursor.location.spelling[1]}"
+          assert_equal false, Clangc::CompletionString == cursor.completion_string.class, "#{cursor.spelling} #{cursor.location.spelling[1]}"
+        elsif cursor.location.spelling[1] == 8
+          assert_equal true, Clangc::CompletionString == cursor.completion_string.class, "#{cursor.spelling} #{cursor.location.spelling[1]}"
         end
       end
       Clangc::ChildVisitResult::RECURSE
@@ -28,7 +28,7 @@ class TestCompletionString < MiniTest::Test
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
     Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
       if cursor.location.spelling[0].name == SOURCE_FILE_COMPLETION_STRING
-        unless (cursor.location.spelling[1] == 7 && cursor.spelling == "struct data")
+        unless (cursor.location.spelling[1] == 7 && cursor.spelling == "struct data") || !cursor.completion_string
         assert_equal Clangc::AvailabilityKind::AVAILABLE, cursor.completion_string.availability, "#{cursor.spelling} #{cursor.location.spelling[1]} #{cursor.completion_string.availability}"
         end
       end
