@@ -50,6 +50,37 @@ This is not recommended, no work on compatibility on other distributions or OS h
 
 ## Examples (see samples directory): 
 
+###   Code completion
+
+```ruby
+cindex = Clangc::Index.new(false, false)
+
+tu = cindex.create_translation_unit_from_source_file(filename, args)
+
+reparse_options = tu.default_reparse_options
+tu.reparse(reparse_options)
+
+complete_results = tu.code_complete_at(filename,
+                                       line,
+                                       column,
+                                       0)
+complete_results.sort_results
+
+puts "Diagnostics : "
+complete_results.diagnostics.each do |d|
+  puts d.spelling
+end
+
+puts "Complete :"
+complete_results.results.each do |r|
+  r.completion_string.chunk_texts.each_with_index do |c, i|
+    if r.completion_string.chunk_kind(i) == Clangc::CompletionChunkKind::TYPED_TEXT
+      puts c
+    end
+  end
+end
+```
+
 ###   C/C++ parser
 
 ```ruby

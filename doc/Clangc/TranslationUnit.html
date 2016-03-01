@@ -88,6 +88,8 @@
     
     <li ><a href="#method-i-module">#module</a>
     
+    <li ><a href="#method-i-reparse">#reparse</a>
+    
     <li ><a href="#method-i-spelling">#spelling</a>
     
   </ul>
@@ -309,11 +311,11 @@ c_TranslationUnit_get_cursor(VALUE self)
           
           <p>Returns the set of flags that is suitable for reparsing a translation unit.</p>
 
-<p>The set of flags returned provide options for
-clang_reparseTranslationUnit() by default. The returned flag set contains
-an unspecified set of optimizations  geared toward common uses of
-reparsing. The set of optimizations enabled may  change from one version 
-to the next. Clangc::ReparseF_Flags constants.</p>
+<p>The set of flags returned provide options for <a
+href="TranslationUnit.html#method-i-reparse">#reparse</a> by default. The
+returned flag set contains an unspecified set of optimizations  geared
+toward common uses of reparsing. The set of optimizations enabled may 
+change from one version  to the next. Clangc::ReparseF_Flags constants.</p>
           
           
 
@@ -616,6 +618,87 @@ c_TranslationUnit_get_module(VALUE self, VALUE file)
     return module;
   else
     return Qnil;
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-reparse" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#reparse(options) &rarr; Clangc::ErrorCode
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Reparse the source files that produced this translation unit.</p>
+
+<p>This routine can be used to re-parse the source files that originally
+created the given translation unit, for example because those source files
+have changed (either on disk or as passed via p unsaved_files). The source
+code will be reparsed with the same command-line options as it was
+originally parsed.</p>
+
+<p>Reparsing a translation unit invalidates all cursors and source locations
+that refer into that translation unit. This makes reparsing a translation
+unit semantically equivalent to destroying the translation unit and then
+creating a new translation unit with the same command-line arguments.
+However, it may be more efficient to reparse a translation  unit using this
+routine.</p>
+
+<p>The translation unit whose contents will be re-parsed. The translation unit
+must originally have been built with  c
+clang_createTranslationUnitFromSourceFile().</p>
+
+<p>TODO  num_unsaved_files The number of unsaved file entries in p
+unsaved_files.</p>
+
+<p>TODO unsaved_files The files that have not yet been saved to disk but may
+be required for parsing, including the contents of those files.  The
+contents and name of these files (as specified by CXUnsavedFile) are copied
+when necessary, so the client only needs to guarantee their validity until
+the call to this function returns.</p>
+
+<p>options A bitset of options composed of the flags in Clangc::Reparse_Flags.
+The function Clangc::TranslationUnit.defaultReparseOptions() produces a
+default set of options recommended for most uses, based on the translation
+unit.</p>
+
+<p>returns 0 if the sources could be reparsed.  A non-zero error code will be
+returned if reparsing was impossible, such that the translation unit is
+invalid. The error codes returned by this routine are described by the
+Clangc::ErrorCode.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="reparse-source">
+            <pre>VALUE
+c_TranslationUnit_reparse(VALUE self, VALUE options)
+{
+  TranslationUnit_t *t;
+  Data_Get_Struct(self, TranslationUnit_t, t);
+  
+  int error;
+  error = clang_reparseTranslationUnit(t-&gt;data,
+                                       0,
+                                       NULL, // TODO Manage unsaved files
+                                       NUM2UINT(options));
+  return CINT_2_NUM(error);
 }</pre>
           </div>
           

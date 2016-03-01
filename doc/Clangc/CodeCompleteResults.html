@@ -84,6 +84,8 @@
     
     <li ><a href="#method-i-results">#results</a>
     
+    <li ><a href="#method-i-sort_results">#sort_results</a>
+    
   </ul>
 </div>
 
@@ -164,18 +166,21 @@ c_CodeCompleteResults_get_container_usr(VALUE self)
     
       <div id="method-i-diagnostic" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">diagnostic</span><span
-            class="method-args">(p1)</span>
+          <span class="method-callseq">
+            Clangc::CodeCompleteResults#diagnostic(index) &rarr; Clangc::Diagnostic
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        
 
         <div class="method-description">
           
-          
+          <p>Retrieve a diagnostic associated with the given code completion.</p>
           
           
 
@@ -421,6 +426,47 @@ href="CompletionResult.html">Clangc::CompletionResult</a></p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">res</span>
 <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-sort_results" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CodeCompleteResults#sort_results &rarr; nil
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Sort the code-completion results in case-insensitive alphabetical  order.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sort_results-source">
+            <pre>VALUE
+c_CodeCompleteResults_sort_results(VALUE self)
+{
+  CodeCompleteResults_t *c;
+  Data_Get_Struct(self, CodeCompleteResults_t, c);
+  
+  clang_sortCodeCompletionResults(c-&gt;data-&gt;Results, c-&gt;data-&gt;NumResults);
+  return Qnil;
+}</pre>
           </div>
           
         </div>
