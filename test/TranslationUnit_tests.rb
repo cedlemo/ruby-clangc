@@ -146,4 +146,10 @@ class TestTranslationUnitUsage < MiniTest::Test
     assert_instance_of(Clangc::CodeCompleteResults,
                        complete_results)
   end
+  def test_TU_reparse
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    options = tu.default_reparse_options
+    error_code = tu.reparse(options)
+    assert(0 == error_code, error_code)
+  end
 end
