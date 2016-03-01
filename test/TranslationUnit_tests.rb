@@ -136,15 +136,26 @@ class TestTranslationUnitUsage < MiniTest::Test
   end
   def test_TU_code_complete_at
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    line = 3 
-    column = 4
-    options = Clangc.default_code_complete_options
+    line = 14 
+    column = 8
+    reparse_options = tu.default_reparse_options
+
+    tu.reparse(reparse_options)
+    
+    options = 0
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
                                            column,
                                            options)
     assert_instance_of(Clangc::CodeCompleteResults,
                        complete_results)
+    assert_equal(3, complete_results.results.size)
+    assert_equal(2, complete_results.results[0].completion_string.num_chunks)
+    assert_equal(2, complete_results.results[1].completion_string.num_chunks)
+    assert_equal(2, complete_results.results[2].completion_string.num_chunks)
+    assert_equal(["int", "a"], complete_results.results[0].completion_string.chunk_texts)
+    assert_equal(Clangc::CompletionChunkKind::RESULT_TYPE,
+                 complete_results.results[0].completion_string.chunk_kind(0))
   end
   def test_TU_reparse
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
