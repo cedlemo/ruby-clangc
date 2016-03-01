@@ -5,11 +5,14 @@ struct data{
 };
 
 struct data *ptr, mydata;
-ptr = &mydata;
+int main ()
+{
+  ptr = &mydata;
 
-ptr->a = 1;
-ptr->b = NULL;
-ptr->c = 0.1;
+  ptr->a = 1;
+  ptr->b = NULL;
+  ptr->c = 0.1;
+}
 /*
  * Comments
  * */
