@@ -203,3 +203,33 @@ c_CompletionString_get_brief_comment(VALUE self)
 
   return CXSTR_2_RVAL(clang_getCompletionBriefComment(c->data));
 }
+
+/**
+ * call-seq:
+ *  Clangc::CompletionString#chunk_completion_string(index) => Clangc::CompletionString
+ *
+ * Retrieve the completion string associated with a particular chunk
+ * within a completion string.
+ *
+ * 0-based index of the chunk in the completion string.
+ *
+ * Returns the completion string associated with the chunk at index
+ * \c chunk_number.
+ */
+//CINDEX_LINKAGE CXCompletionString
+//clang_getCompletionChunkCompletionString(CXCompletionString completion_string,
+VALUE
+c_CompletionString_get_chunk_completion_string(VALUE self, VALUE index)
+{
+  CompletionString_t *c;
+  Data_Get_Struct(self, CompletionString_t, c);
+
+  VALUE completion_string;
+  CompletionString_t *cs;
+  R_GET_CLASS_DATA("Clangc", CompletionString, completion_string, cs);
+  cs->data = clang_getCompletionChunkCompletionString(c->data,
+                                                      NUM2UINT(index));
+  cs->parent = c->parent;
+
+  return completion_string;
+}

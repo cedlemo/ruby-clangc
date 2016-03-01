@@ -51,4 +51,7 @@ c_CompletionString_get_annotation(VALUE, VALUE);
 
 VALUE
 c_CompletionString_get_brief_comment(VALUE);
+
+VALUE
+c_CompletionString_get_chunk_completion_string(VALUE, VALUE);
 #endif //COMPLETIONSTRING_H

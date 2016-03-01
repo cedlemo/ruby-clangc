@@ -321,6 +321,7 @@ void Init_clangc(void) {
   rb_define_method(c_CompletionString, "num_annotations", RUBY_METHOD_FUNC(c_CompletionString_get_num_annotations), 0);// in class_CompletionString.c
   rb_define_method(c_CompletionString, "annotation", RUBY_METHOD_FUNC(c_CompletionString_get_annotation), 1);// in class_CompletionString.c
   rb_define_method(c_CompletionString, "brief_comment", RUBY_METHOD_FUNC(c_CompletionString_get_brief_comment), 0);// in class_CompletionString.c
+  rb_define_method(c_CompletionString, "chunk_completion_string", RUBY_METHOD_FUNC(c_CompletionString_get_chunk_completion_string), 1);// in class_CompletionString.c
 
 /**
 * CXModule class and method
