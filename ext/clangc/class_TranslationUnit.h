@@ -53,4 +53,7 @@ c_TranslationUnit_get_module(VALUE, VALUE);
 
 VALUE
 c_TranslationUnit_code_complete_at(VALUE, VALUE, VALUE, VALUE, VALUE);
+
+VALUE
+c_TranslationUnit_reparse(VALUE, VALUE);
 #endif //TRANSLATIONUNIT_H
