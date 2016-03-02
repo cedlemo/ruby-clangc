@@ -4,9 +4,9 @@ W_DIR=$(pwd)
 cd ext/clangc
 ruby extconf.rb
 cd $W_DIR
-sudo gem uninstall clangc
+gem uninstall clangc
 gem build $DIR/../clangc.gemspec
-gem install --user-install $W_DIR/clangc-0.0.1.gem
+gem install --user-install --verbose $W_DIR/clangc-0.0.1.gem
 
 for N in "Clangc" "Index" "TranslationUnit" "Diagnostic" "File" "SourceRange" \
   "SourceLocation" "Cursor" "Type" "CursorSet" "CompletionString" "Module"\
