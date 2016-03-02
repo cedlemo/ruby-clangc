@@ -1,6 +1,9 @@
 require "mkmf"
 have_library("clang")
 
+$CFLAGS += " -I#{`llvm-config --prefix`.chomp}/include"
+#$LIBS += " #{`llvm-config --libs`.chomp}"
+
 # override normal build configuration to build debug friendly library
 # if installed via 'gem install clangc -- --enable-debug'
 if enable_config('debug')
