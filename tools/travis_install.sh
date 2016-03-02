@@ -6,7 +6,7 @@ ruby extconf.rb
 cd $W_DIR
 sudo gem uninstall clangc
 gem build $DIR/../clangc.gemspec
-sudo gem install $W_DIR/clangc-0.0.1.gem
+gem install --user-install $W_DIR/clangc-0.0.1.gem
 
 for N in "Clangc" "Index" "TranslationUnit" "Diagnostic" "File" "SourceRange" \
   "SourceLocation" "Cursor" "Type" "CursorSet" "CompletionString" "Module"\
