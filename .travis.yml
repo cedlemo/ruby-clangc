@@ -4,7 +4,8 @@ language: c
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y libclang-dev build-essential rake ruby-dev
+  - sudo apt-get install -y libclang1-3.5 build-essential ruby-dev
+  - sudo gem install rake
 
 script: ./tools/reinstallgem.sh
 #matrix:
