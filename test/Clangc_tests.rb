@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "minitest/autorun"
+require 'minitest/autorun'
 require "clangc"
 require "#{File.expand_path(File.dirname(__FILE__))}/clangc_utils.rb"
 

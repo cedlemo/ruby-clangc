@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "minitest/autorun"
+require 'minitest/autorun'
 require "clangc"
 
 class TestIndexCreation < MiniTest::Test
