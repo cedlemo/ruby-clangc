@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 W_DIR=$(pwd)
 cd ext/clangc
@@ -6,7 +6,7 @@ ruby extconf.rb
 cd $W_DIR
 gem uninstall clangc
 gem build $DIR/../clangc.gemspec
-gem install --user-install --verbose $W_DIR/clangc-0.0.1.gem
+gem install --user-install --verbose --local clangc-0.0.1.gem
 
 for N in "Clangc" "Index" "TranslationUnit" "Diagnostic" "File" "SourceRange" \
   "SourceLocation" "Cursor" "Type" "CursorSet" "CompletionString" "Module"\

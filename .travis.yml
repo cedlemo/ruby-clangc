@@ -10,7 +10,7 @@ rvm:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq llvm-dev libclang-3.5-dev libclang1-3.5 libclang-common-3.5-dev build-essential ruby-dev
-  - sudo gem install rake minitest
+  - gem instal bundler
 
 script: ./tools/travis_install.sh
 #matrix:
