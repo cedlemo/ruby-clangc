@@ -1,5 +1,7 @@
 # ruby-clangc
 
+[![Build Status](https://travis-ci.org/cedlemo/ruby-clangc.svg?branch=master)](https://travis-ci.org/cedlemo/ruby-clangc)
+
 ruby bindings to the clang C interface
 
 This is free software shared under the GNU GPL 3.
