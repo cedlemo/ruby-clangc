@@ -2,10 +2,10 @@ sudo: required
 dist: trusty
 
 rvm:
+  - 2.1
+  - 2.2
   - 2.3.0
-  #  - 2.1
-  #- 2.2
-   #- ruby-head
+  - ruby-head
 
 before_install:
   - sudo apt-get update -qq
@@ -17,6 +17,7 @@ script:
   - bundle exec tools/build_gem.sh
   - bundle exec gem install --debug --verbose --local clangc-0.0.1.gem
   - ./tools/run_tests.sh
+
 #./tools/travis_install.sh
 #matrix:
 #  include:
