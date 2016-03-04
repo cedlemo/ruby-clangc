@@ -1,5 +1,4 @@
 require "mkmf"
-have_library("clang")
 
 $CFLAGS += " -std=c99 -I#{`llvm-config --prefix`.chomp}/include"
 #$LIBS += " #{`llvm-config --libs`.chomp}"
@@ -16,5 +15,6 @@ if enable_config('debug')
     CONFIG['debugflags'] << ' -ggdb3 -O0'
   end
 end
+have_library("clang")
 
 create_makefile("clangc/clangc")

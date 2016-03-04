@@ -15,7 +15,7 @@ before_install:
 script: 
   - bundle exec tools/build_gem.sh
   - bundle exec gem install --debug --verbose --local clangc-0.0.1.gem
-  - bundle exec tools/run_tests.sh
+  - ./tools/run_tests.sh
 #./tools/travis_install.sh
 #matrix:
 #  include:
