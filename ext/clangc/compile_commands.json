@@ -1,0 +1,87 @@
+[
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_SourceRange.o class_SourceRange.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_SourceRange.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o _clangc_functions.o _clangc_functions.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/_clangc_functions.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_TranslationUnit.o class_TranslationUnit.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_TranslationUnit.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_Diagnostic.o class_Diagnostic.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Diagnostic.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_Index.o class_Index.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Index.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_Type.o class_Type.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Type.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_CompletionString.o class_CompletionString.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_CompletionString.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_CursorSet.o class_CursorSet.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_CursorSet.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_OverriddenCursor.o class_OverriddenCursor.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_OverriddenCursor.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_File.o class_File.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_File.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_CodeCompleteResults.o class_CodeCompleteResults.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_CodeCompleteResults.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_Cursor.o class_Cursor.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Cursor.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_Module.o class_Module.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_Module.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o clangc.o clangc.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/clangc.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_SourceLocation.o class_SourceLocation.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_SourceLocation.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o class_CompletionResult.o class_CompletionResult.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/class_CompletionResult.c"
+    },
+    {
+        "command": "cc -c -I. -I/usr/include/ruby-2.3.0/x86_64-linux -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I. -D_FORTIFY_SOURCE=2 -fPIC -pipe -fstack-protector-strong -fPIC -std=c99 -I/usr/include -o constants.o constants.c",
+        "directory": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc",
+        "file": "/home/cedlemo/Projets/C++/Clang/Clang-C/ruby-clangc/ext/clangc/constants.c"
+    }
+]
