@@ -33,13 +33,13 @@
 VALUE
 m_clangc_get_version(VALUE self)
 {
-  return CXSTR_2_RVAL(clang_getClangVersion());
+   return CXSTR_2_RVAL(clang_getClangVersion());
 }
 
 /**
 * call-seq:
 *   Clangc.default_diagnostic_display_options => Fixnum
-* 
+*
 * Retrieve the set of display options most similar to the
 * default behavior of the clang compiler.
 *
@@ -49,12 +49,12 @@ m_clangc_get_version(VALUE self)
 VALUE
 m_clangc_get_default_diagnostic_display_options(VALUE self)
 {
-  return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
+   return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
 }
 
 /**
 * call-seq:
-*   Clangc.default_editing_translation_unit_options => Fixnum  
+*   Clangc.default_editing_translation_unit_options => Fixnum
 *
 * Returns the set of flags that is suitable for parsing a translation
 * unit that is being edited. (Clangc::TranslationUnit_Flags constants)
@@ -63,7 +63,7 @@ m_clangc_get_default_diagnostic_display_options(VALUE self)
 * to indicate that the translation unit is likely to be reparsed many times,
 * either explicitly (via Clangc::TranslationUnit#reparse) or implicitly
 * (e.g., by code completion ( Clangc::TranslationUnit#CodeCompleteAt). The returned flag
-* set contains an unspecified set of optimizations (e.g., the precompiled 
+* set contains an unspecified set of optimizations (e.g., the precompiled
 * preamble) geared toward improving the performance of these routines. The
 * set of optimizations enabled may change from one version to the next.
 */
@@ -71,7 +71,7 @@ m_clangc_get_default_diagnostic_display_options(VALUE self)
 VALUE
 m_clangc_get_default_editing_translation_unit_options(VALUE self)
 {
-  return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
+   return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
 }
 
 /**
@@ -79,14 +79,14 @@ m_clangc_get_default_editing_translation_unit_options(VALUE self)
 *   Clangc.default_code_complete_options => Fixnum
 *
 * Returns a default set of code-completion options that can be
-* passed to Clangc::TranslationUnit#codeCompleteAt. 
+* passed to Clangc::TranslationUnit#codeCompleteAt.
 * This set is be bitwise-OR'd constants of the Clangc::CodeComplete_Flags
 */
 
 VALUE
 m_clangc_get_default_code_complete_options(VALUE self)
 {
-  return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
+   return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
 }
 
 /**
@@ -99,11 +99,11 @@ m_clangc_get_default_code_complete_options(VALUE self)
 VALUE
 m_clangc_get_null_source_range(VALUE self)
 {
-  SourceRange_t *s;
-  VALUE a_source_range;
-  R_GET_CLASS_DATA("Clangc", SourceRange, a_source_range, s);
-  s->data = clang_getNullRange();
-  return a_source_range;
+   SourceRange_t *s;
+   VALUE source_range;
+   R_GET_CLASS_DATA("Clangc", SourceRange, source_range, s);
+   s->data = clang_getNullRange();
+   return source_range;
 }
 
 /**
@@ -116,11 +116,11 @@ m_clangc_get_null_source_range(VALUE self)
 VALUE
 m_clangc_get_null_source_location(VALUE self)
 {
-  SourceLocation_t *s;
-  VALUE a_source_location;
-  R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, s);
-  s->data = clang_getNullLocation();
-  return a_source_location;
+   SourceLocation_t *s;
+   VALUE source_location;
+   R_GET_CLASS_DATA("Clangc", SourceLocation, source_location, s);
+   s->data = clang_getNullLocation();
+   return source_location;
 }
 
 /**
@@ -133,44 +133,49 @@ m_clangc_get_null_source_location(VALUE self)
 VALUE
 m_clangc_get_null_cursor(VALUE self)
 {
-  Cursor_t *c;
-  VALUE a_cursor;
-  R_GET_CLASS_DATA("Clangc", Cursor, a_cursor, c);
-  c->data = clang_getNullCursor();
-  return a_cursor;
+   Cursor_t *c;
+   VALUE cursor;
+   R_GET_CLASS_DATA("Clangc", Cursor, cursor, c);
+   c->data = clang_getNullCursor();
+   return cursor;
 }
-static enum CXChildVisitResult visitor(CXCursor cursor, 
-                                       CXCursor parent,
-                                       CXClientData client_data)
+
+static enum CXChildVisitResult
+visitor(CXCursor cursor, CXCursor parent, CXClientData client_data)
 {
-  VALUE callback = (VALUE) client_data;
-  
-  VALUE mClangc = rb_const_get(rb_cObject, rb_intern("Clangc"));
-  VALUE cCursor = rb_const_get(mClangc, rb_intern("Cursor"));
+    VALUE callback, mClangc, cCursor;
+    VALUE r_cursor, r_parent;
+    VALUE r_ret;
+    Cursor_t * c;
+    Cursor_t *p;
+    unsigned ret;
 
-  VALUE r_cursor = rb_class_new_instance(0, NULL, cCursor);
-  Cursor_t * c;
-  Data_Get_Struct(r_cursor, Cursor_t, c);
-  c->data = cursor;
+    callback = (VALUE) client_data;
 
-  VALUE r_parent = rb_class_new_instance(0, NULL,cCursor);
-  Cursor_t *p;
-  Data_Get_Struct(r_parent, Cursor_t, p);
-  p->data = parent;
+    mClangc = rb_const_get(rb_cObject, rb_intern("Clangc"));
+    cCursor = rb_const_get(mClangc, rb_intern("Cursor"));
 
-  VALUE r_ret = rb_funcall(callback, rb_intern("call"), 2, r_cursor, r_parent);
-  if(TYPE(r_ret) == T_FIXNUM)
-  {
-    unsigned ret = NUM2UINT(r_ret);
-    if(ret == CXChildVisit_Break ||
-       ret == CXChildVisit_Continue ||
-       ret == CXChildVisit_Recurse)
-      return ret;
+    r_cursor = rb_class_new_instance(0, NULL, cCursor);
+    Data_Get_Struct(r_cursor, Cursor_t, c);
+    c->data = cursor;
+
+    r_parent = rb_class_new_instance(0, NULL, cCursor);
+    Data_Get_Struct(r_parent, Cursor_t, p);
+    p->data = parent;
+
+    r_ret = rb_funcall(callback, rb_intern("call"), 2, r_cursor, r_parent);
+    if(TYPE(r_ret) == T_FIXNUM)
+    {
+        ret = NUM2UINT(r_ret);
+        if(ret == CXChildVisit_Break ||
+            ret == CXChildVisit_Continue ||
+            ret == CXChildVisit_Recurse)
+            return ret;
+        else
+            return CXChildVisit_Break;
+    }
     else
-      return CXChildVisit_Break;
-  }
-  else
-  return CXChildVisit_Break;  
+        return CXChildVisit_Break;
 }
 
 /**
@@ -203,17 +208,18 @@ static enum CXChildVisitResult visitor(CXCursor cursor,
 VALUE
 m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
 {
-  if (rb_class_of(aproc) != rb_cProc)
-    rb_raise(rb_eTypeError, "Need a block");
+    if (rb_class_of(aproc) != rb_cProc)
+        rb_raise(rb_eTypeError, "Need a block");
 
-  VALUE callback = aproc;
+    VALUE callback = aproc;
+    Cursor_t *c;
+    unsigned ret_with_break;
 
-  Cursor_t *c;
-  Data_Get_Struct(cursor, Cursor_t, c);
-  unsigned ret_with_break = clang_visitChildren(c->data,
-                                                visitor,
-                                                (CXClientData) callback);
-  return NOT_0_2_RVAL(ret_with_break);
+    Data_Get_Struct(cursor, Cursor_t, c);
+    ret_with_break = clang_visitChildren(c->data,
+                                         visitor,
+                                         (CXClientData) callback);
+    return NOT_0_2_RVAL(ret_with_break);
 }
 
 /**
@@ -242,21 +248,21 @@ m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
 *
 *     Clangc.visit_children(cursor: cursor, visitor: callback)
 */
-
 VALUE
 m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
 {
-  if(rb_block_given_p() == 0)
-      rb_raise(rb_eTypeError, "Need a block");
+    if(rb_block_given_p() == 0)
+        rb_raise(rb_eTypeError, "Need a block");
 
-  VALUE callback = rb_block_proc();
+    VALUE callback = rb_block_proc();
+    Cursor_t *c;
+    unsigned ret_with_break;
 
-  Cursor_t *c;
-  Data_Get_Struct(cursor, Cursor_t, c);
-  unsigned ret_with_break = clang_visitChildren(c->data,
-                                                visitor,
-                                                (CXClientData) callback);
-  return NOT_0_2_RVAL(ret_with_break);
+    Data_Get_Struct(cursor, Cursor_t, c);
+    ret_with_break = clang_visitChildren(c->data,
+                                         visitor,
+                                         (CXClientData) callback);
+    return NOT_0_2_RVAL(ret_with_break);
 }
 
 /**
@@ -269,25 +275,26 @@ m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
 VALUE
 m_clangc_get_range(VALUE self, VALUE begin, VALUE end)
 {
-  CHECK_ARG_TYPE(begin, SourceLocation);
-  CHECK_ARG_TYPE(end, SourceLocation);
-  
-  SourceLocation_t *b;
-  SourceLocation_t *e;
-  Data_Get_Struct(begin, SourceLocation_t, b);
-  Data_Get_Struct(end, SourceLocation_t, e);
-  // TODO Should I add a check to see if they come from the same 
-  // file / TU
-  VALUE range;
-  SourceRange_t *s;
-  R_GET_CLASS_DATA("Clangc", SourceRange, range, s);
+    CHECK_ARG_TYPE(begin, SourceLocation);
+    CHECK_ARG_TYPE(end, SourceLocation);
 
-  s->data =  clang_getRange(b->data, e->data);
-  
-  // We use the parent of the first parameter (no real reason)
-  SourceRange_t *p;
-  Data_Get_Struct(b->parent, SourceRange_t, p);
-  s->parent = p->parent;
+    SourceLocation_t *b;
+    SourceLocation_t *e;
+    VALUE range;
+    SourceRange_t *s;
+    SourceRange_t *p;
 
-  return range;
+    Data_Get_Struct(begin, SourceLocation_t, b);
+    Data_Get_Struct(end, SourceLocation_t, e);
+    // TODO Should I add a check to see if they come from the same
+    // file / TU
+    R_GET_CLASS_DATA("Clangc", SourceRange, range, s);
+
+    s->data =  clang_getRange(b->data, e->data);
+
+    // We use the parent of the first parameter (no real reason)
+    Data_Get_Struct(b->parent, SourceRange_t, p);
+    s->parent = p->parent;
+
+    return range;
 }
