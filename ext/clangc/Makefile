@@ -80,7 +80,7 @@ optflags = -O3 -fno-fast-math
 debugflags = -ggdb3
 warnflags = -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wno-maybe-uninitialized
 CCDLFLAGS = -fPIC
-CFLAGS   = $(CCDLFLAGS) -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fPIC $(ARCH_FLAG)
+CFLAGS   = $(CCDLFLAGS) -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fPIC -I/usr/include $(ARCH_FLAG)
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
 CPPFLAGS =  -D_FORTIFY_SOURCE=2 $(DEFS) $(cppflags)
@@ -135,10 +135,10 @@ extout_prefix =
 target_prefix = /clangc
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED) -lclang  -lpthread -lgmp -ldl -lcrypt -lm   -lc
-ORIG_SRCS = class_SourceRange.c _clangc_functions.c class_TranslationUnit.c class_Diagnostic.c class_Index.c class_Type.c class_CompletionString.c class_CursorSet.c class_OverriddenCursor.c class_File.c class_Cursor.c class_Module.c clangc.c class_SourceLocation.c constants.c
+ORIG_SRCS = class_SourceRange.c _clangc_functions.c class_TranslationUnit.c class_Diagnostic.c class_Index.c class_Type.c class_CompletionString.c class_CursorSet.c class_OverriddenCursor.c class_File.c class_CodeCompleteResults.c class_Cursor.c class_Module.c clangc.c class_SourceLocation.c class_CompletionResult.c constants.c
 SRCS = $(ORIG_SRCS) 
-OBJS = class_SourceRange.o _clangc_functions.o class_TranslationUnit.o class_Diagnostic.o class_Index.o class_Type.o class_CompletionString.o class_CursorSet.o class_OverriddenCursor.o class_File.o class_Cursor.o class_Module.o clangc.o class_SourceLocation.o constants.o
-HDRS = $(srcdir)/class_OverriddenCursor.h $(srcdir)/constants.h $(srcdir)/class_Index.h $(srcdir)/class_CompletionString.h $(srcdir)/class_Diagnostic.h $(srcdir)/_clangc_functions.h $(srcdir)/class_Module.h $(srcdir)/class_TranslationUnit.h $(srcdir)/class_CursorSet.h $(srcdir)/class_Cursor.h $(srcdir)/macros.h $(srcdir)/class_SourceRange.h $(srcdir)/class_SourceLocation.h $(srcdir)/class_File.h $(srcdir)/class_Type.h
+OBJS = class_SourceRange.o _clangc_functions.o class_TranslationUnit.o class_Diagnostic.o class_Index.o class_Type.o class_CompletionString.o class_CursorSet.o class_OverriddenCursor.o class_File.o class_CodeCompleteResults.o class_Cursor.o class_Module.o clangc.o class_SourceLocation.o class_CompletionResult.o constants.o
+HDRS = $(srcdir)/class_CompletionResult.h $(srcdir)/class_OverriddenCursor.h $(srcdir)/constants.h $(srcdir)/class_Index.h $(srcdir)/class_CompletionString.h $(srcdir)/class_Diagnostic.h $(srcdir)/_clangc_functions.h $(srcdir)/class_Module.h $(srcdir)/class_TranslationUnit.h $(srcdir)/class_CursorSet.h $(srcdir)/class_Cursor.h $(srcdir)/macros.h $(srcdir)/class_SourceRange.h $(srcdir)/class_CodeCompleteResults.h $(srcdir)/class_SourceLocation.h $(srcdir)/class_File.h $(srcdir)/class_Type.h
 TARGET = clangc
 TARGET_NAME = clangc
 TARGET_ENTRY = Init_$(TARGET_NAME)
