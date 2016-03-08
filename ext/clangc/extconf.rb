@@ -1,6 +1,17 @@
 require "mkmf"
 
-$CFLAGS += " -std=c99 -I#{`llvm-config --prefix`.chomp}/include"
+$CFLAGS += " -I#{`llvm-config --prefix`.chomp}/include"
+#$CFLAGS += " -std=c89 -pedantic -Wall"
+#$CFLAGS += " -Wno-missing-braces -Wextra -Wno-missing-field-initializers -Wformat=2"
+#$CFLAGS += " -Wswitch-default -Wswitch-enum -Wcast-align -Wpointer-arith"
+#$CFLAGS += " -Wbad-function-cast -Wstrict-overflow=5 -Wstrict-prototypes -Winline"
+#$CFLAGS += " -Wundef -Wnested-externs -Wcast-qual -Wshadow -Wunreachable-code"
+#$CFLAGS += " -Wlogical-op -Wfloat-equal -Wstrict-aliasing=2 -Wredundant-decls"
+#$CFLAGS += " -Wold-style-definition -Werror"
+#$CFLAGS += " -ggdb3"
+#$CFLAGS += " -O0"
+#$CFLAGS += " -fno-omit-frame-pointer -ffloat-store -fno-common -fstrict-aliasing"
+#$CFLAGS += " -lm"
 #$LIBS += " #{`llvm-config --libs`.chomp}"
 
 # override normal build configuration to build debug friendly library
@@ -12,7 +23,7 @@ if enable_config('debug')
     $CFLAGS.gsub!(/\s?\-g\w*\s/, ' -ggdb3 ')
     CONFIG['LDSHARED'] = CONFIG['LDSHARED'].gsub(/\s\-s(\s|\z)/, ' ')
   else
-    CONFIG['debugflags'] << ' -ggdb3 -O0'
+    CONFIG['debugflags'] << ' -ggdb3 -O0 -std=c89 -pedantic -Wall'
   end
 end
 have_library("clang")
