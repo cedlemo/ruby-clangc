@@ -21,33 +21,32 @@
 #include "macros.h"
 #include "class_SourceLocation.h"
 
-static void
-c_SourceRange_struct_free(SourceRange_t *s)
+static void c_SourceRange_struct_free(SourceRange_t *s)
 {
-  if(s)
-  {
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
+        ruby_xfree(s);
+    }
+}
 
-static void
-c_SourceRange_mark(void *s)
+static void c_SourceRange_mark(void *s)
 {
-  if(s)
-  {
-    SourceRange_t *t =(SourceRange_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        SourceRange_t *t = (SourceRange_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 VALUE
-c_SourceRange_struct_alloc( VALUE klass)
+c_SourceRange_struct_alloc(VALUE klass)
 {
-  
-  SourceRange_t * ptr;
-  ptr = (SourceRange_t *) ruby_xmalloc(sizeof(SourceRange_t)); 
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_SourceRange_struct_free, (void *) ptr);
+    SourceRange_t *ptr;
+    ptr = (SourceRange_t *) ruby_xmalloc(sizeof(SourceRange_t));
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(
+        klass, NULL, c_SourceRange_struct_free, (void *) ptr);
 }
 
 /**
@@ -59,9 +58,9 @@ c_SourceRange_struct_alloc( VALUE klass)
 VALUE
 c_SourceRange_is_null(VALUE self)
 {
-  SourceRange_t *s;
-  Data_Get_Struct(self, SourceRange_t, s);
-  return NOT_0_2_RVAL(clang_Range_isNull(s->data));
+    SourceRange_t *s;
+    Data_Get_Struct(self, SourceRange_t, s);
+    return NOT_0_2_RVAL(clang_Range_isNull(s->data));
 }
 
 /**
@@ -74,12 +73,12 @@ c_SourceRange_is_null(VALUE self)
 VALUE
 c_SourceRange_is_equal(VALUE self, VALUE source_range)
 {
-  SourceRange_t * sr1;
-  SourceRange_t * sr2;
-  Data_Get_Struct(self, SourceRange_t, sr1);
-  CHECK_ARG_TYPE(source_range, SourceRange);
-  Data_Get_Struct(source_range, SourceRange_t, sr2);
-  return NOT_0_2_RVAL(clang_equalRanges(sr1->data, sr2->data));
+    SourceRange_t *sr1;
+    SourceRange_t *sr2;
+    Data_Get_Struct(self, SourceRange_t, sr1);
+    CHECK_ARG_TYPE(source_range, SourceRange);
+    Data_Get_Struct(source_range, SourceRange_t, sr2);
+    return NOT_0_2_RVAL(clang_equalRanges(sr1->data, sr2->data));
 }
 
 /**
@@ -92,15 +91,15 @@ c_SourceRange_is_equal(VALUE self, VALUE source_range)
 VALUE
 c_SourceRange_get_start(VALUE self)
 {
-  SourceRange_t *sr;
-  SourceLocation_t *sl;
-  VALUE a_source_location;
-  Data_Get_Struct(self, SourceRange_t, sr);
+    SourceRange_t *sr;
+    SourceLocation_t *sl;
+    VALUE a_source_location;
+    Data_Get_Struct(self, SourceRange_t, sr);
 
-  R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
-  sl->data = clang_getRangeStart(sr->data);
-  sl->parent = self;
-  return a_source_location;
+    R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
+    sl->data = clang_getRangeStart(sr->data);
+    sl->parent = self;
+    return a_source_location;
 }
 
 /**
@@ -113,13 +112,13 @@ c_SourceRange_get_start(VALUE self)
 VALUE
 c_SourceRange_get_end(VALUE self)
 {
-  SourceRange_t *sr;
-  SourceLocation_t *sl;
-  VALUE a_source_location;
-  Data_Get_Struct(self, SourceRange_t, sr);
+    SourceRange_t *sr;
+    SourceLocation_t *sl;
+    VALUE a_source_location;
+    Data_Get_Struct(self, SourceRange_t, sr);
 
-  R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
-  sl->data = clang_getRangeEnd(sr->data);
-  sl->parent = self;
-  return a_source_location;
+    R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
+    sl->data = clang_getRangeEnd(sr->data);
+    sl->parent = self;
+    return a_source_location;
 }

@@ -21,36 +21,34 @@
 #include "class_TranslationUnit.h"
 #include "macros.h"
 
-static void
-c_Module_struct_free(Module_t *s)
+static void c_Module_struct_free(Module_t *s)
 {
-  if(s)
-  {
-    
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
 
-static void
-c_Module_mark(void *s)
+        ruby_xfree(s);
+    }
+}
+
+static void c_Module_mark(void *s)
 {
-  if(s)
-  {
-    Module_t *t =(Module_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        Module_t *t = (Module_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
 c_Module_struct_alloc(VALUE klass)
 {
-  
-  Module_t * ptr;
-  ptr = (Module_t *) ruby_xmalloc(sizeof(Module_t)); 
-  ptr->data = NULL;
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_Module_struct_free, (void *) ptr);
+    Module_t *ptr;
+    ptr = (Module_t *) ruby_xmalloc(sizeof(Module_t));
+    ptr->data = NULL;
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(klass, NULL, c_Module_struct_free, (void *) ptr);
 }
 
 /**
@@ -62,16 +60,16 @@ c_Module_struct_alloc(VALUE klass)
 VALUE
 c_Module_get_ast_file(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  VALUE ast_file;
-  File_t *f;
-  R_GET_CLASS_DATA("Clangc", File, ast_file, f);
-  f->data = clang_Module_getASTFile(m->data);
-  if (f->data)
-    return ast_file;
-  else
-    return Qnil;
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    VALUE ast_file;
+    File_t *f;
+    R_GET_CLASS_DATA("Clangc", File, ast_file, f);
+    f->data = clang_Module_getASTFile(m->data);
+    if (f->data)
+        return ast_file;
+    else
+        return Qnil;
 }
 
 /**
@@ -84,13 +82,13 @@ c_Module_get_ast_file(VALUE self)
 VALUE
 c_Module_get_parent(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  VALUE parent;
-  Module_t *p;
-  R_GET_CLASS_DATA("Clangc", Module, parent, p);
-  p->data = clang_Module_getParent(m->data);
-  return parent;
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    VALUE parent;
+    Module_t *p;
+    R_GET_CLASS_DATA("Clangc", Module, parent, p);
+    p->data = clang_Module_getParent(m->data);
+    return parent;
 }
 
 /**
@@ -103,9 +101,9 @@ c_Module_get_parent(VALUE self)
 VALUE
 c_Module_get_name(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  return CXSTR_2_RVAL(clang_Module_getName(m->data));
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    return CXSTR_2_RVAL(clang_Module_getName(m->data));
 }
 
 /**
@@ -117,9 +115,9 @@ c_Module_get_name(VALUE self)
 VALUE
 c_Module_get_full_name(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  return CXSTR_2_RVAL(clang_Module_getFullName(m->data));
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    return CXSTR_2_RVAL(clang_Module_getFullName(m->data));
 }
 
 /**
@@ -131,9 +129,9 @@ c_Module_get_full_name(VALUE self)
 VALUE
 c_Module_is_system(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  return NOT_0_2_RVAL(clang_Module_isSystem(m->data));
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    return NOT_0_2_RVAL(clang_Module_isSystem(m->data));
 }
 
 /**
@@ -145,18 +143,19 @@ c_Module_is_system(VALUE self)
 VALUE
 c_Module_get_num_top_level_headers(VALUE self, VALUE translation_unit)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  TranslationUnit_t *t;
-  CHECK_ARG_TYPE(translation_unit, TranslationUnit);
-  Data_Get_Struct(translation_unit, TranslationUnit_t, t);
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    TranslationUnit_t *t;
+    CHECK_ARG_TYPE(translation_unit, TranslationUnit);
+    Data_Get_Struct(translation_unit, TranslationUnit_t, t);
 
-  return CUINT_2_NUM(clang_Module_getNumTopLevelHeaders(t->data, m->data));
+    return CUINT_2_NUM(clang_Module_getNumTopLevelHeaders(t->data, m->data));
 }
 
 /**
  * call-seq:
- *  Clangc::Module#top_level_header(Clangc::TranslationUnit, Integer) => Clangc::File
+ *  Clangc::Module#top_level_header(Clangc::TranslationUnit, Integer) =>
+ * Clangc::File
  *
  * Index top level header index (zero-based).
  *
@@ -165,18 +164,18 @@ c_Module_get_num_top_level_headers(VALUE self, VALUE translation_unit)
 VALUE
 c_Module_get_top_level_header(VALUE self, VALUE translation_unit, VALUE index)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  TranslationUnit_t *t;
-  CHECK_ARG_TYPE(translation_unit, TranslationUnit);
-  Data_Get_Struct(translation_unit, TranslationUnit_t, t);
-  unsigned int c_index = NUM2UINT(index);
-  VALUE header;
-  File_t *f;
-  R_GET_CLASS_DATA("Clangc", File, header, f);
-  f->data = clang_Module_getTopLevelHeader(t->data, m->data, c_index);
-  if (f->data)
-    return header;
-  else
-    return Qnil;
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    TranslationUnit_t *t;
+    CHECK_ARG_TYPE(translation_unit, TranslationUnit);
+    Data_Get_Struct(translation_unit, TranslationUnit_t, t);
+    unsigned int c_index = NUM2UINT(index);
+    VALUE header;
+    File_t *f;
+    R_GET_CLASS_DATA("Clangc", File, header, f);
+    f->data = clang_Module_getTopLevelHeader(t->data, m->data, c_index);
+    if (f->data)
+        return header;
+    else
+        return Qnil;
 }

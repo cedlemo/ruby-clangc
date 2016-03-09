@@ -20,9 +20,10 @@
 #define SOURCERANGE_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct SourceRange_t {
-  CXSourceRange data; 
-  VALUE parent;
+typedef struct SourceRange_t
+{
+    CXSourceRange data;
+    VALUE parent;
 } SourceRange_t;
 
 VALUE
@@ -39,4 +40,4 @@ c_SourceRange_get_start(VALUE);
 
 VALUE
 c_SourceRange_get_end(VALUE);
-#endif //SOURCERANGE_H
+#endif // SOURCERANGE_H

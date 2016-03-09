@@ -19,9 +19,10 @@
 #define MODULE_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct Module_t {
-  CXModule data; 
-  VALUE parent;
+typedef struct Module_t
+{
+    CXModule data;
+    VALUE parent;
 } Module_t;
 
 VALUE
@@ -47,4 +48,4 @@ c_Module_get_num_top_level_headers(VALUE, VALUE);
 
 VALUE
 c_Module_get_top_level_header(VALUE, VALUE, VALUE);
-#endif //MODULE_H
+#endif // MODULE_H
