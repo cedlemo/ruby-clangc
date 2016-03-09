@@ -68,8 +68,10 @@ VALUE
 c_TranslationUnit_get_diagnostics_num(VALUE self)
 {
     TranslationUnit_t *t;
+    unsigned int num;
     Data_Get_Struct(self, TranslationUnit_t, t);
-    unsigned int num = clang_getNumDiagnostics(t->data);
+
+    num = clang_getNumDiagnostics(t->data);
     return CUINT_2_NUM(num);
 }
 
@@ -90,8 +92,10 @@ VALUE
 c_TranslationUnit_get_default_save_options(VALUE self)
 {
     TranslationUnit_t *t;
+    unsigned int num;
     Data_Get_Struct(self, TranslationUnit_t, t);
-    unsigned int num = clang_defaultSaveOptions(t->data);
+
+    num = clang_defaultSaveOptions(t->data);
     return CUINT_2_NUM(num);
 }
 
@@ -104,7 +108,6 @@ c_TranslationUnit_get_default_save_options(VALUE self)
 VALUE
 c_TranslationUnit_get_spelling(VALUE self)
 {
-    VALUE spelling = Qnil;
     TranslationUnit_t *t;
     Data_Get_Struct(self, TranslationUnit_t, t);
     return CXSTR_2_RVAL(clang_getTranslationUnitSpelling(t->data));
@@ -128,8 +131,10 @@ VALUE
 c_TranslationUnit_get_default_reparse_options(VALUE self)
 {
     TranslationUnit_t *t;
+    unsigned int num;
     Data_Get_Struct(self, TranslationUnit_t, t);
-    unsigned int num = clang_defaultReparseOptions(t->data);
+
+    num = clang_defaultReparseOptions(t->data);
     return CUINT_2_NUM(num);
 }
 
@@ -148,10 +153,13 @@ c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
 {
     TranslationUnit_t *t;
     Data_Get_Struct(self, TranslationUnit_t, t);
-    unsigned int max = clang_getNumDiagnostics(t->data);
-    unsigned int c_num = NUM2UINT(num);
-    CHECK_IN_RANGE(c_num, 0, max);
+    unsigned int max;
+    unsigned int c_num;
     VALUE diagnostic;
+
+    max = clang_getNumDiagnostics(t->data);
+    c_num = NUM2UINT(num);
+    CHECK_IN_RANGE(c_num, 0, max);
     Diagnostic_t *d;
     R_GET_CLASS_DATA("Clangc", Diagnostic, diagnostic, d);
     d->data = clang_getDiagnostic(t->data, c_num);
@@ -173,9 +181,11 @@ VALUE
 c_TranslationUnit_get_file(VALUE self, VALUE file_name)
 {
     TranslationUnit_t *t;
-    Data_Get_Struct(self, TranslationUnit_t, t);
     CXFile cxfile;
-    char *c_file_name = RSTRING_2_CHAR(file_name);
+    char *c_file_name;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    c_file_name = RSTRING_2_CHAR(file_name);
     cxfile = clang_getFile(t->data, c_file_name);
 
     if (cxfile)
@@ -224,13 +234,14 @@ VALUE
 c_TranslationUnit_get_module(VALUE self, VALUE file)
 {
     TranslationUnit_t *t;
-    Data_Get_Struct(self, TranslationUnit_t, t);
     File_t *f;
+    Module_t *m;
+    VALUE module;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
     CHECK_ARG_TYPE(file, File);
     Data_Get_Struct(file, File_t, f);
 
-    Module_t *m;
-    VALUE module;
     R_GET_CLASS_DATA("Clangc", Module, module, m);
     m->data = clang_getModuleForFile(t->data, f->data);
     m->parent = self;
@@ -319,18 +330,27 @@ c_TranslationUnit_code_complete_at(
     VALUE self, VALUE filename, VALUE line, VALUE column, VALUE options)
 {
     TranslationUnit_t *t;
-    Data_Get_Struct(self, TranslationUnit_t, t);
-
     CodeCompleteResults_t *c;
     VALUE code_complete_results;
+    char *c_filename;
+    unsigned int c_line;
+    unsigned int c_column;
+    unsigned int c_options;
+
+    c_filename = RSTRING_2_CHAR(filename);
+    c_line = NUM2UINT(line);
+    c_column = NUM2UINT(column);
+    c_options = NUM2UINT(options);
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
     R_GET_CLASS_DATA("Clangc", CodeCompleteResults, code_complete_results, c);
     c->data = clang_codeCompleteAt(t->data,
-                                   RSTRING_2_CHAR(filename),
-                                   NUM2UINT(line),
-                                   NUM2UINT(column),
+                                   c_filename,
+                                   c_line,
+                                   c_column,
                                    NULL, // TODO Manage unsaved files
                                    0,
-                                   NUM2UINT(options));
+                                   c_options);
     c->parent = self;
 
     if (c->data)
@@ -385,12 +405,14 @@ VALUE
 c_TranslationUnit_reparse(VALUE self, VALUE options)
 {
     TranslationUnit_t *t;
-    Data_Get_Struct(self, TranslationUnit_t, t);
-
     int error;
+    unsigned int c_options;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    c_options = NUM2UINT(options);
     error = clang_reparseTranslationUnit(t->data,
                                          0,
                                          NULL, // TODO Manage unsaved files
-                                         NUM2UINT(options));
+                                         c_options);
     return CINT_2_NUM(error);
 }
