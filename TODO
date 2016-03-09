@@ -11,6 +11,7 @@
     Constants which is more Rubyish (see ruby-gnome2 project)
 
 ## Secondary:
+[ ] See how to exclude clangc.c from modification by clang-format
 
 [ ] Continue / improve YARD usage
 
