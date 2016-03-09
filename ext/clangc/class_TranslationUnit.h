@@ -19,9 +19,10 @@
 #define TRANSLATIONUNIT_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct TranslationUnit_t {
-  CXTranslationUnit data; 
-  VALUE parent;
+typedef struct TranslationUnit_t
+{
+    CXTranslationUnit data;
+    VALUE parent;
 } TranslationUnit_t;
 
 VALUE
@@ -56,4 +57,4 @@ c_TranslationUnit_code_complete_at(VALUE, VALUE, VALUE, VALUE, VALUE);
 
 VALUE
 c_TranslationUnit_reparse(VALUE, VALUE);
-#endif //TRANSLATIONUNIT_H
+#endif // TRANSLATIONUNIT_H
