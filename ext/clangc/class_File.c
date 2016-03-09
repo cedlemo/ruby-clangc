@@ -21,43 +21,42 @@
 #include "macros.h"
 #include "class_TranslationUnit.h"
 
-static void
-c_File_struct_free(File_t *s)
+static void c_File_struct_free(File_t *s)
 {
-  if(s)
-  {
-    
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
 
-static void
-c_File_mark(void *s)
+        ruby_xfree(s);
+    }
+}
+
+static void c_File_mark(void *s)
 {
-  if(s)
-  {
-    File_t *t =(File_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        File_t *t = (File_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
-c_File_struct_alloc( VALUE klass)
+c_File_struct_alloc(VALUE klass)
 {
-  
-  File_t * ptr;
-  ptr = (File_t *) ruby_xmalloc(sizeof(File_t)); 
-  ptr->data = NULL;
-  ptr->parent = Qnil;
-  return Data_Wrap_Struct(klass, c_File_mark, c_File_struct_free, (void *) ptr);
+
+    File_t *ptr;
+    ptr = (File_t *) ruby_xmalloc(sizeof(File_t));
+    ptr->data = NULL;
+    ptr->parent = Qnil;
+    return Data_Wrap_Struct(
+        klass, c_File_mark, c_File_struct_free, (void *) ptr);
 }
 
 VALUE
 generate_File_under(VALUE module, VALUE superclass)
 {
-  VALUE klass = rb_define_class_under(module, "File", superclass);
-  rb_define_alloc_func(klass, c_File_struct_alloc);
-  return klass;
+    VALUE klass = rb_define_class_under(module, "File", superclass);
+    rb_define_alloc_func(klass, c_File_struct_alloc);
+    return klass;
 }
 
 /**
@@ -70,16 +69,16 @@ generate_File_under(VALUE module, VALUE superclass)
 VALUE
 c_File_get_name(VALUE self)
 {
-  File_t * f;
-  VALUE name = Qnil;
-  Data_Get_Struct(self, File_t, f);
-  if (f->data != NULL)
-  {
-    name = CXSTR_2_RVAL(clang_getFileName(f->data));
-  }
-  else
-    name = Qnil;
-  return name;
+    File_t *f;
+    VALUE name = Qnil;
+    Data_Get_Struct(self, File_t, f);
+    if (f->data != NULL)
+    {
+        name = CXSTR_2_RVAL(clang_getFileName(f->data));
+    }
+    else
+        name = Qnil;
+    return name;
 }
 
 /**
@@ -92,11 +91,11 @@ c_File_get_name(VALUE self)
 VALUE
 c_File_get_mtime(VALUE self)
 {
-  File_t *f;
-  VALUE mtime = Qnil;
-  Data_Get_Struct(self, File_t, f);
-  mtime = rb_time_new(clang_getFileTime(f->data), 0);
-  return mtime;
+    File_t *f;
+    VALUE mtime = Qnil;
+    Data_Get_Struct(self, File_t, f);
+    mtime = rb_time_new(clang_getFileTime(f->data), 0);
+    return mtime;
 }
 
 /**
@@ -111,12 +110,12 @@ c_File_get_mtime(VALUE self)
 VALUE
 c_File_is_multiple_include_guarded(VALUE self)
 {
-  File_t * f;
-  Data_Get_Struct(self, File_t, f);
-  TranslationUnit_t * t;
-  Data_Get_Struct(f->parent, TranslationUnit_t, t);
-  unsigned int ret = clang_isFileMultipleIncludeGuarded(t->data, f->data);
-  return NOT_0_2_RVAL(ret);
+    File_t *f;
+    Data_Get_Struct(self, File_t, f);
+    TranslationUnit_t *t;
+    Data_Get_Struct(f->parent, TranslationUnit_t, t);
+    unsigned int ret = clang_isFileMultipleIncludeGuarded(t->data, f->data);
+    return NOT_0_2_RVAL(ret);
 }
 
 #if (CINDEX_VERSION_MINOR >= 29)
@@ -133,11 +132,11 @@ c_File_is_multiple_include_guarded(VALUE self)
 VALUE
 c_File_is_equal(VALUE self, VALUE file)
 {
-  File_t * f1;
-  File_t * f2;
-  Data_Get_Struct(self, File_t, f1);
-  CHECK_ARG_TYPE(file, File);
-  Data_Get_Struct(file, File_t, f2);
-  return NOT_0_2_RVAL(clang_File_isEqual(f1->data, f2->data));
+    File_t *f1;
+    File_t *f2;
+    Data_Get_Struct(self, File_t, f1);
+    CHECK_ARG_TYPE(file, File);
+    Data_Get_Struct(file, File_t, f2);
+    return NOT_0_2_RVAL(clang_File_isEqual(f1->data, f2->data));
 }
 #endif

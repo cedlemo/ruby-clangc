@@ -19,9 +19,10 @@
 #define CURSOR_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct Cursor_t {
-  CXCursor data; 
-  VALUE parent;
+typedef struct Cursor_t
+{
+    CXCursor data;
+    VALUE parent;
 } Cursor_t;
 
 VALUE
@@ -255,4 +256,4 @@ c_Cursor_get_spelling_name_range(VALUE, VALUE, VALUE);
 
 VALUE
 c_Cursor_get_reference_name_range(VALUE, VALUE, VALUE);
-#endif //CURSOR_H
+#endif // CURSOR_H

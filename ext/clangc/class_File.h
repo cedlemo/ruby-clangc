@@ -20,9 +20,11 @@
 #define FILE_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct File_t {
-  CXFile data; 
-  VALUE parent; //A translation unit ( a CXFile is a file related to a translation unit)
+typedef struct File_t
+{
+    CXFile data;
+    VALUE parent; // A translation unit ( a CXFile is a file related to a
+                  // translation unit)
 } File_t;
 
 VALUE
@@ -41,4 +43,4 @@ c_File_is_multiple_include_guarded(VALUE);
 VALUE
 c_File_is_equal(VALUE, VALUE);
 #endif
-#endif //FILE_H
+#endif // FILE_H
