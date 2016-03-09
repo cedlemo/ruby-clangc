@@ -19,9 +19,10 @@
 #define TYPE_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct Type_t {
-  CXType data; 
-  VALUE parent;
+typedef struct Type_t
+{
+    CXType data;
+    VALUE parent;
 } Type_t;
 
 VALUE
@@ -104,4 +105,4 @@ c_Type_get_template_argument_as_type(VALUE, VALUE);
 
 VALUE
 c_Type_get_cxx_ref_qualifier(VALUE);
-#endif //TYPE_H
+#endif // TYPE_H

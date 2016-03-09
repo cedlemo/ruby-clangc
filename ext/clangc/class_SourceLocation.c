@@ -21,31 +21,32 @@
 #include "class_File.h"
 #include "macros.h"
 
-static void
-c_SourceLocation_struct_free(SourceLocation_t *s)
+static void c_SourceLocation_struct_free(SourceLocation_t *s)
 {
-  if(s)
-  {
-    
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
 
-static void
-c_SourceLocation_mark(void *s)
+        ruby_xfree(s);
+    }
+}
+
+static void c_SourceLocation_mark(void *s)
 {
-  if(s)
-  {
-    SourceLocation_t *t =(SourceLocation_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        SourceLocation_t *t = (SourceLocation_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
-c_SourceLocation_struct_alloc( VALUE klass)
+c_SourceLocation_struct_alloc(VALUE klass)
 {
-  
-  return Data_Wrap_Struct(klass, NULL, c_SourceLocation_struct_free, ruby_xmalloc(sizeof(SourceLocation_t)));
+
+    return Data_Wrap_Struct(klass,
+                            NULL,
+                            c_SourceLocation_struct_free,
+                            ruby_xmalloc(sizeof(SourceLocation_t)));
 }
 
 /**
@@ -57,9 +58,9 @@ c_SourceLocation_struct_alloc( VALUE klass)
 VALUE
 c_SourceLocation_is_in_system_header(VALUE self)
 {
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  return NOT_0_2_RVAL(clang_Location_isInSystemHeader(s->data));
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    return NOT_0_2_RVAL(clang_Location_isInSystemHeader(s->data));
 }
 
 /**
@@ -72,9 +73,9 @@ c_SourceLocation_is_in_system_header(VALUE self)
 VALUE
 c_SourceLocation_is_from_main_file(VALUE self)
 {
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  return NOT_0_2_RVAL(clang_Location_isFromMainFile(s->data));
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    return NOT_0_2_RVAL(clang_Location_isFromMainFile(s->data));
 }
 
 /**
@@ -91,13 +92,13 @@ c_SourceLocation_is_from_main_file(VALUE self)
 VALUE
 c_SourceLocation_is_equal(VALUE self, VALUE source_location)
 {
-  SourceLocation_t *s;
-  SourceLocation_t *sl;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  CHECK_ARG_TYPE(source_location, SourceLocation);
-  Data_Get_Struct(source_location, SourceLocation_t, sl);
-  
-  return NOT_0_2_RVAL(clang_equalLocations(s->data, sl->data));
+    SourceLocation_t *s;
+    SourceLocation_t *sl;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    CHECK_ARG_TYPE(source_location, SourceLocation);
+    Data_Get_Struct(source_location, SourceLocation_t, sl);
+
+    return NOT_0_2_RVAL(clang_equalLocations(s->data, sl->data));
 }
 
 /**
@@ -127,31 +128,31 @@ c_SourceLocation_is_equal(VALUE self, VALUE source_location)
 */
 VALUE c_SourceLocation_get_spelling(VALUE self)
 {
-  VALUE ret = rb_ary_new();
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf = NULL;
-  unsigned int line = 0;
-  unsigned int column = 0;
-  unsigned int offset = 0;
-  clang_getSpellingLocation(s->data, &cxf, &line, &column, &offset);
-//  if(&cxf)
-//  {
+    VALUE ret = rb_ary_new();
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    CXFile cxf = NULL;
+    unsigned int line = 0;
+    unsigned int column = 0;
+    unsigned int offset = 0;
+    clang_getSpellingLocation(s->data, &cxf, &line, &column, &offset);
+    //  if(&cxf)
+    //  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA("Clangc", File, file, f);
     f->data = cxf;
     f->parent = self;
     rb_ary_push(ret, file);
-//  }
-//  else
-//    rb_ary_push(ret, Qnil);
+    //  }
+    //  else
+    //    rb_ary_push(ret, Qnil);
 
-  rb_ary_push(ret, CUINT_2_NUM(line));
-  rb_ary_push(ret, CUINT_2_NUM(column));
-  rb_ary_push(ret, CUINT_2_NUM(offset));
-    
-  return ret;
+    rb_ary_push(ret, CUINT_2_NUM(line));
+    rb_ary_push(ret, CUINT_2_NUM(column));
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+
+    return ret;
 }
 /**
 * call-seq:
@@ -180,29 +181,29 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
 */
 VALUE c_SourceLocation_get_file_location(VALUE self)
 {
-  VALUE ret = rb_ary_new();
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf = NULL;
-  unsigned int line;
-  unsigned int column;
-  unsigned int offset;
-  clang_getFileLocation(s->data, &cxf, &line, &column, &offset);
-//  if(&cxf)
-//  {
+    VALUE ret = rb_ary_new();
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    CXFile cxf = NULL;
+    unsigned int line;
+    unsigned int column;
+    unsigned int offset;
+    clang_getFileLocation(s->data, &cxf, &line, &column, &offset);
+    //  if(&cxf)
+    //  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA("Clangc", File, file, f);
     f->data = cxf;
     f->parent = self;
     rb_ary_push(ret, file);
-//  }
-//  else
-//    rb_ary_push(ret, Qnil);
-  
-  rb_ary_push(ret, CUINT_2_NUM(line));
-  rb_ary_push(ret, CUINT_2_NUM(column));
-  rb_ary_push(ret, CUINT_2_NUM(offset));
-    
-  return ret;
+    //  }
+    //  else
+    //    rb_ary_push(ret, Qnil);
+
+    rb_ary_push(ret, CUINT_2_NUM(line));
+    rb_ary_push(ret, CUINT_2_NUM(column));
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+
+    return ret;
 }

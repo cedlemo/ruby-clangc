@@ -20,30 +20,29 @@
 #include "class_Cursor.h"
 #include "macros.h"
 
-static void
-c_Type_struct_free(Type_t *s)
+static void c_Type_struct_free(Type_t *s)
 {
-  if(s)
-  {
-    
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
 
-static void
-c_Type_mark(void *s)
+        ruby_xfree(s);
+    }
+}
+
+static void c_Type_mark(void *s)
 {
-  if(s)
-  {
-    Type_t *t =(Type_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        Type_t *t = (Type_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 VALUE
-c_Type_struct_alloc( VALUE klass)
+c_Type_struct_alloc(VALUE klass)
 {
-  
-  return Data_Wrap_Struct(klass, NULL, c_Type_struct_free, ruby_xmalloc(sizeof(Type_t)));
+
+    return Data_Wrap_Struct(
+        klass, NULL, c_Type_struct_free, ruby_xmalloc(sizeof(Type_t)));
 }
 /**
 * call-seq:
@@ -55,9 +54,9 @@ c_Type_struct_alloc( VALUE klass)
 VALUE
 c_Type_get_kind(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CUINT_2_NUM(t->data.kind);
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CUINT_2_NUM(t->data.kind);
 }
 
 /**
@@ -72,9 +71,9 @@ c_Type_get_kind(VALUE self)
 VALUE
 c_Type_get_spelling(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CXSTR_2_RVAL(clang_getTypeSpelling(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CXSTR_2_RVAL(clang_getTypeSpelling(t->data));
 }
 
 /**
@@ -89,12 +88,12 @@ c_Type_get_spelling(VALUE self)
 VALUE
 c_Type_is_equal(VALUE self, VALUE type)
 {
-  Type_t *t1;
-  Type_t *t2;
-  Data_Get_Struct(self, Type_t, t1);
-  CHECK_ARG_TYPE(type, Type);
-  Data_Get_Struct(type, Type_t, t2);
-  return NOT_0_2_RVAL(clang_equalTypes(t1->data, t2->data));
+    Type_t *t1;
+    Type_t *t2;
+    Data_Get_Struct(self, Type_t, t1);
+    CHECK_ARG_TYPE(type, Type);
+    Data_Get_Struct(type, Type_t, t2);
+    return NOT_0_2_RVAL(clang_equalTypes(t1->data, t2->data));
 }
 
 /**
@@ -111,14 +110,14 @@ c_Type_is_equal(VALUE self, VALUE type)
 VALUE
 c_Type_get_canonical_type(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  Type_t *c;
-  VALUE canonical;
-  R_GET_CLASS_DATA("Clangc", Type, canonical, c);
-  c->data = clang_getCanonicalType(t->data);
-  c->parent = t->parent;
-  return canonical;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    Type_t *c;
+    VALUE canonical;
+    R_GET_CLASS_DATA("Clangc", Type, canonical, c);
+    c->data = clang_getCanonicalType(t->data);
+    c->parent = t->parent;
+    return canonical;
 }
 
 /**
@@ -130,14 +129,14 @@ c_Type_get_canonical_type(VALUE self)
 VALUE
 c_Type_get_pointee_type(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  Type_t *p;
-  VALUE pointee;
-  R_GET_CLASS_DATA("Clangc", Type, pointee, p);
-  p->data = clang_getPointeeType(t->data);
-  p->parent = t->parent;
-  return pointee;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    Type_t *p;
+    VALUE pointee;
+    R_GET_CLASS_DATA("Clangc", Type, pointee, p);
+    p->data = clang_getPointeeType(t->data);
+    p->parent = t->parent;
+    return pointee;
 }
 
 /**
@@ -151,9 +150,9 @@ c_Type_get_pointee_type(VALUE self)
 VALUE
 c_Type_is_const_qualified(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return NOT_0_2_RVAL(clang_isConstQualifiedType(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return NOT_0_2_RVAL(clang_isConstQualifiedType(t->data));
 }
 
 /**
@@ -167,9 +166,9 @@ c_Type_is_const_qualified(VALUE self)
 VALUE
 c_Type_is_volatile_qualified(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return NOT_0_2_RVAL(clang_isVolatileQualifiedType(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return NOT_0_2_RVAL(clang_isVolatileQualifiedType(t->data));
 }
 
 /**
@@ -183,9 +182,9 @@ c_Type_is_volatile_qualified(VALUE self)
 VALUE
 c_Type_is_restrict_qualified(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return NOT_0_2_RVAL(clang_isRestrictQualifiedType(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return NOT_0_2_RVAL(clang_isRestrictQualifiedType(t->data));
 }
 
 /**
@@ -194,20 +193,21 @@ c_Type_is_restrict_qualified(VALUE self)
 *
 * Retrieve the return type associated with a function type.
 *
-* If a non-function type is passed in (Clangc::Type#kind != Clangc::TypeKind::FunctionNoProto for example),
+* If a non-function type is passed in (Clangc::Type#kind !=
+* Clangc::TypeKind::FunctionNoProto for example),
 * an invalid type is returned.
 */
 VALUE
 c_Type_get_result_type(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  Type_t *r;
-  VALUE result;
-  R_GET_CLASS_DATA("Clangc", Type, result, r);
-  r->data = clang_getResultType(t->data);
-  r->parent = t->parent;
-  return result;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    Type_t *r;
+    VALUE result;
+    R_GET_CLASS_DATA("Clangc", Type, result, r);
+    r->data = clang_getResultType(t->data);
+    r->parent = t->parent;
+    return result;
 }
 
 /**
@@ -221,9 +221,9 @@ c_Type_get_result_type(VALUE self)
 VALUE
 c_Type_get_calling_conv(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CUINT_2_NUM(clang_getFunctionTypeCallingConv(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CUINT_2_NUM(clang_getFunctionTypeCallingConv(t->data));
 }
 /**
 * call-seq:
@@ -237,9 +237,9 @@ c_Type_get_calling_conv(VALUE self)
 VALUE
 c_Type_get_num_arg_types(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CINT_2_NUM(clang_getNumArgTypes(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CINT_2_NUM(clang_getNumArgTypes(t->data));
 }
 
 /**
@@ -250,30 +250,29 @@ c_Type_get_num_arg_types(VALUE self)
 *
 * If a non-function type is passed in or the function does not have enough
 * parameters, an invalid type is returned.
-* Better alternative is 
+* Better alternative is
 * <code>Clangc::Type#arg_types => Array</code>
 */
 VALUE
 c_Type_get_arg_type(VALUE self, VALUE index)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  int max = clang_getNumArgTypes(t->data);
-  /*args number can be < 0 if self is not a function type
-    In this case I set max to zero and let this method returns
-    an invalid type. It the user responsabilitty to check
-    if the Clangc::Type#kind is a Functionproto or Functionnoproto
-  */
-  if(max < 0)
-    max = 0; 
-  unsigned int c_index = NUM2UINT(index);
-  CHECK_IN_RANGE(c_index, 0, max);
-  Type_t *a;
-  VALUE arg;
-  R_GET_CLASS_DATA("Clangc", Type, arg, a);
-  a->data = clang_getArgType(t->data, c_index);
-  a->parent = t->parent;
-  return arg;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    int max = clang_getNumArgTypes(t->data);
+    /*args number can be < 0 if self is not a function type
+      In this case I set max to zero and let this method returns
+      an invalid type. It the user responsabilitty to check
+      if the Clangc::Type#kind is a Functionproto or Functionnoproto
+    */
+    if (max < 0) max = 0;
+    unsigned int c_index = NUM2UINT(index);
+    CHECK_IN_RANGE(c_index, 0, max);
+    Type_t *a;
+    VALUE arg;
+    R_GET_CLASS_DATA("Clangc", Type, arg, a);
+    a->data = clang_getArgType(t->data, c_index);
+    a->parent = t->parent;
+    return arg;
 }
 
 /**
@@ -288,14 +287,14 @@ c_Type_get_arg_type(VALUE self, VALUE index)
 VALUE
 c_Type_get_element_type(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  Type_t *e;
-  VALUE element;
-  R_GET_CLASS_DATA("Clangc", Type, element, e);
-  e->data = clang_getElementType(t->data);
-  e->parent = t->parent;
-  return element;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    Type_t *e;
+    VALUE element;
+    R_GET_CLASS_DATA("Clangc", Type, element, e);
+    e->data = clang_getElementType(t->data);
+    e->parent = t->parent;
+    return element;
 }
 
 /**
@@ -310,9 +309,9 @@ c_Type_get_element_type(VALUE self)
 VALUE
 c_Type_get_num_elements(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CLLONG_2_NUM(clang_getNumElements(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CLLONG_2_NUM(clang_getNumElements(t->data));
 }
 
 /**
@@ -326,14 +325,14 @@ c_Type_get_num_elements(VALUE self)
 VALUE
 c_Type_get_array_element_type(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  Type_t *e;
-  VALUE element;
-  R_GET_CLASS_DATA("Clangc", Type, element, e);
-  e->data = clang_getArrayElementType(t->data);
-  e->parent = t->parent;
-  return element;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    Type_t *e;
+    VALUE element;
+    R_GET_CLASS_DATA("Clangc", Type, element, e);
+    e->data = clang_getArrayElementType(t->data);
+    e->parent = t->parent;
+    return element;
 }
 
 /**
@@ -347,9 +346,9 @@ c_Type_get_array_element_type(VALUE self)
 VALUE
 c_Type_get_array_size(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CLLONG_2_NUM(clang_getArraySize(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CLLONG_2_NUM(clang_getArraySize(t->data));
 }
 
 /**
@@ -362,9 +361,9 @@ c_Type_get_array_size(VALUE self)
 VALUE
 c_Type_is_pod(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return NOT_0_2_RVAL(clang_isPODType(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return NOT_0_2_RVAL(clang_isPODType(t->data));
 }
 
 /**
@@ -376,37 +375,38 @@ c_Type_is_pod(VALUE self)
 VALUE
 c_Type_get_type_declaration(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  Cursor_t *d;
-  VALUE declaration;
-  R_GET_CLASS_DATA("Clangc", Cursor, declaration, d);
-  
-  /* Here we get the parent of the parent of self 
-   * As self is a Clangc::Type, its parent is a Clangc::Cursor
-   * and its parent is a TranslationUnit.
-   * TL/DR The parent of the returned cursor is a TranslationUnit
-   * */
-  Cursor_t *c;
-  Data_Get_Struct(t->parent, Cursor_t, c);
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    Cursor_t *d;
+    VALUE declaration;
+    R_GET_CLASS_DATA("Clangc", Cursor, declaration, d);
 
-  d->data = clang_getTypeDeclaration(t->data);
-  d->parent = c->parent;
-  return declaration;
+    /* Here we get the parent of the parent of self
+     * As self is a Clangc::Type, its parent is a Clangc::Cursor
+     * and its parent is a TranslationUnit.
+     * TL/DR The parent of the returned cursor is a TranslationUnit
+     * */
+    Cursor_t *c;
+    Data_Get_Struct(t->parent, Cursor_t, c);
+
+    d->data = clang_getTypeDeclaration(t->data);
+    d->parent = c->parent;
+    return declaration;
 }
 
 /**
 * call-seq:
 *   Clangc::Type#is_function_type_variadic => true/false
 *
-* Return true if the Clangc::Type is a variadic function type, and false otherwise.
+* Return true if the Clangc::Type is a variadic function type, and false
+* otherwise.
 */
 VALUE
 c_Type_is_function_type_variadic(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return NOT_0_2_RVAL(clang_isFunctionTypeVariadic(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return NOT_0_2_RVAL(clang_isFunctionTypeVariadic(t->data));
 }
 
 /**
@@ -416,10 +416,13 @@ c_Type_is_function_type_variadic(VALUE self)
  * Return the alignment of a type in bytes as per C++[expr.alignof]
  *   standard.
  *
- * If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is returned.
- * If the type declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE
+ * If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is
+ * returned.
+ * If the type declaration is an incomplete type,
+ * Clangc::TypeLayoutError::INCOMPLETE
  *   is returned.
- * If the type declaration is a dependent type, Clangc::TypeLayoutError::DEPENDENT is
+ * If the type declaration is a dependent type,
+ * Clangc::TypeLayoutError::DEPENDENT is
  *   returned.
  * If the type declaration is not a constant size type,
  *   Clangc::TypeLayoutError::NOT_CONSTANT_SIZE is returned.
@@ -427,9 +430,9 @@ c_Type_is_function_type_variadic(VALUE self)
 VALUE
 c_Type_get_align_of(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CLLONG_2_NUM(clang_Type_getAlignOf(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CLLONG_2_NUM(clang_Type_getAlignOf(t->data));
 }
 
 /**
@@ -438,18 +441,21 @@ c_Type_get_align_of(VALUE self)
  *
  * Return the size of a type in bytes as per C++[expr.sizeof] standard.
  *
- * If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is returned.
- * If the type declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE
+ * If the type declaration is invalid, Clangc::TypeLayoutError::INVALID is
+ * returned.
+ * If the type declaration is an incomplete type,
+ * Clangc::TypeLayoutError::INCOMPLETE
  *   is returned.
- * If the type declaration is a dependent type, Clangc::TypeLayoutError::DEPENDENT is
+ * If the type declaration is a dependent type,
+ * Clangc::TypeLayoutError::DEPENDENT is
  *   returned.
  */
 VALUE
 c_Type_get_size_of(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CLLONG_2_NUM(clang_Type_getSizeOf(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CLLONG_2_NUM(clang_Type_getSizeOf(t->data));
 }
 
 /**
@@ -463,14 +469,14 @@ c_Type_get_size_of(VALUE self)
 VALUE
 c_Type_get_class_type(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  VALUE class_type;
-  Type_t *ct;
-  R_GET_CLASS_DATA("Clangc", Type, class_type, ct);
-  ct->data = clang_Type_getClassType(t->data);
-  ct->parent = t->parent;
-  return class_type;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    VALUE class_type;
+    Type_t *ct;
+    R_GET_CLASS_DATA("Clangc", Type, class_type, ct);
+    ct->data = clang_Type_getClassType(t->data);
+    ct->parent = t->parent;
+    return class_type;
 }
 
 /**
@@ -480,20 +486,23 @@ c_Type_get_class_type(VALUE self)
  *  Return the offset of a field named S in a record of type T in bits
  *   as it would be returned by __offsetof__ as per C++11[18.2p4]
  *
- * If the cursor is not a record field, Clangc::TypeLayoutError::INVALID is returned.
- * If the field's type declaration is an incomplete type, Clangc::TypeLayoutError::INCOMPLETE
+ * If the cursor is not a record field, Clangc::TypeLayoutError::INVALID is
+ * returned.
+ * If the field's type declaration is an incomplete type,
+ * Clangc::TypeLayoutError::INCOMPLETE
  *   is returned.
- * If the field's type declaration is a dependent type, Clangc::TypeLayoutError::DEPENDENT is
+ * If the field's type declaration is a dependent type,
+ * Clangc::TypeLayoutError::DEPENDENT is
  *   returned.
- * If the field's name S is not found, Clanc::TypeLayoutError::INVALID_FIELD_NAME is returned
+ * If the field's name S is not found,
+ * Clanc::TypeLayoutError::INVALID_FIELD_NAME is returned
  */
 VALUE
 c_Type_get_offset_of(VALUE self, VALUE field)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CLLONG_2_NUM(clang_Type_getOffsetOf(t->data,
-                                             RSTRING_2_CHAR(field)));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CLLONG_2_NUM(clang_Type_getOffsetOf(t->data, RSTRING_2_CHAR(field)));
 }
 
 /**
@@ -509,9 +518,9 @@ c_Type_get_offset_of(VALUE self, VALUE field)
 VALUE
 c_Type_get_num_template_arguments(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return CINT_2_NUM(clang_Type_getNumTemplateArguments(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return CINT_2_NUM(clang_Type_getNumTemplateArguments(t->data));
 }
 
 /**
@@ -527,14 +536,14 @@ c_Type_get_num_template_arguments(VALUE self)
 VALUE
 c_Type_get_template_argument_as_type(VALUE self, VALUE index)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  VALUE template_argument;
-  Type_t *ta;
-  R_GET_CLASS_DATA("Clangc", Type, template_argument, ta);
-  ta->data = clang_Type_getTemplateArgumentAsType(t->data, NUM2UINT(index));
-  ta->parent = t->parent;
-  return template_argument;
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    VALUE template_argument;
+    Type_t *ta;
+    R_GET_CLASS_DATA("Clangc", Type, template_argument, ta);
+    ta->data = clang_Type_getTemplateArgumentAsType(t->data, NUM2UINT(index));
+    ta->parent = t->parent;
+    return template_argument;
 }
 
 /**
@@ -549,7 +558,7 @@ c_Type_get_template_argument_as_type(VALUE self, VALUE index)
 VALUE
 c_Type_get_cxx_ref_qualifier(VALUE self)
 {
-  Type_t *t;
-  Data_Get_Struct(self, Type_t, t);
-  return INT2NUM(clang_Type_getCXXRefQualifier(t->data));
+    Type_t *t;
+    Data_Get_Struct(self, Type_t, t);
+    return INT2NUM(clang_Type_getCXXRefQualifier(t->data));
 }

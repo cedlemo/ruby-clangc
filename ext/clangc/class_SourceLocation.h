@@ -20,9 +20,10 @@
 #define SOURCELOCATION_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct SourceLocation_t {
-  CXSourceLocation data; 
-  VALUE parent;
+typedef struct SourceLocation_t
+{
+    CXSourceLocation data;
+    VALUE parent;
 } SourceLocation_t;
 
 VALUE
@@ -42,4 +43,4 @@ c_SourceLocation_get_spelling(VALUE);
 
 VALUE
 c_SourceLocation_get_file_location(VALUE);
-#endif //SOURCELOCATION_H
+#endif // SOURCELOCATION_H
