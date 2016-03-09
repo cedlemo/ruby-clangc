@@ -20,9 +20,10 @@
 #define CURSORSET_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct CursorSet_t {
-  CXCursorSet data; 
-  VALUE parent;
+typedef struct CursorSet_t
+{
+    CXCursorSet data;
+    VALUE parent;
 } CursorSet_t;
 
 VALUE
@@ -36,4 +37,4 @@ c_CursorSet_contains(VALUE, VALUE);
 
 VALUE
 c_CursorSet_insert(VALUE, VALUE);
-#endif //CURSORSET_H
+#endif // CURSORSET_H

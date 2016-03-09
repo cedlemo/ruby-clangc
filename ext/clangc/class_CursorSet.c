@@ -21,54 +21,51 @@
 #include "macros.h"
 #include "class_Cursor.h"
 
-static void
-c_CursorSet_struct_free(CursorSet_t *s)
+static void c_CursorSet_struct_free(CursorSet_t *s)
 {
-  if(s)
-  {
-    if(s->data)
-      clang_disposeCXCursorSet(s->data);
+    if (s)
+    {
+        if (s->data) clang_disposeCXCursorSet(s->data);
 
-    ruby_xfree(s);
-  }
-}  
+        ruby_xfree(s);
+    }
+}
 
-static void
-c_CursorSet_mark(void *s)
+static void c_CursorSet_mark(void *s)
 {
-  if(s)
-  {
-    CursorSet_t *t =(CursorSet_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        CursorSet_t *t = (CursorSet_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 VALUE
-c_CursorSet_struct_alloc( VALUE klass)
+c_CursorSet_struct_alloc(VALUE klass)
 {
-  
-  CursorSet_t * ptr;
-  ptr = (CursorSet_t *) ruby_xmalloc(sizeof(CursorSet_t)); 
-  ptr->data = NULL;
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_CursorSet_struct_free, (void *) ptr);
+    CursorSet_t *ptr;
+    ptr = (CursorSet_t *) ruby_xmalloc(sizeof(CursorSet_t));
+    ptr->data = NULL;
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(klass, NULL, c_CursorSet_struct_free, (void *) ptr);
 }
 
 /**
 * call-seq:
-*   Clangc::CursorSet#new => Clangc::CursorSet 
+*   Clangc::CursorSet#new => Clangc::CursorSet
 *
 * Creates an empty Clangc::CursorSet instance which is
 * a fast container representing a set of Clangc::Cursor.
 */
 VALUE
-c_CursorSet_initialize(VALUE self) {
-  CursorSet_t *c;
-  Data_Get_Struct(self, CursorSet_t, c);
-  c->data = clang_createCXCursorSet();
-  return self;
+c_CursorSet_initialize(VALUE self)
+{
+    CursorSet_t *c;
+    Data_Get_Struct(self, CursorSet_t, c);
+    c->data = clang_createCXCursorSet();
+    return self;
 }
-
 
 /**
 * call-seq:
@@ -81,14 +78,14 @@ c_CursorSet_initialize(VALUE self) {
 VALUE
 c_CursorSet_contains(VALUE self, VALUE cursor)
 {
-  CursorSet_t *cs;
-  Cursor_t *c;
+    CursorSet_t *cs;
+    Cursor_t *c;
 
-  Data_Get_Struct(self, CursorSet_t, cs);
-  CHECK_ARG_TYPE(cursor, Cursor);
-  Data_Get_Struct(cursor, Cursor_t, c);
+    Data_Get_Struct(self, CursorSet_t, cs);
+    CHECK_ARG_TYPE(cursor, Cursor);
+    Data_Get_Struct(cursor, Cursor_t, c);
 
-  return NOT_0_2_RVAL(clang_CXCursorSet_contains(cs->data, c->data));
+    return NOT_0_2_RVAL(clang_CXCursorSet_contains(cs->data, c->data));
 }
 
 /**
@@ -102,12 +99,12 @@ c_CursorSet_contains(VALUE self, VALUE cursor)
 VALUE
 c_CursorSet_insert(VALUE self, VALUE cursor)
 {
-  CursorSet_t *cs;
-  Cursor_t *c;
+    CursorSet_t *cs;
+    Cursor_t *c;
 
-  Data_Get_Struct(self, CursorSet_t, cs);
-  CHECK_ARG_TYPE(cursor, Cursor);
-  Data_Get_Struct(cursor, Cursor_t, c);
+    Data_Get_Struct(self, CursorSet_t, cs);
+    CHECK_ARG_TYPE(cursor, Cursor);
+    Data_Get_Struct(cursor, Cursor_t, c);
 
-  return NOT_0_2_RVAL(clang_CXCursorSet_insert(cs->data, c->data));
+    return NOT_0_2_RVAL(clang_CXCursorSet_insert(cs->data, c->data));
 }
