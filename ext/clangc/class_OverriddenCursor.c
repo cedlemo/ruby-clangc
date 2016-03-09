@@ -19,35 +19,33 @@
 #include "class_OverriddenCursor.h"
 #include "macros.h"
 
-static void
-c_OverriddenCursor_struct_free(OverriddenCursor_t *s)
+static void c_OverriddenCursor_struct_free(OverriddenCursor_t *s)
 {
-  if(s)
-  {
-    if(s->ptr)
-      clang_disposeOverriddenCursors(s->ptr);
+    if (s)
+    {
+        if (s->ptr) clang_disposeOverriddenCursors(s->ptr);
 
-    ruby_xfree(s);
-  }
-}  
+        ruby_xfree(s);
+    }
+}
 
-static void
-c_OverriddenCursor_mark(void *s)
+static void c_OverriddenCursor_mark(void *s)
 {
-  if(s)
-  {
-    OverriddenCursor_t *t =(OverriddenCursor_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        OverriddenCursor_t *t = (OverriddenCursor_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
-c_OverriddenCursor_struct_alloc( VALUE klass)
+c_OverriddenCursor_struct_alloc(VALUE klass)
 {
-  
-  OverriddenCursor_t * ptr;
-  ptr = (OverriddenCursor_t *) ruby_xmalloc(sizeof(OverriddenCursor_t)); 
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_OverriddenCursor_struct_free, (void *) ptr);
+    OverriddenCursor_t *ptr;
+    ptr = (OverriddenCursor_t *) ruby_xmalloc(sizeof(OverriddenCursor_t));
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(
+        klass, NULL, c_OverriddenCursor_struct_free, (void *) ptr);
 }

@@ -19,12 +19,13 @@
 #define OVERRIDDEN_CURSOR_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct OverriddenCursor_t {
-  CXCursor data; 
-  CXCursor *ptr;
-  VALUE parent;
+typedef struct OverriddenCursor_t
+{
+    CXCursor data;
+    CXCursor *ptr;
+    VALUE parent;
 } OverriddenCursor_t;
 
 VALUE
 c_OverriddenCursor_struct_alloc(VALUE);
-#endif //OVERRIDDEN_CURSOR_H
+#endif // OVERRIDDEN_CURSOR_H
