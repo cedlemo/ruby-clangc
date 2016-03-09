@@ -19,9 +19,10 @@
 #define CODECOMPLETERESULTS_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct CodeCompleteResults_t {
-  CXCodeCompleteResults *data; 
-  VALUE parent;
+typedef struct CodeCompleteResults_t
+{
+    CXCodeCompleteResults *data;
+    VALUE parent;
 } CodeCompleteResults_t;
 
 VALUE
@@ -44,4 +45,4 @@ c_CodeCompleteResults_get_diagnostic(VALUE, VALUE);
 
 VALUE
 c_CodeCompleteResults_sort_results(VALUE);
-#endif //CODECOMPLETERESULTS_H
+#endif // CODECOMPLETERESULTS_H

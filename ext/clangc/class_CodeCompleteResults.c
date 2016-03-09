@@ -21,54 +21,52 @@
 #include "class_Diagnostic.h"
 #include "macros.h"
 
-static void
-c_CodeCompleteResults_struct_free(CodeCompleteResults_t *s)
+static void c_CodeCompleteResults_struct_free(CodeCompleteResults_t *s)
 {
-  if(s)
-  {
-    if(s->data)
-      clang_disposeCodeCompleteResults(s->data);
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
+        if (s->data) clang_disposeCodeCompleteResults(s->data);
+        ruby_xfree(s);
+    }
+}
 
-static void
-c_CodeCompleteResults_mark(void *s)
+static void c_CodeCompleteResults_mark(void *s)
 {
-  if(s)
-  {
-    CodeCompleteResults_t *t =(CodeCompleteResults_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        CodeCompleteResults_t *t = (CodeCompleteResults_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
-c_CodeCompleteResults_struct_alloc( VALUE klass)
+c_CodeCompleteResults_struct_alloc(VALUE klass)
 {
-  
-  CodeCompleteResults_t * ptr;
-  ptr = (CodeCompleteResults_t *) ruby_xmalloc(sizeof(CodeCompleteResults_t)); 
-  ptr->data = NULL;
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_CodeCompleteResults_struct_free, (void *) ptr);
+    CodeCompleteResults_t *ptr;
+    ptr = (CodeCompleteResults_t *) ruby_xmalloc(sizeof(CodeCompleteResults_t));
+    ptr->data = NULL;
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(
+        klass, NULL, c_CodeCompleteResults_struct_free, (void *) ptr);
 }
 
 /**
  * call-seq:
  *  Clangc::CodeCompleteResults#num_results => Number
  *
- * Retrieve the number of Clangc::CompletionResult 
+ * Retrieve the number of Clangc::CompletionResult
  *
  * Not based on libclang function
  */
 VALUE
 c_CodeCompleteResults_get_num_results(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
 
-  return CUINT_2_NUM(c->data->NumResults);
+    return CUINT_2_NUM(c->data->NumResults);
 }
 
 /**
@@ -83,20 +81,19 @@ c_CodeCompleteResults_get_num_results(VALUE self)
 VALUE
 c_CodeCompleteResults_get_result(VALUE self, VALUE index)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  unsigned i =  NUM2UINT(index);
-  
-  if (i < 0 || i > c->data->NumResults)
-    return Qnil;
-  
-  VALUE result;
-  CompletionResult_t *cr;
-  R_GET_CLASS_DATA("Clangc", CompletionResult, result, cr);
-  cr->data = &(c->data->Results[i]);
-  cr->parent = self;
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+    unsigned i = NUM2UINT(index);
 
-  return result;
+    if (i < 0 || i > c->data->NumResults) return Qnil;
+
+    VALUE result;
+    CompletionResult_t *cr;
+    R_GET_CLASS_DATA("Clangc", CompletionResult, result, cr);
+    cr->data = &(c->data->Results[i]);
+    cr->parent = self;
+
+    return result;
 }
 
 /**
@@ -110,10 +107,10 @@ c_CodeCompleteResults_get_result(VALUE self, VALUE index)
 VALUE
 c_CodeCompleteResults_get_container_usr(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  return CXSTR_2_RVAL(clang_codeCompleteGetContainerUSR(c->data));
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+    return CXSTR_2_RVAL(clang_codeCompleteGetContainerUSR(c->data));
 }
 /**
  * call-seq:
@@ -125,10 +122,10 @@ c_CodeCompleteResults_get_container_usr(VALUE self)
 VALUE
 c_CodeCompleteResults_get_num_diagnostics(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  return CUINT_2_NUM(clang_codeCompleteGetNumDiagnostics(c->data));
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+    return CUINT_2_NUM(clang_codeCompleteGetNumDiagnostics(c->data));
 }
 
 /**
@@ -140,32 +137,32 @@ c_CodeCompleteResults_get_num_diagnostics(VALUE self)
 VALUE
 c_CodeCompleteResults_get_diagnostic(VALUE self, VALUE index)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  VALUE diagnostic;
-  Diagnostic_t *d;
-  R_GET_CLASS_DATA("Clangc", Diagnostic, diagnostic, d);
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
 
-  d->data = clang_codeCompleteGetDiagnostic(c->data, NUM2UINT(index));
-  d->parent = c->parent;
+    VALUE diagnostic;
+    Diagnostic_t *d;
+    R_GET_CLASS_DATA("Clangc", Diagnostic, diagnostic, d);
 
-  return diagnostic;
+    d->data = clang_codeCompleteGetDiagnostic(c->data, NUM2UINT(index));
+    d->parent = c->parent;
+
+    return diagnostic;
 }
 
 /**
  * call-seq:
  *  Clangc::CodeCompleteResults#sort_results => nil
  *
- * Sort the code-completion results in case-insensitive alphabetical 
+ * Sort the code-completion results in case-insensitive alphabetical
  * order.
  */
 VALUE
 c_CodeCompleteResults_sort_results(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  clang_sortCodeCompletionResults(c->data->Results, c->data->NumResults);
-  return Qnil;
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+    clang_sortCodeCompletionResults(c->data->Results, c->data->NumResults);
+    return Qnil;
 }

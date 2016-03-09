@@ -21,36 +21,35 @@
 #include "class_CompletionString.h"
 #include "macros.h"
 
-static void
-c_CompletionResult_struct_free(CompletionResult_t *s)
+static void c_CompletionResult_struct_free(CompletionResult_t *s)
 {
-  if(s)
-  {
-    
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
 
-static void
-c_CompletionResult_mark(void *s)
+        ruby_xfree(s);
+    }
+}
+
+static void c_CompletionResult_mark(void *s)
 {
-  if(s)
-  {
-    CompletionResult_t *t =(CompletionResult_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        CompletionResult_t *t = (CompletionResult_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
-c_CompletionResult_struct_alloc( VALUE klass)
+c_CompletionResult_struct_alloc(VALUE klass)
 {
-  
-  CompletionResult_t * ptr;
-  ptr = (CompletionResult_t *) ruby_xmalloc(sizeof(CompletionResult_t)); 
-  ptr->data = NULL;
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_CompletionResult_struct_free, (void *) ptr);
+    CompletionResult_t *ptr;
+    ptr = (CompletionResult_t *) ruby_xmalloc(sizeof(CompletionResult_t));
+    ptr->data = NULL;
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(
+        klass, NULL, c_CompletionResult_struct_free, (void *) ptr);
 }
 
 /*
@@ -70,10 +69,10 @@ c_CompletionResult_struct_alloc( VALUE klass)
 VALUE
 c_CompletionResult_get_cursor_kind(VALUE self)
 {
-  CompletionResult_t *c;
-  Data_Get_Struct(self, CompletionResult_t, c);
-  
-  return CUINT_2_NUM(c->data->CursorKind);
+    CompletionResult_t *c;
+    Data_Get_Struct(self, CompletionResult_t, c);
+
+    return CUINT_2_NUM(c->data->CursorKind);
 }
 
 /*
@@ -86,15 +85,15 @@ c_CompletionResult_get_cursor_kind(VALUE self)
 VALUE
 c_CompletionResult_get_completion_string(VALUE self)
 {
-  CompletionResult_t *c;
-  Data_Get_Struct(self, CompletionResult_t, c);
+    CompletionResult_t *c;
+    Data_Get_Struct(self, CompletionResult_t, c);
 
-  CompletionString_t *cs;
-  VALUE completion_string;
-  R_GET_CLASS_DATA("Clangc", CompletionString, completion_string, cs);
+    CompletionString_t *cs;
+    VALUE completion_string;
+    R_GET_CLASS_DATA("Clangc", CompletionString, completion_string, cs);
 
-  cs->data = c->data->CompletionString;
-  cs->parent = self;
-  
-  return completion_string;
+    cs->data = c->data->CompletionString;
+    cs->parent = self;
+
+    return completion_string;
 }

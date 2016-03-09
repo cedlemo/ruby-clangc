@@ -20,9 +20,10 @@
 #define COMPLETIONRESULT_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct CompletionResult_t {
-  CXCompletionResult *data; 
-  VALUE parent;
+typedef struct CompletionResult_t
+{
+    CXCompletionResult *data;
+    VALUE parent;
 } CompletionResult_t;
 
 VALUE
@@ -33,4 +34,4 @@ c_CompletionResult_get_cursor_kind(VALUE);
 
 VALUE
 c_CompletionResult_get_completion_string(VALUE);
-#endif //COMPLETIONRESULT_H
+#endif // COMPLETIONRESULT_H
