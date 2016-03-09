@@ -20,35 +20,34 @@
 #include "class_CompletionString.h"
 #include "macros.h"
 
-static void
-c_CompletionString_struct_free(CompletionString_t *s)
+static void c_CompletionString_struct_free(CompletionString_t *s)
 {
-  if(s)
-  {
-    ruby_xfree(s);
-  }
-}  
+    if (s)
+    {
+        ruby_xfree(s);
+    }
+}
 
-static void
-c_CompletionString_mark(void *s)
+static void c_CompletionString_mark(void *s)
 {
-  if(s)
-  {
-    CompletionString_t *t =(CompletionString_t *)s;
-    rb_gc_mark(t->parent);
-  }
+    if (s)
+    {
+        CompletionString_t *t = (CompletionString_t *) s;
+        rb_gc_mark(t->parent);
+    }
 }
 
 VALUE
-c_CompletionString_struct_alloc( VALUE klass)
+c_CompletionString_struct_alloc(VALUE klass)
 {
-  
-  CompletionString_t * ptr;
-  ptr = (CompletionString_t *) ruby_xmalloc(sizeof(CompletionString_t)); 
-  ptr->data = NULL;
-  ptr->parent = Qnil;
 
-  return Data_Wrap_Struct(klass, NULL, c_CompletionString_struct_free, (void *) ptr);
+    CompletionString_t *ptr;
+    ptr = (CompletionString_t *) ruby_xmalloc(sizeof(CompletionString_t));
+    ptr->data = NULL;
+    ptr->parent = Qnil;
+
+    return Data_Wrap_Struct(
+        klass, NULL, c_CompletionString_struct_free, (void *) ptr);
 }
 
 /**
@@ -57,16 +56,16 @@ c_CompletionString_struct_alloc( VALUE klass)
  * Determine the availability of the entity that this code-completion
  * string refers to.
  *
- * The availability of the completion string which is one of the 
+ * The availability of the completion string which is one of the
  * Clangc::AvailabilityKind constants.
  */
 VALUE
 c_CompletionString_get_availability(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionAvailability(c->data));
+    return CUINT_2_NUM(clang_getCompletionAvailability(c->data));
 }
 
 /**
@@ -75,7 +74,7 @@ c_CompletionString_get_availability(VALUE self)
  *
  * Determine the priority of this code completion.
  *
- * The priority of a code completion indicates how likely it is that this 
+ * The priority of a code completion indicates how likely it is that this
  * particular completion is the completion that the user will select. The
  * priority is selected by various internal heuristics.
  *
@@ -85,10 +84,10 @@ c_CompletionString_get_availability(VALUE self)
 VALUE
 c_CompletionString_get_priority(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionPriority(c->data));
+    return CUINT_2_NUM(clang_getCompletionPriority(c->data));
 }
 
 /**
@@ -100,10 +99,10 @@ c_CompletionString_get_priority(VALUE self)
 VALUE
 c_CompletionString_get_num_chunks(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getNumCompletionChunks(c->data));
+    return CUINT_2_NUM(clang_getNumCompletionChunks(c->data));
 }
 
 /**
@@ -114,16 +113,16 @@ c_CompletionString_get_num_chunks(VALUE self)
  *
  * chunk_number the 0-based index of the chunk in the completion string.
  *
- * It returns the kind of the chunk at the index chunk_number (a Clangc::CompletionChunkKind constant).
+ * It returns the kind of the chunk at the index chunk_number (a
+ * Clangc::CompletionChunkKind constant).
  */
 VALUE
 c_CompletionString_get_chunk_kind(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionChunkKind(c->data,
-                                                  NUM2UINT(index)));
+    return CUINT_2_NUM(clang_getCompletionChunkKind(c->data, NUM2UINT(index)));
 }
 
 /**
@@ -140,11 +139,10 @@ c_CompletionString_get_chunk_kind(VALUE self, VALUE index)
 VALUE
 c_CompletionString_get_chunk_text(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CXSTR_2_RVAL(clang_getCompletionChunkText(c->data,
-                                                  NUM2UINT(index)));
+    return CXSTR_2_RVAL(clang_getCompletionChunkText(c->data, NUM2UINT(index)));
 }
 
 /**
@@ -160,10 +158,10 @@ c_CompletionString_get_chunk_text(VALUE self, VALUE index)
 VALUE
 c_CompletionString_get_num_annotations(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionNumAnnotations(c->data));
+    return CUINT_2_NUM(clang_getCompletionNumAnnotations(c->data));
 }
 
 /**
@@ -181,11 +179,11 @@ c_CompletionString_get_num_annotations(VALUE self)
 VALUE
 c_CompletionString_get_annotation(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CXSTR_2_RVAL(clang_getCompletionAnnotation(c->data,
-                                                    NUM2UINT(index)));
+    return CXSTR_2_RVAL(
+        clang_getCompletionAnnotation(c->data, NUM2UINT(index)));
 }
 
 /**
@@ -198,15 +196,16 @@ c_CompletionString_get_annotation(VALUE self, VALUE index)
 VALUE
 c_CompletionString_get_brief_comment(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CXSTR_2_RVAL(clang_getCompletionBriefComment(c->data));
+    return CXSTR_2_RVAL(clang_getCompletionBriefComment(c->data));
 }
 
 /**
  * call-seq:
- *  Clangc::CompletionString#chunk_completion_string(index) => Clangc::CompletionString
+ *  Clangc::CompletionString#chunk_completion_string(index) =>
+ * Clangc::CompletionString
  *
  * Retrieve the completion string associated with a particular chunk
  * within a completion string.
@@ -216,20 +215,21 @@ c_CompletionString_get_brief_comment(VALUE self)
  * Returns the completion string associated with the chunk at index
  * \c chunk_number.
  */
-//CINDEX_LINKAGE CXCompletionString
-//clang_getCompletionChunkCompletionString(CXCompletionString completion_string,
+// CINDEX_LINKAGE CXCompletionString
+// clang_getCompletionChunkCompletionString(CXCompletionString
+// completion_string,
 VALUE
 c_CompletionString_get_chunk_completion_string(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  VALUE completion_string;
-  CompletionString_t *cs;
-  R_GET_CLASS_DATA("Clangc", CompletionString, completion_string, cs);
-  cs->data = clang_getCompletionChunkCompletionString(c->data,
-                                                      NUM2UINT(index));
-  cs->parent = c->parent;
+    VALUE completion_string;
+    CompletionString_t *cs;
+    R_GET_CLASS_DATA("Clangc", CompletionString, completion_string, cs);
+    cs->data =
+        clang_getCompletionChunkCompletionString(c->data, NUM2UINT(index));
+    cs->parent = c->parent;
 
-  return completion_string;
+    return completion_string;
 }

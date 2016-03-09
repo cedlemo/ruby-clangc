@@ -21,52 +21,51 @@
 #include "class_SourceRange.h"
 #include "class_SourceLocation.h"
 
-static void
-c_Diagnostic_struct_free(Diagnostic_t *s)
+static void c_Diagnostic_struct_free(Diagnostic_t *s)
 {
-  if(s)
-  {
-    
-  if(s->data)
-    clang_disposeDiagnostic(s->data); 
+    if (s)
+    {
 
-    ruby_xfree(s);
-  }
-}  
-static void
-c_Diagnostic_mark(void *s)
+        if (s->data) clang_disposeDiagnostic(s->data);
+
+        ruby_xfree(s);
+    }
+}
+static void c_Diagnostic_mark(void *s)
 {
-  if(s)
-  {
-    Diagnostic_t *d = (Diagnostic_t *)s;
-    rb_gc_mark(d->parent);
-  }
+    if (s)
+    {
+        Diagnostic_t *d = (Diagnostic_t *) s;
+        rb_gc_mark(d->parent);
+    }
 }
 VALUE
-c_Diagnostic_struct_alloc( VALUE klass)
+c_Diagnostic_struct_alloc(VALUE klass)
 {
-  
-    Diagnostic_t * ptr;
-    ptr = (Diagnostic_t *) ruby_xmalloc(sizeof(Diagnostic_t)); 
+
+    Diagnostic_t *ptr;
+    ptr = (Diagnostic_t *) ruby_xmalloc(sizeof(Diagnostic_t));
     ptr->data = NULL;
     ptr->parent = Qnil;
-  return Data_Wrap_Struct(klass, c_Diagnostic_mark, c_Diagnostic_struct_free, (void *) ptr);
+    return Data_Wrap_Struct(
+        klass, c_Diagnostic_mark, c_Diagnostic_struct_free, (void *) ptr);
 }
 
 /**
 * call-seq:
 *   Clangc::Diagnostic#severity => Fixnum
 *
-* Determine the severity of the given diagnostic. It returns one of the constants defined
+* Determine the severity of the given diagnostic. It returns one of the
+* constants defined
 * in Clangc::DiagnosticSeverity.constants
 */
 VALUE
 c_Diagnostic_get_severity(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int severity = clang_getDiagnosticSeverity(d->data);
-  return CUINT_2_NUM(severity);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int severity = clang_getDiagnosticSeverity(d->data);
+    return CUINT_2_NUM(severity);
 }
 
 /**
@@ -78,19 +77,19 @@ c_Diagnostic_get_severity(VALUE self)
 VALUE
 c_Diagnostic_get_spelling(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  return CXSTR_2_RVAL(clang_getDiagnosticSpelling(d->data));
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    return CXSTR_2_RVAL(clang_getDiagnosticSpelling(d->data));
 }
 
 /**
 * call-seq:
 *   Clangc::Diagnostic#category => Fixnum
-* 
+*
 * Retrieve the category number for this diagnostic.
 *
 * Diagnostics can be categorized into groups along with other, related
-* diagnostics (e.g., diagnostics under the same warning flag). This routine 
+* diagnostics (e.g., diagnostics under the same warning flag). This routine
 * retrieves the category number for the given diagnostic.
 *
 * The number of the category that contains this diagnostic, or zero
@@ -99,10 +98,10 @@ c_Diagnostic_get_spelling(VALUE self)
 VALUE
 c_Diagnostic_get_category(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int category = clang_getDiagnosticCategory(d->data);
-  return CUINT_2_NUM(category);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int category = clang_getDiagnosticCategory(d->data);
+    return CUINT_2_NUM(category);
 }
 
 /**
@@ -110,16 +109,17 @@ c_Diagnostic_get_category(VALUE self)
 *   Clangc::Diagnostic#category_name => String
 *
 * Retrieve the name of a particular diagnostic category.  This
-* is now deprecated.  Use Clangc::Diagnostic#category_text 
+* is now deprecated.  Use Clangc::Diagnostic#category_text
 * instead.
 */
 VALUE
 c_Diagnostic_get_category_name(VALUE self)
 {
-// TODO deprecated write if macro based on clang vervion
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  return CXSTR_2_RVAL(clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data)));
+    // TODO deprecated write if macro based on clang vervion
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    return CXSTR_2_RVAL(
+        clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d->data)));
 }
 
 /**
@@ -132,9 +132,9 @@ c_Diagnostic_get_category_name(VALUE self)
 VALUE
 c_Diagnostic_get_category_text(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  return CXSTR_2_RVAL(clang_getDiagnosticCategoryText(d->data));
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    return CXSTR_2_RVAL(clang_getDiagnosticCategoryText(d->data));
 }
 
 /**
@@ -147,10 +147,10 @@ c_Diagnostic_get_category_text(VALUE self)
 VALUE
 c_Diagnostic_get_num_ranges(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int num = clang_getDiagnosticNumRanges(d->data);
-  return CUINT_2_NUM(num);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int num = clang_getDiagnosticNumRanges(d->data);
+    return CUINT_2_NUM(num);
 }
 
 /**
@@ -163,10 +163,10 @@ c_Diagnostic_get_num_ranges(VALUE self)
 VALUE
 c_Diagnostic_get_num_fixits(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int num = clang_getDiagnosticNumFixIts(d->data);
-  return CUINT_2_NUM(num);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int num = clang_getDiagnosticNumFixIts(d->data);
+    return CUINT_2_NUM(num);
 }
 
 /**
@@ -188,10 +188,10 @@ c_Diagnostic_get_num_fixits(VALUE self)
 VALUE
 c_Diagnostic_format(VALUE self, VALUE options)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int c_options = NUM2UINT(options);
-  return CXSTR_2_RVAL(clang_formatDiagnostic(d->data, c_options));
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int c_options = NUM2UINT(options);
+    return CXSTR_2_RVAL(clang_formatDiagnostic(d->data, c_options));
 }
 
 /**
@@ -199,26 +199,27 @@ c_Diagnostic_format(VALUE self, VALUE options)
 *   Clangc::Diagnostic#option => Array
 *
 * Retrieve the name of the command-line option that enabled this
-* diagnostic such as ("-Wconversion" or "-pedantic") and the option 
+* diagnostic such as ("-Wconversion" or "-pedantic") and the option
 * that disables it if any.
 * returned_array[0] == String command-line option that enabled the diagnostic
-* returned_array[1] == String or nil command-line option that disable the diagnostic
+* returned_array[1] == String or nil command-line option that disable the
+* diagnostic
 */
 
 VALUE
 c_Diagnostic_get_option(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
 
-  CXString str1;
-  CXString str2;
-  str1 = clang_getDiagnosticOption(d->data, &str2);
-  VALUE ret = rb_ary_new();
-  rb_ary_push(ret, CXSTR_2_RVAL(str1));
-  rb_ary_push(ret, CXSTR_2_RVAL(str2));
-  
-  return ret;
+    CXString str1;
+    CXString str2;
+    str1 = clang_getDiagnosticOption(d->data, &str2);
+    VALUE ret = rb_ary_new();
+    rb_ary_push(ret, CXSTR_2_RVAL(str1));
+    rb_ary_push(ret, CXSTR_2_RVAL(str2));
+
+    return ret;
 }
 
 /**
@@ -239,15 +240,15 @@ c_Diagnostic_get_option(VALUE self)
 VALUE
 c_Diagnostic_get_source_range(VALUE self, VALUE index)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);  
-  unsigned int c_index = NUM2UINT(index);
-  VALUE a_source_range;
-  SourceRange_t *s;
-  R_GET_CLASS_DATA("Clangc", SourceRange, a_source_range, s);
-  s->data = clang_getDiagnosticRange(d->data, c_index);
-  s->parent = self;
-  return a_source_range;
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int c_index = NUM2UINT(index);
+    VALUE a_source_range;
+    SourceRange_t *s;
+    R_GET_CLASS_DATA("Clangc", SourceRange, a_source_range, s);
+    s->data = clang_getDiagnosticRange(d->data, c_index);
+    s->parent = self;
+    return a_source_range;
 }
 
 /**
@@ -263,12 +264,12 @@ c_Diagnostic_get_source_range(VALUE self, VALUE index)
 VALUE
 c_Diagnostic_get_source_location(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);  
-  VALUE a_source_location;
-  SourceLocation_t *sl;
-  R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
-  sl->data = clang_getDiagnosticLocation(d->data);
-  sl->parent = self;
-  return a_source_location;  
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    VALUE a_source_location;
+    SourceLocation_t *sl;
+    R_GET_CLASS_DATA("Clangc", SourceLocation, a_source_location, sl);
+    sl->data = clang_getDiagnosticLocation(d->data);
+    sl->parent = self;
+    return a_source_location;
 }

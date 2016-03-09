@@ -19,9 +19,10 @@
 #define DIAGNOSTIC_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct Diagnostic_t {
-  CXDiagnostic data; 
-  VALUE parent;
+typedef struct Diagnostic_t
+{
+    CXDiagnostic data;
+    VALUE parent;
 } Diagnostic_t;
 
 VALUE
@@ -59,4 +60,4 @@ c_Diagnostic_get_source_range(VALUE, VALUE);
 
 VALUE
 c_Diagnostic_get_source_location(VALUE);
-#endif //DIAGNOSTIC_H
+#endif // DIAGNOSTIC_H
