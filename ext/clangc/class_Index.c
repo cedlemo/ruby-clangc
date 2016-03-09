@@ -21,31 +21,29 @@
 #include "stdio.h"
 #include "macros.h"
 
-static void
-c_Index_struct_free(Index_t *s)
+static void c_Index_struct_free(Index_t *s)
 {
-  if(s)
-  {
-    
-    if(s->data)
+    if (s)
     {
-      clang_disposeIndex(s->data); 
+        if (s->data) clang_disposeIndex(s->data);
+
+        ruby_xfree(s);
     }
-    ruby_xfree(s);
-   }
-}  
+}
+
 VALUE
 c_Index_struct_alloc(VALUE klass)
 {
-  Index_t *i;
-  i = (Index_t *) ruby_xmalloc(sizeof(Index_t));
-  i->data = NULL;
-  return Data_Wrap_Struct(klass, NULL, c_Index_struct_free,(void *) i );
+    Index_t *i;
+    i = (Index_t *) ruby_xmalloc(sizeof(Index_t));
+    i->data = NULL;
+    return Data_Wrap_Struct(klass, NULL, c_Index_struct_free, (void *) i);
 }
 
 /*
 * call-seq:
-*   Clangc::Index.new(exclude_decl_from_pch, display_diagnostics) => Clangc::Index
+*   Clangc::Index.new(exclude_decl_from_pch, display_diagnostics) =>
+* Clangc::Index
 *
 * Provides a shared context for creating translation units.
 *
@@ -66,13 +64,22 @@ c_Index_struct_alloc(VALUE klass)
 * to display them.
 */
 VALUE
-c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  i->data = clang_createIndex(RBOOL_2_INT(excl_decls_from_PCH),
-                              RBOOL_2_INT(display_diagnostics));
-  return self;
+c_Index_initialize(VALUE self,
+                   VALUE excl_decls_from_PCH,
+                   VALUE display_diagnostics)
+{
+    Index_t *i;
+    int c_excl_decls_from_PCH;
+    int c_display_diagnostics;
+
+    c_excl_decls_from_PCH = RBOOL_2_INT(excl_decls_from_PCH);
+    c_display_diagnostics = RBOOL_2_INT(display_diagnostics);
+    Data_Get_Struct(self, Index_t, i);
+
+    i->data = clang_createIndex(c_excl_decls_from_PCH, c_display_diagnostics);
+    return self;
 }
+
 /*
 * call-seq:
 *   Clangc::Index#global_options=(options) => nil
@@ -82,29 +89,35 @@ c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnost
 * A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.
 */
 VALUE
-c_Index_set_global_options(VALUE self, VALUE options) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  unsigned int c_options = NUM2UINT(options);
-  clang_CXIndex_setGlobalOptions(i->data,c_options);
-  return Qnil;
+c_Index_set_global_options(VALUE self, VALUE options)
+{
+    Index_t *i;
+    unsigned int c_options;
+
+    Data_Get_Struct(self, Index_t, i);
+    c_options = NUM2UINT(options);
+    clang_CXIndex_setGlobalOptions(i->data, c_options);
+    return Qnil;
 }
+
 /*
 * call-seq:
-*   Clangc::Index#global_options() => num 
+*   Clangc::Index#global_options() => num
 *
 * Gets the general options associated with an Index.
 * A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.
 */
 VALUE
-c_Index_get_global_options(VALUE self) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i->data));
+c_Index_get_global_options(VALUE self)
+{
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i->data));
 }
 /*
 * call-seq:
-*   Clangc::Index#create_translation_unit_from_source_file(source, args) => Clangc::TranslationUnit
+*   Clangc::Index#create_translation_unit_from_source_file(source, args) =>
+* Clangc::TranslationUnit
 *
 * Return a TranslationUnit instance for a given source file and the provided
 * command line arguments one would pass to the compiler.
@@ -120,96 +133,107 @@ c_Index_get_global_options(VALUE self) {
 * These command-line options will be parsed and will affect how the translation
 * unit is parsed. Note that the following options are ignored: '-c',
 * '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
-* 
+*
 * TODO : (not implemented yet)
 * - num_unsaved_files
 * the number of unsaved file entries in unsaved_files.
 *
-* - unsaved_files 
+* - unsaved_files
 * the files that have not yet been saved to disk but may be required
-* for code completion, including the contents of those files.  The contents and name
-* of these files (as specified by CXUnsavedFile) are copied when necessary, so the 
-* client only needs to guarantee their validity until the call to this function 
+* for code completion, including the contents of those files.  The contents and
+* name
+* of these files (as specified by CXUnsavedFile) are copied when necessary, so
+* the
+* client only needs to guarantee their validity until the call to this function
 * returns.
 */
 
 VALUE
-c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
-  char *c_source_file = NULL;
-  c_source_file = RSTRING_2_CHAR(source_file);
-  RARRAY_OF_STRINGS_2_C(args);
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
-  c_tu->data = clang_createTranslationUnitFromSourceFile( i->data,
-                                                          c_source_file,
-                                                          len, c_args, 0, 0); // TODO manage unsaved files
-  c_tu->parent = self;
+c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args)
+{
+    char *c_source_file = NULL;
+    Index_t *i;
+    VALUE tu;
+    TranslationUnit_t *c_tu;
 
-  if(c_tu->data != NULL)
-    return tu;
-  else
-    return Qnil;
+    c_source_file = RSTRING_2_CHAR(source_file);
+    RARRAY_OF_STRINGS_2_C(args);
+    Data_Get_Struct(self, Index_t, i);
+    R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
+
+    c_tu->data = clang_createTranslationUnitFromSourceFile(
+        i->data, c_source_file, len, c_args, 0, 0); // TODO manage unsaved files
+    c_tu->parent = self;
+
+    if (c_tu->data != NULL)
+        return tu;
+    else
+        return Qnil;
 }
 /*
 * call-seq:
 *   Clangc::Index#create_translation_unit(ast_file) => Clangc::TranslationUnit
 *
-* Create a translation unit from an AST file name. If the creation fail, it returns
+* Create a translation unit from an AST file name. If the creation fail, it
+* returns
 * nil.
 * The AST file is created by clang with the option -emit-ast
 */
 VALUE
-c_Index_create_TU(VALUE self, VALUE ast_file) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
-  char *c_ast_file = NULL;
-  c_ast_file = RSTRING_2_CHAR(ast_file);
-  c_tu->data = clang_createTranslationUnit( i->data, c_ast_file);
+c_Index_create_TU(VALUE self, VALUE ast_file)
+{
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
+    char *c_ast_file = NULL;
+    c_ast_file = RSTRING_2_CHAR(ast_file);
+    c_tu->data = clang_createTranslationUnit(i->data, c_ast_file);
 
-  c_tu->parent = self;
+    c_tu->parent = self;
 
-  if(c_tu->data)
-    return tu;
-  else
-    return Qnil;
+    if (c_tu->data)
+        return tu;
+    else
+        return Qnil;
 }
 /*
 * call-seq:
-*   Clangc::Index#create_translation_unit2(ast_file) => Clangc::TranslationUnit or an error code
+*   Clangc::Index#create_translation_unit2(ast_file) => Clangc::TranslationUnit
+* or an error code
 *
-* Create a translation unit from an AST file name. If the creation fail, it returns
-* an error code Clangc::ErrorCode. With this implementation, Clangc::ErrorCode::Success is not
+* Create a translation unit from an AST file name. If the creation fail, it
+* returns
+* an error code Clangc::ErrorCode. With this implementation,
+* Clangc::ErrorCode::Success is not
 * used.
 * The AST file is created by clang with the option -emit-ast
 */
 VALUE
 c_Index_create_TU2(VALUE self, VALUE ast_file)
 {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
-  char *c_ast_file = NULL;
-  c_ast_file = RSTRING_2_CHAR(ast_file);
-  unsigned int er = clang_createTranslationUnit2( i->data, c_ast_file, &(c_tu->data));
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
+    char *c_ast_file = NULL;
+    c_ast_file = RSTRING_2_CHAR(ast_file);
+    unsigned int er =
+        clang_createTranslationUnit2(i->data, c_ast_file, &(c_tu->data));
 
-  c_tu->parent = self;
+    c_tu->parent = self;
 
-  if(er != 0)
-    return CUINT_2_NUM(er);
-  else
-    return tu;
+    if (er != 0)
+        return CUINT_2_NUM(er);
+    else
+        return tu;
 }
 /*
 * call-seq:
-*   Clangc::Index#parse_translation_unit(source_file, args, options) => Clangc::TranslationUnit
+*   Clangc::Index#parse_translation_unit(source_file, args, options) =>
+* Clangc::TranslationUnit
 *
 * Parse the given source file and generate the translation unit corresponding
 * to that file.
@@ -228,16 +252,18 @@ c_Index_create_TU2(VALUE self, VALUE ast_file)
 * The command-line arguments that would be passed to the clang executable if it
 * were being invoked out-of-process.
 * These command-line options will be parsed and will affect how the translation
-* unit is parsed. Note that the following options are ignored: '-c', 
+* unit is parsed. Note that the following options are ignored: '-c',
 * '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
 *
 * - options:
 * A bitmask of options that affects how the translation unit is managed but not
-* its compilation. This should be a bitwise OR of the TranslationUnit_Flags constants.
+* its compilation. This should be a bitwise OR of the TranslationUnit_Flags
+* constants.
 *
 * TODO:
 * - unsaved_files:
-* The files that have not yet been saved to disk but may be required for parsing,
+* The files that have not yet been saved to disk but may be required for
+* parsing,
 * including the contents of those files.  The contents and name of these files
 * (as specified by CXUnsavedFile) are copied when necessary, so the client only
 * needs to guarantee their validity until the call to this function returns.
@@ -248,37 +274,41 @@ c_Index_create_TU2(VALUE self, VALUE ast_file)
 VALUE
 c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
 {
-  char *c_source_file = NULL;
-  c_source_file = RSTRING_2_CHAR(source_file);
-  
-  unsigned int c_options = NUM2UINT(options);
+    char *c_source_file = NULL;
+    c_source_file = RSTRING_2_CHAR(source_file);
 
-  RARRAY_OF_STRINGS_2_C(args);
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
+    unsigned int c_options = NUM2UINT(options);
 
-  c_tu->data = clang_parseTranslationUnit( i->data,
-                                                          c_source_file,
-                                                          c_args, len, 
-                                                          0, 0, c_options); // TODO manage unsaved files
-  
+    RARRAY_OF_STRINGS_2_C(args);
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
 
-  c_tu->parent = self;
+    c_tu->data =
+        clang_parseTranslationUnit(i->data,
+                                   c_source_file,
+                                   c_args,
+                                   len,
+                                   0,
+                                   0,
+                                   c_options); // TODO manage unsaved files
 
-  if (c_tu->data)
-    return tu;
-  else
-    return Qnil;
+    c_tu->parent = self;
+
+    if (c_tu->data)
+        return tu;
+    else
+        return Qnil;
 }
 /*
 * call-seq:
-*   Clangc::Index#parse_translation_unit2(source_file, args, options) => Clangc::TranslationUnit
+*   Clangc::Index#parse_translation_unit2(source_file, args, options) =>
+* Clangc::TranslationUnit
 *
 * Parse the given source file and generate the translation unit corresponding
-* to that file. If its fails, it returns an Integer corresponding to the 
+* to that file. If its fails, it returns an Integer corresponding to the
 * error code a Clangc::ErrorCode constant.
 *
 * This routine is the main entry point for the Clang C API, providing the
@@ -295,16 +325,18 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
 * The command-line arguments that would be passed to the clang executable if it
 * were being invoked out-of-process.
 * These command-line options will be parsed and will affect how the translation
-* unit is parsed. Note that the following options are ignored: '-c', 
+* unit is parsed. Note that the following options are ignored: '-c',
 * '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
 *
 * - options:
 * A bitmask of options that affects how the translation unit is managed but not
-* its compilation. This should be a bitwise OR of the TranslationUnit_Flags constants.
+* its compilation. This should be a bitwise OR of the TranslationUnit_Flags
+* constants.
 *
 * TODO:
 * - unsaved_files:
-* The files that have not yet been saved to disk but may be required for parsing,
+* The files that have not yet been saved to disk but may be required for
+* parsing,
 * including the contents of those files.  The contents and name of these files
 * (as specified by CXUnsavedFile) are copied when necessary, so the client only
 * needs to guarantee their validity until the call to this function returns.
@@ -313,29 +345,34 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
 * The number of unsaved file entries in unsaved_files.
 */
 VALUE
-c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
-  char *c_source_file = NULL;
-  c_source_file = RSTRING_2_CHAR(source_file);
-  
-  unsigned int c_options = NUM2UINT(options);
+c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options)
+{
+    char *c_source_file = NULL;
+    c_source_file = RSTRING_2_CHAR(source_file);
 
-  RARRAY_OF_STRINGS_2_C(args);
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
+    unsigned int c_options = NUM2UINT(options);
 
-  unsigned int er = clang_parseTranslationUnit2(i->data,
-                                        c_source_file,
-                                        c_args, len, 
-                                        0, 0, c_options, // TODO manage unsaved files
-                                        &(c_tu->data)); 
+    RARRAY_OF_STRINGS_2_C(args);
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
 
-  c_tu->parent = self;
+    unsigned int er =
+        clang_parseTranslationUnit2(i->data,
+                                    c_source_file,
+                                    c_args,
+                                    len,
+                                    0,
+                                    0,
+                                    c_options, // TODO manage unsaved files
+                                    &(c_tu->data));
 
-  if(er != 0)
-    return CUINT_2_NUM(er);
-  else
-    return tu;
+    c_tu->parent = self;
+
+    if (er != 0)
+        return CUINT_2_NUM(er);
+    else
+        return tu;
 }

@@ -19,8 +19,9 @@
 #define INDEX_H
 #include <ruby/ruby.h>
 #include "clang-c/Index.h"
-typedef struct Index_t {
-    CXIndex data; 
+typedef struct Index_t
+{
+    CXIndex data;
 } Index_t;
 
 VALUE
@@ -49,4 +50,4 @@ c_Index_parse_TU(VALUE, VALUE, VALUE, VALUE);
 
 VALUE
 c_Index_parse_TU2(VALUE, VALUE, VALUE, VALUE);
-#endif //INDEX_H
+#endif // INDEX_H
