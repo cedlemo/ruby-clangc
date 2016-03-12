@@ -5,7 +5,10 @@
 ruby bindings to the clang C interface
 
 This is free software shared under the GNU GPL 3.
-Those bindings work with Clang v3.5 to v3.7.1 on ArchLinux.
+Those bindings have been tested and work with :
+
+*    Clang v3.5 to v3.7.
+*    ruby 2.1 to 2.4
 
 ## Installation:
 
