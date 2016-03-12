@@ -35,6 +35,54 @@ matrix:
       rvm: ruby-head
       env: CLANG_SRC_VER=35
 
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: 2.1
+      env: CLANG_SRC_VER=37
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: 2.2
+      env: CLANG_SRC_VER=37
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: 2.3.0
+      env: CLANG_SRC_VER=37
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: ruby-head
+      env: CLANG_SRC_VER=37
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: 2.1
+      env: CLANG_SRC_VER=36
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: 2.2
+      env: CLANG_SRC_VER=36
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: 2.3.0
+      env: CLANG_SRC_VER=36
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      rvm: ruby-head
+      env: CLANG_SRC_VER=36
+
 #    - os: linux
 #      compiler: clang
 #      addons:
