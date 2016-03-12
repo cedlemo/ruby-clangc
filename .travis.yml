@@ -14,21 +14,8 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      rvm:
-        - 2.1
-        - 2.2
-        - 2.3.0
-        - ruby-head
-      addons:
-        apt:
-          packages: 
-          - llvm-dev
-          - libclang-3.5-dev
-          - libclang1-3.5 
-          - libclang-common-3.5-dev 
-          - build-essential 
-          - ruby-dev
-      env: CLANG_SRC_VER=3.5
+      rvm: ruby-head
+      env: CLANG_SRC_VER=35
 
 #    - os: linux
 #      compiler: clang
@@ -40,9 +27,10 @@ matrix:
 #script: CXX=$COMPILER ./tools/reinstallgem.sh
 
 before_install:
-  - sudo apt-get update -qq
+  #  - sudo apt-get update -qq
     #  - sudo apt-get install -qq llvm-dev libclang-3.5-dev libclang1-3.5 libclang-common-3.5-dev build-essential ruby-dev
-  - sudo ln -s /usr/lib/x86_64-linux-gnu/libclang-3.5.so /usr/lib/x86_64-linux-gnu/libclang.so
+    #- sudo ln -s /usr/lib/x86_64-linux-gnu/libclang-3.5.so /usr/lib/x86_64-linux-gnu/libclang.so
+  - sudo ./tools/travis_before_install.sh
   - gem install bundler
 
 script: 
