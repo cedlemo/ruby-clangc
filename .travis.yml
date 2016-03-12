@@ -14,13 +14,13 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      rvm: 2.1.0
+      rvm: 2.1
       env: CLANG_SRC_VER=35
 
     - os: linux
       dist: trusty
       sudo: required
-      rvm: 2.2.0
+      rvm: 2.2
       env: CLANG_SRC_VER=35
 
     - os: linux
