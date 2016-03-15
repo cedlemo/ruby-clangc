@@ -1,10 +1,10 @@
 require "./toolbox.rb"
 
 clang_versions = {}
-clang_versions[:v34] = Toolbox::SourceParser.new("#{PATH}/clang-3.4/Index.h")
 clang_versions[:v35] = Toolbox::SourceParser.new("#{PATH}/clang-3.5/Index.h")
 clang_versions[:v36] = Toolbox::SourceParser.new("#{PATH}/clang-3.6/Index.h")
 clang_versions[:v37] = Toolbox::SourceParser.new("#{PATH}/clang-3.7/Index.h")
+clang_versions[:v38] = Toolbox::SourceParser.new("#{PATH}/clang-3.8/Index.h")
 
 OUT = STDOUT.dup
 ERR = STDERR.dup
