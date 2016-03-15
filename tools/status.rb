@@ -13,6 +13,7 @@ def colorize(color, string)
   end
   "#{Term::ANSIColor.send(color.to_sym)}#{string}#{Term::ANSIColor.clear} "
 end
+
 def is_object_generator(f, object_name)
   if f.name.match(/.*2\z/)
     f.parameters.each do |p|
@@ -35,6 +36,7 @@ def is_object_method(f, object_name)
   end
   false
 end
+
 def display_infos(object_name, generators, methods, wrapped_methods = [], versions)
   puts "#{colorize(:bold,object_name)} related functions"
   puts "\t#{colorize(:underscore,"Generators")}"
@@ -64,6 +66,7 @@ def display_infos(object_name, generators, methods, wrapped_methods = [], versio
     output_types << m.return_type.name unless output_types.include?(m.return_type.name)
   end
 end
+
 def sumup_module_functions(functions, wrapped_methods = [], versions)
   puts "#{colorize(:bold,"Module")} functions"
   functions.each do |f|
@@ -78,6 +81,7 @@ def sumup_module_functions(functions, wrapped_methods = [], versions)
   end
   
 end
+
 def sumup_objects(functions, objects, wrapped_methods = [], versions)
   objects.each do |obj|
     obj_generators = []
@@ -120,10 +124,10 @@ end
 MANAGED_FUNCTIONS.uniq!
 # Get Clang versions with function name:
   clang_versions = {}
-  clang_versions[:v34] = Toolbox::SourceParser.new("#{PATH}/clang-3.4/Index.h")
   clang_versions[:v35] = Toolbox::SourceParser.new("#{PATH}/clang-3.5/Index.h")
   clang_versions[:v36] = Toolbox::SourceParser.new("#{PATH}/clang-3.6/Index.h")
   clang_versions[:v37] = Toolbox::SourceParser.new("#{PATH}/clang-3.7/Index.h")
+  clang_versions[:v38] = Toolbox::SourceParser.new("#{PATH}/clang-3.8/Index.h")
 
   OUT = STDOUT.dup
   ERR = STDERR.dup
