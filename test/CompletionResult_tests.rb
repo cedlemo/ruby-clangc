@@ -60,7 +60,7 @@ class TestCompletionResult < MiniTest::Test
                                            line,
                                            column,
                                            options)
-    assert_equal(8, complete_results.num_diagnostics)
+    assert_equal(1, complete_results.num_diagnostics)
   end
   def test_CompletionResult_get_diagnostic
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
@@ -73,7 +73,8 @@ class TestCompletionResult < MiniTest::Test
                                            options)
     # TODO
     assert_instance_of(Clangc::Diagnostic, complete_results.diagnostic(0))
-    assert_equal("redefinition of 'ptr' with a different type: 'int' vs 'struct data *'", complete_results.diagnostic(0).spelling)
+    #assert_equal("redefinition of 'ptr' with a different type: 'int' vs 'struct data *'", complete_results.diagnostic(0).spelling)
+    assert_equal("use of undeclared identifier 'pt'", complete_results.diagnostic(0).spelling)
   end
   def test_CompletionResult_get_diagnostics
     tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
@@ -85,7 +86,7 @@ class TestCompletionResult < MiniTest::Test
                                            column,
                                            options)
     # TODO
-    assert_equal(8, complete_results.diagnostics.size)
+    assert_equal(1, complete_results.diagnostics.size)
     assert_equal("redefinition of 'ptr' with a different type: 'int' vs 'struct data *'", complete_results.diagnostics[0].spelling)
   end
 end
