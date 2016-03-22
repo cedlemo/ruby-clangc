@@ -45,4 +45,7 @@ c_CodeCompleteResults_get_diagnostic(VALUE, VALUE);
 
 VALUE
 c_CodeCompleteResults_sort_results(VALUE);
+
+VALUE
+c_CodeCompleteResults_get_contexts(VALUE);
 #endif // CODECOMPLETERESULTS_H

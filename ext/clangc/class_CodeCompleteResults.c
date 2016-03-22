@@ -166,3 +166,21 @@ c_CodeCompleteResults_sort_results(VALUE self)
     clang_sortCodeCompletionResults(c->data->Results, c->data->NumResults);
     return Qnil;
 }
+
+/**
+ * call-seq:
+ *  Clangc::CodeCompleteResults#contexts => Number
+ *
+ * Determines what completions are appropriate for the context
+ * the given code completion.
+ * 
+ * the kinds of completions that are appropriate for use
+ * along with the given code completion results.
+ */
+VALUE
+c_CodeCompleteResults_get_contexts(VALUE self)
+{
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+    CULLONG_2_NUM(clang_codeCompleteGetContexts(c->data));
+}
