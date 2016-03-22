@@ -49,4 +49,16 @@ class TestCodeCompleteResults < MiniTest::Test
     assert_equal(complete_results.result(0).cursor_kind,
                  complete_results.results[0].cursor_kind)
   end
+  def test_CodeCompleteResults_get_contexts
+    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
+    line = 12 
+    column = 5 
+    options = Clangc.default_code_complete_options
+    complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
+                                           line,
+                                           column,
+                                           options)
+    # TODO 
+    assert_instance_of(Fixnum, complete_results.contexts)
+  end
 end
