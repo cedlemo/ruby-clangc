@@ -113,7 +113,7 @@ matrix:
         - CLANG_SRC_VER='38'
 
 before_install:
-  - sudo ./tools/travis_before_install.sh
+  - sudo CLANG_SRC_VER=$CLANG_SRC_VER ./tools/travis_before_install.sh
   - gem install bundler
 
 script: 
