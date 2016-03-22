@@ -84,33 +84,33 @@ matrix:
       env:
         - CLANG_SRC_VER='36'
 
-    - os: linux
-      dist: trusty
-      sudo: required
-      rvm: 2.1
-      env:
-        - CLANG_SRC_VER='38'
-
-    - os: linux
-      dist: trusty
-      sudo: required
-      rvm: 2.2
-      env:
-        - CLANG_SRC_VER='38'
-
-    - os: linux
-      dist: trusty
-      sudo: required
-      rvm: 2.3.0
-      env:
-        - CLANG_SRC_VER='38'
-
-    - os: linux
-      dist: trusty
-      sudo: required
-      rvm: ruby-head
-      env:
-        - CLANG_SRC_VER='38'
+#    - os: linux
+#      dist: trusty
+#      sudo: required
+#      rvm: 2.1
+#      env:
+#        - CLANG_SRC_VER='38'
+#
+#    - os: linux
+#      dist: trusty
+#      sudo: required
+#      rvm: 2.2
+#      env:
+#        - CLANG_SRC_VER='38'
+#
+#    - os: linux
+#      dist: trusty
+#      sudo: required
+#      rvm: 2.3.0
+#      env:
+#        - CLANG_SRC_VER='38'
+#
+#    - os: linux
+#      dist: trusty
+#      sudo: required
+#      rvm: ruby-head
+#      env:
+#        - CLANG_SRC_VER='38'
 
 before_install:
   - sudo CLANG_SRC_VER=$CLANG_SRC_VER ./tools/travis_before_install.sh
