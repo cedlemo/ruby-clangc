@@ -215,9 +215,6 @@ c_CompletionString_get_brief_comment(VALUE self)
  * Returns the completion string associated with the chunk at index
  * \c chunk_number.
  */
-// CINDEX_LINKAGE CXCompletionString
-// clang_getCompletionChunkCompletionString(CXCompletionString
-// completion_string,
 VALUE
 c_CompletionString_get_chunk_completion_string(VALUE self, VALUE index)
 {
