@@ -153,7 +153,16 @@ class TestTranslationUnitUsage < MiniTest::Test
     assert_equal(2, complete_results.results[0].completion_string.num_chunks)
     assert_equal(2, complete_results.results[1].completion_string.num_chunks)
     assert_equal(2, complete_results.results[2].completion_string.num_chunks)
-    assert_equal(["int", "a"], complete_results.results[0].completion_string.chunk_texts)
+    all_chunks = []
+    complete_results.results.each do |r|
+      all_chunks << r.completion_string.chunk_texts
+    end
+    all_chunks.sort
+    all_chunks_ref = [["int", "a"],
+                      ["char *", "b"],
+                      ["double", "c"]
+                      ].sort
+    assert_equal(all_chunks_ref, all_chunks)
     assert_equal(Clangc::CompletionChunkKind::RESULT_TYPE,
                  complete_results.results[0].completion_string.chunk_kind(0))
   end
