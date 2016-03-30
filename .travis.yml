@@ -1,3 +1,13 @@
+addons:
+  apt:
+    sources:
+    - llvm-toolchain-precise
+    - llvm-toolchain-precise-3.5
+    - llvm-toolchain-precise-3.6
+    - llvm-toolchain-precise-3.7
+#    - llvm-toolchain-precise-3.8
+    - ubuntu-toolchain-r-test
+
 matrix:
   include:
     - os: linux
