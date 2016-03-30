@@ -1,8 +1,6 @@
 # TODO
 
 ## Primary
-[ ] Do Clangc::CompletionString#chunk_completion_strings method
-
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
@@ -11,6 +9,8 @@
     Constants which is more Rubyish (see ruby-gnome2 project)
 
 ## Secondary:
+[ ] Add travis check for 3.8
+
 [ ] See how to exclude clangc.c from modification by clang-format
 
 [ ] Continue / improve YARD usage
