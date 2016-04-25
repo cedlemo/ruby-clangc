@@ -1,14 +1,16 @@
 # TODO
 
 ## Primary
-[ ] Use a real case test for completion string
+[ ] Create one method for creating translation unit with hash as options
+
+[ ] Rework how all the constants are used
+  [ ] Try to implement enum with ruby class instead of module and allow the usage of symbol instead of ruby
+      Constants which is more Rubyish (see ruby-gnome2 project)
 
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
 
-[ ] Try to implement enum with ruby class instead of module and allow the usage of symbol instead of ruby
-    Constants which is more Rubyish (see ruby-gnome2 project)
 
 ## Secondary:
 [ ] Add travis check for 3.8
