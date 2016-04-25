@@ -142,6 +142,23 @@ m_clangc_get_null_cursor(VALUE self)
     return cursor;
 }
 
+typedef struct {
+  VALUE callback;
+  VALUE parent;
+  VALUE cursor;
+  int status;
+} EvalCallbackData;
+
+static VALUE eval_callback_body( VALUE user_data)
+{
+    VALUE parent, cursor;
+    EvalCallbackData * data = (EvalCallbackData *) user_data;
+    parent = data->parent;
+    cursor = data->cursor;
+    
+    return rb_funcall(data->callback, rb_intern("call"), 2, cursor, parent);
+}
+
 static enum CXChildVisitResult
 visitor(CXCursor cursor, CXCursor parent, CXClientData client_data)
 {
@@ -164,8 +181,21 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData client_data)
     r_parent = rb_class_new_instance(0, NULL, cCursor);
     Data_Get_Struct(r_parent, Cursor_t, p);
     p->data = parent;
+    
+    EvalCallbackData data;
+    data.parent = r_parent;
+    data.cursor = r_cursor;
+    int status = 0;
+    data.callback = callback;
 
-    r_ret = rb_funcall(callback, rb_intern("call"), 2, r_cursor, r_parent);
+    r_ret = rb_protect(eval_callback_body, (VALUE) (&data), &status);
+    
+    if(status)
+    {
+      LOG_ERR("An error occurred in your ruby block while visiting the AST");
+      rb_jump_tag(status);
+    }
+    
     if (TYPE(r_ret) == T_FIXNUM)
     {
         ret = NUM2UINT(r_ret);
@@ -217,8 +247,9 @@ m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
     unsigned ret_with_break;
 
     Data_Get_Struct(cursor, Cursor_t, c);
-    ret_with_break =
-        clang_visitChildren(c->data, visitor, (CXClientData) callback);
+    ret_with_break = clang_visitChildren(c->data,
+                                         visitor,
+                                         (CXClientData) callback);
     return NOT_0_2_RVAL(ret_with_break);
 }
 
@@ -259,8 +290,9 @@ m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
     unsigned ret_with_break;
 
     Data_Get_Struct(cursor, Cursor_t, c);
-    ret_with_break =
-        clang_visitChildren(c->data, visitor, (CXClientData) callback);
+    ret_with_break = clang_visitChildren(c->data,
+                                         visitor,
+                                         (CXClientData) callback);
     return NOT_0_2_RVAL(ret_with_break);
 }
 

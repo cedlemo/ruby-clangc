@@ -1,6 +1,8 @@
 # TODO
 
 ## Primary
+[ ] Use a real case test for completion string
+
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
