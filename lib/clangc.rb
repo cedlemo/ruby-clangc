@@ -340,4 +340,31 @@ module Clangc
       diags
     end
   end
+  
+  class Index
+    def self.translation_unit(options)
+      parse =   options[:parse] || nil
+      ast =     options[:ast] || nil
+      flags =   options[:flags] || Clangc::TranslationUnit_Flags::NONE
+      source =  options[:source] || ""
+      args =    options[:args] || []
+      error =   options[:error] || nil
+      
+      if ast
+        if error
+          create_translation_unit2(ast) 
+        else
+          create_translation_unit(ast) 
+        end
+      elsif parse
+        if error
+          parse_translation_unit2(parse, args, flags)
+        else
+          parse_translation_unit(parse, args, flags)
+        end
+      else
+        create_translation_unit_from_source_file(source, args)
+      end
+    end
+  end
 end
