@@ -1,7 +1,8 @@
 # TODO
 
 ## Primary
-[ ] Create one method for creating translation unit with hash as options
+[ ] Generalize usage of create_translation_unit and parse_translation_unit
+    Favorize parse_translation_unit
 
 [ ] Rework how all the constants are used
   [ ] Try to implement enum with ruby class instead of module and allow the usage of symbol instead of ruby
