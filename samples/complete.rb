@@ -28,10 +28,8 @@ end
 
 cindex = Clangc::Index.new(false, false)
 
-# options = Clangc::TranslationUnit_Flags::PRECOMPILED_PREAMBLE
-# tu = cindex.parse_translation_unit(filename, args, options)
 
-tu = cindex.create_translation_unit_from_source_file(filename, args)
+tu = cindex.create_translation_unit(source: filename, args: args)
 if tu == nil
   puts "Failed to create a translation unit"
   exit 1
