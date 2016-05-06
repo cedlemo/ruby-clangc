@@ -95,7 +95,7 @@ c_Index_set_global_options(VALUE self, VALUE options)
     unsigned int c_options;
 
     Data_Get_Struct(self, Index_t, i);
-    c_options = NUM2UINT(options);
+    c_options = CLANGC_CONSTANT_TO_UINT("GlobalOptFlags", options);
     clang_CXIndex_setGlobalOptions(i->data, c_options);
     return Qnil;
 }
