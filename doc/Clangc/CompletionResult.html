@@ -136,17 +136,17 @@ code-completion result into the editing buffer.</p>
             <pre>VALUE
 c_CompletionResult_get_completion_string(VALUE self)
 {
-  CompletionResult_t *c;
-  Data_Get_Struct(self, CompletionResult_t, c);
+    CompletionResult_t *c;
+    Data_Get_Struct(self, CompletionResult_t, c);
 
-  CompletionString_t *cs;
-  VALUE completion_string;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionString, completion_string, cs);
+    CompletionString_t *cs;
+    VALUE completion_string;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionString, completion_string, cs);
 
-  cs-&gt;data = c-&gt;data-&gt;CompletionString;
-  cs-&gt;parent = self;
-  
-  return completion_string;
+    cs-&gt;data = c-&gt;data-&gt;CompletionString;
+    cs-&gt;parent = self;
+
+    return completion_string;
 }</pre>
           </div>
           
@@ -193,10 +193,10 @@ to extract additional information from declaration.</p>
             <pre>VALUE
 c_CompletionResult_get_cursor_kind(VALUE self)
 {
-  CompletionResult_t *c;
-  Data_Get_Struct(self, CompletionResult_t, c);
-  
-  return CUINT_2_NUM(c-&gt;data-&gt;CursorKind);
+    CompletionResult_t *c;
+    Data_Get_Struct(self, CompletionResult_t, c);
+
+    return CUINT_2_NUM(c-&gt;data-&gt;CursorKind);
 }</pre>
           </div>
           

@@ -80,6 +80,8 @@
     
     <li ><a href="#method-i-chunk_completion_string">#chunk_completion_string</a>
     
+    <li ><a href="#method-i-chunk_completion_strings">#chunk_completion_strings</a>
+    
     <li ><a href="#method-i-chunk_kind">#chunk_kind</a>
     
     <li ><a href="#method-i-chunk_kinds">#chunk_kinds</a>
@@ -171,11 +173,11 @@ annotation_number, or a NULL string if that annotation is not available.</p>
             <pre>VALUE
 c_CompletionString_get_annotation(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CXSTR_2_RVAL(clang_getCompletionAnnotation(c-&gt;data,
-                                                    NUM2UINT(index)));
+    return CXSTR_2_RVAL(
+        clang_getCompletionAnnotation(c-&gt;data, NUM2UINT(index)));
 }</pre>
           </div>
           
@@ -249,7 +251,7 @@ c_CompletionString_get_annotation(VALUE self, VALUE index)
 <p>Determine the availability of the entity that this code-completion string
 refers to.</p>
 
-<p>The availability of the completion string which is one of the 
+<p>The availability of the completion string which is one of the
 Clangc::AvailabilityKind constants.</p>
           
           
@@ -259,10 +261,10 @@ Clangc::AvailabilityKind constants.</p>
             <pre>VALUE
 c_CompletionString_get_availability(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionAvailability(c-&gt;data));
+    return CUINT_2_NUM(clang_getCompletionAvailability(c-&gt;data));
 }</pre>
           </div>
           
@@ -302,10 +304,10 @@ corresponds to the given completion string.</p>
             <pre>VALUE
 c_CompletionString_get_brief_comment(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CXSTR_2_RVAL(clang_getCompletionBriefComment(c-&gt;data));
+    return CXSTR_2_RVAL(clang_getCompletionBriefComment(c-&gt;data));
 }</pre>
           </div>
           
@@ -319,18 +321,34 @@ c_CompletionString_get_brief_comment(VALUE self)
     
       <div id="method-i-chunk_completion_string" class="method-detail ">
         
+        
         <div class="method-heading">
-          <span class="method-name">chunk_completion_string</span><span
-            class="method-args">(p1)</span>
+          <span class="method-callseq">
+            Clangc::CompletionString#chunk_completion_string(index) &rarr;
+          </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString
+          </span>
+          
+        </div>
+        
+        
 
         <div class="method-description">
           
-          
+          <p>Retrieve the completion string associated with a particular chunk within a
+completion string.</p>
+
+<p>0-based index of the chunk in the completion string.</p>
+
+<p>Returns the completion string associated with the chunk at index c
+chunk_number.</p>
           
           
 
@@ -339,18 +357,62 @@ c_CompletionString_get_brief_comment(VALUE self)
             <pre>VALUE
 c_CompletionString_get_chunk_completion_string(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  VALUE completion_string;
-  CompletionString_t *cs;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionString, completion_string, cs);
-  cs-&gt;data = clang_getCompletionChunkCompletionString(c-&gt;data,
-                                                      NUM2UINT(index));
-  cs-&gt;parent = c-&gt;parent;
+    VALUE completion_string;
+    CompletionString_t *cs;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionString, completion_string, cs);
+    cs-&gt;data =
+        clang_getCompletionChunkCompletionString(c-&gt;data, NUM2UINT(index));
+    cs-&gt;parent = c-&gt;parent;
 
-  return completion_string;
+    return completion_string;
 }</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-chunk_completion_strings" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CompletionString#chunk_text_completion_strings &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return an array that contains all the  completion strings for a completion
+string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="chunk_completion_strings-source">
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 300</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">chunk_completion_strings</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_chunks</span>
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+
+  <span class="ruby-identifier">completion_strings</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">completion_strings</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chunk_completion_string</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">completion_strings</span>
+<span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -391,11 +453,10 @@ Clangc::CompletionChunkKind constant).</p>
             <pre>VALUE
 c_CompletionString_get_chunk_kind(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionChunkKind(c-&gt;data,
-                                                  NUM2UINT(index)));
+    return CUINT_2_NUM(clang_getCompletionChunkKind(c-&gt;data, NUM2UINT(index)));
 }</pre>
           </div>
           
@@ -483,11 +544,10 @@ string.</p>
             <pre>VALUE
 c_CompletionString_get_chunk_text(VALUE self, VALUE index)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CXSTR_2_RVAL(clang_getCompletionChunkText(c-&gt;data,
-                                                  NUM2UINT(index)));
+    return CXSTR_2_RVAL(clang_getCompletionChunkText(c-&gt;data, NUM2UINT(index)));
 }</pre>
           </div>
           
@@ -572,10 +632,10 @@ string.</p>
             <pre>VALUE
 c_CompletionString_get_num_annotations(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionNumAnnotations(c-&gt;data));
+    return CUINT_2_NUM(clang_getCompletionNumAnnotations(c-&gt;data));
 }</pre>
           </div>
           
@@ -612,10 +672,10 @@ c_CompletionString_get_num_annotations(VALUE self)
             <pre>VALUE
 c_CompletionString_get_num_chunks(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getNumCompletionChunks(c-&gt;data));
+    return CUINT_2_NUM(clang_getNumCompletionChunks(c-&gt;data));
 }</pre>
           </div>
           
@@ -645,7 +705,7 @@ c_CompletionString_get_num_chunks(VALUE self)
           
           <p>Determine the priority of this code completion.</p>
 
-<p>The priority of a code completion indicates how likely it is that this 
+<p>The priority of a code completion indicates how likely it is that this
 particular completion is the completion that the user will select. The
 priority is selected by various internal heuristics.</p>
 
@@ -659,10 +719,10 @@ higher-priority (more likely) completions.</p>
             <pre>VALUE
 c_CompletionString_get_priority(VALUE self)
 {
-  CompletionString_t *c;
-  Data_Get_Struct(self, CompletionString_t, c);
+    CompletionString_t *c;
+    Data_Get_Struct(self, CompletionString_t, c);
 
-  return CUINT_2_NUM(clang_getCompletionPriority(c-&gt;data));
+    return CUINT_2_NUM(clang_getCompletionPriority(c-&gt;data));
 }</pre>
           </div>
           

@@ -141,12 +141,12 @@ can hold the same File_t data.</p>
             <pre>VALUE
 c_File_is_equal(VALUE self, VALUE file)
 {
-  File_t * f1;
-  File_t * f2;
-  Data_Get_Struct(self, File_t, f1);
-  CHECK_ARG_TYPE(file, File);
-  Data_Get_Struct(file, File_t, f2);
-  return NOT_0_2_RVAL(clang_File_isEqual(f1-&gt;data, f2-&gt;data));
+    File_t *f1;
+    File_t *f2;
+    Data_Get_Struct(self, File_t, f1);
+    CHECK_ARG_TYPE(file, File);
+    Data_Get_Struct(file, File_t, f2);
+    return NOT_0_2_RVAL(clang_File_isEqual(f1-&gt;data, f2-&gt;data));
 }</pre>
           </div>
           
@@ -185,12 +185,12 @@ either with the conventional #ifndef/#define/#endif macro guards or with
             <pre>VALUE
 c_File_is_multiple_include_guarded(VALUE self)
 {
-  File_t * f;
-  Data_Get_Struct(self, File_t, f);
-  TranslationUnit_t * t;
-  Data_Get_Struct(f-&gt;parent, TranslationUnit_t, t);
-  unsigned int ret = clang_isFileMultipleIncludeGuarded(t-&gt;data, f-&gt;data);
-  return NOT_0_2_RVAL(ret);
+    File_t *f;
+    Data_Get_Struct(self, File_t, f);
+    TranslationUnit_t *t;
+    Data_Get_Struct(f-&gt;parent, TranslationUnit_t, t);
+    unsigned int ret = clang_isFileMultipleIncludeGuarded(t-&gt;data, f-&gt;data);
+    return NOT_0_2_RVAL(ret);
 }</pre>
           </div>
           
@@ -227,11 +227,11 @@ c_File_is_multiple_include_guarded(VALUE self)
             <pre>VALUE
 c_File_get_mtime(VALUE self)
 {
-  File_t *f;
-  VALUE mtime = Qnil;
-  Data_Get_Struct(self, File_t, f);
-  mtime = rb_time_new(clang_getFileTime(f-&gt;data), 0);
-  return mtime;
+    File_t *f;
+    VALUE mtime = Qnil;
+    Data_Get_Struct(self, File_t, f);
+    mtime = rb_time_new(clang_getFileTime(f-&gt;data), 0);
+    return mtime;
 }</pre>
           </div>
           
@@ -269,16 +269,16 @@ the CXFile pointer is NULL (this can happen)</p>
             <pre>VALUE
 c_File_get_name(VALUE self)
 {
-  File_t * f;
-  VALUE name = Qnil;
-  Data_Get_Struct(self, File_t, f);
-  if (f-&gt;data != NULL)
-  {
-    name = CXSTR_2_RVAL(clang_getFileName(f-&gt;data));
-  }
-  else
-    name = Qnil;
-  return name;
+    File_t *f;
+    VALUE name = Qnil;
+    Data_Get_Struct(self, File_t, f);
+    if (f-&gt;data != NULL)
+    {
+        name = CXSTR_2_RVAL(clang_getFileName(f-&gt;data));
+    }
+    else
+        name = Qnil;
+    return name;
 }</pre>
           </div>
           

@@ -134,10 +134,17 @@ in an <a href="Index.html">Index</a></p>
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::TranslationUnit#code_complete_at(filename, line, column, options) &rarr; Clangc::CodeCompleteResults or nil
+            Clangc::TranslationUnit#code_complete_at(filename, line, column, options) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CodeCompleteResults or nil
+          </span>
           
         </div>
         
@@ -201,7 +208,7 @@ needs to guarantee their validity until the call to this function returns.</p>
 unsaved_files.</p>
 
 <p>Extra options that control the behavior of code completion, expressed as a
-bitwise OR of the constants of the Clangc::CodeComplete_Flags. The 
+bitwise OR of the constants of the Clangc::CodeComplete_Flags. The
 Clangc_default_code_complete_options function returns a default set of
 code-completion options.</p>
 
@@ -214,27 +221,37 @@ clang_disposeCodeCompleteResults(). If code completion fails, returns NULL.</p>
           
           <div class="method-source-code" id="code_complete_at-source">
             <pre>VALUE
-c_TranslationUnit_code_complete_at(VALUE self, VALUE filename, VALUE line, VALUE column, VALUE options)
+c_TranslationUnit_code_complete_at(
+    VALUE self, VALUE filename, VALUE line, VALUE column, VALUE options)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  
-  CodeCompleteResults_t *c;
-  VALUE code_complete_results;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, CodeCompleteResults, code_complete_results, c);
-  c-&gt;data = clang_codeCompleteAt(t-&gt;data,
-                                 RSTRING_2_CHAR(filename),
-                                 NUM2UINT(line),
-                                 NUM2UINT(column),
-                                 NULL, // TODO Manage unsaved files
-                                 0,
-                                 NUM2UINT(options));
-  c-&gt;parent = self;
-  
-  if (c-&gt;data)
-    return code_complete_results;
-  else
-    return Qnil;
+    TranslationUnit_t *t;
+    CodeCompleteResults_t *c;
+    VALUE code_complete_results;
+    char *c_filename;
+    unsigned int c_line;
+    unsigned int c_column;
+    unsigned int c_options;
+
+    c_filename = RSTRING_2_CHAR(filename);
+    c_line = NUM2UINT(line);
+    c_column = NUM2UINT(column);
+    c_options = NUM2UINT(options);
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, CodeCompleteResults, code_complete_results, c);
+    c-&gt;data = clang_codeCompleteAt(t-&gt;data,
+                                   c_filename,
+                                   c_line,
+                                   c_column,
+                                   NULL, // TODO Manage unsaved files
+                                   0,
+                                   c_options);
+    c-&gt;parent = self;
+
+    if (c-&gt;data)
+        return code_complete_results;
+    else
+        return Qnil;
 }</pre>
           </div>
           
@@ -274,14 +291,14 @@ declarations within the given translation unit.</p>
             <pre>VALUE
 c_TranslationUnit_get_cursor(VALUE self)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  Cursor_t *c;
-  VALUE a_cursor;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, a_cursor, c);
-  c-&gt;data = clang_getTranslationUnitCursor(t-&gt;data);
-  c-&gt;parent = self;
-  return a_cursor;
+    TranslationUnit_t *t;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    Cursor_t *c;
+    VALUE a_cursor;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, a_cursor, c);
+    c-&gt;data = clang_getTranslationUnitCursor(t-&gt;data);
+    c-&gt;parent = self;
+    return a_cursor;
 }</pre>
           </div>
           
@@ -313,8 +330,8 @@ c_TranslationUnit_get_cursor(VALUE self)
 
 <p>The set of flags returned provide options for <a
 href="TranslationUnit.html#method-i-reparse">#reparse</a> by default. The
-returned flag set contains an unspecified set of optimizations  geared
-toward common uses of reparsing. The set of optimizations enabled may 
+returned flag set contains an unspecified set of optimizations geared
+toward common uses of reparsing. The set of optimizations enabled may
 change from one version  to the next. Clangc::ReparseF_Flags constants.</p>
           
           
@@ -324,10 +341,12 @@ change from one version  to the next. Clangc::ReparseF_Flags constants.</p>
             <pre>VALUE
 c_TranslationUnit_get_default_reparse_options(VALUE self)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  unsigned int num = clang_defaultReparseOptions(t-&gt;data);
-  return CUINT_2_NUM(num);
+    TranslationUnit_t *t;
+    unsigned int num;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+
+    num = clang_defaultReparseOptions(t-&gt;data);
+    return CUINT_2_NUM(num);
 }</pre>
           </div>
           
@@ -369,10 +388,12 @@ that save translation units with the most commonly-requested data.</p>
             <pre>VALUE
 c_TranslationUnit_get_default_save_options(VALUE self)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  unsigned int num = clang_defaultSaveOptions(t-&gt;data);
-  return CUINT_2_NUM(num);
+    TranslationUnit_t *t;
+    unsigned int num;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+
+    num = clang_defaultSaveOptions(t-&gt;data);
+    return CUINT_2_NUM(num);
 }</pre>
           </div>
           
@@ -413,17 +434,20 @@ c_TranslationUnit_get_default_save_options(VALUE self)
             <pre>VALUE
 c_TranslationUnit_get_diagnostic(VALUE self, VALUE num)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  unsigned int max = clang_getNumDiagnostics(t-&gt;data);
-  unsigned int c_num = NUM2UINT(num);
-  CHECK_IN_RANGE(c_num, 0, max);
-  VALUE diagnostic;
-  Diagnostic_t *d;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, Diagnostic, diagnostic, d); 
-  d-&gt;data = clang_getDiagnostic(t-&gt;data, c_num);
-  d-&gt;parent = self;
-  return diagnostic;
+    TranslationUnit_t *t;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    unsigned int max;
+    unsigned int c_num;
+    VALUE diagnostic;
+
+    max = clang_getNumDiagnostics(t-&gt;data);
+    c_num = NUM2UINT(num);
+    CHECK_IN_RANGE(c_num, 0, max);
+    Diagnostic_t *d;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, Diagnostic, diagnostic, d);
+    d-&gt;data = clang_getDiagnostic(t-&gt;data, c_num);
+    d-&gt;parent = self;
+    return diagnostic;
 }</pre>
           </div>
           
@@ -504,10 +528,12 @@ unit.</p>
             <pre>VALUE
 c_TranslationUnit_get_diagnostics_num(VALUE self)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  unsigned int num = clang_getNumDiagnostics(t-&gt;data);
-  return CUINT_2_NUM(num); 
+    TranslationUnit_t *t;
+    unsigned int num;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+
+    num = clang_getNumDiagnostics(t-&gt;data);
+    return CUINT_2_NUM(num);
 }</pre>
           </div>
           
@@ -548,23 +574,25 @@ nil if the file was not a part of this translation unit.</p>
             <pre>VALUE
 c_TranslationUnit_get_file(VALUE self, VALUE file_name)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  CXFile cxfile;
-  char * c_file_name = RSTRING_2_CHAR(file_name);
-  cxfile = clang_getFile(t-&gt;data, c_file_name); 
- 
-  if(cxfile)
-  {  
-    VALUE file;
-    File_t *f;
-    R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
-    f-&gt;data = cxfile;
-    f-&gt;parent = self;
-    return file;
-  }
-  else
-    return Qnil;
+    TranslationUnit_t *t;
+    CXFile cxfile;
+    char *c_file_name;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    c_file_name = RSTRING_2_CHAR(file_name);
+    cxfile = clang_getFile(t-&gt;data, c_file_name);
+
+    if (cxfile)
+    {
+        VALUE file;
+        File_t *f;
+        R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
+        f-&gt;data = cxfile;
+        f-&gt;parent = self;
+        return file;
+    }
+    else
+        return Qnil;
 }</pre>
           </div>
           
@@ -602,22 +630,23 @@ that contains it, if one exists.</p>
             <pre>VALUE
 c_TranslationUnit_get_module(VALUE self, VALUE file)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  File_t *f;
-  CHECK_ARG_TYPE(file, File);
-  Data_Get_Struct(file, File_t, f);
+    TranslationUnit_t *t;
+    File_t *f;
+    Module_t *m;
+    VALUE module;
 
-  Module_t *m;
-  VALUE module;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, Module, module, m);
-  m-&gt;data = clang_getModuleForFile(t-&gt;data, f-&gt;data);
-  m-&gt;parent = self;
-  
-  if (m-&gt;data)
-    return module;
-  else
-    return Qnil;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    CHECK_ARG_TYPE(file, File);
+    Data_Get_Struct(file, File_t, f);
+
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, Module, module, m);
+    m-&gt;data = clang_getModuleForFile(t-&gt;data, f-&gt;data);
+    m-&gt;parent = self;
+
+    if (m-&gt;data)
+        return module;
+    else
+        return Qnil;
 }</pre>
           </div>
           
@@ -657,11 +686,11 @@ originally parsed.</p>
 that refer into that translation unit. This makes reparsing a translation
 unit semantically equivalent to destroying the translation unit and then
 creating a new translation unit with the same command-line arguments.
-However, it may be more efficient to reparse a translation  unit using this
+However, it may be more efficient to reparse a translation unit using this
 routine.</p>
 
 <p>The translation unit whose contents will be re-parsed. The translation unit
-must originally have been built with  c
+must originally have been built with c
 clang_createTranslationUnitFromSourceFile().</p>
 
 <p>TODO  num_unsaved_files The number of unsaved file entries in p
@@ -690,15 +719,17 @@ Clangc::ErrorCode.</p>
             <pre>VALUE
 c_TranslationUnit_reparse(VALUE self, VALUE options)
 {
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  
-  int error;
-  error = clang_reparseTranslationUnit(t-&gt;data,
-                                       0,
-                                       NULL, // TODO Manage unsaved files
-                                       NUM2UINT(options));
-  return CINT_2_NUM(error);
+    TranslationUnit_t *t;
+    int error;
+    unsigned int c_options;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    c_options = NUM2UINT(options);
+    error = clang_reparseTranslationUnit(t-&gt;data,
+                                         0,
+                                         NULL, // TODO Manage unsaved files
+                                         c_options);
+    return CINT_2_NUM(error);
 }</pre>
           </div>
           
@@ -735,10 +766,9 @@ c_TranslationUnit_reparse(VALUE self, VALUE options)
             <pre>VALUE
 c_TranslationUnit_get_spelling(VALUE self)
 {
-  VALUE spelling = Qnil;
-  TranslationUnit_t *t;
-  Data_Get_Struct(self, TranslationUnit_t, t);
-  return CXSTR_2_RVAL(clang_getTranslationUnitSpelling(t-&gt;data));
+    TranslationUnit_t *t;
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    return CXSTR_2_RVAL(clang_getTranslationUnitSpelling(t-&gt;data));
 }</pre>
           </div>
           

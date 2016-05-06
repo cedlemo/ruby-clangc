@@ -147,16 +147,16 @@
             <pre>VALUE
 c_Module_get_ast_file(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  VALUE ast_file;
-  File_t *f;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, File, ast_file, f);
-  f-&gt;data = clang_Module_getASTFile(m-&gt;data);
-  if (f-&gt;data)
-    return ast_file;
-  else
-    return Qnil;
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    VALUE ast_file;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, File, ast_file, f);
+    f-&gt;data = clang_Module_getASTFile(m-&gt;data);
+    if (f-&gt;data)
+        return ast_file;
+    else
+        return Qnil;
 }</pre>
           </div>
           
@@ -193,9 +193,9 @@ c_Module_get_ast_file(VALUE self)
             <pre>VALUE
 c_Module_get_full_name(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  return CXSTR_2_RVAL(clang_Module_getFullName(m-&gt;data));
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    return CXSTR_2_RVAL(clang_Module_getFullName(m-&gt;data));
 }</pre>
           </div>
           
@@ -232,9 +232,9 @@ c_Module_get_full_name(VALUE self)
             <pre>VALUE
 c_Module_is_system(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  return NOT_0_2_RVAL(clang_Module_isSystem(m-&gt;data));
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    return NOT_0_2_RVAL(clang_Module_isSystem(m-&gt;data));
 }</pre>
           </div>
           
@@ -272,9 +272,9 @@ will return “vector”.</p>
             <pre>VALUE
 c_Module_get_name(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  return CXSTR_2_RVAL(clang_Module_getName(m-&gt;data));
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    return CXSTR_2_RVAL(clang_Module_getName(m-&gt;data));
 }</pre>
           </div>
           
@@ -311,13 +311,13 @@ c_Module_get_name(VALUE self)
             <pre>VALUE
 c_Module_get_num_top_level_headers(VALUE self, VALUE translation_unit)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  TranslationUnit_t *t;
-  CHECK_ARG_TYPE(translation_unit, TranslationUnit);
-  Data_Get_Struct(translation_unit, TranslationUnit_t, t);
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    TranslationUnit_t *t;
+    CHECK_ARG_TYPE(translation_unit, TranslationUnit);
+    Data_Get_Struct(translation_unit, TranslationUnit_t, t);
 
-  return CUINT_2_NUM(clang_Module_getNumTopLevelHeaders(t-&gt;data, m-&gt;data));
+    return CUINT_2_NUM(clang_Module_getNumTopLevelHeaders(t-&gt;data, m-&gt;data));
 }</pre>
           </div>
           
@@ -355,13 +355,13 @@ for &#39;std.vector&#39; it will return the &#39;std&#39; module.</p>
             <pre>VALUE
 c_Module_get_parent(VALUE self)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  VALUE parent;
-  Module_t *p;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, Module, parent, p);
-  p-&gt;data = clang_Module_getParent(m-&gt;data);
-  return parent;
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    VALUE parent;
+    Module_t *p;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, Module, parent, p);
+    p-&gt;data = clang_Module_getParent(m-&gt;data);
+    return parent;
 }</pre>
           </div>
           
@@ -378,10 +378,17 @@ c_Module_get_parent(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Module#top_level_header(Clangc::TranslationUnit, Integer) &rarr; Clangc::File
+            Clangc::Module#top_level_header(Clangc::TranslationUnit, Integer) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::File
+          </span>
           
         </div>
         
@@ -400,20 +407,20 @@ c_Module_get_parent(VALUE self)
             <pre>VALUE
 c_Module_get_top_level_header(VALUE self, VALUE translation_unit, VALUE index)
 {
-  Module_t *m;
-  Data_Get_Struct(self, Module_t, m);
-  TranslationUnit_t *t;
-  CHECK_ARG_TYPE(translation_unit, TranslationUnit);
-  Data_Get_Struct(translation_unit, TranslationUnit_t, t);
-  unsigned int c_index = NUM2UINT(index);
-  VALUE header;
-  File_t *f;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, File, header, f);
-  f-&gt;data = clang_Module_getTopLevelHeader(t-&gt;data, m-&gt;data, c_index);
-  if (f-&gt;data)
-    return header;
-  else
-    return Qnil;
+    Module_t *m;
+    Data_Get_Struct(self, Module_t, m);
+    TranslationUnit_t *t;
+    CHECK_ARG_TYPE(translation_unit, TranslationUnit);
+    Data_Get_Struct(translation_unit, TranslationUnit_t, t);
+    unsigned int c_index = NUM2UINT(index);
+    VALUE header;
+    File_t *f;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, File, header, f);
+    f-&gt;data = clang_Module_getTopLevelHeader(t-&gt;data, m-&gt;data, c_index);
+    if (f-&gt;data)
+        return header;
+    else
+        return Qnil;
 }</pre>
           </div>
           

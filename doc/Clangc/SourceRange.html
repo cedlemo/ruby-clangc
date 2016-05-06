@@ -93,7 +93,8 @@
     
 <p>Identifies a half-open character range in the source code.</p>
 
-<p>Use Clangc::Range#start and Clangc::Range#end to retrieve the starting and
+<p>Use <a href="SourceRange.html#method-i-start">#start</a> and <a
+href="SourceRange.html#method-i-end">#end</a> to retrieve the starting and
 end locations from a source range, respectively.</p>
 
   </section>
@@ -143,15 +144,15 @@ range.</p>
             <pre>VALUE
 c_SourceRange_get_end(VALUE self)
 {
-  SourceRange_t *sr;
-  SourceLocation_t *sl;
-  VALUE a_source_location;
-  Data_Get_Struct(self, SourceRange_t, sr);
+    SourceRange_t *sr;
+    SourceLocation_t *sl;
+    VALUE a_source_location;
+    Data_Get_Struct(self, SourceRange_t, sr);
 
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, sl);
-  sl-&gt;data = clang_getRangeEnd(sr-&gt;data);
-  sl-&gt;parent = self;
-  return a_source_location;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, sl);
+    sl-&gt;data = clang_getRangeEnd(sr-&gt;data);
+    sl-&gt;parent = self;
+    return a_source_location;
 }</pre>
           </div>
           
@@ -189,12 +190,12 @@ the same, false if they differ.</p>
             <pre>VALUE
 c_SourceRange_is_equal(VALUE self, VALUE source_range)
 {
-  SourceRange_t * sr1;
-  SourceRange_t * sr2;
-  Data_Get_Struct(self, SourceRange_t, sr1);
-  CHECK_ARG_TYPE(source_range, SourceRange);
-  Data_Get_Struct(source_range, SourceRange_t, sr2);
-  return NOT_0_2_RVAL(clang_equalRanges(sr1-&gt;data, sr2-&gt;data));
+    SourceRange_t *sr1;
+    SourceRange_t *sr2;
+    Data_Get_Struct(self, SourceRange_t, sr1);
+    CHECK_ARG_TYPE(source_range, SourceRange);
+    Data_Get_Struct(source_range, SourceRange_t, sr2);
+    return NOT_0_2_RVAL(clang_equalRanges(sr1-&gt;data, sr2-&gt;data));
 }</pre>
           </div>
           
@@ -231,9 +232,9 @@ c_SourceRange_is_equal(VALUE self, VALUE source_range)
             <pre>VALUE
 c_SourceRange_is_null(VALUE self)
 {
-  SourceRange_t *s;
-  Data_Get_Struct(self, SourceRange_t, s);
-  return NOT_0_2_RVAL(clang_Range_isNull(s-&gt;data));
+    SourceRange_t *s;
+    Data_Get_Struct(self, SourceRange_t, s);
+    return NOT_0_2_RVAL(clang_Range_isNull(s-&gt;data));
 }</pre>
           </div>
           
@@ -271,15 +272,15 @@ range.</p>
             <pre>VALUE
 c_SourceRange_get_start(VALUE self)
 {
-  SourceRange_t *sr;
-  SourceLocation_t *sl;
-  VALUE a_source_location;
-  Data_Get_Struct(self, SourceRange_t, sr);
+    SourceRange_t *sr;
+    SourceLocation_t *sl;
+    VALUE a_source_location;
+    Data_Get_Struct(self, SourceRange_t, sr);
 
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, sl);
-  sl-&gt;data = clang_getRangeStart(sr-&gt;data);
-  sl-&gt;parent = self;
-  return a_source_location;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, sl);
+    sl-&gt;data = clang_getRangeStart(sr-&gt;data);
+    sl-&gt;parent = self;
+    return a_source_location;
 }</pre>
           </div>
           

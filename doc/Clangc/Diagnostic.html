@@ -150,7 +150,7 @@ text, source ranges, and fix-it hints.</p>
           <p>Retrieve the category number for this diagnostic.</p>
 
 <p>Diagnostics can be categorized into groups along with other, related
-diagnostics (e.g., diagnostics under the same warning flag). This routine 
+diagnostics (e.g., diagnostics under the same warning flag). This routine
 retrieves the category number for the given diagnostic.</p>
 
 <p>The number of the category that contains this diagnostic, or zero if this
@@ -163,10 +163,10 @@ diagnostic is uncategorized.</p>
             <pre>VALUE
 c_Diagnostic_get_category(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int category = clang_getDiagnosticCategory(d-&gt;data);
-  return CUINT_2_NUM(category);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int category = clang_getDiagnosticCategory(d-&gt;data);
+    return CUINT_2_NUM(category);
 }</pre>
           </div>
           
@@ -196,7 +196,7 @@ c_Diagnostic_get_category(VALUE self)
           
           <p>Retrieve the name of a particular diagnostic category.  This is now
 deprecated.  Use <a
-href="Diagnostic.html#method-i-category_text">#category_text</a>  instead.</p>
+href="Diagnostic.html#method-i-category_text">#category_text</a> instead.</p>
           
           
 
@@ -205,10 +205,11 @@ href="Diagnostic.html#method-i-category_text">#category_text</a>  instead.</p>
             <pre>VALUE
 c_Diagnostic_get_category_name(VALUE self)
 {
-// TODO deprecated write if macro based on clang vervion
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  return CXSTR_2_RVAL(clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d-&gt;data)));
+    // TODO deprecated write if macro based on clang vervion
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    return CXSTR_2_RVAL(
+        clang_getDiagnosticCategoryName(clang_getDiagnosticCategory(d-&gt;data)));
 }</pre>
           </div>
           
@@ -246,9 +247,9 @@ text of the given diagnostic category.</p>
             <pre>VALUE
 c_Diagnostic_get_category_text(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  return CXSTR_2_RVAL(clang_getDiagnosticCategoryText(d-&gt;data));
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    return CXSTR_2_RVAL(clang_getDiagnosticCategoryText(d-&gt;data));
 }</pre>
           </div>
           
@@ -296,10 +297,10 @@ combining Clangc::DiagnosticDisplayOptions constants.</p>
             <pre>VALUE
 c_Diagnostic_format(VALUE self, VALUE options)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int c_options = NUM2UINT(options);
-  return CXSTR_2_RVAL(clang_formatDiagnostic(d-&gt;data, c_options));
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int c_options = NUM2UINT(options);
+    return CXSTR_2_RVAL(clang_formatDiagnostic(d-&gt;data, c_options));
 }</pre>
           </div>
           
@@ -336,10 +337,10 @@ c_Diagnostic_format(VALUE self, VALUE options)
             <pre>VALUE
 c_Diagnostic_get_num_fixits(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int num = clang_getDiagnosticNumFixIts(d-&gt;data);
-  return CUINT_2_NUM(num);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int num = clang_getDiagnosticNumFixIts(d-&gt;data);
+    return CUINT_2_NUM(num);
 }</pre>
           </div>
           
@@ -376,10 +377,10 @@ c_Diagnostic_get_num_fixits(VALUE self)
             <pre>VALUE
 c_Diagnostic_get_num_ranges(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int num = clang_getDiagnosticNumRanges(d-&gt;data);
-  return CUINT_2_NUM(num);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int num = clang_getDiagnosticNumRanges(d-&gt;data);
+    return CUINT_2_NUM(num);
 }</pre>
           </div>
           
@@ -408,7 +409,7 @@ c_Diagnostic_get_num_ranges(VALUE self)
         <div class="method-description">
           
           <p>Retrieve the name of the command-line option that enabled this diagnostic
-such as (“-Wconversion” or “-pedantic”) and the option  that disables it if
+such as (“-Wconversion” or “-pedantic”) and the option that disables it if
 any. <a href="0">returned_array</a> == String command-line option that
 enabled the diagnostic <a href="1">returned_array</a> == String or nil
 command-line option that disable the diagnostic</p>
@@ -420,17 +421,17 @@ command-line option that disable the diagnostic</p>
             <pre>VALUE
 c_Diagnostic_get_option(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
 
-  CXString str1;
-  CXString str2;
-  str1 = clang_getDiagnosticOption(d-&gt;data, &amp;str2);
-  VALUE ret = rb_ary_new();
-  rb_ary_push(ret, CXSTR_2_RVAL(str1));
-  rb_ary_push(ret, CXSTR_2_RVAL(str2));
-  
-  return ret;
+    CXString str1;
+    CXString str2;
+    str1 = clang_getDiagnosticOption(d-&gt;data, &amp;str2);
+    VALUE ret = rb_ary_new();
+    rb_ary_push(ret, CXSTR_2_RVAL(str1));
+    rb_ary_push(ret, CXSTR_2_RVAL(str2));
+
+    return ret;
 }</pre>
           </div>
           
@@ -468,10 +469,10 @@ constants defined in Clangc::DiagnosticSeverity.constants</p>
             <pre>VALUE
 c_Diagnostic_get_severity(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  unsigned int severity = clang_getDiagnosticSeverity(d-&gt;data);
-  return CUINT_2_NUM(severity);
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int severity = clang_getDiagnosticSeverity(d-&gt;data);
+    return CUINT_2_NUM(severity);
 }</pre>
           </div>
           
@@ -511,14 +512,14 @@ displaying the diagnostic on the command line.</p>
             <pre>VALUE
 c_Diagnostic_get_source_location(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);  
-  VALUE a_source_location;
-  SourceLocation_t *sl;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, sl);
-  sl-&gt;data = clang_getDiagnosticLocation(d-&gt;data);
-  sl-&gt;parent = self;
-  return a_source_location;  
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    VALUE a_source_location;
+    SourceLocation_t *sl;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, sl);
+    sl-&gt;data = clang_getDiagnosticLocation(d-&gt;data);
+    sl-&gt;parent = self;
+    return a_source_location;
 }</pre>
           </div>
           
@@ -566,15 +567,15 @@ is being extracted.</p>
             <pre>VALUE
 c_Diagnostic_get_source_range(VALUE self, VALUE index)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);  
-  unsigned int c_index = NUM2UINT(index);
-  VALUE a_source_range;
-  SourceRange_t *s;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, a_source_range, s);
-  s-&gt;data = clang_getDiagnosticRange(d-&gt;data, c_index);
-  s-&gt;parent = self;
-  return a_source_range;
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int c_index = NUM2UINT(index);
+    VALUE a_source_range;
+    SourceRange_t *s;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, a_source_range, s);
+    s-&gt;data = clang_getDiagnosticRange(d-&gt;data, c_index);
+    s-&gt;parent = self;
+    return a_source_range;
 }</pre>
           </div>
           
@@ -656,9 +657,9 @@ empty if there is no <a href="SourceRange.html">Clangc::SourceRange</a></p>
             <pre>VALUE
 c_Diagnostic_get_spelling(VALUE self)
 {
-  Diagnostic_t *d;
-  Data_Get_Struct(self, Diagnostic_t, d);
-  return CXSTR_2_RVAL(clang_getDiagnosticSpelling(d-&gt;data));
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    return CXSTR_2_RVAL(clang_getDiagnosticSpelling(d-&gt;data));
 }</pre>
           </div>
           

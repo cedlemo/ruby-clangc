@@ -72,6 +72,8 @@
     
     <li ><a href="#method-i-container_usr">#container_usr</a>
     
+    <li ><a href="#method-i-contexts">#contexts</a>
+    
     <li ><a href="#method-i-diagnostic">#diagnostic</a>
     
     <li ><a href="#method-i-diagnostics">#diagnostics</a>
@@ -149,10 +151,53 @@ return the empty string.</p>
             <pre>VALUE
 c_CodeCompleteResults_get_container_usr(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  return CXSTR_2_RVAL(clang_codeCompleteGetContainerUSR(c-&gt;data));
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+    return CXSTR_2_RVAL(clang_codeCompleteGetContainerUSR(c-&gt;data));
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-contexts" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::CodeCompleteResults#contexts &rarr; Number
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Determines what completions are appropriate for the context the given code
+completion.</p>
+
+<p>the kinds of completions that are appropriate for use along with the given
+code completion results.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="contexts-source">
+            <pre>VALUE
+c_CodeCompleteResults_get_contexts(VALUE self)
+{
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+    CULLONG_2_NUM(clang_codeCompleteGetContexts(c-&gt;data));
 }</pre>
           </div>
           
@@ -189,17 +234,17 @@ c_CodeCompleteResults_get_container_usr(VALUE self)
             <pre>VALUE
 c_CodeCompleteResults_get_diagnostic(VALUE self, VALUE index)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  VALUE diagnostic;
-  Diagnostic_t *d;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, Diagnostic, diagnostic, d);
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
 
-  d-&gt;data = clang_codeCompleteGetDiagnostic(c-&gt;data, NUM2UINT(index));
-  d-&gt;parent = c-&gt;parent;
+    VALUE diagnostic;
+    Diagnostic_t *d;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, Diagnostic, diagnostic, d);
 
-  return diagnostic;
+    d-&gt;data = clang_codeCompleteGetDiagnostic(c-&gt;data, NUM2UINT(index));
+    d-&gt;parent = c-&gt;parent;
+
+    return diagnostic;
 }</pre>
           </div>
           
@@ -233,7 +278,7 @@ c_CodeCompleteResults_get_diagnostic(VALUE self, VALUE index)
 
           
           <div class="method-source-code" id="diagnostics-source">
-            <pre><span class="ruby-comment"># File lib/clangc.rb, line 315</span>
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 332</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diagnostics</span>
   <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_diagnostics</span>
   <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
@@ -280,10 +325,10 @@ code completion was performed.</p>
             <pre>VALUE
 c_CodeCompleteResults_get_num_diagnostics(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  return CUINT_2_NUM(clang_codeCompleteGetNumDiagnostics(c-&gt;data));
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+    return CUINT_2_NUM(clang_codeCompleteGetNumDiagnostics(c-&gt;data));
 }</pre>
           </div>
           
@@ -323,10 +368,10 @@ href="CompletionResult.html">Clangc::CompletionResult</a></p>
             <pre>VALUE
 c_CodeCompleteResults_get_num_results(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
 
-  return CUINT_2_NUM(c-&gt;data-&gt;NumResults);
+    return CUINT_2_NUM(c-&gt;data-&gt;NumResults);
 }</pre>
           </div>
           
@@ -367,20 +412,19 @@ libclang function</p>
             <pre>VALUE
 c_CodeCompleteResults_get_result(VALUE self, VALUE index)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  unsigned i =  NUM2UINT(index);
-  
-  if (i &lt; 0 || i &gt; c-&gt;data-&gt;NumResults)
-    return Qnil;
-  
-  VALUE result;
-  CompletionResult_t *cr;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionResult, result, cr);
-  cr-&gt;data = &amp;(c-&gt;data-&gt;Results[i]);
-  cr-&gt;parent = self;
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+    unsigned i = NUM2UINT(index);
 
-  return result;
+    if (i &lt; 0 || i &gt; c-&gt;data-&gt;NumResults) return Qnil;
+
+    VALUE result;
+    CompletionResult_t *cr;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, CompletionResult, result, cr);
+    cr-&gt;data = &amp;(c-&gt;data-&gt;Results[i]);
+    cr-&gt;parent = self;
+
+    return result;
 }</pre>
           </div>
           
@@ -415,7 +459,7 @@ href="CompletionResult.html">Clangc::CompletionResult</a></p>
 
           
           <div class="method-source-code" id="results-source">
-            <pre><span class="ruby-comment"># File lib/clangc.rb, line 300</span>
+            <pre><span class="ruby-comment"># File lib/clangc.rb, line 317</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">results</span>
   <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num_results</span>
   <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
@@ -452,7 +496,7 @@ href="CompletionResult.html">Clangc::CompletionResult</a></p>
 
         <div class="method-description">
           
-          <p>Sort the code-completion results in case-insensitive alphabetical  order.</p>
+          <p>Sort the code-completion results in case-insensitive alphabetical order.</p>
           
           
 
@@ -461,11 +505,11 @@ href="CompletionResult.html">Clangc::CompletionResult</a></p>
             <pre>VALUE
 c_CodeCompleteResults_sort_results(VALUE self)
 {
-  CodeCompleteResults_t *c;
-  Data_Get_Struct(self, CodeCompleteResults_t, c);
-  
-  clang_sortCodeCompletionResults(c-&gt;data-&gt;Results, c-&gt;data-&gt;NumResults);
-  return Qnil;
+    CodeCompleteResults_t *c;
+    Data_Get_Struct(self, CodeCompleteResults_t, c);
+
+    clang_sortCodeCompletionResults(c-&gt;data-&gt;Results, c-&gt;data-&gt;NumResults);
+    return Qnil;
 }</pre>
           </div>
           

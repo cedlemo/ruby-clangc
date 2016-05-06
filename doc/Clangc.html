@@ -136,7 +136,7 @@
         <div class="method-description">
           
           <p>Returns a default set of code-completion options that can be passed to
-Clangc::TranslationUnit#codeCompleteAt.  This set is be bitwise-OR&#39;d
+Clangc::TranslationUnit#codeCompleteAt. This set is be bitwise-OR&#39;d
 constants of the Clangc::CodeComplete_Flags</p>
           
           
@@ -146,7 +146,7 @@ constants of the Clangc::CodeComplete_Flags</p>
             <pre>VALUE
 m_clangc_get_default_code_complete_options(VALUE self)
 {
-  return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
+    return CUINT_2_NUM(clang_defaultCodeCompleteOptions());
 }</pre>
           </div>
           
@@ -187,7 +187,7 @@ href="Clangc/Diagnostic.html#method-i-format">Clangc::Diagnostic#format</a></p>
             <pre>VALUE
 m_clangc_get_default_diagnostic_display_options(VALUE self)
 {
-  return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
+    return CUINT_2_NUM(clang_defaultDiagnosticDisplayOptions());
 }</pre>
           </div>
           
@@ -224,7 +224,7 @@ likely to be reparsed many times, either explicitly (via <a
 href="Clangc/TranslationUnit.html#method-i-reparse">Clangc::TranslationUnit#reparse</a>)
 or implicitly (e.g., by code completion (
 Clangc::TranslationUnit#CodeCompleteAt). The returned flag set contains an
-unspecified set of optimizations (e.g., the precompiled  preamble) geared
+unspecified set of optimizations (e.g., the precompiled preamble) geared
 toward improving the performance of these routines. The set of
 optimizations enabled may change from one version to the next.</p>
           
@@ -235,7 +235,7 @@ optimizations enabled may change from one version to the next.</p>
             <pre>VALUE
 m_clangc_get_default_editing_translation_unit_options(VALUE self)
 {
-  return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
+    return CUINT_2_NUM(clang_defaultEditingTranslationUnitOptions());
 }</pre>
           </div>
           
@@ -272,11 +272,11 @@ m_clangc_get_default_editing_translation_unit_options(VALUE self)
             <pre>VALUE
 m_clangc_get_null_cursor(VALUE self)
 {
-  Cursor_t *c;
-  VALUE a_cursor;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, a_cursor, c);
-  c-&gt;data = clang_getNullCursor();
-  return a_cursor;
+    Cursor_t *c;
+    VALUE cursor;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, Cursor, cursor, c);
+    c-&gt;data = clang_getNullCursor();
+    return cursor;
 }</pre>
           </div>
           
@@ -313,11 +313,11 @@ m_clangc_get_null_cursor(VALUE self)
             <pre>VALUE
 m_clangc_get_null_source_location(VALUE self)
 {
-  SourceLocation_t *s;
-  VALUE a_source_location;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, a_source_location, s);
-  s-&gt;data = clang_getNullLocation();
-  return a_source_location;
+    SourceLocation_t *s;
+    VALUE source_location;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceLocation, source_location, s);
+    s-&gt;data = clang_getNullLocation();
+    return source_location;
 }</pre>
           </div>
           
@@ -354,11 +354,11 @@ m_clangc_get_null_source_location(VALUE self)
             <pre>VALUE
 m_clangc_get_null_source_range(VALUE self)
 {
-  SourceRange_t *s;
-  VALUE a_source_range;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, a_source_range, s);
-  s-&gt;data = clang_getNullRange();
-  return a_source_range;
+    SourceRange_t *s;
+    VALUE source_range;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, source_range, s);
+    s-&gt;data = clang_getNullRange();
+    return source_range;
 }</pre>
           </div>
           
@@ -375,10 +375,17 @@ m_clangc_get_null_source_range(VALUE self)
         
         <div class="method-heading">
           <span class="method-callseq">
-            range(Clangc::SourceLocation, Clangc::SourceLocation) &rarr; Clangc::SourceRange
+            range(Clangc::SourceLocation, Clangc::SourceLocation) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::SourceRange
+          </span>
           
         </div>
         
@@ -395,27 +402,28 @@ m_clangc_get_null_source_range(VALUE self)
             <pre>VALUE
 m_clangc_get_range(VALUE self, VALUE begin, VALUE end)
 {
-  CHECK_ARG_TYPE(begin, SourceLocation);
-  CHECK_ARG_TYPE(end, SourceLocation);
-  
-  SourceLocation_t *b;
-  SourceLocation_t *e;
-  Data_Get_Struct(begin, SourceLocation_t, b);
-  Data_Get_Struct(end, SourceLocation_t, e);
-  // TODO Should I add a check to see if they come from the same 
-  // file / TU
-  VALUE range;
-  SourceRange_t *s;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, range, s);
+    CHECK_ARG_TYPE(begin, SourceLocation);
+    CHECK_ARG_TYPE(end, SourceLocation);
 
-  s-&gt;data =  clang_getRange(b-&gt;data, e-&gt;data);
-  
-  // We use the parent of the first parameter (no real reason)
-  SourceRange_t *p;
-  Data_Get_Struct(b-&gt;parent, SourceRange_t, p);
-  s-&gt;parent = p-&gt;parent;
+    SourceLocation_t *b;
+    SourceLocation_t *e;
+    VALUE range;
+    SourceRange_t *s;
+    SourceRange_t *p;
 
-  return range;
+    Data_Get_Struct(begin, SourceLocation_t, b);
+    Data_Get_Struct(end, SourceLocation_t, e);
+    // TODO Should I add a check to see if they come from the same
+    // file / TU
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, range, s);
+
+    s-&gt;data = clang_getRange(b-&gt;data, e-&gt;data);
+
+    // We use the parent of the first parameter (no real reason)
+    Data_Get_Struct(b-&gt;parent, SourceRange_t, p);
+    s-&gt;parent = p-&gt;parent;
+
+    return range;
 }</pre>
           </div>
           
@@ -453,7 +461,7 @@ to be parsed (the format is not guaranteed to be stable).</p>
             <pre>VALUE
 m_clangc_get_version(VALUE self)
 {
-  return CXSTR_2_RVAL(clang_getClangVersion());
+    return CXSTR_2_RVAL(clang_getClangVersion());
 }</pre>
           </div>
           
@@ -572,17 +580,17 @@ returning Clangc::ChildVisitiResult::Break.</p>
             <pre>VALUE
 m_clangc_visit_children_with_block(VALUE self, VALUE cursor)
 {
-  if(rb_block_given_p() == 0)
-      rb_raise(rb_eTypeError, &quot;Need a block&quot;);
+    if (rb_block_given_p() == 0) rb_raise(rb_eTypeError, &quot;Need a block&quot;);
 
-  VALUE callback = rb_block_proc();
+    VALUE callback = rb_block_proc();
+    Cursor_t *c;
+    unsigned ret_with_break;
 
-  Cursor_t *c;
-  Data_Get_Struct(cursor, Cursor_t, c);
-  unsigned ret_with_break = clang_visitChildren(c-&gt;data,
-                                                visitor,
-                                                (CXClientData) callback);
-  return NOT_0_2_RVAL(ret_with_break);
+    Data_Get_Struct(cursor, Cursor_t, c);
+    ret_with_break = clang_visitChildren(c-&gt;data,
+                                         visitor,
+                                         (CXClientData) callback);
+    return NOT_0_2_RVAL(ret_with_break);
 }</pre>
           </div>
           
@@ -639,17 +647,17 @@ returning Clangc::ChildVisitiResult::Break.</p>
             <pre>VALUE
 m_clangc_visit_children_with_proc(VALUE self, VALUE cursor, VALUE aproc)
 {
-  if (rb_class_of(aproc) != rb_cProc)
-    rb_raise(rb_eTypeError, &quot;Need a block&quot;);
+    if (rb_class_of(aproc) != rb_cProc) rb_raise(rb_eTypeError, &quot;Need a block&quot;);
 
-  VALUE callback = aproc;
+    VALUE callback = aproc;
+    Cursor_t *c;
+    unsigned ret_with_break;
 
-  Cursor_t *c;
-  Data_Get_Struct(cursor, Cursor_t, c);
-  unsigned ret_with_break = clang_visitChildren(c-&gt;data,
-                                                visitor,
-                                                (CXClientData) callback);
-  return NOT_0_2_RVAL(ret_with_break);
+    Data_Get_Struct(cursor, Cursor_t, c);
+    ret_with_break = clang_visitChildren(c-&gt;data,
+                                         visitor,
+                                         (CXClientData) callback);
+    return NOT_0_2_RVAL(ret_with_break);
 }</pre>
           </div>
           

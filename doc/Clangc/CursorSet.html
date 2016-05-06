@@ -137,11 +137,12 @@ href="Cursor.html">Clangc::Cursor</a>.</p>
           
           <div class="method-source-code" id="new-source">
             <pre>VALUE
-c_CursorSet_initialize(VALUE self) {
-  CursorSet_t *c;
-  Data_Get_Struct(self, CursorSet_t, c);
-  c-&gt;data = clang_createCXCursorSet();
-  return self;
+c_CursorSet_initialize(VALUE self)
+{
+    CursorSet_t *c;
+    Data_Get_Struct(self, CursorSet_t, c);
+    c-&gt;data = clang_createCXCursorSet();
+    return self;
 }</pre>
           </div>
           
@@ -188,14 +189,14 @@ c_CursorSet_initialize(VALUE self) {
             <pre>VALUE
 c_CursorSet_contains(VALUE self, VALUE cursor)
 {
-  CursorSet_t *cs;
-  Cursor_t *c;
+    CursorSet_t *cs;
+    Cursor_t *c;
 
-  Data_Get_Struct(self, CursorSet_t, cs);
-  CHECK_ARG_TYPE(cursor, Cursor);
-  Data_Get_Struct(cursor, Cursor_t, c);
+    Data_Get_Struct(self, CursorSet_t, cs);
+    CHECK_ARG_TYPE(cursor, Cursor);
+    Data_Get_Struct(cursor, Cursor_t, c);
 
-  return NOT_0_2_RVAL(clang_CXCursorSet_contains(cs-&gt;data, c-&gt;data));
+    return NOT_0_2_RVAL(clang_CXCursorSet_contains(cs-&gt;data, c-&gt;data));
 }</pre>
           </div>
           
@@ -234,14 +235,14 @@ c_CursorSet_contains(VALUE self, VALUE cursor)
             <pre>VALUE
 c_CursorSet_insert(VALUE self, VALUE cursor)
 {
-  CursorSet_t *cs;
-  Cursor_t *c;
+    CursorSet_t *cs;
+    Cursor_t *c;
 
-  Data_Get_Struct(self, CursorSet_t, cs);
-  CHECK_ARG_TYPE(cursor, Cursor);
-  Data_Get_Struct(cursor, Cursor_t, c);
+    Data_Get_Struct(self, CursorSet_t, cs);
+    CHECK_ARG_TYPE(cursor, Cursor);
+    Data_Get_Struct(cursor, Cursor_t, c);
 
-  return NOT_0_2_RVAL(clang_CXCursorSet_insert(cs-&gt;data, c-&gt;data));
+    return NOT_0_2_RVAL(clang_CXCursorSet_insert(cs-&gt;data, c-&gt;data));
 }</pre>
           </div>
           

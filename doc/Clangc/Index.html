@@ -78,6 +78,8 @@
     
     <li ><a href="#method-i-create_translation_unit_from_source_file">#create_translation_unit_from_source_file</a>
     
+    <li ><a href="#method-i-create_translation_unit_raw">#create_translation_unit_raw</a>
+    
     <li ><a href="#method-i-global_options">#global_options</a>
     
     <li ><a href="#method-i-global_options-3D">#global_options=</a>
@@ -85,6 +87,8 @@
     <li ><a href="#method-i-parse_translation_unit">#parse_translation_unit</a>
     
     <li ><a href="#method-i-parse_translation_unit2">#parse_translation_unit2</a>
+    
+    <li ><a href="#method-i-parse_translation_unit_raw">#parse_translation_unit_raw</a>
     
   </ul>
 </div>
@@ -128,10 +132,17 @@ linked together into an executable or library.</p>
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Index.new(exclude_decl_from_pch, display_diagnostics) &rarr; Clangc::Index
+            Clangc::Index.new(exclude_decl_from_pch, display_diagnostics) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::Index
+          </span>
           
         </div>
         
@@ -166,12 +177,20 @@ user to display them.</p>
           
           <div class="method-source-code" id="new-source">
             <pre>VALUE
-c_Index_initialize(VALUE self, VALUE excl_decls_from_PCH, VALUE display_diagnostics) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  i-&gt;data = clang_createIndex(RBOOL_2_INT(excl_decls_from_PCH),
-                              RBOOL_2_INT(display_diagnostics));
-  return self;
+c_Index_initialize(VALUE self,
+                   VALUE excl_decls_from_PCH,
+                   VALUE display_diagnostics)
+{
+    Index_t *i;
+    int c_excl_decls_from_PCH;
+    int c_display_diagnostics;
+
+    c_excl_decls_from_PCH = RBOOL_2_INT(excl_decls_from_PCH);
+    c_display_diagnostics = RBOOL_2_INT(display_diagnostics);
+    Data_Get_Struct(self, Index_t, i);
+
+    i-&gt;data = clang_createIndex(c_excl_decls_from_PCH, c_display_diagnostics);
+    return self;
 }</pre>
           </div>
           
@@ -215,27 +234,32 @@ returns nil. The AST file is created by clang with the option -emit-ast</p>
           
           <div class="method-source-code" id="create_translation_unit-source">
             <pre>VALUE
-c_Index_create_TU(VALUE self, VALUE ast_file) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
-  char *c_ast_file = NULL;
-  c_ast_file = RSTRING_2_CHAR(ast_file);
-  c_tu-&gt;data = clang_createTranslationUnit( i-&gt;data, c_ast_file);
+c_Index_create_TU(VALUE self, VALUE ast_file)
+{
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+    char *c_ast_file = NULL;
+    c_ast_file = RSTRING_2_CHAR(ast_file);
+    c_tu-&gt;data = clang_createTranslationUnit(i-&gt;data, c_ast_file);
 
-  c_tu-&gt;parent = self;
+    c_tu-&gt;parent = self;
 
-  if(c_tu-&gt;data)
-    return tu;
-  else
-    return Qnil;
+    if (c_tu-&gt;data)
+        return tu;
+    else
+        return Qnil;
 }</pre>
           </div>
           
         </div>
 
+        
+        <div class="aliases">
+          Also aliased as: <a href="Index.html#method-i-create_translation_unit_raw">create_translation_unit_raw</a>
+        </div>
         
 
         
@@ -247,10 +271,17 @@ c_Index_create_TU(VALUE self, VALUE ast_file) {
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Index#create_translation_unit2(ast_file) &rarr; Clangc::TranslationUnit or an error code
+            Clangc::Index#create_translation_unit2(ast_file) &rarr; Clangc::TranslationUnit
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            or an error code
+          </span>
           
         </div>
         
@@ -270,21 +301,22 @@ with the option -emit-ast</p>
             <pre>VALUE
 c_Index_create_TU2(VALUE self, VALUE ast_file)
 {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
-  char *c_ast_file = NULL;
-  c_ast_file = RSTRING_2_CHAR(ast_file);
-  unsigned int er = clang_createTranslationUnit2( i-&gt;data, c_ast_file, &amp;(c_tu-&gt;data));
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+    char *c_ast_file = NULL;
+    c_ast_file = RSTRING_2_CHAR(ast_file);
+    unsigned int er =
+        clang_createTranslationUnit2(i-&gt;data, c_ast_file, &amp;(c_tu-&gt;data));
 
-  c_tu-&gt;parent = self;
+    c_tu-&gt;parent = self;
 
-  if(er != 0)
-    return CUINT_2_NUM(er);
-  else
-    return tu;
+    if (er != 0)
+        return CUINT_2_NUM(er);
+    else
+        return tu;
 }</pre>
           </div>
           
@@ -301,10 +333,17 @@ c_Index_create_TU2(VALUE self, VALUE ast_file)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Index#create_translation_unit_from_source_file(source, args) &rarr; Clangc::TranslationUnit
+            Clangc::Index#create_translation_unit_from_source_file(source, args) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit
+          </span>
           
         </div>
         
@@ -346,32 +385,34 @@ default), and &#39;-o &lt;output file&gt;&#39;.</p>
 <p>the files that have not yet been saved to disk but may be required for code
 completion, including the contents of those files.  The contents and name
 of these files (as specified by CXUnsavedFile) are copied when necessary,
-so the  client only needs to guarantee their validity until the call to
-this function  returns.</p>
+so the client only needs to guarantee their validity until the call to this
+function returns.</p>
           
           
 
           
           <div class="method-source-code" id="create_translation_unit_from_source_file-source">
             <pre>VALUE
-c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
-  char *c_source_file = NULL;
-  c_source_file = RSTRING_2_CHAR(source_file);
-  RARRAY_OF_STRINGS_2_C(args);
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
-  c_tu-&gt;data = clang_createTranslationUnitFromSourceFile( i-&gt;data,
-                                                          c_source_file,
-                                                          len, c_args, 0, 0); // TODO manage unsaved files
-  c_tu-&gt;parent = self;
+c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args)
+{
+    char *c_source_file = NULL;
+    Index_t *i;
+    VALUE tu;
+    TranslationUnit_t *c_tu;
 
-  if(c_tu-&gt;data != NULL)
-    return tu;
-  else
-    return Qnil;
+    c_source_file = RSTRING_2_CHAR(source_file);
+    RARRAY_OF_STRINGS_2_C(args);
+    Data_Get_Struct(self, Index_t, i);
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+
+    c_tu-&gt;data = clang_createTranslationUnitFromSourceFile(
+        i-&gt;data, c_source_file, len, c_args, 0, 0); // TODO manage unsaved files
+    c_tu-&gt;parent = self;
+
+    if (c_tu-&gt;data != NULL)
+        return tu;
+    else
+        return Qnil;
 }</pre>
           </div>
           
@@ -379,6 +420,42 @@ c_Index_create_TU_from_source_file(VALUE self, VALUE source_file, VALUE args) {
 
         
 
+        
+      </div>
+
+    
+      <div id="method-i-create_translation_unit_raw" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">create_translation_unit_raw</span><span
+            class="method-args">(p1)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>:call-seq:</p>
+
+<pre class="ruby"><span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">Index</span><span class="ruby-comment">#translation_unit(options) =&gt; Clangc::TranslationUnit</span>
+</pre>
+
+<p>Convenient method that easily allow to create a translation unit through
+different ways based on the options you use: :source =&gt; source file
+:args   =&gt; command line arguments :error  =&gt; true or false or nil
+:ast =&gt; String an ast file</p>
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Index.html#method-i-create_translation_unit">create_translation_unit</a>
+        </div>
         
       </div>
 
@@ -407,10 +484,11 @@ A bitmask of options, a bitwise OR of the Clangc::GlobalOptFlags constants.</p>
           
           <div class="method-source-code" id="global_options-source">
             <pre>VALUE
-c_Index_get_global_options(VALUE self) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i-&gt;data));
+c_Index_get_global_options(VALUE self)
+{
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    return CUINT_2_NUM(clang_CXIndex_getGlobalOptions(i-&gt;data));
 }</pre>
           </div>
           
@@ -451,12 +529,15 @@ instance.</p>
           
           <div class="method-source-code" id="global_options-3D-source">
             <pre>VALUE
-c_Index_set_global_options(VALUE self, VALUE options) {
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  unsigned int c_options = NUM2UINT(options);
-  clang_CXIndex_setGlobalOptions(i-&gt;data,c_options);
-  return Qnil;
+c_Index_set_global_options(VALUE self, VALUE options)
+{
+    Index_t *i;
+    unsigned int c_options;
+
+    Data_Get_Struct(self, Index_t, i);
+    c_options = NUM2UINT(options);
+    clang_CXIndex_setGlobalOptions(i-&gt;data, c_options);
+    return Qnil;
 }</pre>
           </div>
           
@@ -473,10 +554,17 @@ c_Index_set_global_options(VALUE self, VALUE options) {
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Index#parse_translation_unit(source_file, args, options) &rarr; Clangc::TranslationUnit
+            Clangc::Index#parse_translation_unit(source_file, args, options) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit
+          </span>
           
         </div>
         
@@ -505,7 +593,7 @@ in the command line arguments.</p>
 <p>The command-line arguments that would be passed to the clang executable if
 it were being invoked out-of-process. These command-line options will be
 parsed and will affect how the translation unit is parsed. Note that the
-following options are ignored: &#39;-c&#39;,  &#39;-emit-ast&#39;,
+following options are ignored: &#39;-c&#39;, &#39;-emit-ast&#39;,
 &#39;-fsyntax-only&#39; (which is the default), and &#39;-o &lt;output
 file&gt;&#39;.</p>
 <ul><li>
@@ -539,35 +627,42 @@ function returns.</p>
             <pre>VALUE
 c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
 {
-  char *c_source_file = NULL;
-  c_source_file = RSTRING_2_CHAR(source_file);
-  
-  unsigned int c_options = NUM2UINT(options);
+    char *c_source_file = NULL;
+    c_source_file = RSTRING_2_CHAR(source_file);
 
-  RARRAY_OF_STRINGS_2_C(args);
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+    unsigned int c_options = NUM2UINT(options);
 
-  c_tu-&gt;data = clang_parseTranslationUnit( i-&gt;data,
-                                                          c_source_file,
-                                                          c_args, len, 
-                                                          0, 0, c_options); // TODO manage unsaved files
-  
+    RARRAY_OF_STRINGS_2_C(args);
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
 
-  c_tu-&gt;parent = self;
+    c_tu-&gt;data =
+        clang_parseTranslationUnit(i-&gt;data,
+                                   c_source_file,
+                                   c_args,
+                                   len,
+                                   0,
+                                   0,
+                                   c_options); // TODO manage unsaved files
 
-  if (c_tu-&gt;data)
-    return tu;
-  else
-    return Qnil;
+    c_tu-&gt;parent = self;
+
+    if (c_tu-&gt;data)
+        return tu;
+    else
+        return Qnil;
 }</pre>
           </div>
           
         </div>
 
+        
+        <div class="aliases">
+          Also aliased as: <a href="Index.html#method-i-parse_translation_unit_raw">parse_translation_unit_raw</a>
+        </div>
         
 
         
@@ -579,10 +674,17 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
         
         <div class="method-heading">
           <span class="method-callseq">
-            Clangc::Index#parse_translation_unit2(source_file, args, options) &rarr; Clangc::TranslationUnit
+            Clangc::Index#parse_translation_unit2(source_file, args, options) &rarr;
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit
+          </span>
           
         </div>
         
@@ -591,7 +693,7 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
         <div class="method-description">
           
           <p>Parse the given source file and generate the translation unit corresponding
-to that file. If its fails, it returns an Integer corresponding to the 
+to that file. If its fails, it returns an Integer corresponding to the
 error code a Clangc::ErrorCode constant.</p>
 
 <p>This routine is the main entry point for the Clang C API, providing the
@@ -612,7 +714,7 @@ in the command line arguments.</p>
 <p>The command-line arguments that would be passed to the clang executable if
 it were being invoked out-of-process. These command-line options will be
 parsed and will affect how the translation unit is parsed. Note that the
-following options are ignored: &#39;-c&#39;,  &#39;-emit-ast&#39;,
+following options are ignored: &#39;-c&#39;, &#39;-emit-ast&#39;,
 &#39;-fsyntax-only&#39; (which is the default), and &#39;-o &lt;output
 file&gt;&#39;.</p>
 <ul><li>
@@ -644,31 +746,36 @@ function returns.</p>
           
           <div class="method-source-code" id="parse_translation_unit2-source">
             <pre>VALUE
-c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
-  char *c_source_file = NULL;
-  c_source_file = RSTRING_2_CHAR(source_file);
-  
-  unsigned int c_options = NUM2UINT(options);
+c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options)
+{
+    char *c_source_file = NULL;
+    c_source_file = RSTRING_2_CHAR(source_file);
 
-  RARRAY_OF_STRINGS_2_C(args);
-  Index_t *i;
-  Data_Get_Struct(self, Index_t, i);
-  VALUE tu;
-  TranslationUnit_t *c_tu;
-  R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
+    unsigned int c_options = NUM2UINT(options);
 
-  unsigned int er = clang_parseTranslationUnit2(i-&gt;data,
-                                        c_source_file,
-                                        c_args, len, 
-                                        0, 0, c_options, // TODO manage unsaved files
-                                        &amp;(c_tu-&gt;data)); 
+    RARRAY_OF_STRINGS_2_C(args);
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA(&quot;Clangc&quot;, TranslationUnit, tu, c_tu);
 
-  c_tu-&gt;parent = self;
+    unsigned int er =
+        clang_parseTranslationUnit2(i-&gt;data,
+                                    c_source_file,
+                                    c_args,
+                                    len,
+                                    0,
+                                    0,
+                                    c_options, // TODO manage unsaved files
+                                    &amp;(c_tu-&gt;data));
 
-  if(er != 0)
-    return CUINT_2_NUM(er);
-  else
-    return tu;
+    c_tu-&gt;parent = self;
+
+    if (er != 0)
+        return CUINT_2_NUM(er);
+    else
+        return tu;
 }</pre>
           </div>
           
@@ -676,6 +783,42 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options) {
 
         
 
+        
+      </div>
+
+    
+      <div id="method-i-parse_translation_unit_raw" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_translation_unit_raw</span><span
+            class="method-args">(p1, p2, p3)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>:call-seq:</p>
+
+<pre class="ruby"><span class="ruby-constant">Clangc</span><span class="ruby-operator">::</span><span class="ruby-constant">Index</span><span class="ruby-comment">#parse_translation_unit(options) =&gt; Clangc::TranslationUnit</span>
+</pre>
+
+<p>Convenient method that easily allow to parse a file to a translation unit
+through different ways based on the options you use: :source =&gt; source
+file :args   =&gt; command line arguments :error  =&gt; true or false or
+nil :flags  =&gt; bitwise OR of the TranslationUnit_Flags constants</p>
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Index.html#method-i-parse_translation_unit">parse_translation_unit</a>
+        </div>
         
       </div>
 

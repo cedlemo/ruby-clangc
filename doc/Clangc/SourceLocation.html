@@ -162,31 +162,31 @@ the given source location points. (the position in the file)</p>
           <div class="method-source-code" id="file_location-source">
             <pre>VALUE c_SourceLocation_get_file_location(VALUE self)
 {
-  VALUE ret = rb_ary_new();
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf = NULL;
-  unsigned int line;
-  unsigned int column;
-  unsigned int offset;
-  clang_getFileLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
-//  if(&amp;cxf)
-//  {
+    VALUE ret = rb_ary_new();
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    CXFile cxf = NULL;
+    unsigned int line;
+    unsigned int column;
+    unsigned int offset;
+    clang_getFileLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
+    //  if(&amp;cxf)
+    //  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxf;
     f-&gt;parent = self;
     rb_ary_push(ret, file);
-//  }
-//  else
-//    rb_ary_push(ret, Qnil);
-  
-  rb_ary_push(ret, CUINT_2_NUM(line));
-  rb_ary_push(ret, CUINT_2_NUM(column));
-  rb_ary_push(ret, CUINT_2_NUM(offset));
-    
-  return ret;
+    //  }
+    //  else
+    //    rb_ary_push(ret, Qnil);
+
+    rb_ary_push(ret, CUINT_2_NUM(line));
+    rb_ary_push(ret, CUINT_2_NUM(column));
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+
+    return ret;
 }</pre>
           </div>
           
@@ -227,13 +227,13 @@ refer to different locations.</p>
             <pre>VALUE
 c_SourceLocation_is_equal(VALUE self, VALUE source_location)
 {
-  SourceLocation_t *s;
-  SourceLocation_t *sl;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  CHECK_ARG_TYPE(source_location, SourceLocation);
-  Data_Get_Struct(source_location, SourceLocation_t, sl);
-  
-  return NOT_0_2_RVAL(clang_equalLocations(s-&gt;data, sl-&gt;data));
+    SourceLocation_t *s;
+    SourceLocation_t *sl;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    CHECK_ARG_TYPE(source_location, SourceLocation);
+    Data_Get_Struct(source_location, SourceLocation_t, sl);
+
+    return NOT_0_2_RVAL(clang_equalLocations(s-&gt;data, sl-&gt;data));
 }</pre>
           </div>
           
@@ -271,9 +271,9 @@ corresponding translation unit.</p>
             <pre>VALUE
 c_SourceLocation_is_from_main_file(VALUE self)
 {
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  return NOT_0_2_RVAL(clang_Location_isFromMainFile(s-&gt;data));
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    return NOT_0_2_RVAL(clang_Location_isFromMainFile(s-&gt;data));
 }</pre>
           </div>
           
@@ -310,9 +310,9 @@ c_SourceLocation_is_from_main_file(VALUE self)
             <pre>VALUE
 c_SourceLocation_is_in_system_header(VALUE self)
 {
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  return NOT_0_2_RVAL(clang_Location_isInSystemHeader(s-&gt;data));
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    return NOT_0_2_RVAL(clang_Location_isInSystemHeader(s-&gt;data));
 }</pre>
           </div>
           
@@ -366,31 +366,31 @@ the given source location points. (the position in the file)</p>
           <div class="method-source-code" id="spelling-source">
             <pre>VALUE c_SourceLocation_get_spelling(VALUE self)
 {
-  VALUE ret = rb_ary_new();
-  SourceLocation_t *s;
-  Data_Get_Struct(self, SourceLocation_t, s);
-  CXFile cxf = NULL;
-  unsigned int line = 0;
-  unsigned int column = 0;
-  unsigned int offset = 0;
-  clang_getSpellingLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
-//  if(&amp;cxf)
-//  {
+    VALUE ret = rb_ary_new();
+    SourceLocation_t *s;
+    Data_Get_Struct(self, SourceLocation_t, s);
+    CXFile cxf = NULL;
+    unsigned int line = 0;
+    unsigned int column = 0;
+    unsigned int offset = 0;
+    clang_getSpellingLocation(s-&gt;data, &amp;cxf, &amp;line, &amp;column, &amp;offset);
+    //  if(&amp;cxf)
+    //  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA(&quot;Clangc&quot;, File, file, f);
     f-&gt;data = cxf;
     f-&gt;parent = self;
     rb_ary_push(ret, file);
-//  }
-//  else
-//    rb_ary_push(ret, Qnil);
+    //  }
+    //  else
+    //    rb_ary_push(ret, Qnil);
 
-  rb_ary_push(ret, CUINT_2_NUM(line));
-  rb_ary_push(ret, CUINT_2_NUM(column));
-  rb_ary_push(ret, CUINT_2_NUM(offset));
-    
-  return ret;
+    rb_ary_push(ret, CUINT_2_NUM(line));
+    rb_ary_push(ret, CUINT_2_NUM(column));
+    rb_ary_push(ret, CUINT_2_NUM(offset));
+
+    return ret;
 }</pre>
           </div>
           
