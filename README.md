@@ -243,7 +243,9 @@ clang_headers_path = Dir.glob("/usr/lib/clang/*/include").collect {|x| "-I#{x}"}
 source = "#{File.expand_path(File.dirname(__FILE__))}/list.c"
 options = Clangc::TranslationUnit_Flags::NONE
 
-tu = cindex.parse_translation_unit(source, clang_headers_path, options)
+tu = cindex.parse_translation_unit(source: source,
+                                   args: clang_headers_path,
+                                   flags: options)
 
 exit unless tu
 
