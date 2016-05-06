@@ -93,6 +93,42 @@ static inline char *rstring_2_char(VALUE rval)
 }
 #define RSTRING_2_CHAR(rval) rstring_2_char(rval)
 
+static int symbol_2_const(char *module_name, char *enum_name, VALUE sym)
+{
+  VALUE main_module, enum_module, constant_name;
+  main_module = rb_const_get(rb_cObject, rb_intern(module_name));
+  enum_module = rb_const_get(main_module, rb_intern(enum_name));
+  constant_name = rb_funcall(sym, rb_intern("upcase"), 0, NULL);
+  
+  return NUM2INT(rb_const_get(enum_module, rb_intern_str(constant_name)));
+}
+
+static int bitmask_or_array(char *module_name, char *enum_name, VALUE array)
+{
+  int or_sum = 0;
+  int i = 0;
+  int len = rb_array_len(array);
+  
+  for(i = 0; i < len; i++)
+  {
+    VALUE sym = rb_ary_entry(array, i);
+    or_sum = or_sum | symbol_2_const(module_name, enum_name, sym);
+  }
+  return or_sum;
+}
+
+static int rb_constant_argument_to_int(char *module_name, char *enum_name, VALUE argument)
+{
+  if(TYPE(argument) == T_SYMBOL)
+    return NUM2INT(symbol_2_const(module_name, enum_name, argument));
+  else if(TYPE(argument) == T_ARRAY)
+    return bitmask_or_array(module_name, enum_name, argument);
+  else
+    return NUM2INT(argument);
+}
+#define CLANGC_CONSTANT_TO_INT(enum_name, argument) \
+  rb_constant_argument_to_int("Clangc", enum_name, argument)
+
 /****************/
 /*Classes Macros*/
 /****************/
