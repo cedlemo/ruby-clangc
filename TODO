@@ -5,8 +5,22 @@
     Favorize parse_translation_unit
 
 [ ] Rework how all the constants are used
-  [ ] Try to implement enum with ruby class instead of module and allow the usage of symbol instead of ruby
-      Constants which is more Rubyish (see ruby-gnome2 project)
+    Finish in Index with parse_translation_unit and parse_translation_unit
+    class_Index.c
+    _clangc_functions.c
+    class_CodeCompleteResults.c
+    class_CompletionResult.c
+    class_CompletionString.c
+    class_Cursor.c
+    class_CursorSet.c
+    class_Diagnostic.c
+    class_File.c
+    class_Module.c
+    class_OverriddenCursor.c
+    class_SourceLocation.c
+    class_SourceRange.c
+    class_TranslationUnit.c
+    class_Type.c
 
 [ ] Finish Implement Clangc::Cursor methods
 
