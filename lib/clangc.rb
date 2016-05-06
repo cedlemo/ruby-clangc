@@ -342,7 +342,7 @@ module Clangc
   end
   
   class Index
-    def self.translation_unit(options)
+    def translation_unit(options)
       parse =   options[:parse] || nil
       ast =     options[:ast] || nil
       flags =   options[:flags] || Clangc::TranslationUnit_Flags::NONE
