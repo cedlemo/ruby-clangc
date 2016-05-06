@@ -342,28 +342,51 @@ module Clangc
   end
   
   class Index
-    def translation_unit(options)
-      parse =   options[:parse] || nil
-      ast =     options[:ast] || nil
-      flags =   options[:flags] || Clangc::TranslationUnit_Flags::NONE
+    ##
+    # :call-seq:
+    #   Clangc::Index#translation_unit(options) => Clangc::TranslationUnit
+    #
+    # Convenient method that easily allow to create a translation unit
+    # through different ways based on the options you use:
+    # :source => source file
+    # :args   => command line arguments
+    # :error  => true or false or nil
+    # :ast => String an ast file
+    alias_method :create_translation_unit_raw, :create_translation_unit
+    
+    def create_translation_unit(options)
       source =  options[:source] || ""
       args =    options[:args] || []
       error =   options[:error] || nil
-      
+      ast =     options[:ast] || nil
       if ast
-        if error
-          create_translation_unit2(ast) 
-        else
-          create_translation_unit(ast) 
-        end
-      elsif parse
-        if error
-          parse_translation_unit2(parse, args, flags)
-        else
-          parse_translation_unit(parse, args, flags)
-        end
+        error ? create_translation_unit2(ast) : create_translation_unit_raw(ast) 
       else
         create_translation_unit_from_source_file(source, args)
+      end
+    end
+
+    ##
+    # :call-seq:
+    #   Clangc::Index#parse_translation_unit(options) => Clangc::TranslationUnit
+    #
+    # Convenient method that easily allow to parse a file to a translation
+    # unit through different ways based on the options you use:
+    # :source => source file
+    # :args   => command line arguments
+    # :error  => true or false or nil
+    # :flags  => bitwise OR of the TranslationUnit_Flags constants
+    alias_method :parse_translation_unit_raw, :parse_translation_unit
+    
+    def parse_translation_unit(options)
+      source =  options[:source] || ""
+      args =    options[:args] || []
+      error =   options[:error] || nil
+      flags =   options[:flags] || Clangc::TranslationUnit_Flags::NONE
+      if error
+        parse_translation_unit2(source, args, flags)
+      else
+        parse_translation_unit_raw(source, args, flags)
       end
     end
   end
