@@ -98,9 +98,11 @@ static int symbol_2_const(char *module_name, char *enum_name, VALUE sym)
   VALUE main_module, enum_module, constant_name;
   main_module = rb_const_get(rb_cObject, rb_intern(module_name));
   enum_module = rb_const_get(main_module, rb_intern(enum_name));
-  constant_name = rb_funcall(sym, rb_intern("upcase"), 0, NULL);
+  constant_name = rb_funcall(sym, rb_intern("to_s"), 0, NULL);
+  constant_name = rb_funcall(constant_name, rb_intern("upcase"), 0, NULL);
+  VALUE num =  rb_const_get(enum_module, rb_intern_str(constant_name));
   
-  return NUM2INT(rb_const_get(enum_module, rb_intern_str(constant_name)));
+  return NUM2UINT(num);
 }
 
 static int bitmask_or_array(char *module_name, char *enum_name, VALUE array)
@@ -117,17 +119,17 @@ static int bitmask_or_array(char *module_name, char *enum_name, VALUE array)
   return or_sum;
 }
 
-static int rb_constant_argument_to_int(char *module_name, char *enum_name, VALUE argument)
+static unsigned int rb_constant_argument_to_uint(char *module_name, char *enum_name, VALUE argument)
 {
   if(TYPE(argument) == T_SYMBOL)
-    return NUM2INT(symbol_2_const(module_name, enum_name, argument));
+    return symbol_2_const(module_name, enum_name, argument);
   else if(TYPE(argument) == T_ARRAY)
     return bitmask_or_array(module_name, enum_name, argument);
   else
-    return NUM2INT(argument);
+    return NUM2UINT(argument);
 }
-#define CLANGC_CONSTANT_TO_INT(enum_name, argument) \
-  rb_constant_argument_to_int("Clangc", enum_name, argument)
+#define CLANGC_CONSTANT_TO_UINT(enum_name, argument) \
+  rb_constant_argument_to_uint("Clangc", enum_name, argument)
 
 /****************/
 /*Classes Macros*/
