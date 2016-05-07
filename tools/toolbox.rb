@@ -69,9 +69,12 @@ begin
         else
           @base_dir = File.expand_path(File.dirname(@source_file))
         end
-        gcc_lib_base='/usr/lib/gcc/' << `llvm-config --host-target`.chomp << "/*"
-        gcc_lib = Dir.glob(gcc_lib_base ).sort.last + "/include"
-        header_paths << gcc_lib
+        gcc_lib_base = "/usr/lib/gcc/" << `llvm-config --host-target`.chomp << "/*"
+        last_gcc_lib_base = Dir.glob(gcc_lib_base ).sort.last
+        if last_gcc_lib_base
+          gcc_lib = last_gcc_lib_base + "/include"
+          header_paths << gcc_lib
+        end
         header_paths << "/usr/include"
         header_paths << @base_dir
         header_paths.collect {|h| "-I#{h}"}
