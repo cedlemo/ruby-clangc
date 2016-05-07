@@ -190,7 +190,8 @@ c_Diagnostic_format(VALUE self, VALUE options)
 {
     Diagnostic_t *d;
     Data_Get_Struct(self, Diagnostic_t, d);
-    unsigned int c_options = NUM2UINT(options);
+    unsigned int c_options = CLANGC_CONSTANT_TO_UINT("DiagnosticDisplayOptions",
+                                                     options);
     return CXSTR_2_RVAL(clang_formatDiagnostic(d->data, c_options));
 }
 
