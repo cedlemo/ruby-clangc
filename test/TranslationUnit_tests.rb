@@ -218,7 +218,7 @@ class TestTranslationUnitUsage < MiniTest::Test
 
     tu.reparse(reparse_options)
 
-    options = 0
+    options = [:include_macros, :include_code_patterns, :include_brief_comments] 
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
                                            column,
