@@ -409,7 +409,7 @@ c_TranslationUnit_reparse(VALUE self, VALUE options)
     unsigned int c_options;
 
     Data_Get_Struct(self, TranslationUnit_t, t);
-    c_options = NUM2UINT(options);
+    c_options = CLANGC_CONSTANT_TO_UINT("Reparse_Flags", options);
     error = clang_reparseTranslationUnit(t->data,
                                          0,
                                          NULL, // TODO Manage unsaved files
