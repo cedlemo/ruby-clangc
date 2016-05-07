@@ -4,10 +4,11 @@
 [ ] Generalize usage of create_translation_unit and parse_translation_unit
     Favorize parse_translation_unit
 
-[ ] Rework how all the constants are used
+[ ] Check and rework how all the constants as agruments are used
     
     class_Index.c                       done
-    _clangc_functions.c
+    _clangc_functions.c                 done 
+    class_TranslationUnit.c
     class_CodeCompleteResults.c
     class_CompletionResult.c
     class_CompletionString.c
@@ -19,7 +20,6 @@
     class_OverriddenCursor.c
     class_SourceLocation.c
     class_SourceRange.c
-    class_TranslationUnit.c
     class_Type.c
 
 [ ] Clean Tests files
@@ -39,7 +39,38 @@
     CursorSet_tests.rb
     Diagnostic_tests.rb
 
-  
+[ ] Update copyright informations (in *.h too)
+    class_Index.c                       done
+    _clangc_functions.c                 done 
+    class_TranslationUnit.c             done
+    class_CodeCompleteResults.c
+    class_CompletionResult.c
+    class_CompletionString.c
+    class_Cursor.c
+    class_CursorSet.c
+    class_Diagnostic.c
+    class_File.c
+    class_Module.c
+    class_OverriddenCursor.c
+    class_SourceLocation.c
+    class_SourceRange.c
+    class_Type.c
+    TranslationUnit_tests.rb            done
+    Index_tests.rb                      done
+    Clangc_tests.rb                     done
+    CompletionString_tests.rb
+    CompletionResult_tests.rb
+    CodeCompleteResults_tests.rb
+    clangc_utils.rb
+    Cursor_tests.rb
+    Type_tests.rb
+    SourceLocation_tests.rb
+    Module_tests.rb
+    File_tests.rb
+    SourceRange_tests.rb
+    CursorSet_tests.rb
+    Diagnostic_tests.rb
+
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
