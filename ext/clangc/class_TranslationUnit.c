@@ -340,7 +340,7 @@ c_TranslationUnit_code_complete_at(
     c_filename = RSTRING_2_CHAR(filename);
     c_line = NUM2UINT(line);
     c_column = NUM2UINT(column);
-    c_options = NUM2UINT(options);
+    c_options = CLANGC_CONSTANT_TO_UINT("CodeComplete_Flags", options);
 
     Data_Get_Struct(self, TranslationUnit_t, t);
     R_GET_CLASS_DATA("Clangc", CodeCompleteResults, code_complete_results, c);
