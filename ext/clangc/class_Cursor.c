@@ -1512,7 +1512,8 @@ c_Cursor_get_obj_c_property_attributes(VALUE self, VALUE reserved)
 {
     Cursor_t *c;
     Data_Get_Struct(self, Cursor_t, c);
-    unsigned c_reserved = NUM2UINT(reserved);
+    unsigned c_reserved = CLANGC_CONSTANT_TO_UINT("ObjCPropertyAttrKind",
+                                                  reserved);
     return CUINT_2_NUM(
         clang_Cursor_getObjCPropertyAttributes(c->data, c_reserved));
 }
