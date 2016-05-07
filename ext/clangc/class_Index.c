@@ -277,7 +277,8 @@ c_Index_parse_TU(VALUE self, VALUE source_file, VALUE args, VALUE options)
     char *c_source_file = NULL;
     c_source_file = RSTRING_2_CHAR(source_file);
 
-    unsigned int c_options = NUM2UINT(options);
+    unsigned int c_options = CLANGC_CONSTANT_TO_UINT("TranslationUnit_Flags",
+                                                     options);
 
     RARRAY_OF_STRINGS_2_C(args);
     Index_t *i;
@@ -350,7 +351,8 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options)
     char *c_source_file = NULL;
     c_source_file = RSTRING_2_CHAR(source_file);
 
-    unsigned int c_options = NUM2UINT(options);
+    unsigned int c_options = CLANGC_CONSTANT_TO_UINT("TranslationUnit_Flags",
+                                                     options);
 
     RARRAY_OF_STRINGS_2_C(args);
     Index_t *i;
