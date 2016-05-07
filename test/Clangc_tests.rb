@@ -1,4 +1,20 @@
 #!/usr/bin/env ruby
+# ruby-clangc ruby bindings for the C interface of Clang
+# Copyright (C) 2015-2016 Cédric Le Moigne cedlemo <cedlemo@gmx.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 require "minitest/autorun"
 require "clangc"
 require "#{File.expand_path(File.dirname(__FILE__))}/clangc_utils.rb"
@@ -7,15 +23,15 @@ class TestClangcMethods < MiniTest::Test
   include ClangcUtils
 
   def test_clangc_version
-    assert_instance_of String, Clangc.version
+    assert_instance_of(String, Clangc.version)
   end
 
   def test_clangc_default_diagnostic_display_options
-    assert_instance_of Fixnum, Clangc.default_diagnostic_display_options
-    default_display_options = Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION |
-                              Clangc::DiagnosticDisplayOptions::DISPLAY_COLUMN |
-                              Clangc::DiagnosticDisplayOptions::DISPLAY_OPTION
-    assert_equal(default_display_options, Clangc.default_diagnostic_display_options)
+    assert_instance_of(Fixnum, Clangc.default_diagnostic_display_options)
+    default = Clangc::DiagnosticDisplayOptions::DISPLAY_SOURCE_LOCATION |
+              Clangc::DiagnosticDisplayOptions::DISPLAY_COLUMN |
+              Clangc::DiagnosticDisplayOptions::DISPLAY_OPTION
+    assert_equal(default, Clangc.default_diagnostic_display_options)
   end
 
   def test_clangc_default_editing_translation_unit_options
@@ -74,7 +90,7 @@ class TestClangcMethods < MiniTest::Test
     Clangc.visit_children(cursor: tu.cursor, visitor: myproc)
   end
 
-  def test_SourceLocation_file_location_start_end
+  def test_source_location_file_location_start_end
     cindex = Clangc::Index.new(false, false)
     tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE,
                                                          CLANG_HEADERS_PATH)
