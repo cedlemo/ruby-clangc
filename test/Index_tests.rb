@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'minitest/autorun'
+require "minitest/autorun"
 require "clangc"
 
 class TestIndexCreation < MiniTest::Test
@@ -20,35 +20,31 @@ class TestIndexCreation < MiniTest::Test
   end
 end
 
-# index global options test
-#Clangc::GlobalOptFlags.constants
-#=> [:NONE, :THREAD_BACKGROUND_PRIORITY_FOR_INDEXING, :THREAD_BACKGROUND_PRIORITY_FOR_EDITING, :Threadbackgroundpriorityforall]
-
 class TestIndexGlobalOptions < MiniTest::Test
   def setup
     @cindex = Clangc::Index.new(true, true)
   end
 
-  def test_index_set_global_options_None
+  def test_index_set_global_options_none
     flags = Clangc::GlobalOptFlags::NONE
     @cindex.global_options = flags
     assert_equal(flags, @cindex.global_options)
   end
 
-  def test_index_set_global_options_None_sym
+  def test_index_set_global_options_none_sym
     flags = Clangc::GlobalOptFlags::NONE
     @cindex.global_options = :none
     assert_equal(flags, @cindex.global_options)
   end
 
   def test_index_set_global_options_editing
-    flags =  Clangc::GlobalOptFlags::THREAD_BACKGROUND_PRIORITY_FOR_EDITING
+    flags = Clangc::GlobalOptFlags::THREAD_BACKGROUND_PRIORITY_FOR_EDITING
     @cindex.global_options = flags
     assert_equal(flags, @cindex.global_options)
   end
 
   def test_index_set_global_options_editing_sym
-    flags =  Clangc::GlobalOptFlags::THREAD_BACKGROUND_PRIORITY_FOR_EDITING
+    flags = Clangc::GlobalOptFlags::THREAD_BACKGROUND_PRIORITY_FOR_EDITING
     @cindex.global_options = :thread_background_priority_for_editing
     assert_equal(flags, @cindex.global_options)
   end
