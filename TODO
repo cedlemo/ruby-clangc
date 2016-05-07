@@ -5,8 +5,8 @@
     Favorize parse_translation_unit
 
 [ ] Rework how all the constants are used
-    Finish in Index with parse_translation_unit and parse_translation_unit
-    class_Index.c
+    
+    class_Index.c                       done
     _clangc_functions.c
     class_CodeCompleteResults.c
     class_CompletionResult.c
@@ -22,6 +22,24 @@
     class_TranslationUnit.c
     class_Type.c
 
+[ ] Clean Tests files
+    TranslationUnit_tests.rb            done
+    Index_tests.rb                      done
+    CompletionString_tests.rb
+    CompletionResult_tests.rb
+    Clangc_tests.rb
+    CodeCompleteResults_tests.rb
+    clangc_utils.rb
+    Cursor_tests.rb
+    Type_tests.rb
+    SourceLocation_tests.rb
+    Module_tests.rb
+    File_tests.rb
+    SourceRange_tests.rb
+    CursorSet_tests.rb
+    Diagnostic_tests.rb
+
+  
 [ ] Finish Implement Clangc::Cursor methods
 
 [ ] use rubyish methods name. All methods starting with is_something must be in ruby something?
