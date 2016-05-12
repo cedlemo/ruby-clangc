@@ -11,11 +11,11 @@
     class_TranslationUnit.c             done
     class_Cursor.c                      done
     class_Diagnostic.c                  done
+    class_File.c                        done
     class_CodeCompleteResults.c
     class_CompletionResult.c
     class_CompletionString.c
     class_CursorSet.c
-    class_File.c
     class_Module.c
     class_OverriddenCursor.c
     class_SourceLocation.c
@@ -27,6 +27,7 @@
     Index_tests.rb                      done
     Clangc_tests.rb                     done
     Diagnostic_tests.rb                 done
+    File_tests.rb                       done
     CompletionString_tests.rb
     CompletionResult_tests.rb
     CodeCompleteResults_tests.rb
@@ -35,7 +36,6 @@
     Type_tests.rb
     SourceLocation_tests.rb
     Module_tests.rb
-    File_tests.rb
     SourceRange_tests.rb
     CursorSet_tests.rb
 
@@ -45,11 +45,11 @@
     class_TranslationUnit.c             done
     class_Cursor.c                      done
     class_Diagnostic.c                  done
+    class_File.c                        done
     class_CodeCompleteResults.c
     class_CompletionResult.c
     class_CompletionString.c
     class_CursorSet.c
-    class_File.c
     class_Module.c
     class_OverriddenCursor.c
     class_SourceLocation.c
@@ -60,6 +60,7 @@
     Clangc_tests.rb                     done
     Cursor_tests.rb                     done
     Diagnostic_tests.rb                 done
+    File_tests.rb                       done
     CompletionString_tests.rb
     CompletionResult_tests.rb
     CodeCompleteResults_tests.rb
@@ -67,7 +68,6 @@
     Type_tests.rb
     SourceLocation_tests.rb
     Module_tests.rb
-    File_tests.rb
     SourceRange_tests.rb
     CursorSet_tests.rb
 
