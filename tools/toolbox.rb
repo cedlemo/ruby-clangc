@@ -8,7 +8,7 @@ begin
   require "clangc"
   module Toolbox
     class SourceParser
-      attr_reader :index, :source_file, :base_dir, 
+      attr_reader :index, :source_file, :base_dir,
                   :translation_unit, :diagnostics,
                   :functions
       def initialize(source_file, base_dir = nil, lang = "c")
@@ -18,10 +18,10 @@ begin
         args = ["-x", lang] + include_libs
         @index = Clangc::Index.new(false, false)
         @functions = []
-        @translation_unit = @index.create_translation_unit_from_source_file(source_file,
-                                                                            args)
+        @translation_unit = @index.create_translation_unit(source: source_file,
+                                                           args: args)
       end
-      
+
       def parse(only_main_file)
         @diagnostics = @translation_unit.diagnostics if @translation_unit
         return false unless @translation_unit
@@ -45,12 +45,12 @@ begin
         end
         return true if @translation_unit
       end
-      
-      # Check if the cursor given in argument focus on 
+
+      # Check if the cursor given in argument focus on
       # the file we want to parse and not on included
       # headers
       def cursor_in_main_file?(cursor)
-        return true if !@only_main_file #non readable hack
+        return true if !@only_main_file 
         # if we dont care that the cursor go in other
         # file we do like it is always in the main file
         cursor_file = cursor.location.spelling[0]
@@ -80,11 +80,11 @@ begin
         header_paths.collect {|h| "-I#{h}"}
       end
     end
-    
+
       class SourceFunction
       attr_reader :name, :parameters
       attr_accessor :return_type
-      
+
       def initialize(name, return_type = nil, parameters = [])
         @name = name
         @parameters = parameters
@@ -94,7 +94,7 @@ begin
       def add_param(param)
         @parameters << param if param.class == SourceParameter
       end
-      
+
       def parameters_num
         @parameters.size
       end
