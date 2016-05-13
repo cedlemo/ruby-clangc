@@ -135,18 +135,12 @@ VALUE c_SourceLocation_get_spelling(VALUE self)
     unsigned int column = 0;
     unsigned int offset = 0;
     clang_getSpellingLocation(s->data, &cxf, &line, &column, &offset);
-    //  if(&cxf)
-    //  {
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA("Clangc", File, file, f);
     f->data = cxf;
     f->parent = self;
     rb_ary_push(ret, file);
-    //  }
-    //  else
-    //    rb_ary_push(ret, Qnil);
-
     rb_ary_push(ret, CUINT_2_NUM(line));
     rb_ary_push(ret, CUINT_2_NUM(column));
     rb_ary_push(ret, CUINT_2_NUM(offset));
@@ -188,18 +182,13 @@ VALUE c_SourceLocation_get_file_location(VALUE self)
     unsigned int column;
     unsigned int offset;
     clang_getFileLocation(s->data, &cxf, &line, &column, &offset);
-    //  if(&cxf)
-    //  {
+    
     VALUE file;
     File_t *f;
     R_GET_CLASS_DATA("Clangc", File, file, f);
     f->data = cxf;
     f->parent = self;
     rb_ary_push(ret, file);
-    //  }
-    //  else
-    //    rb_ary_push(ret, Qnil);
-
     rb_ary_push(ret, CUINT_2_NUM(line));
     rb_ary_push(ret, CUINT_2_NUM(column));
     rb_ary_push(ret, CUINT_2_NUM(offset));
