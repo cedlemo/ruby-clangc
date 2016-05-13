@@ -7,7 +7,7 @@ ruby bindings to the clang C interface
 This is free software shared under the GNU GPL 3.
 Those bindings have been tested and work with :
 
-*    Clang v3.5 to v3.7.
+*    Clang v3.5 to v3.8.
 *    ruby 2.1 to 2.4
 
 ## Installation:
@@ -35,7 +35,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 
 ### functions wrapped:
 
-*    180/252 functions wrapped => 71.42857142857143%
+*    181/257 functions wrapped => 70.42801556420234%
 
 ### classes wrapped:
 
@@ -59,16 +59,17 @@ This is not recommended, no work on compatibility on other distributions or OS h
 
 ```ruby
 cindex = Clangc::Index.new(false, false)
-
-tu = cindex.create_translation_unit_from_source_file(filename, args)
+tu = cindex.create_translation_unit(source: filename,
+                                    args: args)
 
 reparse_options = tu.default_reparse_options
 tu.reparse(reparse_options)
 
+options = [:include_code_patterns, :include_macros, :include_brief_comments]
 complete_results = tu.code_complete_at(filename,
                                        line,
                                        column,
-                                       0)
+                                       options)
 complete_results.sort_results
 
 puts "Diagnostics : "

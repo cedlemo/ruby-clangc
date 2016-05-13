@@ -42,8 +42,8 @@ if tu.reparse(reparse_options) != 0
   exit 1
 end
 
-options = 0#Clangc::CodeComplete_Flags::INCLUDE_CODE_PATTERNS
-
+# Clangc::CodeComplete_Flags
+options = [:include_code_patterns, :include_macros, :include_brief_comments]
 complete_results = tu.code_complete_at(filename,
                                        line,
                                        column,
