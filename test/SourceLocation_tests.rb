@@ -83,7 +83,7 @@ class TestSourceLocation < MiniTest::Test
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.end
     spelling = source_location.spelling
-    if Clangc.version =~ /clang version 3.(6|7)/
+    if Clangc.version =~ /clang version 3.(6|7|8)/
       # file
       assert_equal(nil, spelling[0].name)
       # line
@@ -126,7 +126,7 @@ class TestSourceLocation < MiniTest::Test
     diagnostics = tu.diagnostics
     source_location = diagnostics[1].source_ranges.last.end
     file_location = source_location.file_location
-    if Clangc.version =~ /clang version 3.(6|7)/
+    if Clangc.version =~ /clang version 3.(6|7|8)/
       # file
       assert_equal(nil, file_location[0].name)
       # line

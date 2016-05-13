@@ -14,13 +14,13 @@
     class_File.c                        done
     class_Type.c                        done
     class_SourceRange.c                 done
+    class_SourceLocation.c              done
     class_CodeCompleteResults.c         
     class_CompletionResult.c
     class_CompletionString.c
     class_CursorSet.c
     class_Module.c
     class_OverriddenCursor.c
-    class_SourceLocation.c
 
 [ ] Clean Tests files
     TranslationUnit_tests.rb            done
@@ -30,12 +30,12 @@
     File_tests.rb                       done
     Type_tests.rb                       done
     SourceRange_tests.rb                done
+    SourceLocation_tests.rb             done
     CompletionString_tests.rb
     CompletionResult_tests.rb
     CodeCompleteResults_tests.rb
     clangc_utils.rb
     Cursor_tests.rb
-    SourceLocation_tests.rb
     Module_tests.rb
     CursorSet_tests.rb
 
@@ -48,13 +48,13 @@
     class_File.c                        done
     class_Type.c                        done
     class_SourceRange.c                 done
+    class_SourceLocation.c              done
     class_CodeCompleteResults.c
     class_CompletionResult.c
     class_CompletionString.c
     class_CursorSet.c
     class_Module.c
     class_OverriddenCursor.c
-    class_SourceLocation.c
     TranslationUnit_tests.rb            done
     Index_tests.rb                      done
     Clangc_tests.rb                     done
@@ -63,11 +63,11 @@
     File_tests.rb                       done
     Type_tests.rb                       done
     SourceRange_tests.rb                done
+    SourceLocation_tests.rb             done
     CompletionString_tests.rb
     CompletionResult_tests.rb
     CodeCompleteResults_tests.rb
     clangc_utils.rb
-    SourceLocation_tests.rb
     Module_tests.rb
     CursorSet_tests.rb
 
