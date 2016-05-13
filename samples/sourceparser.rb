@@ -11,9 +11,10 @@ class SourceParser
     @base_dir = base_dir
     include_libs = build_default_include_libs
     args = ["-x", lang] + include_libs
+    puts args
     @index = Clangc::Index.new(false, false)
-    @translation_unit = @index.create_translation_unit_from_source_file(source_file,
-                                                                        args)
+    @translation_unit = @index.create_translation_unit(source: source_file,
+                                                       args: args)
     @diagnostics = @translation_unit.diagnostics if @translation_unit
   end
   
@@ -49,8 +50,11 @@ class SourceParser
       @base_dir = File.expand_path(File.dirname(@source_file))
     end
     gcc_lib_base='/usr/lib/gcc/' << `llvm-config --host-target`.chomp << "/*"
-    gcc_lib = Dir.glob(gcc_lib_base ).sort.last + "/include"
-    header_paths << gcc_lib
+    last_gcc_lib_base = Dir.glob(gcc_lib_base ).sort.last
+    if last_gcc_lib_base
+      gcc_lib = last_gcc_lib_base + "/include"
+      header_paths << gcc_lib
+    end
     header_paths << "/usr/include"
     header_paths << @base_dir
     header_paths.collect {|h| "-I#{h}"}
@@ -69,16 +73,16 @@ class CPPSourceParser < SourceParser
   end
 end
 
-source = "#{PATH}/../tools/clang-3.4/Index.h"
+source = "#{PATH}/../tools/clang-3.5/Index.h"
 
-cl34 = CSourceParser.new(source)
+cl35 = CSourceParser.new(source)
 
-unless cl34.translation_unit
+unless cl35.translation_unit
   puts "Parsing failed"
 end
 
-cl34.parse do |tu, cursor, parent|
-  if cl34.cursor_in_main_file?(cursor)
+cl35.parse do |tu, cursor, parent|
+  if cl35.cursor_in_main_file?(cursor)
     puts cursor.spelling if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
   end
   Clangc::ChildVisitResult::RECURSE
