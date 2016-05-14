@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "bento/fedora-23"
+  config.vm.box_check_update = true
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "1024"
+  end
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   sudo apt-get update
+  #   sudo apt-get install -y apache2
+  # SHELL
+  shell_script = <<SHELL
+  sudo dnf update -y
+  sudo dnf install -y vim git ruby ruby-devel
+  sudo dnf install -y llvm clang llvm-libs clang-libs llvm-devel clang-devel
+  sudo dnf install -y @development-tools redhat-rpm-config autoconf
+  sudo gem install rake rake-compiler minitest term-ansicolor
+  git clone https://github.com/cedlemo/ruby-clangc.git
+  cd ruby-clangc
+  gem build clangc.gemspec
+  gem install clangc-0.0.1.gem
+SHELL
+  config.vm.provision "shell", inline: shell_script, privileged: false
+end
