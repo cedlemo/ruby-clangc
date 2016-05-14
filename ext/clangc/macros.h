@@ -127,7 +127,7 @@ static int bitmask_or_array(char *module_name, char *enum_name, VALUE array)
 {
   int or_sum = 0;
   int i = 0;
-  int len = rb_array_len(array);
+  int len = RARRAY_LEN(array);
   
   for(i = 0; i < len; i++)
   {
