@@ -13,7 +13,10 @@ $CFLAGS += " -I#{`llvm-config --prefix`.chomp}/include"
 #$CFLAGS += " -fno-omit-frame-pointer -ffloat-store -fno-common -fstrict-aliasing"
 #$CFLAGS += " -lm"
 #$LIBS += " #{`llvm-config --libs`.chomp}"
-
+# When the libclang.so is in a custom directory:
+# llvm-config --libdir => /usr/lib64/llvm in Fedora
+# llvm-config --libdir => /usr/lib in Archlinux so not needed 
+$LDFLAGS << " -L#{`llvm-config --libdir`.chomp}"
 # override normal build configuration to build debug friendly library
 # if installed via 'gem install clangc -- --enable-debug'
 if enable_config('debug')
