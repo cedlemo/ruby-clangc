@@ -11,8 +11,10 @@ Those bindings have been tested and work with :
 *    ruby 2.1 to 2.3
 
 
+## Table of Content
 
 *  [Installation](#installation)
+  *  [Dependencies](#dependencies)
   *  [On Your system](#on-your-system)
   *  [With Virtual Box and Vagrant](#with-virtual-box-and-vagrant)
     *  [ArchLinux:](#archlinux)
@@ -22,14 +24,30 @@ Those bindings have been tested and work with :
   *  [C and C++ parser](#c-and-c++-parser)
   *  [C simple parsing](#c-simple-parsing)
   *  [Displaying code diagnostics](#displaying-code-diagnostics)
+*  [Documentation](#documentation)
 *  [Status](#status)
 
 ## Installation
 
+### Dependencies
+*  llvm/clang v3.5 to v3.8
+*  ruby and its development libs
+*  usual development tools (gcc, make, autoconf ...)
+*  gems:
+    * rake
+    * rake-compiler
+    * minitest (optional)
+    * term-ansicolor (optional)
+
+More informations can be found in the Vagrantfiles, in the `shell_script`
+variable.
+
 ### On your system
-This is not recommended, no work on compatibility on other distributions or OS have been done.
+the ruby-clangc gem has not been released yet. You need to clone this github repository , build the gem and install it.
 
 ```bash
+    git clone https://github.com/cedlemo/ruby-clangc.git
+    cd ruby-clangc
     gem build clanc.gemspec
     gem install clangc-x.x.x.gem
 ```
@@ -58,7 +76,7 @@ This is not recommended, no work on compatibility on other distributions or OS h
 ```
 
 ## Examples 
-See in the samples directory
+See in the samples directory if you want to try those examples.
 
 ### Code completion
 
@@ -278,8 +296,15 @@ tu.diagnostics.each_with_index do |diagnostic, index|
                                 :display_category_name])}"
 end
 ```
+## Documentation
+
+All the functions are documented with rdoc (maybe yard when I will have 
+the time) in the *doc* directory. If you want to update it, or re-generate it just do:
+
+    rake rdoc
 
 ## Status
+When ruby-clangc is installed, you can try the *tools/status.rb* script in order to see the current status and to see what we can do with ruby-clangc. You will need the gem `term-ansicolor`
 
 ### functions wrapped:
 
@@ -301,3 +326,6 @@ end
 *    CXCodeCompleteResults
 *    CXCompletionResult
 
+
+ruby-clangc ruby bindings for the C interface of Clang
+Copyright (C) 2015-2016 Cédric Le Moigne cedlemo <cedlemo@gmx.com>
