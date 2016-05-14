@@ -170,7 +170,7 @@ static inline void check_arg_type(VALUE arg, char *class_name)
     {
         if (len != -1)
         {
-            rb_raise(rb_eTypeError, message);
+            rb_raise(rb_eTypeError, "%s", message);
             free(message);
         }
         else
