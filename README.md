@@ -8,11 +8,25 @@ This is free software shared under the GNU GPL 3.
 Those bindings have been tested and work with :
 
 *    Clang v3.5 to v3.8.
-*    ruby 2.1 to 2.4
+*    ruby 2.1 to 2.3
 
-## Installation:
 
-### On your system.
+
+*  [Installation](#installation)
+  *  [On Your system](#on-your-system)
+  *  [With Virtual Box and Vagrant](#with-virtual-box-and-vagrant)
+    *  [ArchLinux:](#archlinux)
+    *  [Fedora](#fedora)
+*  [Examples](#examples)
+  *  [Code completion](#code-completion)
+  *  [C and C++ parser](#c-and-c++-parser)
+  *  [C simple parsing](#c-simple-parsing)
+  *  [Displaying code diagnostics](#displaying-code-diagnostics)
+*  [Status](#status)
+
+## Installation
+
+### On your system
 This is not recommended, no work on compatibility on other distributions or OS have been done.
 
 ```bash
@@ -20,42 +34,33 @@ This is not recommended, no work on compatibility on other distributions or OS h
     gem install clangc-x.x.x.gem
 ```
 
-### In a Virtual Machine (Virtual Box) with Vagrant
+### With Virtual Box and Vagrant
+
+#### ArchLinux
 
 ```bash
     vagrant box add archlinux-x86_64 http://cloud.terry.im/vagrant/archlinux-x86_64.box
     mkdir ruby_clang_test
-    cd ruby_clang__test
-    wget https://raw.githubusercontent.com/cedlemo/ruby-clangc/master/Vagrantfile
+    cd ruby_clang_test
+    wget https://raw.githubusercontent.com/cedlemo/ruby-clangc/master/ArchLinux_x86_64_Vagrantfile
+    vagrant up
+    vagrant provision
+```
+#### Fedora
+
+```bash
+    vagrant add bento/fedora-23
+    mkdir ruby_clang_test
+    cd ruby_clang_test
+    wget https://raw.githubusercontent.com/cedlemo/ruby-clangc/master/Fedora-23_Vagrantfile
     vagrant up
     vagrant provision
 ```
 
-## Status:
+## Examples 
+See in the samples directory
 
-### functions wrapped:
-
-*    181/257 functions wrapped => 70.42801556420234%
-
-### classes wrapped:
-
-*    CXIndex
-*    CXTranslationUnit
-*    CXDiagnostic
-*    CXFile
-*    CXSourceRange
-*    CXSourceLocation
-*    CXCursor
-*    CXType
-*    CXCursorSet
-*    CXModule
-*    CXCompletionString
-*    CXCodeCompleteResults
-*    CXCompletionResult
-
-## Examples (see samples directory): 
-
-###   Code completion
+### Code completion
 
 ```ruby
 cindex = Clangc::Index.new(false, false)
@@ -87,7 +92,7 @@ complete_results.results.each do |r|
 end
 ```
 
-###   C/C++ parser
+###  C and C++ parser
 
 ```ruby
 require "clangc"
@@ -233,7 +238,7 @@ Clangc.visit_children(cursor: cursor) do |cursor, parent|
 end
 ```
 
-### Deal with Clangc diagnostic formats
+### Displaying code diagnostics
 
 ```ruby
 #!/usr/bin/env ruby
@@ -273,3 +278,26 @@ tu.diagnostics.each_with_index do |diagnostic, index|
                                 :display_category_name])}"
 end
 ```
+
+## Status
+
+### functions wrapped:
+
+*    181/257 functions wrapped => 70.42801556420234%
+
+### classes wrapped:
+
+*    CXIndex
+*    CXTranslationUnit
+*    CXDiagnostic
+*    CXFile
+*    CXSourceRange
+*    CXSourceLocation
+*    CXCursor
+*    CXType
+*    CXCursorSet
+*    CXModule
+*    CXCompletionString
+*    CXCodeCompleteResults
+*    CXCompletionResult
+
