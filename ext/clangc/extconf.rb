@@ -29,6 +29,6 @@ if enable_config('debug')
     CONFIG['debugflags'] << ' -ggdb3 -O0 -std=c89 -pedantic -Wall'
   end
 end
-have_library("clang")
+have_library("clang", "clang_createIndex")
 
 create_makefile("clangc/clangc")
