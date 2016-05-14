@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
   end
   shell_script = <<-SHELL
     yaourt -Syu --noconfirm
-    yaourt --noconfirm -S clang llvm llvm-libs git cppunit ruby
+    yaourt --noconfirm -S clang llvm llvm-libs git ruby
     git clone https://github.com/cedlemo/ruby-clangc.git
     cd ruby-clangc
     gem build clangc.gemspec
