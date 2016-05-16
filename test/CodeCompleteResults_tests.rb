@@ -22,13 +22,16 @@ require "#{File.expand_path(File.dirname(__FILE__))}/clangc_utils.rb"
 
 class TestCodeCompleteResults < MiniTest::Test
   include ClangcUtils
+
   def setup
     @cindex = Clangc::Index.new(false, false)
   end
-  def test_CodeCompleteResults_num_results
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    line = 12 
-    column = 5 
+
+  def test_code_complete_results_num_results
+    tu = @cindex.create_translation_unit(source: SOURCE_FILE_COMPLETION_STRING,
+                                         args: CLANG_HEADERS_PATH)
+    line = 12
+    column = 5
     options = Clangc.default_code_complete_options
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
@@ -36,12 +39,13 @@ class TestCodeCompleteResults < MiniTest::Test
                                            options)
     # TODO
     assert_instance_of(Fixnum, complete_results.num_results)
-
   end
-  def test_CodeCompleteResults_get_result
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    line = 12 
-    column = 5 
+
+  def test_code_complete_results_get_result
+    tu = @cindex.create_translation_unit(source: SOURCE_FILE_COMPLETION_STRING,
+                                         args: CLANG_HEADERS_PATH)
+    line = 12
+    column = 5
     options = Clangc.default_code_complete_options
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
@@ -50,10 +54,12 @@ class TestCodeCompleteResults < MiniTest::Test
     # TODO
     assert_instance_of(Clangc::CompletionResult, complete_results.result(0))
   end
-  def test_CodeCompleteResults_get_results
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    line = 12 
-    column = 5 
+
+  def test_code_complete_results_get_results
+    tu = @cindex.create_translation_unit(source: SOURCE_FILE_COMPLETION_STRING,
+                                         args: CLANG_HEADERS_PATH)
+    line = 12
+    column = 5
     options = Clangc.default_code_complete_options
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
@@ -65,16 +71,18 @@ class TestCodeCompleteResults < MiniTest::Test
     assert_equal(complete_results.result(0).cursor_kind,
                  complete_results.results[0].cursor_kind)
   end
-  def test_CodeCompleteResults_get_contexts
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    line = 12 
-    column = 5 
+
+  def test_code_complete_results_get_contexts
+    tu = @cindex.create_translation_unit(source: SOURCE_FILE_COMPLETION_STRING,
+                                         args: CLANG_HEADERS_PATH)
+    line = 12
+    column = 5
     options = Clangc.default_code_complete_options
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
                                            column,
                                            options)
-    # TODO 
+    # TODO
     assert_instance_of(Fixnum, complete_results.contexts)
   end
 end
