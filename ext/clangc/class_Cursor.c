@@ -1664,10 +1664,14 @@ c_Cursor_get_reference_name_range(VALUE self,
     Data_Get_Struct(self, Cursor_t, c);
     SourceRange_t *sr;
     VALUE source_range;
+    unsigned int c_name_flags;
+    unsigned int c_piece_index;
+    c_name_flags = CLANGC_CONSTANT_TO_UINT("NameRefFlags", name_flags);
+    c_piece_index = NUM2UINT(piece_index);
     R_GET_CLASS_DATA("Clangc", SourceRange, source_range, sr);
 
     sr->data = clang_getCursorReferenceNameRange(
-        c->data, NUM2UINT(name_flags), NUM2UINT(piece_index));
+        c->data, c_name_flags, c_piece_index);
     sr->parent = c->parent;
     return source_range;
 }
