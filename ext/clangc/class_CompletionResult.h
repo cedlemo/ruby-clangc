@@ -1,4 +1,3 @@
-
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
  * Copyright (C) 2016 Cédric Le Moigne <cedlemo@gmx.com>
