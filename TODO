@@ -4,72 +4,20 @@
 [ ] Generalize usage of create_translation_unit and parse_translation_unit
     Favorize parse_translation_unit
 
+[ ] Merge the CodeCompleteResults CompletionResult and CompletionString tests
+    only the CompletionString as valid tests.
+
+[ ] Make conditionnal tests works with 3.8 if needed
+
 [ ] Check and rework how all the constants as agruments are used
     
-    class_Index.c                       done
-    _clangc_functions.c                 done 
-    class_TranslationUnit.c             done
-    class_Cursor.c                      done
-    class_Diagnostic.c                  done
-    class_File.c                        done
-    class_Type.c                        done
-    class_SourceRange.c                 done
-    class_SourceLocation.c              done
-    class_CodeCompleteResults.c         
-    class_CompletionResult.c
-    class_CompletionString.c
-    class_CursorSet.c
-    class_Module.c
-    class_OverriddenCursor.c
+    class_Cursor.c                      
 
 [ ] Clean Tests files
-    TranslationUnit_tests.rb            done
-    Index_tests.rb                      done
-    Clangc_tests.rb                     done
-    Diagnostic_tests.rb                 done
-    File_tests.rb                       done
-    Type_tests.rb                       done
-    SourceRange_tests.rb                done
-    SourceLocation_tests.rb             done
-    CompletionString_tests.rb
-    CompletionResult_tests.rb
-    CodeCompleteResults_tests.rb
     clangc_utils.rb
-    Cursor_tests.rb
-    Module_tests.rb
-    CursorSet_tests.rb
 
 [ ] Update copyright informations (in *.h too)
-    class_Index.c                       done
-    _clangc_functions.c                 done 
-    class_TranslationUnit.c             done
-    class_Cursor.c                      done
-    class_Diagnostic.c                  done
-    class_File.c                        done
-    class_Type.c                        done
-    class_SourceRange.c                 done
-    class_SourceLocation.c              done
-    class_CodeCompleteResults.c
-    class_CompletionResult.c
-    class_CompletionString.c
-    class_CursorSet.c
-    class_Module.c
-    class_OverriddenCursor.c
-    TranslationUnit_tests.rb            done
-    Index_tests.rb                      done
-    Clangc_tests.rb                     done
-    Cursor_tests.rb                     done
-    Diagnostic_tests.rb                 done
-    File_tests.rb                       done
-    Type_tests.rb                       done
-    SourceRange_tests.rb                done
-    SourceLocation_tests.rb             done
-    CompletionString_tests.rb
-    CompletionResult_tests.rb
-    CodeCompleteResults_tests.rb
-    clangc_utils.rb
-    Module_tests.rb
-    CursorSet_tests.rb
+    Module_tests.rb                     done
 
 [ ] Finish Implement Clangc::Cursor methods
 
