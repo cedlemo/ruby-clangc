@@ -431,21 +431,6 @@ class TestCursorUsage < MiniTest::Test
     end
   end
 
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_num_template_arguments
-      source_file = SOURCE_FILE_FUNCTION_TEMPLATE
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      tu = @cindex.create_translation_unit(source: source_file,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          assert_equal(3, cursor.num_template_arguments, cursor.spelling)
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
   def test_cursor_get_decl_obj_c_type_encoding
     arguments = ["-x", "objective-c"] + CLANG_HEADERS_PATH
     tu = @cindex.create_translation_unit(source: SOURCE_FILE_OBJECTC,
@@ -470,35 +455,6 @@ class TestCursorUsage < MiniTest::Test
         end
       end
       Clangc::ChildVisitResult::RECURSE
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_offset_of_field
-      tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FIELD_DECL
-          assert_equal(0, cursor.offset_of_field) if cursor.spelling == "index"
-        else
-          assert_equal(-1, cursor.offset_of_field)
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_is_anonymous
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      tu = @cindex.create_translation_unit(source: SOURCE_FILE_ANON_DECLS,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::UNION_DECL &&
-           cursor.spelling != "X"
-          assert_equal(true, cursor.is_anonymous, cursor.spelling)
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
     end
   end
 
@@ -542,20 +498,6 @@ class TestCursorUsage < MiniTest::Test
         end
       end
       Clangc::ChildVisitResult::RECURSE
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_storage_class
-      tu = @cindex.create_translation_unit(source: SOURCE_FILE,
-                                           args: CLANG_HEADERS_PATH)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          assert_equal(Clangc::StorageClass::SC_NONE, cursor.storage_class)
-        elsif cursor.kind != Clangc::CursorKind::VAR_DECL
-          assert_equal(Clangc::StorageClass::SC_INVALID, cursor.storage_class)
-        end
-      end
     end
   end
 
@@ -790,20 +732,6 @@ class TestCursorUsage < MiniTest::Test
     end
   end
 
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_mangling
-      tu = @cindex.create_translation_unit(source: SOURCE_FILE,
-                                           args: CLANG_HEADERS_PATH)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.location.spelling[0].name == SOURCE_FILE
-          # TODO
-          assert_instance_of(String, cursor.mangling)
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
   def test_cursor_cxx_method_is_pure_virtual
     arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
     tu = @cindex.create_translation_unit(source: SOURCE_FILE_VIRT_BASE_CLASS,
@@ -896,146 +824,6 @@ class TestCursorUsage < MiniTest::Test
       Clangc::ChildVisitResult::RECURSE
     end
   end
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_argument_kind
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          (0..2).each do |i|
-            found = false
-            Clangc::TemplateArgumentKind.constants.each do |c|
-              arg_kind = cursor.template_argument_kind(i)
-              if arg_kind == Clangc::TemplateArgumentKind.const_get(c)
-                found = true
-              end
-            end
-            assert(found, cursor.spelling)
-          end
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_arguments_kinds
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          cursor.template_arguments_kinds.each do |k|
-            found = false
-            Clangc::TemplateArgumentKind.constants.each do |c|
-              found = true if k == Clangc::TemplateArgumentKind.const_get(c)
-            end
-            assert(found, cursor.spelling)
-          end
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_argument_type
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          assert_equal("float", cursor.template_argument_type(0).spelling)
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_arguments_types
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          args = cursor.template_arguments_types
-          assert_equal("float", args[0].spelling)
-          assert_equal("", args[1].spelling, args[1].spelling)
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_argument_value
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          assert_equal(-7, cursor.template_argument_value(1))
-          assert_equal(1, cursor.template_argument_value(2))
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_arguments_values
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          values = cursor.template_arguments_values
-          assert_equal(-7, values[1])
-          assert_equal(1, values[2])
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
-
-  if Clangc.version =~ /clang version 3.(6|7)/
-    def test_cursor_get_template_argument_unsigned_value
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE_2
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          assert_equal(2_147_483_649,
-                       cursor.template_argument_unsigned_value(1))
-          assert_equal(1, cursor.template_argument_unsigned_value(2))
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-
-    def test_cursor_get_template_arguments_unsigned_values
-      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
-      file_name = SOURCE_FILE_FUNCTION_TEMPLATE_2
-      tu = @cindex.create_translation_unit(source: file_name,
-                                           args: arguments)
-      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
-        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
-          values = cursor.template_arguments_unsigned_values
-          assert_equal(2_147_483_649, values[1])
-          assert_equal(1, values[2])
-        end
-        Clangc::ChildVisitResult::RECURSE
-      end
-    end
-  end
 
   def test_cursor_get_decl_obj_c_property_attributes
     arguments = ["-x", "objective-c"] + CLANG_HEADERS_PATH
@@ -1114,6 +902,211 @@ class TestCursorUsage < MiniTest::Test
         assert_instance_of(Clangc::SourceRange, source_range, cursor.spelling)
       end
       Clangc::ChildVisitResult::RECURSE
+    end
+  end
+end
+
+class TestCursorUsagePostVersion35 < MiniTest::Test
+  include ClangcUtils
+
+  def setup
+    @cindex = Clangc::Index.new(false, false)
+    system(*%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE}))
+  end
+
+  def teardown
+    FileUtils.rm_f(AST_FILE)
+  end
+
+  if Clangc.version =~ /clang version 3.(6|7|8)/
+    def test_cursor_get_num_template_arguments
+      source_file = SOURCE_FILE_FUNCTION_TEMPLATE
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      tu = @cindex.create_translation_unit(source: source_file,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal(3, cursor.num_template_arguments, cursor.spelling)
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_offset_of_field
+      tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE, CLANG_HEADERS_PATH)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FIELD_DECL
+          assert_equal(0, cursor.offset_of_field) if cursor.spelling == "index"
+        else
+          assert_equal(-1, cursor.offset_of_field)
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_is_anonymous
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      tu = @cindex.create_translation_unit(source: SOURCE_FILE_ANON_DECLS,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::UNION_DECL &&
+           cursor.spelling != "X"
+          assert_equal(true, cursor.is_anonymous, cursor.spelling)
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_storage_class
+      tu = @cindex.create_translation_unit(source: SOURCE_FILE,
+                                           args: CLANG_HEADERS_PATH)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal(Clangc::StorageClass::SC_NONE, cursor.storage_class)
+        elsif cursor.kind != Clangc::CursorKind::VAR_DECL
+          assert_equal(Clangc::StorageClass::SC_INVALID, cursor.storage_class)
+        end
+      end
+    end
+
+    def test_cursor_get_mangling
+      tu = @cindex.create_translation_unit(source: SOURCE_FILE,
+                                           args: CLANG_HEADERS_PATH)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.location.spelling[0].name == SOURCE_FILE
+          # TODO
+          assert_instance_of(String, cursor.mangling)
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_argument_kind
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          (0..2).each do |i|
+            found = false
+            Clangc::TemplateArgumentKind.constants.each do |c|
+              arg_kind = cursor.template_argument_kind(i)
+              if arg_kind == Clangc::TemplateArgumentKind.const_get(c)
+                found = true
+              end
+            end
+            assert(found, cursor.spelling)
+          end
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+    
+    def test_cursor_get_template_arguments_kinds
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          cursor.template_arguments_kinds.each do |k|
+            found = false
+            Clangc::TemplateArgumentKind.constants.each do |c|
+              found = true if k == Clangc::TemplateArgumentKind.const_get(c)
+            end
+            assert(found, cursor.spelling)
+          end
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_argument_type
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal("float", cursor.template_argument_type(0).spelling)
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_arguments_types
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          args = cursor.template_arguments_types
+          assert_equal("float", args[0].spelling)
+          assert_equal("", args[1].spelling, args[1].spelling)
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_argument_value
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal(-7, cursor.template_argument_value(1))
+          assert_equal(1, cursor.template_argument_value(2))
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_arguments_values
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          values = cursor.template_arguments_values
+          assert_equal(-7, values[1])
+          assert_equal(1, values[2])
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_argument_unsigned_value
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE_2
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          assert_equal(2_147_483_649,
+                       cursor.template_argument_unsigned_value(1))
+          assert_equal(1, cursor.template_argument_unsigned_value(2))
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
+    end
+
+    def test_cursor_get_template_arguments_unsigned_values
+      arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+      file_name = SOURCE_FILE_FUNCTION_TEMPLATE_2
+      tu = @cindex.create_translation_unit(source: file_name,
+                                           args: arguments)
+      Clangc.visit_children(cursor: tu.cursor) do |cursor, _parent|
+        if cursor.kind == Clangc::CursorKind::FUNCTION_DECL
+          values = cursor.template_arguments_unsigned_values
+          assert_equal(2_147_483_649, values[1])
+          assert_equal(1, values[2])
+        end
+        Clangc::ChildVisitResult::RECURSE
+      end
     end
   end
 end
