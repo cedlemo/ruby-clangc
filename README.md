@@ -17,7 +17,7 @@ Those bindings have been tested and work with :
   *  [Dependencies](#dependencies)
   *  [On Your system](#on-your-system)
   *  [With Virtual Box and Vagrant](#with-virtual-box-and-vagrant)
-    *  [ArchLinux:](#archlinux)
+    *  [ArchLinux](#archlinux)
     *  [Fedora](#fedora)
     *  [Debian](#debian)
 *  [Examples](#examples)
