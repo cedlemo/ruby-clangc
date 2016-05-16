@@ -24,12 +24,14 @@ class TestCompletionString < MiniTest::Test
   include ClangcUtils
   def setup
     @cindex = Clangc::Index.new(false, false)
+    @arguments = ["-x", "c++"] + CLANG_HEADERS_PATH
+    @tu = @cindex.create_translation_unit(source: SOURCE_FILE_COMPLETION_STRING,
+                                          args: @arguments)
   end
-  
-  def test_CompletionString_from_cursor
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+
+  def test_completion_string_from_cursor
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if line == 1 && cursor.spelling == "f"
           assert_instance_of(Clangc::CompletionString,
@@ -41,10 +43,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_availability
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING,  ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_availability
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if line == 1 && cursor.spelling == "f"
           assert_equal(Clangc::AvailabilityKind::AVAILABLE,
@@ -55,10 +56,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_priority
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING,  ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_priority
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if line == 1 && cursor.spelling == "f"
           completion_string = cursor.completion_string
@@ -69,10 +69,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_num_chunks
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING,  ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_num_chunks
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           completion_string = cursor.completion_string
@@ -83,10 +82,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_chunk_kind
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_chunk_kind
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           completion_string = cursor.completion_string
@@ -108,10 +106,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_chunk_kinds
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING,  ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_chunk_kinds
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           chunk_kinds = cursor.completion_string.chunk_kinds
@@ -133,10 +130,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_chunk_text
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING,  ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_chunk_text
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           completion_string = cursor.completion_string
@@ -158,13 +154,11 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_chunk_texts
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING,   ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_chunk_texts
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
-          completion_string = cursor.completion_string
           chunk_texts = cursor.completion_string.chunk_texts
           assert_equal("void",
                        chunk_texts[0])
@@ -184,14 +178,13 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_num_annotations
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_num_annotations
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           completion_string = cursor.completion_string
-          assert_equal( 0, completion_string.num_annotations)
+          assert_equal(0, completion_string.num_annotations)
         end
         # NOTE find real example
       end
@@ -199,10 +192,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_annotation
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, ["-x", "c++"] + CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_annotation
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         # NOTE find real example
       end
@@ -210,10 +202,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_annotations
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_annotations
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         # NOTE find real example
       end
@@ -221,10 +212,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_brief_comment
-    tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_brief_comment
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           # NOTE find real example
@@ -236,17 +226,16 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_chunk_completion_string
-   tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_chunk_completion_string
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           completion_string = cursor.completion_string
-          chunks_kinds = completion_string.chunk_kinds 
-          chunks_kinds.each_with_index do |k, index|
-            assert_instance_of(Clangc::CompletionString, 
-                         completion_string.chunk_completion_string(index))
+          chunks_kinds = completion_string.chunk_kinds
+          chunks_kinds.each_with_index do |_k, index|
+            assert_instance_of(Clangc::CompletionString,
+                               completion_string.chunk_completion_string(index))
           end
         end
       end
@@ -254,10 +243,9 @@ class TestCompletionString < MiniTest::Test
     end
   end
 
-  def test_CompletionString_chunk_completion_strings
-   tu = @cindex.create_translation_unit_from_source_file(SOURCE_FILE_COMPLETION_STRING, CLANG_HEADERS_PATH)
-    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-      file, line, pos, offset = cursor.location.spelling
+  def test_completion_string_chunk_completion_strings
+    Clangc.visit_children(cursor: @tu.cursor) do |cursor, _parent|
+      file, _line, _pos, _offset = cursor.location.spelling
       if file.name == SOURCE_FILE_COMPLETION_STRING
         if cursor.spelling == "f"
           completion_string = cursor.completion_string
