@@ -24,38 +24,48 @@ class TestCursorUsage < MiniTest::Test
   include ClangcUtils
   def setup
     # TODO
-    cindex = Clangc::Index.new(false, false)
-      #tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT, ["-x", "c++", "-fmodules", "-fcxxmodules"] + CLANG_HEADERS_PATH)
-    tu = cindex.create_translation_unit_from_source_file(SOURCE_FILE_MODULE_IMPORT,
-                                                         ["-x", "c++", "-fmodules"]  + CLANG_HEADERS_PATH)
-#    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
-#      if cursor.kind == Clangc::CursorKind::MODULE_IMPORT_DECL
-#        @module = cursor.module
-#      end
-#      Clangc::ChildVisitResult::RECURSE
-#    end
+    # @cindex = Clangc::Index.new(false, false)
+    # args = ["-x", "c++", "-fmodules", "-fcxxmodules"] + CLANG_HEADERS_PATH
+    # args = ["-x", "c++", "-fmodules"]  + CLANG_HEADERS_PATH
+    # @tu = cindex.create_translation_unit(source: SOURCE_FILE_MODULE_IMPORT,
+    #                                      args: args)
+
+    #    Clangc.visit_children(cursor: tu.cursor) do |cursor, parent|
+    #      if cursor.kind == Clangc::CursorKind::MODULE_IMPORT_DECL
+    #        @module = cursor.module
+    #      end
+    #      Clangc::ChildVisitResult::RECURSE
+    #    end
   end
+
   def test_module_get_ast_file
     # TODO
   end
+
   def test_module_get_parent
     # TODO
   end
+
   def test_module_get_name
     # TODO
   end
+
   def test_module_get_full_name
     # TODO
   end
+
   def test_module_is_system
     # TODO
   end
+
   def test_module_get_num_top_level_headers
     # TODO
   end
+
   def test_module_get_top_level_header
     # TODO
   end
+
   def test_module_get_top_level_headers
     # TODO
   end
