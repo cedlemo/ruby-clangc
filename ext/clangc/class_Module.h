@@ -1,6 +1,6 @@
 /*
  * ruby-clangc ruby bindings for the C interface of Clang
- * Copyright (C) 2016  cedlemo <cedlemo@gmx.com>
+ * Copyright (C) 2016 Cedric Le Moigne cedlemo <cedlemo@gmx.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
