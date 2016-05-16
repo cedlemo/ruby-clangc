@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "debian/jessie64"
+
+  config.vm.box_check_update = true
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "1024"
+  end
+  config.vm.provision "shell", inline: <<-SHELL, privileged: false
+    sudo apt-get update
+    sudo apt-get install -y build-essential git vim ruby 
+    sudo apt-get install -y clang libclang1 libclang-dev llvm
+    sudo apt-get install -y ruby-dev 
+    sudo gem install rake rake-compiler minitest term-ansicolor
+  SHELL
+end

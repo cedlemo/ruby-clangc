@@ -19,6 +19,7 @@ Those bindings have been tested and work with :
   *  [With Virtual Box and Vagrant](#with-virtual-box-and-vagrant)
     *  [ArchLinux:](#archlinux)
     *  [Fedora](#fedora)
+    *  [Debian](#debian)
 *  [Examples](#examples)
   *  [Code completion](#code-completion)
   *  [C and C++ parser](#c-and-c++-parser)
@@ -64,6 +65,8 @@ the ruby-clangc gem has not been released yet. You need to clone this github rep
     vagrant up
     vagrant provision
 ```
+Then clone the github repository, build the gem and install it like [on your system](#on-your-system).
+
 #### Fedora
 
 ```bash
@@ -74,6 +77,18 @@ the ruby-clangc gem has not been released yet. You need to clone this github rep
     vagrant up
     vagrant provision
 ```
+Then clone the github repository, build the gem and install it like [on your system](#on-your-system).
+
+#### Debian
+
+```bash
+    vagrant box add debian/jessie64
+    mkdir ruby_clang_test
+    wget https://raw.githubusercontent.com/cedlemo/ruby-clangc/master/Debian-Jessie-64_Vagrantfile
+    vagrant up
+    vagrant provision
+```
+Then clone the github repository, build the gem and install it like [on your system](#on-your-system).
 
 ## Examples 
 See in the samples directory if you want to try those examples.

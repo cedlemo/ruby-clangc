@@ -12,10 +12,6 @@ Vagrant.configure(2) do |config|
   shell_script = <<-SHELL
     yaourt -Syu --noconfirm
     yaourt --noconfirm -S clang llvm llvm-libs git ruby
-    git clone https://github.com/cedlemo/ruby-clangc.git
-    cd ruby-clangc
-    gem build clangc.gemspec
-    gem install clangc-0.0.1.gem
   SHELL
   config.vm.provision "shell", inline: shell_script, privileged: false
 end
