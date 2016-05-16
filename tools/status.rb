@@ -155,7 +155,8 @@ MANAGED_FUNCTIONS.uniq!
   end
 
 # Get a list of all Clang functions of system headers
-clang_c = "/usr/include/clang-c/Index.h"
+libclang_dir = `llvm-config --includedir`.chomp
+clang_c = libclang_dir + "/clang-c/Index.h"
 
 parser = Toolbox::SourceParser.new(clang_c)
 unless parser.parse(true)
