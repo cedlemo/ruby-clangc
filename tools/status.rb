@@ -124,10 +124,14 @@ end
 MANAGED_FUNCTIONS.uniq!
 # Get Clang versions with function name:
   clang_versions = {}
-  clang_versions[:v35] = Toolbox::SourceParser.new("#{PATH}/clang-3.5/Index.h")
-  clang_versions[:v36] = Toolbox::SourceParser.new("#{PATH}/clang-3.6/Index.h")
-  clang_versions[:v37] = Toolbox::SourceParser.new("#{PATH}/clang-3.7/Index.h")
-  clang_versions[:v38] = Toolbox::SourceParser.new("#{PATH}/clang-3.8/Index.h")
+  clang_versions[:v35] = Toolbox::SourceParser.new("#{PATH}/clang-3.5/clang-c/Index.h",
+                                                   "#{PATH}/clang-3.5")
+  clang_versions[:v36] = Toolbox::SourceParser.new("#{PATH}/clang-3.6/clang-c/Index.h",
+                                                   "#{PATH}/clang-3.6")
+  clang_versions[:v37] = Toolbox::SourceParser.new("#{PATH}/clang-3.7/clang-c/Index.h",
+                                                   "#{PATH}/clang-3.7")
+  clang_versions[:v38] = Toolbox::SourceParser.new("#{PATH}/clang-3.8/clang-c/Index.h",
+                                                   "#{PATH}/clang-3.8")
 
   OUT = STDOUT.dup
   ERR = STDERR.dup
