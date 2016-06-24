@@ -162,7 +162,7 @@ MANAGED_FUNCTIONS.uniq!
 libclang_dir = `llvm-config --includedir`.chomp
 clang_c = libclang_dir + "/clang-c/Index.h"
 
-parser = Toolbox::SourceParser.new(clang_c)
+parser = Toolbox::SourceParser.new(clang_c, libclang_dir)
 unless parser.parse(true)
   puts "Can't parse"
   exit
