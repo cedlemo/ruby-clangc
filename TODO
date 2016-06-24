@@ -7,8 +7,6 @@
 [ ] Merge the CodeCompleteResults CompletionResult and CompletionString tests
     only the CompletionString as valid tests.
 
-[ ] Check to see why status.rb doesn't work in debian
-
 [ ] Check and rework how all the constants as agruments are used
     
     class_Cursor.c                      
