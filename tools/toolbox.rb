@@ -50,12 +50,12 @@ begin
       # the file we want to parse and not on included
       # headers
       def cursor_in_main_file?(cursor)
-        return true if !@only_main_file 
+        return true if !@only_main_file
         # if we dont care that the cursor go in other
         # file we do like it is always in the main file
         cursor_file = cursor.location.spelling[0]
         main_file = @translation_unit.file(@source_file)
-        cursor_file.is_equal(main_file)
+        cursor_file.name == main_file.name
       end
 
       private
