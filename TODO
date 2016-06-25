@@ -1,6 +1,9 @@
 # TODO
 
 ## Primary
+[ ] Implement clang_getDiagnosticFixIt
+[ ] Implement clang_getFileUniqueID clang_getSkippedRanges 
+
 [ ] Generalize usage of create_translation_unit and parse_translation_unit
     Favorize parse_translation_unit
 
