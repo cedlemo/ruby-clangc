@@ -26,7 +26,7 @@ class TestDiagnostic < MiniTest::Test
     @cindex = Clangc::Index.new(false, false)
     system(*%W(clang -emit-ast -o #{AST_FILE} #{SOURCE_FILE}))
   end
-  
+
   def teardown
     FileUtils.rm_f(AST_FILE)
   end
@@ -200,5 +200,25 @@ class TestDiagnostic < MiniTest::Test
                                          args: CLANG_HEADERS_PATH)
     diagnostics = tu.diagnostics
     assert_instance_of(Clangc::SourceLocation, diagnostics[0].source_location)
+  end
+
+  def test_get_diagnostic_fixit
+    tu = @cindex.create_translation_unit(source: SOURCE_FILE_ONE_ERROR,
+                                         args: CLANG_HEADERS_PATH)
+    diagnostics = tu.diagnostics
+
+    assert_equal(";", diagnostics[0].fixit(0)[0])
+    position_start = diagnostics[0].fixit(0)[1].start.spelling
+    position_end = diagnostics[0].fixit(0)[1].end.spelling
+
+    file, line, position, _ = position_start
+    assert_equal(SOURCE_FILE_ONE_ERROR, file.name)
+    assert_equal(6, line)
+    assert_equal(11, position)
+
+    file, line, position, _ = position_end
+    assert_equal(SOURCE_FILE_ONE_ERROR, file.name)
+    assert_equal(6, line)
+    assert_equal(11, position)
   end
 end
