@@ -1,7 +1,6 @@
 # TODO
 
 ## Primary
-[ ] Implement clang_getDiagnosticFixIt
 [ ] Implement clang_getFileUniqueID clang_getSkippedRanges 
 
 [ ] Generalize usage of create_translation_unit and parse_translation_unit
@@ -11,14 +10,7 @@
     only the CompletionString as valid tests.
 
 [ ] Check and rework how all the constants as agruments are used
-    
     class_Cursor.c                      
-
-[ ] Clean Tests files
-    clangc_utils.rb
-
-[ ] Update copyright informations (in *.h too)
-    Module_tests.rb                     done
 
 [ ] Finish Implement Clangc::Cursor methods
 
