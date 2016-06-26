@@ -274,3 +274,49 @@ c_Diagnostic_get_source_location(VALUE self)
     sl->parent = self;
     return a_source_location;
 }
+
+/**
+ * call-seq:
+ *  Clangc::Diagnostic#fix_it(fix_number) => Array [Str, Clangc::SourceRange]
+ *
+ * Retrieve the replacement information for a given fix-it.
+ *
+ * Fix-its are described in terms of a source range whose contents
+ * should be replaced by a string. This approach generalizes over
+ * three kinds of operations: removal of source code (the range covers
+ * the code to be removed and the replacement string is empty),
+ * replacement of source code (the range covers the code to be
+ * replaced and the replacement string provides the new code), and
+ * insertion (both the start and end of the range point at the
+ * insertion location, and the replacement string provides the text to
+ * insert).
+ *
+ * fix_number The zero-based index of the fix-it.
+ *
+ * Returns an Array with in the following order:
+ *
+ * A string containing text that should be replace the source
+ * code indicated by the \c ReplacementRange.
+ *
+ * The source range whose contents will be
+ * replaced with the returned replacement string. Note that source
+ * ranges are half-open ranges [a, b), so the source code should be
+ * replaced from a and up to (but not including) b.
+ */
+VALUE
+c_Diagnostic_get_fixit(VALUE self, VALUE index)
+{
+    Diagnostic_t *d;
+    Data_Get_Struct(self, Diagnostic_t, d);
+    unsigned int c_index = NUM2UINT(index);
+    VALUE source_range;
+    SourceRange_t *s;
+    CXString fixit_str;
+    VALUE ret = rb_ary_new();
+    R_GET_CLASS_DATA("Clangc", SourceRange, source_range, s);
+    s->parent = self;
+    fixit_str = clang_getDiagnosticFixIt(d->data, c_index, &(s->data));
+    rb_ary_push(ret, CXSTR_2_RVAL(fixit_str));
+    rb_ary_push(ret, source_range);
+    return ret;
+}

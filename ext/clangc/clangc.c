@@ -44,7 +44,7 @@ void Init_clangc(void) {
     VALUE c_SourceRange;
     VALUE c_SourceLocation;
     VALUE c_Cursor;
-    VALUE c_OverriddenCursor;    
+    VALUE c_OverriddenCursor;
     VALUE c_Type;
     VALUE c_CursorSet;
     VALUE c_CompletionString;
@@ -92,8 +92,8 @@ void Init_clangc(void) {
     rb_define_method(c_TranslationUnit, "default_save_options", RUBY_METHOD_FUNC(c_TranslationUnit_get_default_save_options), 0);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "spelling", RUBY_METHOD_FUNC(c_TranslationUnit_get_spelling), 0);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "default_reparse_options", RUBY_METHOD_FUNC(c_TranslationUnit_get_default_reparse_options), 0);// in class_TranslationUnit.c
-    rb_define_method(c_TranslationUnit, "diagnostic", RUBY_METHOD_FUNC(c_TranslationUnit_get_diagnostic), 1);// in class_TranslationUnit.c  
-    rb_define_method(c_TranslationUnit, "file", RUBY_METHOD_FUNC(c_TranslationUnit_get_file), 1);// in class_TranslationUnit.c  
+    rb_define_method(c_TranslationUnit, "diagnostic", RUBY_METHOD_FUNC(c_TranslationUnit_get_diagnostic), 1);// in class_TranslationUnit.c
+    rb_define_method(c_TranslationUnit, "file", RUBY_METHOD_FUNC(c_TranslationUnit_get_file), 1);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "cursor", RUBY_METHOD_FUNC(c_TranslationUnit_get_cursor), 0);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "module", RUBY_METHOD_FUNC(c_TranslationUnit_get_module), 1);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "code_complete_at", RUBY_METHOD_FUNC(c_TranslationUnit_code_complete_at), 4);// in class_TranslationUnit.c
@@ -116,6 +116,7 @@ void Init_clangc(void) {
     rb_define_method(c_Diagnostic, "option", RUBY_METHOD_FUNC(c_Diagnostic_get_option), 0);// in class_Diagnostic.c
     rb_define_method(c_Diagnostic, "source_range", RUBY_METHOD_FUNC(c_Diagnostic_get_source_range), 1);// in class_Diagnostic.c
     rb_define_method(c_Diagnostic, "source_location", RUBY_METHOD_FUNC(c_Diagnostic_get_source_location), 0);// in class_Diagnostic.c
+    rb_define_method(c_Diagnostic, "fixit", RUBY_METHOD_FUNC(c_Diagnostic_get_fixit), 1); // in class_Diagnostic.c
 
 /*
 *  A particular source file that is part of a translation unit
@@ -201,7 +202,7 @@ void Init_clangc(void) {
     rb_define_method(c_Cursor, "is_translation_unit", RUBY_METHOD_FUNC(c_Cursor_is_translation_unit), 0);// in class_Cursor.c
     rb_define_method(c_Cursor, "is_preprocessing", RUBY_METHOD_FUNC(c_Cursor_is_preprocessing), 0);// in class_Cursor.c
     rb_define_method(c_Cursor, "enum_decl_integer_type", RUBY_METHOD_FUNC(c_Cursor_get_enum_decl_integer_type), 0);// in class_Cursor.c
-    rb_define_method(c_Cursor, "enum_const_decl_value", RUBY_METHOD_FUNC(c_Cursor_get_enum_const_decl_value), 0);// in class_Cursor.c  
+    rb_define_method(c_Cursor, "enum_const_decl_value", RUBY_METHOD_FUNC(c_Cursor_get_enum_const_decl_value), 0);// in class_Cursor.c
     rb_define_method(c_Cursor, "enum_const_decl_unsigned_value", RUBY_METHOD_FUNC(c_Cursor_get_enum_const_decl_unsigned_value), 0);// in class_Cursor.c
     rb_define_method(c_Cursor, "field_decl_bit_width", RUBY_METHOD_FUNC(c_Cursor_get_field_decl_bit_width), 0);// in class_Cursor.c
     rb_define_method(c_Cursor, "num_arguments", RUBY_METHOD_FUNC(c_Cursor_get_num_arguments), 0);// in class_Cursor.c
@@ -268,7 +269,7 @@ void Init_clangc(void) {
   c_OverriddenCursor = rb_define_class_under(m_Clangc, "OverriddenCursor", c_Cursor);
   rb_define_alloc_func(c_OverriddenCursor, c_OverriddenCursor_struct_alloc);
 
-  
+
 /*
 * Type informations for Clangc::Cursor
 */
@@ -300,7 +301,7 @@ void Init_clangc(void) {
     rb_define_method(c_Type, "num_template_arguments", RUBY_METHOD_FUNC(c_Type_get_num_template_arguments), 0);// in class_Type.c
     rb_define_method(c_Type, "template_argument_as_type", RUBY_METHOD_FUNC(c_Type_get_template_argument_as_type), 1);// in class_Type.c
     rb_define_method(c_Type, "cxx_ref_qualifier", RUBY_METHOD_FUNC(c_Type_get_cxx_ref_qualifier), 0);// in class_Type.c
- 
+
 /**
 * \brief A fast container representing a set of CXCursors.
 */

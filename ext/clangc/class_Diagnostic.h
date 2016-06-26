@@ -60,4 +60,7 @@ c_Diagnostic_get_source_range(VALUE, VALUE);
 
 VALUE
 c_Diagnostic_get_source_location(VALUE);
+
+VALUE
+c_Diagnostic_get_fixit(VALUE, VALUE);
 #endif // DIAGNOSTIC_H
