@@ -218,7 +218,7 @@ class TestTranslationUnitUsage < MiniTest::Test
 
     tu.reparse(reparse_options)
 
-    options = [:include_macros, :include_code_patterns, :include_brief_comments] 
+    options = [:include_macros, :include_code_patterns, :include_brief_comments]
     complete_results = tu.code_complete_at(SOURCE_FILE_COMPLETION_STRING,
                                            line,
                                            column,
@@ -249,5 +249,23 @@ class TestTranslationUnitUsage < MiniTest::Test
     options = tu.default_reparse_options
     error_code = tu.reparse(options)
     assert(0 == error_code, error_code)
+  end
+
+  def test_tu_skipped_ranges
+    tu = @cindex.create_translation_unit(source: SOURCE_MACROS_CONDITIONAL_DEF,
+                                         args: CLANG_HEADERS_PATH)
+
+    skipped_ranges = tu.skipped_ranges(tu.file(SOURCE_MACROS_CONDITIONAL_DEF))
+    assert_equal(2, skipped_ranges.size)
+
+    _file, line = skipped_ranges[0].start.spelling
+    assert_equal(10, line, skipped_ranges[0].start.spelling)
+    _file, line = skipped_ranges[0].end.spelling
+    assert_equal(13, line)
+
+    _file, line = skipped_ranges[1].start.spelling
+    assert_equal(15, line, skipped_ranges[1].start.spelling)
+    _file, line = skipped_ranges[1].end.spelling
+    assert_equal(18, line)
   end
 end
