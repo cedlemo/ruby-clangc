@@ -139,3 +139,7 @@ c_File_is_equal(VALUE self, VALUE file)
     return NOT_0_2_RVAL(clang_File_isEqual(f1->data, f2->data));
 }
 #endif
+
+/*
+ * skipped :
+ * clang_getFileUniqueID*/
