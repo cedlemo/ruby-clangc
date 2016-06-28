@@ -57,4 +57,7 @@ c_TranslationUnit_code_complete_at(VALUE, VALUE, VALUE, VALUE, VALUE);
 
 VALUE
 c_TranslationUnit_reparse(VALUE, VALUE);
+
+VALUE
+c_TranslationUnit_get_skipped_ranges(VALUE, VALUE);
 #endif // TRANSLATIONUNIT_H

@@ -98,6 +98,7 @@ void Init_clangc(void) {
     rb_define_method(c_TranslationUnit, "module", RUBY_METHOD_FUNC(c_TranslationUnit_get_module), 1);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "code_complete_at", RUBY_METHOD_FUNC(c_TranslationUnit_code_complete_at), 4);// in class_TranslationUnit.c
     rb_define_method(c_TranslationUnit, "reparse", RUBY_METHOD_FUNC(c_TranslationUnit_reparse), 1);// in class_TranslationUnit.c
+    rb_define_method(c_TranslationUnit, "skipped_ranges", RUBY_METHOD_FUNC(c_TranslationUnit_get_skipped_ranges), 1);// in class_TranslationUnit.c
 
 /*
 * A diagnostic object, containing the diagnostic's severity,

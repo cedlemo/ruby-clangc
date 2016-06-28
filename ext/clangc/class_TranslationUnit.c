@@ -22,6 +22,7 @@
 #include "class_Cursor.h"
 #include "class_Module.h"
 #include "class_CodeCompleteResults.h"
+#include "class_SourceRange.h"
 #include "macros.h"
 
 static void c_TranslationUnit_struct_free(TranslationUnit_t *s)
@@ -415,4 +416,42 @@ c_TranslationUnit_reparse(VALUE self, VALUE options)
                                          NULL, // TODO Manage unsaved files
                                          c_options);
     return CINT_2_NUM(error);
+}
+
+/**
+ * call-seq:
+ *  Clangc::TranslationUnit#skipped_ranges(cxfile) => Array
+ *
+ * Retrieve all ranges that were skipped by the preprocessor for the Clangc::File
+ * instance.
+ *
+ * The preprocessor will skip lines when they are surrounded by an
+ * if/ifdef/ifndef directive whose condition does not evaluate to true.
+ * It returns an Array of SourceRange.
+ */
+VALUE
+c_TranslationUnit_get_skipped_ranges(VALUE self, VALUE file)
+{
+    TranslationUnit_t *t;
+    File_t *f;
+    VALUE ret = rb_ary_new();
+    CXSourceRangeList * skipped_ranges_list;
+    int i = 0;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    CHECK_ARG_TYPE(file, File);
+    Data_Get_Struct(file, File_t, f);
+    skipped_ranges_list = clang_getSkippedRanges(t->data, f->data);
+    
+    for(i = 0; i < skipped_ranges_list->count; i++)
+    {
+        SourceRange_t * s;
+        VALUE source_range;
+        R_GET_CLASS_DATA("Clangc", SourceRange, source_range, s);
+        s->data = skipped_ranges_list->ranges[i];
+        s->parent = t->data;
+        rb_ary_push(ret, source_range);
+    }
+    clang_disposeSourceRangeList(skipped_ranges_list);
+    return ret;
 }
