@@ -323,7 +323,7 @@ When ruby-clangc is installed, you can try the *tools/status.rb* script in order
 
 ### functions wrapped:
 
-*    182/257 functions wrapped => 70.8171206225681%
+*    185/257 functions wrapped => 71.98443579766537%
 
 ### classes wrapped:
 

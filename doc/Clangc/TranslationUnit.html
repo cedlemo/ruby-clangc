@@ -90,6 +90,8 @@
     
     <li ><a href="#method-i-reparse">#reparse</a>
     
+    <li ><a href="#method-i-skipped_ranges">#skipped_ranges</a>
+    
     <li ><a href="#method-i-spelling">#spelling</a>
     
   </ul>
@@ -730,6 +732,69 @@ c_TranslationUnit_reparse(VALUE self, VALUE options)
                                          NULL, // TODO Manage unsaved files
                                          c_options);
     return CINT_2_NUM(error);
+}</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-skipped_ranges" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            Clangc::TranslationUnit#skipped_ranges(cxfile) &rarr; Array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve all ranges that were skipped by the preprocessor for the <a
+href="File.html">Clangc::File</a> instance.</p>
+
+<p>The preprocessor will skip lines when they are surrounded by an
+if/ifdef/ifndef directive whose condition does not evaluate to true. It
+returns an Array of <a href="SourceRange.html">SourceRange</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="skipped_ranges-source">
+            <pre>VALUE
+c_TranslationUnit_get_skipped_ranges(VALUE self, VALUE file)
+{
+    TranslationUnit_t *t;
+    File_t *f;
+    VALUE ret = rb_ary_new();
+    CXSourceRangeList * skipped_ranges_list;
+    int i = 0;
+
+    Data_Get_Struct(self, TranslationUnit_t, t);
+    CHECK_ARG_TYPE(file, File);
+    Data_Get_Struct(file, File_t, f);
+    skipped_ranges_list = clang_getSkippedRanges(t-&gt;data, f-&gt;data);
+    
+    for(i = 0; i &lt; skipped_ranges_list-&gt;count; i++)
+    {
+        SourceRange_t * s;
+        VALUE source_range;
+        R_GET_CLASS_DATA(&quot;Clangc&quot;, SourceRange, source_range, s);
+        s-&gt;data = skipped_ranges_list-&gt;ranges[i];
+        s-&gt;parent = t-&gt;data;
+        rb_ary_push(ret, source_range);
+    }
+    clang_disposeSourceRangeList(skipped_ranges_list);
+    return ret;
 }</pre>
           </div>
           
