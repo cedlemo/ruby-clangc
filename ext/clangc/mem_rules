@@ -9,6 +9,7 @@ Diagnostic          y           TranslationUnit
 
 SourceRange                     Cursor
                                 Diagnostic
+                                TranslationUnit (when from TranslationUnit)
 
 SourceLocation                  Cursor
                                 Diagnostic
