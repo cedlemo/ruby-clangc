@@ -79,6 +79,8 @@ module ClangcUtils
   # Source code for code completion
   SOURCE_FILE_COMPLETION_STRING = "#{PATH}/source30.c"
   SOURCE_FILE_WITH_INCLUDE_GUARD = "#{PATH}/include_guarded_header.h"
+  # Source code with ifdef ifndef
+  SOURCE_MACROS_CONDITIONAL_DEF = "#{PATH}/source31.c"
   # Inexistant file
   BAD_FILE = "#{PATH}/qsdfqsdf.c"
   AST_FILE = "#{PATH}/source1.ast"
