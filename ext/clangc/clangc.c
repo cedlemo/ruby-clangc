@@ -82,6 +82,9 @@ void Init_clangc(void) {
     rb_define_method(c_Index, "create_translation_unit2", RUBY_METHOD_FUNC(c_Index_create_TU2), 1);// in class_Index.c
     rb_define_method(c_Index, "parse_translation_unit", RUBY_METHOD_FUNC(c_Index_parse_TU), 3);// in class_Index.c
     rb_define_method(c_Index, "parse_translation_unit2", RUBY_METHOD_FUNC(c_Index_parse_TU2), 3);// in class_Index.c
+#if (CINDEX_VERSION_MINOR >= 32)
+    rb_define_method(c_Index, "parse_translation_unit2_full_argv", RUBY_METHOD_FUNC(c_Index_parse_TU2_full_argv), 3);// in class_Index.c
+#endif
 
 /*
 * A single TranslationUnit which resides in an Index

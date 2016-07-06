@@ -378,3 +378,84 @@ c_Index_parse_TU2(VALUE self, VALUE source_file, VALUE args, VALUE options)
     else
         return tu;
 }
+
+#if (CINDEX_VERSION_MINOR >= 32)
+/*
+* call-seq:
+*   Clangc::Index#parse_translation_unit2_full_argv(source_file, args, options) =>
+* Clangc::TranslationUnit
+*
+* Parse the given source file and generate the translation unit corresponding
+* to that file. If its fails, it returns an Integer corresponding to the
+* error code a Clangc::ErrorCode constant.
+*
+* This routine is the main entry point for the Clang C API, providing the
+* ability to parse a source file into a translation unit that can then be
+* queried by other functions in the API. This routine accepts a set of
+* command-line arguments so that the compilation can be configured in the same
+* way that the compiler is configured on the command line.
+*
+* - source_file:
+* The name of the source file to load, or nil if the source file is included in
+* the command line arguments.
+*
+* - args:
+* The command-line arguments that would be passed to the clang executable if it
+* were being invoked out-of-process.
+* These command-line options will be parsed and will affect how the translation
+* unit is parsed. Note that the following options are ignored: '-c',
+* '-emit-ast', '-fsyntax-only' (which is the default), and '-o \<output file>'.
+*
+* - options:
+* A bitmask of options that affects how the translation unit is managed but not
+* its compilation. This should be a bitwise OR of the TranslationUnit_Flags
+* constants.
+*
+* TODO:
+* - unsaved_files:
+* The files that have not yet been saved to disk but may be required for
+* parsing,
+* including the contents of those files.  The contents and name of these files
+* (as specified by CXUnsavedFile) are copied when necessary, so the client only
+* needs to guarantee their validity until the call to this function returns.
+*
+* - num_unsaved_files:
+* The number of unsaved file entries in unsaved_files.
+* Same as clang_parseTranslationUnit2 but requires a full command line
+* for \c command_line_args including argv[0]. This is useful if the standard
+* library paths are relative to the binary.
+*/
+VALUE
+c_Index_parse_TU2_full_argv(VALUE self, VALUE source_file, VALUE args, VALUE options)
+{
+    char *c_source_file = NULL;
+    c_source_file = RSTRING_2_CHAR(source_file);
+
+    unsigned int c_options = CLANGC_CONSTANT_TO_UINT("TranslationUnit_Flags",
+                                                     options);
+
+    RARRAY_OF_STRINGS_2_C(args);
+    Index_t *i;
+    Data_Get_Struct(self, Index_t, i);
+    VALUE tu;
+    TranslationUnit_t *c_tu;
+    R_GET_CLASS_DATA("Clangc", TranslationUnit, tu, c_tu);
+
+    unsigned int er =
+        clang_parseTranslationUnit2FullArgv(i->data,
+                                            c_source_file,
+                                            c_args,
+                                            len,
+                                            0,
+                                            0,
+                                            c_options, // TODO manage unsaved files
+                                            &(c_tu->data));
+
+    c_tu->parent = self;
+
+    if (er != 0)
+        return CUINT_2_NUM(er);
+    else
+        return tu;
+}
+#endif

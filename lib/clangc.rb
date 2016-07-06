@@ -4,7 +4,7 @@ module Clangc
   ##
   # :call-seq:
   # Clangc.visit_children(Hash)
-  # 
+  #
   # This is a convenient method that call Clangc.visit_children_with_proc or
   # Clangc.visit_children_with_block.
   # the Hash arguments can accept two keys:
@@ -30,10 +30,10 @@ module Clangc
     end
   end
   class TranslationUnit
-    ## 
+    ##
     # :call-seq:
     #   Clangc::TranslationUnit#diagnostics => Array
-    # 
+    #
     # Returns an array of Clangc::Diagnostic for the current Clangc::TranslationUnit.
     # The array is empty if no Clangc::Diagnostic can be found.
     def diagnostics
@@ -45,7 +45,7 @@ module Clangc
     end
   end
   class Diagnostic
-    ## 
+    ##
     # :call-seq:
     #   Clangc::Diagnostic#source_ranges => Array
     #
@@ -63,11 +63,11 @@ module Clangc
     end
   end
   class Type
-    ## 
+    ##
     # :call-seq:
     # Clangc::Type#arg_types -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # types for the argument of the function that
     # is related to the current type.
     # If the current type is not a function, it returns
@@ -82,11 +82,11 @@ module Clangc
       end
       types
     end
-      ## 
+      ##
     # :call-seq:
     # Clangc::Type#template_arguments_as_type -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # types for the arguments of the current Class Type template that
     # is related to the current cursor.
     # If the Cursor is not a Class Declaration, it returns
@@ -102,12 +102,12 @@ module Clangc
       types
     end
   end
-  class Cursor 
-    ## 
+  class Cursor
+    ##
     # :call-seq:
     # Clangc::Cursor#arguments -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # cursors for the arguments of the function that
     # is related to the current cursor.
     # If the current cursor is not a function, it returns
@@ -122,11 +122,11 @@ module Clangc
       end
       cursors
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::Cursor#overloaded_decls -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # cursors for the overloaded declarations that
     # are related to the current cursor.
     # If the current cursor is not an overloaded declaration, it returns
@@ -141,11 +141,11 @@ module Clangc
       end
       cursors
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::Cursor#template_arguments_kinds -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # kinds for the arguments of the function template that
     # is related to the current cursor.
     # If the current cursor is not a function declaration, it returns
@@ -160,11 +160,11 @@ module Clangc
       end
       kinds
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::Cursor#template_arguments_types -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # types for the arguments of the function template that
     # is related to the current cursor.
     # If the current cursor is not a function declaration, it returns
@@ -179,11 +179,11 @@ module Clangc
       end
       types
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::Cursor#template_arguments_values -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # values for the arguments of the function template that
     # is related to the current cursor.
     # If the current cursor is not a function declaration, it returns
@@ -198,11 +198,11 @@ module Clangc
       end
       values
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::Cursor#template_arguments_unsigned_values -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # values for the arguments of the function template that
     # is related to the current cursor.
     # If the current cursor is not a function declaration, it returns
@@ -219,11 +219,11 @@ module Clangc
     end
   end
   class Module
-    ## 
+    ##
     # :call-seq:
     # Clangc::Module#top_level_headers(Clangc::TranslationUnit) -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # Clangc::File corresponding to the related
     # toplevel headers.
     # If the current cursor is not a module, it returns
@@ -240,11 +240,11 @@ module Clangc
     end
   end
   class CompletionString
-    ## 
+    ##
     # :call-seq:
     # Clangc::CompletionString#chunk_kinds -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # kinds of the chunk completions for a
     # completion string.
     def chunk_kinds
@@ -257,11 +257,11 @@ module Clangc
       end
       kinds
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::CompletionString#chunk_texts -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # texts of the chunk completions for a
     # completion string.
     def chunk_texts
@@ -274,11 +274,11 @@ module Clangc
       end
       texts
     end
-    ## 
+    ##
     # :call-seq:
     #   Clangc::CompletionString#num_annotations -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # annotations for a completion string.
     def annotations
       num = num_annotations
@@ -290,11 +290,11 @@ module Clangc
       end
       annotations
     end
-    ## 
+    ##
     # :call-seq:
     # Clangc::CompletionString#chunk_text_completion_strings -> Array
     #
-    # Return an array that contains all the 
+    # Return an array that contains all the
     # completion strings for a
     # completion string.
     def chunk_completion_strings
@@ -340,7 +340,7 @@ module Clangc
       diags
     end
   end
-  
+
   class Index
     ##
     # :call-seq:
@@ -353,14 +353,14 @@ module Clangc
     # :error  => true or false or nil
     # :ast => String an ast file
     alias_method :create_translation_unit_raw, :create_translation_unit
-    
+
     def create_translation_unit(options)
       source =  options[:source] || ""
       args =    options[:args] || []
       error =   options[:error] || nil
       ast =     options[:ast] || nil
       if ast
-        error ? create_translation_unit2(ast) : create_translation_unit_raw(ast) 
+        error ? create_translation_unit2(ast) : create_translation_unit_raw(ast)
       else
         create_translation_unit_from_source_file(source, args)
       end
@@ -376,14 +376,18 @@ module Clangc
     # :args   => command line arguments
     # :error  => true or false or nil
     # :flags  => bitwise OR of the TranslationUnit_Flags constants
+    # :argv  => true or false in order to use argv form
     alias_method :parse_translation_unit_raw, :parse_translation_unit
-    
+
     def parse_translation_unit(options)
       source =  options[:source] || ""
       args =    options[:args] || []
       error =   options[:error] || nil
       flags =   options[:flags] || Clangc::TranslationUnit_Flags::NONE
-      if error
+      argv =    options[:argv] || false
+      if error && argv
+        parse_translation_unit2_full_argv(source, args, flags)
+      elsif error
         parse_translation_unit2(source, args, flags)
       else
         parse_translation_unit_raw(source, args, flags)

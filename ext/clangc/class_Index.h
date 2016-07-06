@@ -50,4 +50,9 @@ c_Index_parse_TU(VALUE, VALUE, VALUE, VALUE);
 
 VALUE
 c_Index_parse_TU2(VALUE, VALUE, VALUE, VALUE);
+
+#if (CINDEX_VERSION_MINOR >= 32)
+VALUE
+c_Index_parse_TU2_full_argv(VALUE, VALUE, VALUE, VALUE);
+#endif
 #endif // INDEX_H
