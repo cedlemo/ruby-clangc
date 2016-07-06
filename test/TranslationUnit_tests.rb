@@ -136,6 +136,16 @@ class TestTranslationUnitCreation < MiniTest::Test
     assert_equal(Integer, tu.class.superclass)
     assert_equal(Clangc::ErrorCode::FAILURE, tu)
   end
+
+  def test_parse_tu2_full_argv
+    options = Clangc::TranslationUnit_Flags::NONE
+    tu = @cindex.parse_translation_unit(source: SOURCE_FILE,
+                                        args: CLANG_HEADERS_PATH,
+                                        flags: options, error: true,
+                                        argv: true)
+    assert_instance_of(Clangc::TranslationUnit, tu)
+  end
+
 end
 
 class TestTranslationUnitUsage < MiniTest::Test
